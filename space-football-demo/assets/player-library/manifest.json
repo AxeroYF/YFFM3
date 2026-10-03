@@ -1,0 +1,3125 @@
+{
+  "schemaVersion": 1,
+  "sourceProject": "黄狗风云 / Rougelite",
+  "sourceRecords": 842,
+  "imported": 386,
+  "excluded": 456,
+  "attributes": [
+    "passing",
+    "firstTouch",
+    "dribbling",
+    "crossing",
+    "finishing",
+    "longShots",
+    "heading",
+    "setPieces",
+    "tackling",
+    "marking",
+    "positioning",
+    "vision",
+    "decisions",
+    "composure",
+    "offBall",
+    "discipline",
+    "pace",
+    "acceleration",
+    "strength",
+    "stamina",
+    "agility",
+    "jumping",
+    "workRate",
+    "aggression",
+    "goalkeeping",
+    "reflexes"
+  ],
+  "assets": [
+    {
+      "playerId": "legend-courtois",
+      "name": "库尔图瓦",
+      "sourceFile": "Courtois.webp",
+      "asset": "portraits/6984e91351d1249a3f1e11d3b2013a0072b36bfc4d1652e912fe5493aa0cc7d3.webp",
+      "sha256": "6984e91351d1249a3f1e11d3b2013a0072b36bfc4d1652e912fe5493aa0cc7d3",
+      "bytes": 261624
+    },
+    {
+      "playerId": "s4-fc26-212831",
+      "name": "阿利松",
+      "sourceFile": "Alisson.webp",
+      "asset": "portraits/a5b4412dc2f9963bf75b00ed1f374e7ceb7cfc5b8ddd2ced0316ca7b1e8abaa1.webp",
+      "sha256": "a5b4412dc2f9963bf75b00ed1f374e7ceb7cfc5b8ddd2ced0316ca7b1e8abaa1",
+      "bytes": 114020
+    },
+    {
+      "playerId": "s4-fc26-230621",
+      "name": "多纳鲁马",
+      "sourceFile": "Donnarumma.webp",
+      "asset": "portraits/6ffe5234ac6add63806eba608db1a84e16730a27f25efc68c765e2d5898ac8e5.webp",
+      "sha256": "6ffe5234ac6add63806eba608db1a84e16730a27f25efc68c765e2d5898ac8e5",
+      "bytes": 128620
+    },
+    {
+      "playerId": "s4-fc26-200389",
+      "name": "奥布拉克",
+      "sourceFile": "Oblak.webp",
+      "asset": "portraits/69176b69984d855f875f4e1524476ff4dc0e7d257e758a4f22ab28c222a7a0e9.webp",
+      "sha256": "69176b69984d855f875f4e1524476ff4dc0e7d257e758a4f22ab28c222a7a0e9",
+      "bytes": 95328
+    },
+    {
+      "playerId": "s4-fc26-215698",
+      "name": "迈尼昂",
+      "sourceFile": "Maignan.webp",
+      "asset": "portraits/093d464b72bda902ef3a8533bf2a9b8e39313a749383a189eedef3c378dcde70.webp",
+      "sha256": "093d464b72bda902ef3a8533bf2a9b8e39313a749383a189eedef3c378dcde70",
+      "bytes": 92570
+    },
+    {
+      "playerId": "s4-fc26-177683",
+      "name": "索默",
+      "sourceFile": "Sommer.webp",
+      "asset": "portraits/93a8426cb0e8cb93a5c8491f162410cc54c0ab304841dc9456a0302c9de751ca.webp",
+      "sha256": "93a8426cb0e8cb93a5c8491f162410cc54c0ab304841dc9456a0302c9de751ca",
+      "bytes": 168460
+    },
+    {
+      "playerId": "s4-fc26-220901",
+      "name": "大卫拉亚",
+      "sourceFile": "David_Raya.webp",
+      "asset": "portraits/0fce90c99fd6852aab61a821cae78720d22ced8983dd3289ff6fd19c9f4dbc58.webp",
+      "sha256": "0fce90c99fd6852aab61a821cae78720d22ced8983dd3289ff6fd19c9f4dbc58",
+      "bytes": 293378
+    },
+    {
+      "playerId": "s4-fc26-235073",
+      "name": "科贝尔",
+      "sourceFile": "Kobel.webp",
+      "asset": "portraits/28ea0c2878049133948b1b82632f68484600631604e45d3c3f776c205889b327.webp",
+      "sha256": "28ea0c2878049133948b1b82632f68484600631604e45d3c3f776c205889b327",
+      "bytes": 68196
+    },
+    {
+      "playerId": "s4-fc26-192448",
+      "name": "特尔施特根",
+      "sourceFile": "ter_Stegen.webp",
+      "asset": "portraits/a9954d47c765663dff95624f5805510dbd2d7a9414a15b53fb5241fdcccb2ab5.webp",
+      "sha256": "a9954d47c765663dff95624f5805510dbd2d7a9414a15b53fb5241fdcccb2ab5",
+      "bytes": 53982
+    },
+    {
+      "playerId": "s4-fc26-210257",
+      "name": "埃莫森",
+      "sourceFile": "s4-imported/eedf4db3480df22df2dd09e4.webp",
+      "asset": "portraits/3dcb8595e50e942c71c9c0eb9a8630719958ae864f3210f179f2f3b65699e944.webp",
+      "sha256": "3dcb8595e50e942c71c9c0eb9a8630719958ae864f3210f179f2f3b65699e944",
+      "bytes": 38380
+    },
+    {
+      "playerId": "s4-fc26-202811",
+      "name": "大马丁",
+      "sourceFile": "s4-imported/ae569510ed6e211335dc0c31.webp",
+      "asset": "portraits/6ea166fe0c28e393b06b2fde65779d5ac4335decd068b808d80cd0b6225dcd04.webp",
+      "sha256": "6ea166fe0c28e393b06b2fde65779d5ac4335decd068b808d80cd0b6225dcd04",
+      "bytes": 107362
+    },
+    {
+      "playerId": "s4-fc26-167495",
+      "name": "诺伊尔",
+      "sourceFile": "Neuer.webp",
+      "asset": "portraits/00c9631ea6b25724d4abcdb2a6bdc84935914f72fb163a1f9b46200caff30050.webp",
+      "sha256": "00c9631ea6b25724d4abcdb2a6bdc84935914f72fb163a1f9b46200caff30050",
+      "bytes": 155622
+    },
+    {
+      "playerId": "s4-fc26-234577",
+      "name": "迪奥戈科斯塔",
+      "sourceFile": "s4-imported/e35489d146b4e18805c8c9be.webp",
+      "asset": "portraits/514bba9c8950ab7e8d86cd1faa9c397e1b4d395aa3a51248c01dd98d3d0b9b96.webp",
+      "sha256": "514bba9c8950ab7e8d86cd1faa9c397e1b4d395aa3a51248c01dd98d3d0b9b96",
+      "bytes": 65342
+    },
+    {
+      "playerId": "s4-retired-gianluigi-buffon",
+      "name": "布冯",
+      "sourceFile": "Buffon.webp",
+      "asset": "portraits/925619210ab7463c47c0d521365a34559a1c5add4f40d512abb33dfa6e9e11a5.webp",
+      "sha256": "925619210ab7463c47c0d521365a34559a1c5add4f40d512abb33dfa6e9e11a5",
+      "bytes": 102316
+    },
+    {
+      "playerId": "s4-retired-iker-casillas",
+      "name": "卡西利亚斯",
+      "sourceFile": "Casillas.webp",
+      "asset": "portraits/07af430ad52b724c5830fe7530195ec7a206984736fe86df341d8dcf35f0e57e.webp",
+      "sha256": "07af430ad52b724c5830fe7530195ec7a206984736fe86df341d8dcf35f0e57e",
+      "bytes": 182896
+    },
+    {
+      "playerId": "s4-retired-oliver-kahn",
+      "name": "卡恩",
+      "sourceFile": "Kahn.webp",
+      "asset": "portraits/80e1fb1422c6fce225734c795a5db994863a4f1a68ba1d7de490ec5499d03081.webp",
+      "sha256": "80e1fb1422c6fce225734c795a5db994863a4f1a68ba1d7de490ec5499d03081",
+      "bytes": 97498
+    },
+    {
+      "playerId": "s4-dlc-20260731-017",
+      "name": "儒利奥·塞萨尔",
+      "sourceFile": "Júlio César.webp",
+      "asset": "portraits/44819a992f3421df69f05664b09f57f912e3d4900b54fc99e2be4e5d602c4a21.webp",
+      "sha256": "44819a992f3421df69f05664b09f57f912e3d4900b54fc99e2be4e5d602c4a21",
+      "bytes": 130298
+    },
+    {
+      "playerId": "s4-dlc2-20260803-051",
+      "name": "鲁伊·帕特里西奥",
+      "sourceFile": "Patrício.webp",
+      "asset": "portraits/9e55ece21cec2727fd9a9a18e56878e607c2f786abed402a6278d4e2022d3215.webp",
+      "sha256": "9e55ece21cec2727fd9a9a18e56878e607c2f786abed402a6278d4e2022d3215",
+      "bytes": 63108
+    },
+    {
+      "playerId": "s4-dlc2-20260803-056",
+      "name": "曼努埃尔·本托",
+      "sourceFile": "Bento.webp",
+      "asset": "portraits/caa610652ade90c5612b863612d22b95b3b491e8d6bee56ef744df0571d6a749.webp",
+      "sha256": "caa610652ade90c5612b863612d22b95b3b491e8d6bee56ef744df0571d6a749",
+      "bytes": 107036
+    },
+    {
+      "playerId": "s4-dlc2-20260803-059",
+      "name": "维托尔·拜亚",
+      "sourceFile": "Vítor Baía.webp",
+      "asset": "portraits/83c37ea5002e3dba798a53f0dc2423c423d8030ca3c815cd44db4a6040905a7b.webp",
+      "sha256": "83c37ea5002e3dba798a53f0dc2423c423d8030ca3c815cd44db4a6040905a7b",
+      "bytes": 75560
+    },
+    {
+      "playerId": "s4-dlc2-20260803-066",
+      "name": "迪诺·佐夫",
+      "sourceFile": "Zoff.webp",
+      "asset": "portraits/d73410ab6b964c58d8ee2c8a8d0b144642038ec7a2e93c86993512b35fa2e3b2.webp",
+      "sha256": "d73410ab6b964c58d8ee2c8a8d0b144642038ec7a2e93c86993512b35fa2e3b2",
+      "bytes": 106028
+    },
+    {
+      "playerId": "s4-dlc2-20260803-072",
+      "name": "凯洛尔·纳瓦斯",
+      "sourceFile": "Navas.webp",
+      "asset": "portraits/3ae48bca8ca205ffc8dc633a8d3ee58a3c974c9647f6203740080b3f2efdc92b.webp",
+      "sha256": "3ae48bca8ca205ffc8dc633a8d3ee58a3c974c9647f6203740080b3f2efdc92b",
+      "bytes": 93586
+    },
+    {
+      "playerId": "s4-dlc3-20260808-013",
+      "name": "帕科·布约",
+      "sourceFile": "s4-imported/bcd968833184676a68a45bc4.webp",
+      "asset": "portraits/b9e52d5f44b955bbe914e07ebb3cab4425cbd073b4ca58c962d00f4923734ff9.webp",
+      "sha256": "b9e52d5f44b955bbe914e07ebb3cab4425cbd073b4ca58c962d00f4923734ff9",
+      "bytes": 37960
+    },
+    {
+      "playerId": "s4-dlc3-20260808-016",
+      "name": "雅辛",
+      "sourceFile": "Yashin.webp",
+      "asset": "portraits/d61515ce6342b91e4847d59965e1730b4c742bca85d1bd2d6f7e17753d99e4ac.webp",
+      "sha256": "d61515ce6342b91e4847d59965e1730b4c742bca85d1bd2d6f7e17753d99e4ac",
+      "bytes": 57922
+    },
+    {
+      "playerId": "s4-dlc3-20260808-033",
+      "name": "巴特兹",
+      "sourceFile": "Barthez.webp",
+      "asset": "portraits/f61e5979bd4f7dadaaf2425f5ea3001d39d0feea3e675d7735d4c1e8445c6a67.webp",
+      "sha256": "f61e5979bd4f7dadaaf2425f5ea3001d39d0feea3e675d7735d4c1e8445c6a67",
+      "bytes": 46980
+    },
+    {
+      "playerId": "s4-dlc3-20260808-035",
+      "name": "莱曼",
+      "sourceFile": "Lehmann.webp",
+      "asset": "portraits/1e383200818705b393e9ec2547a67609d2c8a951c41907c794303d6cc95552fa.webp",
+      "sha256": "1e383200818705b393e9ec2547a67609d2c8a951c41907c794303d6cc95552fa",
+      "bytes": 68362
+    },
+    {
+      "playerId": "s4-dlc3-20260808-042",
+      "name": "维克托巴尔德斯",
+      "sourceFile": "Valdés.webp",
+      "asset": "portraits/f3559b2b478ebb5f7265881eb4a17d6b6f3fa75cca422d27fbf787515f59488b.webp",
+      "sha256": "f3559b2b478ebb5f7265881eb4a17d6b6f3fa75cca422d27fbf787515f59488b",
+      "bytes": 168890
+    },
+    {
+      "playerId": "legend-beckenbauer",
+      "name": "贝肯鲍尔",
+      "sourceFile": "Beckenbauer.webp",
+      "asset": "portraits/d86753310c7aef575f41f3d5e38bb6e8f2db23cc1ddc4ee81211b579579caf38.webp",
+      "sha256": "d86753310c7aef575f41f3d5e38bb6e8f2db23cc1ddc4ee81211b579579caf38",
+      "bytes": 75416
+    },
+    {
+      "playerId": "s4-fc26-203376",
+      "name": "范戴克",
+      "sourceFile": "van_Dijk.webp",
+      "asset": "portraits/a2ebd78f9b246404a04d502152747ffc37cabab68e0551a06999fc44dc1ecce0.webp",
+      "sha256": "a2ebd78f9b246404a04d502152747ffc37cabab68e0551a06999fc44dc1ecce0",
+      "bytes": 161982
+    },
+    {
+      "playerId": "s4-fc26-235212",
+      "name": "阿什拉夫",
+      "sourceFile": "Hakimi.webp",
+      "asset": "portraits/788d56363785a51aca4d676a151bb7a55b5606f0155f83220c482d5386fc2a75.webp",
+      "sha256": "788d56363785a51aca4d676a151bb7a55b5606f0155f83220c482d5386fc2a75",
+      "bytes": 82664
+    },
+    {
+      "playerId": "s4-fc26-232580",
+      "name": "加布里埃尔",
+      "sourceFile": "Gabriel.webp",
+      "asset": "portraits/c207c82f9c90e8b1b2eb8765c7fdbc3a412c8b1930a7c6571f06d836671ef173.webp",
+      "sha256": "c207c82f9c90e8b1b2eb8765c7fdbc3a412c8b1930a7c6571f06d836671ef173",
+      "bytes": 76704
+    },
+    {
+      "playerId": "s4-fc26-237383",
+      "name": "巴斯托尼",
+      "sourceFile": "Bastoni.webp",
+      "asset": "portraits/ec71503abbcfd8d7bd38fe11345cf04986216b4ccb960322efef2ad3e355e7b3.webp",
+      "sha256": "ec71503abbcfd8d7bd38fe11345cf04986216b4ccb960322efef2ad3e355e7b3",
+      "bytes": 93270
+    },
+    {
+      "playerId": "s4-fc26-213331",
+      "name": "塔",
+      "sourceFile": "Tah.webp",
+      "asset": "portraits/cc9ff7888a5c46b7ffc7ded2138381fcceb7f3a015bad1ad5b9dddbd9383eda6.webp",
+      "sha256": "cc9ff7888a5c46b7ffc7ded2138381fcceb7f3a015bad1ad5b9dddbd9383eda6",
+      "bytes": 40906
+    },
+    {
+      "playerId": "s4-fc26-241486",
+      "name": "孔德",
+      "sourceFile": "Koundé.webp",
+      "asset": "portraits/3f84ac6fdf553366093c60d2d3e1559e564743e8cae1cc4f8d21ad7195184b67.webp",
+      "sha256": "3f84ac6fdf553366093c60d2d3e1559e564743e8cae1cc4f8d21ad7195184b67",
+      "bytes": 146418
+    },
+    {
+      "playerId": "s4-fc26-207865",
+      "name": "马尔基尼奥斯",
+      "sourceFile": "Marquinhos.webp",
+      "asset": "portraits/62902773ee2267117ca669386a44acd0bf67f2e603556c5e905a9ceb57ba2551.webp",
+      "sha256": "62902773ee2267117ca669386a44acd0bf67f2e603556c5e905a9ceb57ba2551",
+      "bytes": 61448
+    },
+    {
+      "playerId": "s4-fc26-243715",
+      "name": "萨利巴",
+      "sourceFile": "Saliba.webp",
+      "asset": "portraits/65e36430cfbe3818f7059e35a57e189a9eb6a3d4d89b9b8702065798570cdcc8.webp",
+      "sha256": "65e36430cfbe3818f7059e35a57e189a9eb6a3d4d89b9b8702065798570cdcc8",
+      "bytes": 141584
+    },
+    {
+      "playerId": "s4-fc26-205452",
+      "name": "吕迪格",
+      "sourceFile": "Rüdiger.webp",
+      "asset": "portraits/86a71999a4029727105182c73445bced08b02329443f080ebe7d05fa155f4834.webp",
+      "sha256": "86a71999a4029727105182c73445bced08b02329443f080ebe7d05fa155f4834",
+      "bytes": 119028
+    },
+    {
+      "playerId": "s4-fc26-237678",
+      "name": "柯纳特",
+      "sourceFile": "Konaté.webp",
+      "asset": "portraits/7e3070cd105fd316ec7279e6bebaea22db87dc9149f56fc6b6b27345a79ffdad.webp",
+      "sha256": "7e3070cd105fd316ec7279e6bebaea22db87dc9149f56fc6b6b27345a79ffdad",
+      "bytes": 102428
+    },
+    {
+      "playerId": "s4-fc26-252145",
+      "name": "努诺门德斯",
+      "sourceFile": "Nuno_Mendes.webp",
+      "asset": "portraits/ec54391eea8e470c8f8e5885a930215c8420f2ab7b8444b25964b906b881e75c.webp",
+      "sha256": "ec54391eea8e470c8f8e5885a930215c8420f2ab7b8444b25964b906b881e75c",
+      "bytes": 102930
+    },
+    {
+      "playerId": "s4-fc26-239818",
+      "name": "鲁本迪亚斯",
+      "sourceFile": "Rúben_Dias.webp",
+      "asset": "portraits/011c693e415276785d07444ee0a2167a7b9931c644b36ba332f0acaecdbe2d88.webp",
+      "sha256": "011c693e415276785d07444ee0a2167a7b9931c644b36ba332f0acaecdbe2d88",
+      "bytes": 108714
+    },
+    {
+      "playerId": "s4-fc26-231281",
+      "name": "阿诺德",
+      "sourceFile": "Alexander-Arnold.webp",
+      "asset": "portraits/6df9963e1230580b0bb195cfbec7f7f00c43b2176c36bb3e7eba0dbd8285445b.webp",
+      "sha256": "6df9963e1230580b0bb195cfbec7f7f00c43b2176c36bb3e7eba0dbd8285445b",
+      "bytes": 62212
+    },
+    {
+      "playerId": "s4-fc26-256196",
+      "name": "帕乔",
+      "sourceFile": "Pacho.webp",
+      "asset": "portraits/fb788c83de2559a3b82cacd04f83927a350e3ea95fb58953adede880adf93936.webp",
+      "sha256": "fb788c83de2559a3b82cacd04f83927a350e3ea95fb58953adede880adf93936",
+      "bytes": 41268
+    },
+    {
+      "playerId": "s4-fc26-226268",
+      "name": "迪马尔科",
+      "sourceFile": "Dimarco.webp",
+      "asset": "portraits/08fffd6dbe5bea292c413f96fa31b04d72cce18918114e4c56f2bccd808a7fdf.webp",
+      "sha256": "08fffd6dbe5bea292c413f96fa31b04d72cce18918114e4c56f2bccd808a7fdf",
+      "bytes": 87022
+    },
+    {
+      "playerId": "s4-fc26-239580",
+      "name": "布雷默",
+      "sourceFile": "Bremer.webp",
+      "asset": "portraits/61d8218d8f836de6d69e9674478d0514d56dfb0d34ad6f48421bc272f625b03c.webp",
+      "sha256": "61d8218d8f836de6d69e9674478d0514d56dfb0d34ad6f48421bc272f625b03c",
+      "bytes": 62508
+    },
+    {
+      "playerId": "s4-fc26-204963",
+      "name": "卡瓦哈尔",
+      "sourceFile": "Carvajal.webp",
+      "asset": "portraits/f418d22b826d08259c77a44ce2efa8b984f488da1ff7bd64be8e3079f8bc795d.webp",
+      "sha256": "f418d22b826d08259c77a44ce2efa8b984f488da1ff7bd64be8e3079f8bc795d",
+      "bytes": 53764
+    },
+    {
+      "playerId": "s4-fc26-229558",
+      "name": "于帕梅卡诺",
+      "sourceFile": "Upamecano.webp",
+      "asset": "portraits/769950b6fbc64a7e6940c6b352d11fd12012ca753216daf56d21099c33d030f4.webp",
+      "sha256": "769950b6fbc64a7e6940c6b352d11fd12012ca753216daf56d21099c33d030f4",
+      "bytes": 114570
+    },
+    {
+      "playerId": "s4-fc26-204525",
+      "name": "伊尼戈马丁内斯",
+      "sourceFile": "Iñigo_Martínez.webp",
+      "asset": "portraits/0b3d40a7aa27432135a20fa65ada2122e03b5806bcfa631f1d0add2a919e13c4.webp",
+      "sha256": "0b3d40a7aa27432135a20fa65ada2122e03b5806bcfa631f1d0add2a919e13c4",
+      "bytes": 40400
+    },
+    {
+      "playerId": "s4-fc26-247819",
+      "name": "施罗德贝克",
+      "sourceFile": "Schlotterbeck.webp",
+      "asset": "portraits/966480f5f3788cc3dd14f65860be0ceec7fc080660785ef57a5953e65247b4fd.webp",
+      "sha256": "966480f5f3788cc3dd14f65860be0ceec7fc080660785ef57a5953e65247b4fd",
+      "bytes": 63906
+    },
+    {
+      "playerId": "s4-fc26-210514",
+      "name": "坎赛洛",
+      "sourceFile": "Cancelo.webp",
+      "asset": "portraits/e51c24bcc0e88910a53895c788526fc936abae6a74b096145761ce6ec4830995.webp",
+      "sha256": "e51c24bcc0e88910a53895c788526fc936abae6a74b096145761ce6ec4830995",
+      "bytes": 181030
+    },
+    {
+      "playerId": "s4-fc26-226161",
+      "name": "马科斯略伦特",
+      "sourceFile": "Marcos_Llorente.webp",
+      "asset": "portraits/f6b8d103b3974bb8f04662f275ba35df2df7efd86e724a52cf86b8e611c084e6.webp",
+      "sha256": "f6b8d103b3974bb8f04662f275ba35df2df7efd86e724a52cf86b8e611c084e6",
+      "bytes": 67766
+    },
+    {
+      "playerId": "s4-fc26-232656",
+      "name": "特奥",
+      "sourceFile": "Theo_Hernández.webp",
+      "asset": "portraits/17d1a9b27d8c62ae5d7baca4ff941442b14e09f1cce1ff51c9e06b278d72ff5f.webp",
+      "sha256": "17d1a9b27d8c62ae5d7baca4ff941442b14e09f1cce1ff51c9e06b278d72ff5f",
+      "bytes": 36264
+    },
+    {
+      "playerId": "s4-fc26-226851",
+      "name": "帕瓦尔",
+      "sourceFile": "s4-imported/212fa9062ffe2428067b9ea1.webp",
+      "asset": "portraits/b14dd170b6d8f4661291848b3cec753d6abbbfe81f13617776e88b82ec710928.webp",
+      "sha256": "b14dd170b6d8f4661291848b3cec753d6abbbfe81f13617776e88b82ec710928",
+      "bytes": 88958
+    },
+    {
+      "playerId": "s4-fc26-233096",
+      "name": "邓弗里斯",
+      "sourceFile": "s4-imported/a8a7aafd92f79f4350c325a4.webp",
+      "asset": "portraits/53f2ae8c7cca07a48945a784d778a3b7ff879cc2b7657c41a31e1fc507d6071f.webp",
+      "sha256": "53f2ae8c7cca07a48945a784d778a3b7ff879cc2b7657c41a31e1fc507d6071f",
+      "bytes": 108102
+    },
+    {
+      "playerId": "s4-fc26-240130",
+      "name": "米利唐",
+      "sourceFile": "s4-imported/b31f28a691be6cf316c0b4f7.webp",
+      "asset": "portraits/63185a6db3450a84e6525db77a0225a62e44d9f7ef66ef5280f331150f0b088c.webp",
+      "sha256": "63185a6db3450a84e6525db77a0225a62e44d9f7ef66ef5280f331150f0b088c",
+      "bytes": 70666
+    },
+    {
+      "playerId": "s4-fc26-239231",
+      "name": "库库雷利亚",
+      "sourceFile": "Ccurelia.webp",
+      "asset": "portraits/04b615cd78c778ee66a26126dac3a389f7626013d9a82a07f509c3e9aac76450.webp",
+      "sha256": "04b615cd78c778ee66a26126dac3a389f7626013d9a82a07f509c3e9aac76450",
+      "bytes": 137014
+    },
+    {
+      "playerId": "s4-fc26-231936",
+      "name": "本怀特",
+      "sourceFile": "s4-imported/e32a41e079034e3916414884.webp",
+      "asset": "portraits/6701575d2cba5caec3152e66d1beea077771212a8d4493768279043c46f5d540.webp",
+      "sha256": "6701575d2cba5caec3152e66d1beea077771212a8d4493768279043c46f5d540",
+      "bytes": 59766
+    },
+    {
+      "playerId": "s4-fc26-192366",
+      "name": "奥塔门迪",
+      "sourceFile": "s4-imported/6571df7191cc53c93faf075a.webp",
+      "asset": "portraits/75d2fa3dc057d700e2b8d025b0bc32f1cffc4c6fa4d1f2db7ff794e2966258a7.webp",
+      "sha256": "75d2fa3dc057d700e2b8d025b0bc32f1cffc4c6fa4d1f2db7ff794e2966258a7",
+      "bytes": 127852
+    },
+    {
+      "playerId": "s4-fc26-278046",
+      "name": "库巴西",
+      "sourceFile": "s4-imported/881eb22189b4b1263bad5605.webp",
+      "asset": "portraits/3dd06083adf7db4151709c1c25fc67904ffca9fa650c3d2f98445584e25f9a98.webp",
+      "sha256": "3dd06083adf7db4151709c1c25fc67904ffca9fa650c3d2f98445584e25f9a98",
+      "bytes": 62250
+    },
+    {
+      "playerId": "s4-fc26-212218",
+      "name": "拉波尔特",
+      "sourceFile": "s4-imported/97e6946d8a50149efde5c7b7.webp",
+      "asset": "portraits/9d585b9276c0217e9d5bdc5723b7a1efa30fd4fbb78f8333e0ebb3e89d7ab4c9.webp",
+      "sha256": "9d585b9276c0217e9d5bdc5723b7a1efa30fd4fbb78f8333e0ebb3e89d7ab4c9",
+      "bytes": 173830
+    },
+    {
+      "playerId": "s4-fc26-200888",
+      "name": "达尼洛佩雷拉",
+      "sourceFile": "s4-imported/576cb79690a65f58786f5949.webp",
+      "asset": "portraits/e9a91df4b36b824818560b96e10fc1ab06b1089c5cacce96e80b8621dae60b7e.webp",
+      "sha256": "e9a91df4b36b824818560b96e10fc1ab06b1089c5cacce96e80b8621dae60b7e",
+      "bytes": 107620
+    },
+    {
+      "playerId": "s4-fc26-209889",
+      "name": "拉斐尔格雷罗",
+      "sourceFile": "s4-imported/3a69a2ee78d2cf4739265bda.webp",
+      "asset": "portraits/5a0c584265f8d1587770b005d0ac6dd46ed329702ee8782b0b178bed9f761b68.webp",
+      "sha256": "5a0c584265f8d1587770b005d0ac6dd46ed329702ee8782b0b178bed9f761b68",
+      "bytes": 81674
+    },
+    {
+      "playerId": "s4-fc26-203263",
+      "name": "马奎尔",
+      "sourceFile": "s4-imported/adbbf6dd5927e948c627db8f.webp",
+      "asset": "portraits/f6d3671476f1b5c16c89ffc1d993eac2f2058c1517a281b78f16a0ce524c2e79.webp",
+      "sha256": "f6d3671476f1b5c16c89ffc1d993eac2f2058c1517a281b78f16a0ce524c2e79",
+      "bytes": 126488
+    },
+    {
+      "playerId": "s4-fc26-253124",
+      "name": "努内斯",
+      "sourceFile": "s4-imported/5f8acca2c60ae57be47bff11.webp",
+      "asset": "portraits/c1c1dd1e962c5c25537a5053113b0ef0527db4f83e743f4031e9ea6eac551927.webp",
+      "sha256": "c1c1dd1e962c5c25537a5053113b0ef0527db4f83e743f4031e9ea6eac551927",
+      "bytes": 71320
+    },
+    {
+      "playerId": "s4-fc26-258966",
+      "name": "坎比亚索",
+      "sourceFile": "Cambiaso.webp",
+      "asset": "portraits/f1be17b7cf3b67e1526202979f58fcce52b54aafe6ef6aea26d8b2821b19cc6e.webp",
+      "sha256": "f1be17b7cf3b67e1526202979f58fcce52b54aafe6ef6aea26d8b2821b19cc6e",
+      "bytes": 104592
+    },
+    {
+      "playerId": "s4-fc26-234574",
+      "name": "达洛特",
+      "sourceFile": "s4-imported/9926067a496d800277e22bcc.webp",
+      "asset": "portraits/4a9d5ac095b43cff8fd5b31a10befd65f88c14729e25bef459a6463ed93f0263.webp",
+      "sha256": "4a9d5ac095b43cff8fd5b31a10befd65f88c14729e25bef459a6463ed93f0263",
+      "bytes": 65274
+    },
+    {
+      "playerId": "s4-fc26-188377",
+      "name": "凯尔沃克",
+      "sourceFile": "s4-imported/724286502dfe7173aee12e4e.webp",
+      "asset": "portraits/130167d6590e7e0300c8159a0ff400cefd9a9cb89e586119218595b2d170da12.webp",
+      "sha256": "130167d6590e7e0300c8159a0ff400cefd9a9cb89e586119218595b2d170da12",
+      "bytes": 45818
+    },
+    {
+      "playerId": "s4-retired-paolo-maldini",
+      "name": "保罗马尔蒂尼",
+      "sourceFile": "Maldini.webp",
+      "asset": "portraits/d21921d58cd427735c9acb2fdfe39fb8f175c0f9c1cdd121f12998c507e922d1.webp",
+      "sha256": "d21921d58cd427735c9acb2fdfe39fb8f175c0f9c1cdd121f12998c507e922d1",
+      "bytes": 32432
+    },
+    {
+      "playerId": "s4-retired-franco-baresi",
+      "name": "巴雷西",
+      "sourceFile": "Baresi.webp",
+      "asset": "portraits/2f09bf5c66cacd2750dce48d952e3d1ed223059bb74e7673d338ab790519b128.webp",
+      "sha256": "2f09bf5c66cacd2750dce48d952e3d1ed223059bb74e7673d338ab790519b128",
+      "bytes": 117934
+    },
+    {
+      "playerId": "s4-retired-alessandro-nesta",
+      "name": "内斯塔",
+      "sourceFile": "Nesta.webp",
+      "asset": "portraits/f2f2643a316b3d3813f0712b5eba101adac4e413151cea1d7bed69f21aa1c4ce.webp",
+      "sha256": "f2f2643a316b3d3813f0712b5eba101adac4e413151cea1d7bed69f21aa1c4ce",
+      "bytes": 105142
+    },
+    {
+      "playerId": "s4-retired-fabio-cannavaro",
+      "name": "卡纳瓦罗",
+      "sourceFile": "Cannavaro.webp",
+      "asset": "portraits/378de6345837e31d24b3aed9a2c3bdfc4417720e7dfdd51191a64c1890946e8f.webp",
+      "sha256": "378de6345837e31d24b3aed9a2c3bdfc4417720e7dfdd51191a64c1890946e8f",
+      "bytes": 79378
+    },
+    {
+      "playerId": "s4-retired-carles-puyol",
+      "name": "普约尔",
+      "sourceFile": "Puyol.webp",
+      "asset": "portraits/75245ba57b94625df47f5088f2fcb14720ea664095d5f8ccfc495353bfd50740.webp",
+      "sha256": "75245ba57b94625df47f5088f2fcb14720ea664095d5f8ccfc495353bfd50740",
+      "bytes": 88896
+    },
+    {
+      "playerId": "s4-retired-rio-ferdinand",
+      "name": "费迪南德",
+      "sourceFile": "Ferdinand.webp",
+      "asset": "portraits/287d6642c0a0fc01de6fcbcee4f186b85a42f975bf68d1a0260f040d1905e6f7.webp",
+      "sha256": "287d6642c0a0fc01de6fcbcee4f186b85a42f975bf68d1a0260f040d1905e6f7",
+      "bytes": 77690
+    },
+    {
+      "playerId": "s4-retired-john-terry",
+      "name": "特里",
+      "sourceFile": "Terry.webp",
+      "asset": "portraits/00171f40bbd1b767296bafca810c511f3a6a5cba01f833f141943ba74b60b79f.webp",
+      "sha256": "00171f40bbd1b767296bafca810c511f3a6a5cba01f833f141943ba74b60b79f",
+      "bytes": 56152
+    },
+    {
+      "playerId": "s4-retired-nemanja-vidic",
+      "name": "维迪奇",
+      "sourceFile": "Vidić.webp",
+      "asset": "portraits/c6b20ad18a11221fb397f15e7785a04b50eb85032229b5018de27395af0fefad.webp",
+      "sha256": "c6b20ad18a11221fb397f15e7785a04b50eb85032229b5018de27395af0fefad",
+      "bytes": 190404
+    },
+    {
+      "playerId": "s4-retired-philipp-lahm",
+      "name": "拉姆",
+      "sourceFile": "Lahm.webp",
+      "asset": "portraits/907218b0fe1b0f726e5fbe200203d60a051671458e5e08fd5fb82832152a8a1f.webp",
+      "sha256": "907218b0fe1b0f726e5fbe200203d60a051671458e5e08fd5fb82832152a8a1f",
+      "bytes": 88882
+    },
+    {
+      "playerId": "s4-retired-cafu",
+      "name": "卡福",
+      "sourceFile": "Cafu.webp",
+      "asset": "portraits/13685c54c7396f91aeffbaaa07743013a1c8499adc6b698d32a48b36f8c7eda6.webp",
+      "sha256": "13685c54c7396f91aeffbaaa07743013a1c8499adc6b698d32a48b36f8c7eda6",
+      "bytes": 64876
+    },
+    {
+      "playerId": "s4-retired-javier-zanetti",
+      "name": "萨内蒂",
+      "sourceFile": "Zanetti.webp",
+      "asset": "portraits/4e128c495ac9e097011d884ff4686ee7f602c557483810a730cbeb1eebe5d08a.webp",
+      "sha256": "4e128c495ac9e097011d884ff4686ee7f602c557483810a730cbeb1eebe5d08a",
+      "bytes": 112918
+    },
+    {
+      "playerId": "s4-retired-marcelo",
+      "name": "马塞洛",
+      "sourceFile": "Marcelo.webp",
+      "asset": "portraits/91e8d8101242fbdca57f3c484ea48f555a508a263ac33bdfb2fa8e0b30315200.webp",
+      "sha256": "91e8d8101242fbdca57f3c484ea48f555a508a263ac33bdfb2fa8e0b30315200",
+      "bytes": 83160
+    },
+    {
+      "playerId": "s4-retired-roberto-carlos",
+      "name": "罗伯特卡洛斯",
+      "sourceFile": "Roberto_Carlos.webp",
+      "asset": "portraits/013c83b1879fbaa2733a5088daa02f2321411ed84d8ac66e07eb0b514f1b764c.webp",
+      "sha256": "013c83b1879fbaa2733a5088daa02f2321411ed84d8ac66e07eb0b514f1b764c",
+      "bytes": 68500
+    },
+    {
+      "playerId": "s4-dlc-20260731-001",
+      "name": "塞尔希奥·拉莫斯",
+      "sourceFile": "Sergio Ramos.webp",
+      "asset": "portraits/dd20c0578a9359febbd9eeeb30d5d451a98ca2b2fdcb038f7334ee6e4fd2739f.webp",
+      "sha256": "dd20c0578a9359febbd9eeeb30d5d451a98ca2b2fdcb038f7334ee6e4fd2739f",
+      "bytes": 98870
+    },
+    {
+      "playerId": "s4-dlc-20260731-004",
+      "name": "皮克",
+      "sourceFile": "s4-imported/8e8364d9a51b820b9e1bd076.webp",
+      "asset": "portraits/1abdedfa9b9956113507938d970e1aaa402da823d28a3998634fe597318f3eb1.webp",
+      "sha256": "1abdedfa9b9956113507938d970e1aaa402da823d28a3998634fe597318f3eb1",
+      "bytes": 30784
+    },
+    {
+      "playerId": "s4-dlc-20260731-005",
+      "name": "丹尼·阿尔维斯",
+      "sourceFile": "s4-imported/cb62051df37a2cea39688801.webp",
+      "asset": "portraits/d46ec1d74f53ee8ecaebffb905c1e0a8c1298552bb938be0aa6625f57b473d16.webp",
+      "sha256": "d46ec1d74f53ee8ecaebffb905c1e0a8c1298552bb938be0aa6625f57b473d16",
+      "bytes": 130396
+    },
+    {
+      "playerId": "s4-dlc-20260731-011",
+      "name": "麦孔",
+      "sourceFile": "Maicon.webp",
+      "asset": "portraits/4a28a6de89cf2cb091bab2bc4b0c204c6598ccbb17707b4a4b250552fdd4897b.webp",
+      "sha256": "4a28a6de89cf2cb091bab2bc4b0c204c6598ccbb17707b4a4b250552fdd4897b",
+      "bytes": 45946
+    },
+    {
+      "playerId": "s4-dlc-20260731-012",
+      "name": "瓦拉内",
+      "sourceFile": "Raphaël Varane.webp",
+      "asset": "portraits/4b2dfdc6c3f7e0756a0cec3cb9c63dd95fddf8cd203d5f5ce9133fd3746eb8fa.webp",
+      "sha256": "4b2dfdc6c3f7e0756a0cec3cb9c63dd95fddf8cd203d5f5ce9133fd3746eb8fa",
+      "bytes": 130064
+    },
+    {
+      "playerId": "s4-dlc-20260731-015",
+      "name": "蒂亚戈·席尔瓦",
+      "sourceFile": "Thiago Silva.webp",
+      "asset": "portraits/82b0db72f4f4222c1631f11019ae64f3960ae4ef7a18090da1a11cb76480d38a.webp",
+      "sha256": "82b0db72f4f4222c1631f11019ae64f3960ae4ef7a18090da1a11cb76480d38a",
+      "bytes": 233360
+    },
+    {
+      "playerId": "s4-dlc-20260731-020",
+      "name": "德罗西",
+      "sourceFile": "s4-imported/426c4c83013b7714657646f4.webp",
+      "asset": "portraits/391e6699fb74a94a996b362dee8bb57a65cac71c7e43139225410878d0feb725.webp",
+      "sha256": "391e6699fb74a94a996b362dee8bb57a65cac71c7e43139225410878d0feb725",
+      "bytes": 104350
+    },
+    {
+      "playerId": "s4-dlc-20260731-022",
+      "name": "马特拉齐",
+      "sourceFile": "Marco Materazzi.webp",
+      "asset": "portraits/dcc7db28cbfc7100d32edf8d66b92fb767e8e8c614a56daae7df0d74c67096cb.webp",
+      "sha256": "dcc7db28cbfc7100d32edf8d66b92fb767e8e8c614a56daae7df0d74c67096cb",
+      "bytes": 35524
+    },
+    {
+      "playerId": "s4-dlc-20260731-025",
+      "name": "卡瓦略",
+      "sourceFile": "s4-imported/4dc8101e87f74b99e0cd2ed4.webp",
+      "asset": "portraits/47c5e34917fbd1a53b5a282bef3670a9402418145b4db104d79a5379d88b7afe.webp",
+      "sha256": "47c5e34917fbd1a53b5a282bef3670a9402418145b4db104d79a5379d88b7afe",
+      "bytes": 67622
+    },
+    {
+      "playerId": "s4-dlc-20260731-045",
+      "name": "卢西奥",
+      "sourceFile": "Lúcio.webp",
+      "asset": "portraits/376a44b34e4c0019ab4fb4d33b7bc16a3f485d8398844160df63ba93f4294168.webp",
+      "sha256": "376a44b34e4c0019ab4fb4d33b7bc16a3f485d8398844160df63ba93f4294168",
+      "bytes": 96912
+    },
+    {
+      "playerId": "s4-dlc-20260731-047",
+      "name": "博阿滕",
+      "sourceFile": "Jérôme Boateng.webp",
+      "asset": "portraits/a3182dcb754b884003c83e876222921de7f09fe84469a8975a11d8c39b4a5d1d.webp",
+      "sha256": "a3182dcb754b884003c83e876222921de7f09fe84469a8975a11d8c39b4a5d1d",
+      "bytes": 131108
+    },
+    {
+      "playerId": "s4-dlc2-20260803-002",
+      "name": "帕萨雷拉",
+      "sourceFile": "Passarella.webp",
+      "asset": "portraits/98ac2ddbd5a6a01abad5ceb769dca6c2a61f76aa952d57e49d52c9fd9c1254c3.webp",
+      "sha256": "98ac2ddbd5a6a01abad5ceb769dca6c2a61f76aa952d57e49d52c9fd9c1254c3",
+      "bytes": 138268
+    },
+    {
+      "playerId": "s4-dlc2-20260803-008",
+      "name": "奥斯卡·鲁杰里",
+      "sourceFile": "Oscar Ruggeri.webp",
+      "asset": "portraits/a5a3e9885e47b128b2fc02836ad218f9f3897fa5e35ca66f5b5605a741c619b7.webp",
+      "sha256": "a5a3e9885e47b128b2fc02836ad218f9f3897fa5e35ca66f5b5605a741c619b7",
+      "bytes": 147886
+    },
+    {
+      "playerId": "s4-dlc2-20260803-021",
+      "name": "海因策",
+      "sourceFile": "Heinze.webp",
+      "asset": "portraits/b1000cf349e9a505e68bb1f87e6cc1f03db82938a4d13b22280391499baf344e.webp",
+      "sha256": "b1000cf349e9a505e68bb1f87e6cc1f03db82938a4d13b22280391499baf344e",
+      "bytes": 74944
+    },
+    {
+      "playerId": "s4-dlc2-20260803-023",
+      "name": "罗纳德·科曼",
+      "sourceFile": "Koeman.webp",
+      "asset": "portraits/c026466d1f2b955976411f3cc89df26bbe30fb739719bd580deefa81e862dee8.webp",
+      "sha256": "c026466d1f2b955976411f3cc89df26bbe30fb739719bd580deefa81e862dee8",
+      "bytes": 56838
+    },
+    {
+      "playerId": "s4-dlc2-20260803-030",
+      "name": "雅普·斯塔姆",
+      "sourceFile": "Stam.webp",
+      "asset": "portraits/1b5c8544b5c9be49d4dc158aa53e20f625b6a57c310a37674147bf98c6578252.webp",
+      "sha256": "1b5c8544b5c9be49d4dc158aa53e20f625b6a57c310a37674147bf98c6578252",
+      "bytes": 177290
+    },
+    {
+      "playerId": "s4-dlc2-20260803-044",
+      "name": "佩佩",
+      "sourceFile": "Pepe.webp",
+      "asset": "portraits/b1701c0e20291a0116f548c7c5648f2e91ec2e58c1af8bee40d35d52cd375371.webp",
+      "sha256": "b1701c0e20291a0116f548c7c5648f2e91ec2e58c1af8bee40d35d52cd375371",
+      "bytes": 175226
+    },
+    {
+      "playerId": "s4-dlc2-20260803-053",
+      "name": "温贝托·科埃略",
+      "sourceFile": "Coelho.webp",
+      "asset": "portraits/363692b8ef239fe08c89e8414c191aa272b480d0ceae9342cc2418e889295851.webp",
+      "sha256": "363692b8ef239fe08c89e8414c191aa272b480d0ceae9342cc2418e889295851",
+      "bytes": 146516
+    },
+    {
+      "playerId": "s4-dlc2-20260803-065",
+      "name": "西雷阿",
+      "sourceFile": "Gaetano Scirea.webp",
+      "asset": "portraits/4987483890dd407289682eb8d9e29fdd0393dce1636c55c9556599063ae8c2c7.webp",
+      "sha256": "4987483890dd407289682eb8d9e29fdd0393dce1636c55c9556599063ae8c2c7",
+      "bytes": 112982
+    },
+    {
+      "playerId": "s4-dlc2-20260803-069",
+      "name": "法切蒂",
+      "sourceFile": "Giacinto Facchetti.webp",
+      "asset": "portraits/1630dc5daccaf2e7d061605f62c2705b4f5c447de7682299577ab820b7d3d7f2.webp",
+      "sha256": "1630dc5daccaf2e7d061605f62c2705b4f5c447de7682299577ab820b7d3d7f2",
+      "bytes": 112962
+    },
+    {
+      "playerId": "s4-dlc3-20260808-001",
+      "name": "埃弗拉",
+      "sourceFile": "Evra.webp",
+      "asset": "portraits/b031769b028c5c0910f5d976b4c93be58cba2bbb5f1a056e02ebf80505c854a7.webp",
+      "sha256": "b031769b028c5c0910f5d976b4c93be58cba2bbb5f1a056e02ebf80505c854a7",
+      "bytes": 160048
+    },
+    {
+      "playerId": "s4-dlc3-20260808-003",
+      "name": "利扎拉祖",
+      "sourceFile": "Lizarazu.webp",
+      "asset": "portraits/105c81e528922b2c1f89a9182e115348e1302babb7409f54c736885962120128.webp",
+      "sha256": "105c81e528922b2c1f89a9182e115348e1302babb7409f54c736885962120128",
+      "bytes": 58552
+    },
+    {
+      "playerId": "s4-dlc3-20260808-004",
+      "name": "利利安图拉姆",
+      "sourceFile": "Lilian_Thuram.webp",
+      "asset": "portraits/3bb22089381d6bede882a23671df709eca2a9d95c4c2755b293bf638c13b4561.webp",
+      "sha256": "3bb22089381d6bede882a23671df709eca2a9d95c4c2755b293bf638c13b4561",
+      "bytes": 78808
+    },
+    {
+      "playerId": "s4-dlc3-20260808-007",
+      "name": "萨穆埃尔",
+      "sourceFile": "Samuel.webp",
+      "asset": "portraits/369f41f3bf5421c865aa514adce3594b66baeee68b07e3129f55ff1aa5c0b7b8.webp",
+      "sha256": "369f41f3bf5421c865aa514adce3594b66baeee68b07e3129f55ff1aa5c0b7b8",
+      "bytes": 57922
+    },
+    {
+      "playerId": "s4-dlc3-20260808-008",
+      "name": "阿亚拉",
+      "sourceFile": "Ayala.webp",
+      "asset": "portraits/f8a8de95deba56e56bb620e4f96863ae1b89993d2e535d32f257737db3a295e6.webp",
+      "sha256": "f8a8de95deba56e56bb620e4f96863ae1b89993d2e535d32f257737db3a295e6",
+      "bytes": 213194
+    },
+    {
+      "playerId": "s4-dlc3-20260808-012",
+      "name": "耶罗",
+      "sourceFile": "Hierro.webp",
+      "asset": "portraits/6edc8d0907069f5123cfb9935a43bc7397b1bfbe4a185683b8e68ddbcca012bb.webp",
+      "sha256": "6edc8d0907069f5123cfb9935a43bc7397b1bfbe4a185683b8e68ddbcca012bb",
+      "bytes": 30570
+    },
+    {
+      "playerId": "s4-dlc3-20260808-018",
+      "name": "格罗索",
+      "sourceFile": "Grosso.webp",
+      "asset": "portraits/362b27f1581e6c28a3c97982e395f44ece903e0c068e0550c85baea1b3960201.webp",
+      "sha256": "362b27f1581e6c28a3c97982e395f44ece903e0c068e0550c85baea1b3960201",
+      "bytes": 76694
+    },
+    {
+      "playerId": "s4-dlc3-20260808-024",
+      "name": "赞布罗塔",
+      "sourceFile": "Zambrotta.webp",
+      "asset": "portraits/2561fa2af73d97836406a008998fe24ca5de3fa30bee071143e115f3e7c4a267.webp",
+      "sha256": "2561fa2af73d97836406a008998fe24ca5de3fa30bee071143e115f3e7c4a267",
+      "bytes": 94534
+    },
+    {
+      "playerId": "s4-dlc3-20260808-027",
+      "name": "儒尼奥尔",
+      "sourceFile": "Júnior.webp",
+      "asset": "portraits/ea4b327c687f8b5c594e4c77a3dd3c4073f13c2e85a0f8cdd41de3180b42426e.webp",
+      "sha256": "ea4b327c687f8b5c594e4c77a3dd3c4073f13c2e85a0f8cdd41de3180b42426e",
+      "bytes": 98124
+    },
+    {
+      "playerId": "s4-dlc3-20260808-040",
+      "name": "博努奇",
+      "sourceFile": "Bonucci.webp",
+      "asset": "portraits/fdae56427bd1b0a164eca3816b51a32b325dc62518da939d37b767a623f5d626.webp",
+      "sha256": "fdae56427bd1b0a164eca3816b51a32b325dc62518da939d37b767a623f5d626",
+      "bytes": 151062
+    },
+    {
+      "playerId": "legend-zidane",
+      "name": "齐达内",
+      "sourceFile": "Zidane.webp",
+      "asset": "portraits/e946106c8c733dfc4c0760bc15c463c4c2d70699a6019152c082bc3f5425f736.webp",
+      "sha256": "e946106c8c733dfc4c0760bc15c463c4c2d70699a6019152c082bc3f5425f736",
+      "bytes": 58294
+    },
+    {
+      "playerId": "legend-ronaldinho",
+      "name": "罗纳尔迪尼奥",
+      "sourceFile": "Ronaldinho.webp",
+      "asset": "portraits/4b2cc9dd1f3ba2129f754dd6cae13252742523945f5ac2d46dd0729645150804.webp",
+      "sha256": "4b2cc9dd1f3ba2129f754dd6cae13252742523945f5ac2d46dd0729645150804",
+      "bytes": 162918
+    },
+    {
+      "playerId": "legend-kroos",
+      "name": "克罗斯",
+      "sourceFile": "Kroos.webp",
+      "asset": "portraits/e081f7281b33148a0804f6863eb1e0abc8cdc430a6a948be81be5edfab6a4fa0.webp",
+      "sha256": "e081f7281b33148a0804f6863eb1e0abc8cdc430a6a948be81be5edfab6a4fa0",
+      "bytes": 108020
+    },
+    {
+      "playerId": "legend-beckham",
+      "name": "贝克汉姆",
+      "sourceFile": "Beckham.webp",
+      "asset": "portraits/6223a27129e2136cd9d6333b84c4192a25e609789dfe1db2453d232653f701de.webp",
+      "sha256": "6223a27129e2136cd9d6333b84c4192a25e609789dfe1db2453d232653f701de",
+      "bytes": 167628
+    },
+    {
+      "playerId": "legend-modric",
+      "name": "莫德里奇",
+      "sourceFile": "Modric.webp",
+      "asset": "portraits/6fbd25a205005b64859a54ed6d8305cc54c0e64be1a4729940aee0094dd27a7a.webp",
+      "sha256": "6fbd25a205005b64859a54ed6d8305cc54c0e64be1a4729940aee0094dd27a7a",
+      "bytes": 109352
+    },
+    {
+      "playerId": "s4-fc26-209331",
+      "name": "萨拉赫",
+      "sourceFile": "Salah.webp",
+      "asset": "portraits/19fd9840d32638747a569c44d82b4aaf338c9cd0f0e54d116c64edacc570e3cf.webp",
+      "sha256": "19fd9840d32638747a569c44d82b4aaf338c9cd0f0e54d116c64edacc570e3cf",
+      "bytes": 147174
+    },
+    {
+      "playerId": "s4-fc26-252371",
+      "name": "贝林厄姆",
+      "sourceFile": "Bellingham.webp",
+      "asset": "portraits/8b18e9c016dc15cd743f350b25e39d0adced9468c763bf10b14aef403f958bed.webp",
+      "sha256": "8b18e9c016dc15cd743f350b25e39d0adced9468c763bf10b14aef403f958bed",
+      "bytes": 122868
+    },
+    {
+      "playerId": "s4-fc26-231866",
+      "name": "罗德里",
+      "sourceFile": "Rodri.webp",
+      "asset": "portraits/fe3b20d9ffdb22a98cffdc1e119e333010010bef751c4fda030b070fe5d1469f.webp",
+      "sha256": "fe3b20d9ffdb22a98cffdc1e119e333010010bef751c4fda030b070fe5d1469f",
+      "bytes": 106646
+    },
+    {
+      "playerId": "s4-fc26-212622",
+      "name": "基米希",
+      "sourceFile": "Kimmich.webp",
+      "asset": "portraits/61f789c7475cf35736de7681aa2fd64380cad2a8c493d760c7d8a4c8620eeab6.webp",
+      "sha256": "61f789c7475cf35736de7681aa2fd64380cad2a8c493d760c7d8a4c8620eeab6",
+      "bytes": 86322
+    },
+    {
+      "playerId": "s4-fc26-277643",
+      "name": "亚马尔",
+      "sourceFile": "Yamal.webp",
+      "asset": "portraits/63d632662ea2ba195250390e7f012f4f516eb9608260f8b22b0cc2be3fe30d2d.webp",
+      "sha256": "63d632662ea2ba195250390e7f012f4f516eb9608260f8b22b0cc2be3fe30d2d",
+      "bytes": 97582
+    },
+    {
+      "playerId": "s4-fc26-251854",
+      "name": "佩德里",
+      "sourceFile": "Pedri.webp",
+      "asset": "portraits/add6f46bc1092303bf9e1a1787f499333260975f5a096e36af59318ea7fa97bd.webp",
+      "sha256": "add6f46bc1092303bf9e1a1787f499333260975f5a096e36af59318ea7fa97bd",
+      "bytes": 93760
+    },
+    {
+      "playerId": "s4-fc26-233419",
+      "name": "拉菲尼亚",
+      "sourceFile": "Raphinha.webp",
+      "asset": "portraits/3c46b20a5f0cebcd58f17ebadd60cc69bd33ef381376fb663c1b82b9689c6d69.webp",
+      "sha256": "3c46b20a5f0cebcd58f17ebadd60cc69bd33ef381376fb663c1b82b9689c6d69",
+      "bytes": 197270
+    },
+    {
+      "playerId": "s4-fc26-255253",
+      "name": "维蒂尼亚",
+      "sourceFile": "Vitinha.webp",
+      "asset": "portraits/2760d25c8f9850f3f19b67d39ffe396577d43cb29dd08fcad9fa92b39f8da448.webp",
+      "sha256": "2760d25c8f9850f3f19b67d39ffe396577d43cb29dd08fcad9fa92b39f8da448",
+      "bytes": 65362
+    },
+    {
+      "playerId": "s4-fc26-239053",
+      "name": "巴尔韦德",
+      "sourceFile": "Valverde.webp",
+      "asset": "portraits/58752b946597ee85e6c76bacacef4c53e0db0fd25dc7936292df02c0ab426156.webp",
+      "sha256": "58752b946597ee85e6c76bacacef4c53e0db0fd25dc7936292df02c0ab426156",
+      "bytes": 288056
+    },
+    {
+      "playerId": "s4-fc26-256630",
+      "name": "维尔茨",
+      "sourceFile": "Wirtz.webp",
+      "asset": "portraits/fb5ec9059d2ae2cd70c9e820b211abc2ebc0e50ef86f6c8155c668ac49032f2a.webp",
+      "sha256": "fb5ec9059d2ae2cd70c9e820b211abc2ebc0e50ef86f6c8155c668ac49032f2a",
+      "bytes": 72524
+    },
+    {
+      "playerId": "s4-fc26-256790",
+      "name": "穆西亚拉",
+      "sourceFile": "Musiala.webp",
+      "asset": "portraits/810fbf507b5243f5db68f113a63a0512dba0cb2ddee4f96a5eeeae2e5d1e3256.webp",
+      "sha256": "810fbf507b5243f5db68f113a63a0512dba0cb2ddee4f96a5eeeae2e5d1e3256",
+      "bytes": 49634
+    },
+    {
+      "playerId": "s4-fc26-257534",
+      "name": "帕尔默",
+      "sourceFile": "Palmer.webp",
+      "asset": "portraits/5daea626cd603e6ad236b3b2806dc87a28bf15a71a9e9e42ac9737019774b271.webp",
+      "sha256": "5daea626cd603e6ad236b3b2806dc87a28bf15a71a9e9e42ac9737019774b271",
+      "bytes": 52660
+    },
+    {
+      "playerId": "s4-fc26-228702",
+      "name": "弗朗基德容",
+      "sourceFile": "de_Jong.webp",
+      "asset": "portraits/f9a3adb47ad283e4283c1c96fe2273fdcf61fe2945813c5bec7cf2aabccbe4ac.webp",
+      "sha256": "f9a3adb47ad283e4283c1c96fe2273fdcf61fe2945813c5bec7cf2aabccbe4ac",
+      "bytes": 176280
+    },
+    {
+      "playerId": "s4-fc26-192985",
+      "name": "德布劳内",
+      "sourceFile": "De_Bruyne.webp",
+      "asset": "portraits/66c26dd30291b2a1e9824873bb1aeda83f53e3f0d95717f6f7a1456f808f6125.webp",
+      "sha256": "66c26dd30291b2a1e9824873bb1aeda83f53e3f0d95717f6f7a1456f808f6125",
+      "bytes": 151088
+    },
+    {
+      "playerId": "s4-fc26-256079",
+      "name": "凯赛多",
+      "sourceFile": "Caicedo.webp",
+      "asset": "portraits/406b4f86e35443981581cf004dad420d09b4c068fe1bd7daae8327f3bd2a1e2c.webp",
+      "sha256": "406b4f86e35443981581cf004dad420d09b4c068fe1bd7daae8327f3bd2a1e2c",
+      "bytes": 181958
+    },
+    {
+      "playerId": "s4-fc26-239837",
+      "name": "麦卡利斯特",
+      "sourceFile": "Mac_Allister.webp",
+      "asset": "portraits/97fbe831715a60e8a2b69a29f2cf65e697cd9206afcd87b1190e1f01e5ff1ba7.webp",
+      "sha256": "97fbe831715a60e8a2b69a29f2cf65e697cd9206afcd87b1190e1f01e5ff1ba7",
+      "bytes": 127852
+    },
+    {
+      "playerId": "s4-fc26-212198",
+      "name": "布鲁诺费尔南德斯",
+      "sourceFile": "Bruno_Fernandes.webp",
+      "asset": "portraits/86b8924234614406780330944484cc9755241a4f85f12865f2c6736dc2fbb788.webp",
+      "sha256": "86b8924234614406780330944484cc9755241a4f85f12865f2c6736dc2fbb788",
+      "bytes": 162448
+    },
+    {
+      "playerId": "s4-fc26-234378",
+      "name": "赖斯",
+      "sourceFile": "Rice.webp",
+      "asset": "portraits/79cd548f41a25976eb511ccda8f5cd8f9fe0f5048a3bbfdc68386cf099a0a85f.webp",
+      "sha256": "79cd548f41a25976eb511ccda8f5cd8f9fe0f5048a3bbfdc68386cf099a0a85f",
+      "bytes": 202756
+    },
+    {
+      "playerId": "s4-fc26-222665",
+      "name": "厄德高",
+      "sourceFile": "Ødegaard.webp",
+      "asset": "portraits/207aa08abfa098e08841035a53f3e6d223213dbca5104cd24fa4c24254a3d01a.webp",
+      "sha256": "207aa08abfa098e08841035a53f3e6d223213dbca5104cd24fa4c24254a3d01a",
+      "bytes": 185444
+    },
+    {
+      "playerId": "s4-fc26-224232",
+      "name": "巴雷拉",
+      "sourceFile": "Barella.webp",
+      "asset": "portraits/5c884873c181f2a9eafdacd9d4958fb5c40ea9f73b06a98711d66347f178c3c1.webp",
+      "sha256": "5c884873c181f2a9eafdacd9d4958fb5c40ea9f73b06a98711d66347f178c3c1",
+      "bytes": 88026
+    },
+    {
+      "playerId": "s4-fc26-247851",
+      "name": "吉马良斯",
+      "sourceFile": "Guimarães.webp",
+      "asset": "portraits/c83bd7530f303f4e4fb1035fcadfaf742bf9bc4ce32b6b65fdb4435acae26e85.webp",
+      "sha256": "c83bd7530f303f4e4fb1035fcadfaf742bf9bc4ce32b6b65fdb4435acae26e85",
+      "bytes": 56612
+    },
+    {
+      "playerId": "s4-fc26-247827",
+      "name": "奥利赛",
+      "sourceFile": "Olise.webp",
+      "asset": "portraits/7384788c0b78b7d17e3b35d311656b12016fc159ec394509469da1c8a2a962f0.webp",
+      "sha256": "7384788c0b78b7d17e3b35d311656b12016fc159ec394509469da1c8a2a962f0",
+      "bytes": 115086
+    },
+    {
+      "playerId": "s4-fc26-211110",
+      "name": "迪巴拉",
+      "sourceFile": "Dybala.webp",
+      "asset": "portraits/a8ce9ad106e2a21b04e3c30789684be313b9ffbd81f73f3ae6ac4582e83211da.webp",
+      "sha256": "a8ce9ad106e2a21b04e3c30789684be313b9ffbd81f73f3ae6ac4582e83211da",
+      "bytes": 106902
+    },
+    {
+      "playerId": "s4-fc26-272834",
+      "name": "若昂内维斯",
+      "sourceFile": "s4-imported/166dfffc30d0ed36faf3ee1e.webp",
+      "asset": "portraits/dc8d3d9d04e4bc87579ea5367f34e08daec813d3eaf7e8d459c17653ed2648a0.webp",
+      "sha256": "dc8d3d9d04e4bc87579ea5367f34e08daec813d3eaf7e8d459c17653ed2648a0",
+      "bytes": 70816
+    },
+    {
+      "playerId": "s4-fc26-246104",
+      "name": "赫拉芬贝赫",
+      "sourceFile": "Gravenberch.webp",
+      "asset": "portraits/ed4e14f543f4845db6a2898eebe393c826c235cada6d31159c320c502c311241.webp",
+      "sha256": "ed4e14f543f4845db6a2898eebe393c826c235cada6d31159c320c502c311241",
+      "bytes": 103024
+    },
+    {
+      "playerId": "s4-fc26-215914",
+      "name": "坎特",
+      "sourceFile": "s4-imported/bd1110fc878ec7c401f0e60a.webp",
+      "asset": "portraits/36372f70cb187692755bf6b52b539aeeb99a333579196c5970803606de7a4c61.webp",
+      "sha256": "36372f70cb187692755bf6b52b539aeeb99a333579196c5970803606de7a4c61",
+      "bytes": 175646
+    },
+    {
+      "playerId": "s4-fc26-241637",
+      "name": "楚阿梅尼",
+      "sourceFile": "s4-imported/074b16f2d2e2ea164459a59d.webp",
+      "asset": "portraits/e284abc72a6a5d0b4fb3dad466ec7a3fe8b553d6f5de6367a42f8a794c42517a.webp",
+      "sha256": "e284abc72a6a5d0b4fb3dad466ec7a3fe8b553d6f5de6367a42f8a794c42517a",
+      "bytes": 111588
+    },
+    {
+      "playerId": "s4-fc26-218667",
+      "name": "贝尔纳多席尔瓦",
+      "sourceFile": "s4-imported/8de329e1b7662ec59240faef.webp",
+      "asset": "portraits/be74bbe3dbb1d1011702676369c797a81390d1ae3f4726dd182fc005080a9124.webp",
+      "sha256": "be74bbe3dbb1d1011702676369c797a81390d1ae3f4726dd182fc005080a9124",
+      "bytes": 67864
+    },
+    {
+      "playerId": "s4-fc26-224293",
+      "name": "鲁本内维斯",
+      "sourceFile": "s4-imported/0816c3a23244444e736b2e74.webp",
+      "asset": "portraits/d5b44d844bc25f4220c61abdca267bc1cc7aa311568288394272e3cbe9f4a9e2.webp",
+      "sha256": "d5b44d844bc25f4220c61abdca267bc1cc7aa311568288394272e3cbe9f4a9e2",
+      "bytes": 79062
+    },
+    {
+      "playerId": "s4-fc26-197781",
+      "name": "伊斯科",
+      "sourceFile": "s4-imported/72f6b7bdfd405a8c599b4b76.webp",
+      "asset": "portraits/5365c71b0594dc5210851a491bb604b72bbe6315834921ffdc33ca745adcdf24.webp",
+      "sha256": "5365c71b0594dc5210851a491bb604b72bbe6315834921ffdc33ca745adcdf24",
+      "bytes": 84444
+    },
+    {
+      "playerId": "s4-fc26-229391",
+      "name": "帕利尼亚",
+      "sourceFile": "s4-imported/483222ad9510bb92fed24b81.webp",
+      "asset": "portraits/35ab10e08fb283976bfa92bc9e1d05b256bd93f085805b1b6ba1c1fd45eea433.webp",
+      "sha256": "35ab10e08fb283976bfa92bc9e1d05b256bd93f085805b1b6ba1c1fd45eea433",
+      "bytes": 103484
+    },
+    {
+      "playerId": "s4-fc26-264309",
+      "name": "居莱尔",
+      "sourceFile": "s4-imported/29c4ba318d00059075c12018.webp",
+      "asset": "portraits/2ab5f128e56493d50e2d99ff4a79e9e3587a3a8afea0b4e1cd0c3a3d9a2ec119.webp",
+      "sha256": "2ab5f128e56493d50e2d99ff4a79e9e3587a3a8afea0b4e1cd0c3a3d9a2ec119",
+      "bytes": 200466
+    },
+    {
+      "playerId": "s4-retired-xavi",
+      "name": "哈维",
+      "sourceFile": "Xavi.webp",
+      "asset": "portraits/8f7cf2c94cc16332562a830067d3e53fda824a5d352de0b803038fab4f25da7d.webp",
+      "sha256": "8f7cf2c94cc16332562a830067d3e53fda824a5d352de0b803038fab4f25da7d",
+      "bytes": 83834
+    },
+    {
+      "playerId": "s4-retired-andres-iniesta",
+      "name": "因涅斯塔",
+      "sourceFile": "Iniesta.webp",
+      "asset": "portraits/b3ff844fcfbedb496d23a4d98cc624831674082e4e1723bdc8baebcdef9cdbb8.webp",
+      "sha256": "b3ff844fcfbedb496d23a4d98cc624831674082e4e1723bdc8baebcdef9cdbb8",
+      "bytes": 187816
+    },
+    {
+      "playerId": "s4-retired-andrea-pirlo",
+      "name": "皮尔洛",
+      "sourceFile": "Pirlo.webp",
+      "asset": "portraits/29e2fa2ef94d9ec5b61d53318973f87ccb9fcfc406a1eb73a80eed94d754d9f7.webp",
+      "sha256": "29e2fa2ef94d9ec5b61d53318973f87ccb9fcfc406a1eb73a80eed94d754d9f7",
+      "bytes": 116062
+    },
+    {
+      "playerId": "s4-retired-paul-scholes",
+      "name": "斯科尔斯",
+      "sourceFile": "Scholes.webp",
+      "asset": "portraits/22414385e8fe63f91bc56c9d77bbc3abf901a52770e42d3ea086d6ed0fc0dc3c.webp",
+      "sha256": "22414385e8fe63f91bc56c9d77bbc3abf901a52770e42d3ea086d6ed0fc0dc3c",
+      "bytes": 77416
+    },
+    {
+      "playerId": "s4-retired-steven-gerrard",
+      "name": "杰拉德",
+      "sourceFile": "Gerrard.webp",
+      "asset": "portraits/063319b1973b81e398d71e0f75a0424c8683453c2cfb6125d84e7627bb7cc1bf.webp",
+      "sha256": "063319b1973b81e398d71e0f75a0424c8683453c2cfb6125d84e7627bb7cc1bf",
+      "bytes": 85666
+    },
+    {
+      "playerId": "s4-retired-frank-lampard",
+      "name": "兰帕德",
+      "sourceFile": "Lampard.webp",
+      "asset": "portraits/6b5fe69ca9449f432aeb906f5eb50c0cb713c7ffee4be4ed1e0795e02234a6f0.webp",
+      "sha256": "6b5fe69ca9449f432aeb906f5eb50c0cb713c7ffee4be4ed1e0795e02234a6f0",
+      "bytes": 158888
+    },
+    {
+      "playerId": "s4-retired-patrick-vieira",
+      "name": "维埃拉",
+      "sourceFile": "Vieira.webp",
+      "asset": "portraits/d3d703630601850e1dcec0c461c61f076fe1ca8634c175af73e3ed57343418b3.webp",
+      "sha256": "d3d703630601850e1dcec0c461c61f076fe1ca8634c175af73e3ed57343418b3",
+      "bytes": 119966
+    },
+    {
+      "playerId": "s4-retired-claude-makelele",
+      "name": "马克莱莱",
+      "sourceFile": "Makélélé.webp",
+      "asset": "portraits/72801d043b5356d88337ec35608f59f771a7dadf914c8b33f7e28540e3797d68.webp",
+      "sha256": "72801d043b5356d88337ec35608f59f771a7dadf914c8b33f7e28540e3797d68",
+      "bytes": 91080
+    },
+    {
+      "playerId": "s4-retired-yaya-toure",
+      "name": "亚亚图雷",
+      "sourceFile": "Touré.webp",
+      "asset": "portraits/0d00f69d6a274be6d2db2efebd48e4613bccf9b8fdb2029df32371c79357976b.webp",
+      "sha256": "0d00f69d6a274be6d2db2efebd48e4613bccf9b8fdb2029df32371c79357976b",
+      "bytes": 121230
+    },
+    {
+      "playerId": "s4-retired-kaka",
+      "name": "卡卡",
+      "sourceFile": "Kaká.webp",
+      "asset": "portraits/bd663dad62156b8b3caab8e58190088153124a2ae10d8f6fbc153536f42eace1.webp",
+      "sha256": "bd663dad62156b8b3caab8e58190088153124a2ae10d8f6fbc153536f42eace1",
+      "bytes": 137136
+    },
+    {
+      "playerId": "s4-retired-luis-figo",
+      "name": "路易斯菲戈",
+      "sourceFile": "Figo.webp",
+      "asset": "portraits/21adefa3f4da87cabd02367205870892564479d331c99eff238840557b6ebc5e.webp",
+      "sha256": "21adefa3f4da87cabd02367205870892564479d331c99eff238840557b6ebc5e",
+      "bytes": 106992
+    },
+    {
+      "playerId": "s4-retired-pavel-nedved",
+      "name": "内德维德",
+      "sourceFile": "Nedvěd.webp",
+      "asset": "portraits/17d908a12940735ee36017e9ceba4e05360de28691c456df76dcd35c09f89fd6.webp",
+      "sha256": "17d908a12940735ee36017e9ceba4e05360de28691c456df76dcd35c09f89fd6",
+      "bytes": 114246
+    },
+    {
+      "playerId": "s4-retired-clarence-seedorf",
+      "name": "西多夫",
+      "sourceFile": "Seedorf.webp",
+      "asset": "portraits/9f7c86965650623625095c08d24ceaceaa74d325f438342864fb4128c09d50d6.webp",
+      "sha256": "9f7c86965650623625095c08d24ceaceaa74d325f438342864fb4128c09d50d6",
+      "bytes": 134786
+    },
+    {
+      "playerId": "s4-retired-juan-roman-riquelme",
+      "name": "里克尔梅",
+      "sourceFile": "Riquelme.webp",
+      "asset": "portraits/6ebf0429495381d7b97a51f90ea12610cd061d48765899475cb94732dee65d2b.webp",
+      "sha256": "6ebf0429495381d7b97a51f90ea12610cd061d48765899475cb94732dee65d2b",
+      "bytes": 94388
+    },
+    {
+      "playerId": "s4-retired-gennaro-gattuso",
+      "name": "加图索",
+      "sourceFile": "Gattuso.webp",
+      "asset": "portraits/8b03d9bfedff478c0b2ffc65b14b886b47799fa59fa4d781ff27bc9b723d26e0.webp",
+      "sha256": "8b03d9bfedff478c0b2ffc65b14b886b47799fa59fa4d781ff27bc9b723d26e0",
+      "bytes": 110932
+    },
+    {
+      "playerId": "s4-dlc-20260731-003",
+      "name": "卡塞米罗",
+      "sourceFile": "Casemiro.webp",
+      "asset": "portraits/26d6de75cbd91cafd4fe6bb0e98211fab909921bf74173036658703f208e9163.webp",
+      "sha256": "26d6de75cbd91cafd4fe6bb0e98211fab909921bf74173036658703f208e9163",
+      "bytes": 102210
+    },
+    {
+      "playerId": "s4-dlc-20260731-007",
+      "name": "佩德罗",
+      "sourceFile": "s4-imported/c273dd7cabdd5c48e8e37aa2.webp",
+      "asset": "portraits/6195d3df95ab10c991eaecbb2f361d63025bee8fdb06ea3b2827d3cf4e770411.webp",
+      "sha256": "6195d3df95ab10c991eaecbb2f361d63025bee8fdb06ea3b2827d3cf4e770411",
+      "bytes": 129862
+    },
+    {
+      "playerId": "s4-dlc-20260731-013",
+      "name": "布斯克茨",
+      "sourceFile": "s4-imported/49819113f54cb6c93f9f866f.webp",
+      "asset": "portraits/4f390c042180515d409e50958df3aed58b7f1b6346e5a3b575869a984e673f6f.webp",
+      "sha256": "4f390c042180515d409e50958df3aed58b7f1b6346e5a3b575869a984e673f6f",
+      "bytes": 106660
+    },
+    {
+      "playerId": "s4-dlc-20260731-023",
+      "name": "鲁伊·科斯塔",
+      "sourceFile": "s4-imported/8ad3935368b69e6c10d29a56.webp",
+      "asset": "portraits/5283a23d0c3bb17b9e42b8a2c920fffba85011a5ec83b90a118472cb90297cef.webp",
+      "sha256": "5283a23d0c3bb17b9e42b8a2c920fffba85011a5ec83b90a118472cb90297cef",
+      "bytes": 85066
+    },
+    {
+      "playerId": "s4-dlc-20260731-024",
+      "name": "法比奥·科恩特朗",
+      "sourceFile": "s4-imported/18a39069395b83663948a071.webp",
+      "asset": "portraits/b68c6ddadefb9c596ab85dfb8e580eca115708224084ff894b58272d993f5890.webp",
+      "sha256": "b68c6ddadefb9c596ab85dfb8e580eca115708224084ff894b58272d993f5890",
+      "bytes": 186230
+    },
+    {
+      "playerId": "s4-dlc-20260731-030",
+      "name": "里杰卡尔德",
+      "sourceFile": "Frank Rijkaard.webp",
+      "asset": "portraits/d302e4c8ceae5ba416def8164b26761810798b8886a8bd04ed3b47d55cf0815b.webp",
+      "sha256": "d302e4c8ceae5ba416def8164b26761810798b8886a8bd04ed3b47d55cf0815b",
+      "bytes": 91240
+    },
+    {
+      "playerId": "s4-dlc-20260731-031",
+      "name": "古利特",
+      "sourceFile": "Ruud Gullit.webp",
+      "asset": "portraits/41e0aa624ee0c3c8236d6e3ebbfbc775167cfd3d39d39431a16582648a4b54b2.webp",
+      "sha256": "41e0aa624ee0c3c8236d6e3ebbfbc775167cfd3d39d39431a16582648a4b54b2",
+      "bytes": 117824
+    },
+    {
+      "playerId": "s4-dlc-20260731-034",
+      "name": "哈维·阿隆索",
+      "sourceFile": "Xabi Alonso.webp",
+      "asset": "portraits/dab11b9c7386f5dcb90e47beadc4852ebc94483a00223ccd7733f25bc4dcc44c.webp",
+      "sha256": "dab11b9c7386f5dcb90e47beadc4852ebc94483a00223ccd7733f25bc4dcc44c",
+      "bytes": 71108
+    },
+    {
+      "playerId": "s4-dlc-20260731-035",
+      "name": "托马斯·穆勒",
+      "sourceFile": "Thomas Müller.webp",
+      "asset": "portraits/4e8dd22d35755c4aa0849a3aec97976ebd968458dcc850a49bbfd51b67267a5b.webp",
+      "sha256": "4e8dd22d35755c4aa0849a3aec97976ebd968458dcc850a49bbfd51b67267a5b",
+      "bytes": 111098
+    },
+    {
+      "playerId": "s4-dlc-20260731-036",
+      "name": "博格巴",
+      "sourceFile": "Paul Pogba.webp",
+      "asset": "portraits/cbbe1d734bf63fc6ab6fbb27b1e791ed3405fe2984680a894f9042c0ee0385f9.webp",
+      "sha256": "cbbe1d734bf63fc6ab6fbb27b1e791ed3405fe2984680a894f9042c0ee0385f9",
+      "bytes": 48750
+    },
+    {
+      "playerId": "s4-dlc-20260731-040",
+      "name": "里瓦尔多",
+      "sourceFile": "Rivaldo.webp",
+      "asset": "portraits/0eb49771b6f910e4fab71453dcf29acb35714dc2b6f26bc4b84172c36c31c650.webp",
+      "sha256": "0eb49771b6f910e4fab71453dcf29acb35714dc2b6f26bc4b84172c36c31c650",
+      "bytes": 157760
+    },
+    {
+      "playerId": "s4-dlc-20260731-048",
+      "name": "迪迪",
+      "sourceFile": "Didi.webp",
+      "asset": "portraits/b485b35927af6d5821cbc28f7bece74b8d6dc7f1e4ffd561ccd9e459f2f0b6bc.webp",
+      "sha256": "b485b35927af6d5821cbc28f7bece74b8d6dc7f1e4ffd561ccd9e459f2f0b6bc",
+      "bytes": 35598
+    },
+    {
+      "playerId": "s4-dlc-20260731-052",
+      "name": "泽·罗伯托",
+      "sourceFile": "Zé Roberto.webp",
+      "asset": "portraits/611e4793f27f81d06a1a43335914a6b147b02e5917a40e4720ac33a0f24d7663.webp",
+      "sha256": "611e4793f27f81d06a1a43335914a6b147b02e5917a40e4720ac33a0f24d7663",
+      "bytes": 125808
+    },
+    {
+      "playerId": "s4-dlc2-20260803-003",
+      "name": "雷东多",
+      "sourceFile": "Redondo.webp",
+      "asset": "portraits/60133b5ac2b9fe685153e210c8349aefb2111289071202ff72f6dfc060d72e5f.webp",
+      "sha256": "60133b5ac2b9fe685153e210c8349aefb2111289071202ff72f6dfc060d72e5f",
+      "bytes": 111936
+    },
+    {
+      "playerId": "s4-dlc2-20260803-011",
+      "name": "贝隆",
+      "sourceFile": "Verón.webp",
+      "asset": "portraits/4b1219ceab50066352df9e30c924d8557a63aa42ffcdb7594bc681156c61a0e9.webp",
+      "sha256": "4b1219ceab50066352df9e30c924d8557a63aa42ffcdb7594bc681156c61a0e9",
+      "bytes": 101098
+    },
+    {
+      "playerId": "s4-dlc2-20260803-012",
+      "name": "阿尔迪列斯",
+      "sourceFile": "Osvaldo Ardiles.webp",
+      "asset": "portraits/80e540aebbab29888fe4e3504c452b0e5b37ba5591703c89da20da4550ab7503.webp",
+      "sha256": "80e540aebbab29888fe4e3504c452b0e5b37ba5591703c89da20da4550ab7503",
+      "bytes": 136976
+    },
+    {
+      "playerId": "s4-dlc2-20260803-014",
+      "name": "布鲁查加",
+      "sourceFile": "Burruchaga.webp",
+      "asset": "portraits/8d7df3278ec059b7881b7a6f47a0410f08bf9b9d5d8e5f19b14a76649da1d13b.webp",
+      "sha256": "8d7df3278ec059b7881b7a6f47a0410f08bf9b9d5d8e5f19b14a76649da1d13b",
+      "bytes": 96136
+    },
+    {
+      "playerId": "s4-dlc2-20260803-015",
+      "name": "迭戈·西蒙尼",
+      "sourceFile": "Diego Simeone.webp",
+      "asset": "portraits/fede9d33508dbe48f21d2e769862cd73459f1741dabf11223bdf024eda8481f8.webp",
+      "sha256": "fede9d33508dbe48f21d2e769862cd73459f1741dabf11223bdf024eda8481f8",
+      "bytes": 80844
+    },
+    {
+      "playerId": "s4-dlc2-20260803-024",
+      "name": "约翰·内斯肯斯",
+      "sourceFile": "Neeskens.webp",
+      "asset": "portraits/dc1a012a0dbe96b82853fc7cb9cf947f1b803568b0565be23e7014508a675931.webp",
+      "sha256": "dc1a012a0dbe96b82853fc7cb9cf947f1b803568b0565be23e7014508a675931",
+      "bytes": 90224
+    },
+    {
+      "playerId": "s4-dlc2-20260803-026",
+      "name": "斯内德",
+      "sourceFile": "Sneijder.webp",
+      "asset": "portraits/2cc865bebaab57c32d90b6073cca97da53071bc14ac6501239b89433072566d5.webp",
+      "sha256": "2cc865bebaab57c32d90b6073cca97da53071bc14ac6501239b89433072566d5",
+      "bytes": 174620
+    },
+    {
+      "playerId": "s4-dlc2-20260803-029",
+      "name": "戴维斯",
+      "sourceFile": "Davids.webp",
+      "asset": "portraits/8f502a56ce23931a7c408b6e3ed892c8e8b5bd356dfa827eb89d729919477d63.webp",
+      "sha256": "8f502a56ce23931a7c408b6e3ed892c8e8b5bd356dfa827eb89d729919477d63",
+      "bytes": 83936
+    },
+    {
+      "playerId": "s4-dlc2-20260803-041",
+      "name": "范博梅尔",
+      "sourceFile": "van Bommel.webp",
+      "asset": "portraits/448a9c64c27e0e7d7ac78eb18e8583f4071291f7183b6af56e0155172daed6e2.webp",
+      "sha256": "448a9c64c27e0e7d7ac78eb18e8583f4071291f7183b6af56e0155172daed6e2",
+      "bytes": 89812
+    },
+    {
+      "playerId": "s4-dlc2-20260803-045",
+      "name": "德科",
+      "sourceFile": "Deco.webp",
+      "asset": "portraits/6bd879c2b9adc932f83cb9c1b1ec12cd7df01e1c15752d7793d17336632cba54.webp",
+      "sha256": "6bd879c2b9adc932f83cb9c1b1ec12cd7df01e1c15752d7793d17336632cba54",
+      "bytes": 43112
+    },
+    {
+      "playerId": "s4-dlc2-20260803-052",
+      "name": "穆蒂尼奥",
+      "sourceFile": "Moutinho.webp",
+      "asset": "portraits/dcbfd0ad5ea22aed875a0609dcb1eb4705adbbb94b047640aa222b0c3e3c6777.webp",
+      "sha256": "dcbfd0ad5ea22aed875a0609dcb1eb4705adbbb94b047640aa222b0c3e3c6777",
+      "bytes": 148104
+    },
+    {
+      "playerId": "s4-dlc2-20260803-054",
+      "name": "查拉纳",
+      "sourceFile": "Chalana.webp",
+      "asset": "portraits/fd8a72f890a8fdee09c24a8c8a1ec78f6abd1ce38c02609f147ea43380e2335c.webp",
+      "sha256": "fd8a72f890a8fdee09c24a8c8a1ec78f6abd1ce38c02609f147ea43380e2335c",
+      "bytes": 110440
+    },
+    {
+      "playerId": "s4-dlc2-20260803-060",
+      "name": "纳尼",
+      "sourceFile": "s4-imported/0f3792f5974c7d9ebee26c9e.webp",
+      "asset": "portraits/f0b0ec0ba509b79c6a3f709649eb1e9d2460e8d4a8efdeaa88dcb561f69483ba.webp",
+      "sha256": "f0b0ec0ba509b79c6a3f709649eb1e9d2460e8d4a8efdeaa88dcb561f69483ba",
+      "bytes": 35036
+    },
+    {
+      "playerId": "s4-dlc2-20260803-061",
+      "name": "保罗·索萨",
+      "sourceFile": "Sousa.webp",
+      "asset": "portraits/ebac52915ab792dbe365846760fa2d08e5f3deb363ca751ae6f64605fd4fd5b1.webp",
+      "sha256": "ebac52915ab792dbe365846760fa2d08e5f3deb363ca751ae6f64605fd4fd5b1",
+      "bytes": 173788
+    },
+    {
+      "playerId": "s4-dlc2-20260803-067",
+      "name": "里维拉",
+      "sourceFile": "Rivera.webp",
+      "asset": "portraits/0a403ad4c0de3b7d56721abfa30d73f5256975eabb447c01ba636f073809878d.webp",
+      "sha256": "0a403ad4c0de3b7d56721abfa30d73f5256975eabb447c01ba636f073809878d",
+      "bytes": 55858
+    },
+    {
+      "playerId": "s4-dlc2-20260803-073",
+      "name": "哈梅斯·罗德里格斯",
+      "sourceFile": "Rodríguez.webp",
+      "asset": "portraits/90a11be8fb8971be7c2266c60288d117e33c196f760e8bb712410d73fb1f2a3e.webp",
+      "sha256": "90a11be8fb8971be7c2266c60288d117e33c196f760e8bb712410d73fb1f2a3e",
+      "bytes": 148636
+    },
+    {
+      "playerId": "s4-dlc2-20260803-074",
+      "name": "古蒂",
+      "sourceFile": "Guti.webp",
+      "asset": "portraits/1b2d6cd22384ae3b9ca01c8ce5ee1a7bb0aada68839fa6477a6a52e4e54c6154.webp",
+      "sha256": "1b2d6cd22384ae3b9ca01c8ce5ee1a7bb0aada68839fa6477a6a52e4e54c6154",
+      "bytes": 130908
+    },
+    {
+      "playerId": "s4-dlc3-20260808-006",
+      "name": "艾马尔",
+      "sourceFile": "Aimar.webp",
+      "asset": "portraits/fa41cfe6639ec1c4f7a3d5e25053306903769c5f54e960c0584313ed9cd9cead.webp",
+      "sha256": "fa41cfe6639ec1c4f7a3d5e25053306903769c5f54e960c0584313ed9cd9cead",
+      "bytes": 105594
+    },
+    {
+      "playerId": "s4-dlc3-20260808-014",
+      "name": "巴拉克",
+      "sourceFile": "Ballack.webp",
+      "asset": "portraits/64ec969896748a7fdf53fc8a4240ab347071819970740b9d71c4c002d0d21415.webp",
+      "sha256": "64ec969896748a7fdf53fc8a4240ab347071819970740b9d71c4c002d0d21415",
+      "bytes": 126924
+    },
+    {
+      "playerId": "s4-dlc3-20260808-017",
+      "name": "罗伊基恩",
+      "sourceFile": "Keane.webp",
+      "asset": "portraits/d2be29177ab45906c462013be9a767837d81f4eaa98f0d1781203ef5b4ebd86a.webp",
+      "sha256": "d2be29177ab45906c462013be9a767837d81f4eaa98f0d1781203ef5b4ebd86a",
+      "bytes": 84704
+    },
+    {
+      "playerId": "s4-dlc3-20260808-026",
+      "name": "库蒂尼奥",
+      "sourceFile": "Coutinho.webp",
+      "asset": "portraits/c90884e45a19cfbd063748331b2a9213d712c37da72a65182854f3b3d4c92e83.webp",
+      "sha256": "c90884e45a19cfbd063748331b2a9213d712c37da72a65182854f3b3d4c92e83",
+      "bytes": 267708
+    },
+    {
+      "playerId": "s4-dlc3-20260808-028",
+      "name": "吉尔伯托·席尔瓦",
+      "sourceFile": "Gilberto.webp",
+      "asset": "portraits/7cad52f0c9f44e3f1d0793b3b90bfe618c6f156b2da9c237278482ebcbf014c8.webp",
+      "sha256": "7cad52f0c9f44e3f1d0793b3b90bfe618c6f156b2da9c237278482ebcbf014c8",
+      "bytes": 120346
+    },
+    {
+      "playerId": "s4-dlc3-20260808-030",
+      "name": "卡莫拉内西",
+      "sourceFile": "s4-imported/942ef1b34c23d3244a9b1f22.webp",
+      "asset": "portraits/8645d3a248e5b764dd72e25887330a7b4bde7bfde587067b80ea092e7eee3e6e.webp",
+      "sha256": "8645d3a248e5b764dd72e25887330a7b4bde7bfde587067b80ea092e7eee3e6e",
+      "bytes": 93710
+    },
+    {
+      "playerId": "s4-dlc3-20260808-034",
+      "name": "里贝里",
+      "sourceFile": "Ribéry.webp",
+      "asset": "portraits/5f2cc8e731845a17dccc396555d8616cf9f3a59f4c45699a9291de315245023d.webp",
+      "sha256": "5f2cc8e731845a17dccc396555d8616cf9f3a59f4c45699a9291de315245023d",
+      "bytes": 93868
+    },
+    {
+      "playerId": "s4-dlc3-20260808-037",
+      "name": "施温施泰格",
+      "sourceFile": "Schweinsteiger.webp",
+      "asset": "portraits/2f62f329d4da3e33b248f43fd41ab55b427d7013c0045e6a038a6c3284c7a820.webp",
+      "sha256": "2f62f329d4da3e33b248f43fd41ab55b427d7013c0045e6a038a6c3284c7a820",
+      "bytes": 141348
+    },
+    {
+      "playerId": "s4-dlc3-20260808-043",
+      "name": "大卫席尔瓦",
+      "sourceFile": "David_Silva.webp",
+      "asset": "portraits/adde9171fc1f9b8bcc46268482e58d7b66c027552828f3a8c96c293cd6698fe3.webp",
+      "sha256": "adde9171fc1f9b8bcc46268482e58d7b66c027552828f3a8c96c293cd6698fe3",
+      "bytes": 113358
+    },
+    {
+      "playerId": "s4-dlc3-20260808-044",
+      "name": "赫苏斯纳瓦斯",
+      "sourceFile": "Jesús_Navas.webp",
+      "asset": "portraits/6b4d6de8a270b0da04de3b2d5e090d11071068c797d39b4a4666471445881d1b.webp",
+      "sha256": "6b4d6de8a270b0da04de3b2d5e090d11071068c797d39b4a4666471445881d1b",
+      "bytes": 160138
+    },
+    {
+      "playerId": "s4-dlc3-20260808-045",
+      "name": "马塔",
+      "sourceFile": "Mata.webp",
+      "asset": "portraits/e918cfe0aa1fc5709c00dac0416979f5ab5ec0a4752e66b605f3576e236d9d1a.webp",
+      "sha256": "e918cfe0aa1fc5709c00dac0416979f5ab5ec0a4752e66b605f3576e236d9d1a",
+      "bytes": 110682
+    },
+    {
+      "playerId": "legend-pele",
+      "name": "贝利",
+      "sourceFile": "Pelé.webp",
+      "asset": "portraits/8bd746deee9030174b26d0bc7b8173ebb37d904e1dde137d3af8dd313edb60e5.webp",
+      "sha256": "8bd746deee9030174b26d0bc7b8173ebb37d904e1dde137d3af8dd313edb60e5",
+      "bytes": 47504
+    },
+    {
+      "playerId": "legend-maradona",
+      "name": "马拉多纳",
+      "sourceFile": "Maradona.webp",
+      "asset": "portraits/ec53242d49beaa78aeea2ffae8b69017a1ec61870d74fce832d87a61d8621e1a.webp",
+      "sha256": "ec53242d49beaa78aeea2ffae8b69017a1ec61870d74fce832d87a61d8621e1a",
+      "bytes": 102014
+    },
+    {
+      "playerId": "legend-ronaldo-nazario",
+      "name": "大罗",
+      "sourceFile": "Ronaldo_Nazário.webp",
+      "asset": "portraits/f3e435b022e915708481d8230b057d6bed596347266ab5d48b9133e004094eb5.webp",
+      "sha256": "f3e435b022e915708481d8230b057d6bed596347266ab5d48b9133e004094eb5",
+      "bytes": 100672
+    },
+    {
+      "playerId": "legend-messi",
+      "name": "梅西",
+      "sourceFile": "Messi.webp",
+      "asset": "portraits/6ab94c224d1388b1db7fd6c370100b8af274c83706f27df7179e7208873bf735.webp",
+      "sha256": "6ab94c224d1388b1db7fd6c370100b8af274c83706f27df7179e7208873bf735",
+      "bytes": 196888
+    },
+    {
+      "playerId": "legend-cristiano-ronaldo",
+      "name": "C罗",
+      "sourceFile": "Cristiano_Ronaldo.webp",
+      "asset": "portraits/687fe917e33ac2b7978d6b3295f8394323a568dcc371e45d4e91cdeec9b552a1.webp",
+      "sha256": "687fe917e33ac2b7978d6b3295f8394323a568dcc371e45d4e91cdeec9b552a1",
+      "bytes": 120534
+    },
+    {
+      "playerId": "legend-mbappe",
+      "name": "姆巴佩",
+      "sourceFile": "Mbappé.webp",
+      "asset": "portraits/fa50e843f8aad0027d3e361ec68b6ebe6bfc95a3a30c133b7e36b06eb81947f6.webp",
+      "sha256": "fa50e843f8aad0027d3e361ec68b6ebe6bfc95a3a30c133b7e36b06eb81947f6",
+      "bytes": 72870
+    },
+    {
+      "playerId": "legend-haaland",
+      "name": "哈兰德",
+      "sourceFile": "Haaland.webp",
+      "asset": "portraits/7ffdc0c6bb934e2096c05cd77df13c1584a79131a9a55ba0a79d1315868c75d9.webp",
+      "sha256": "7ffdc0c6bb934e2096c05cd77df13c1584a79131a9a55ba0a79d1315868c75d9",
+      "bytes": 98754
+    },
+    {
+      "playerId": "s4-fc26-231443",
+      "name": "登贝莱",
+      "sourceFile": "Dembélé.webp",
+      "asset": "portraits/b6c8aacf42cbe9da0076d17bcd0ce607bbf6f921b8d7c43eaeb9be9647dfbd15.webp",
+      "sha256": "b6c8aacf42cbe9da0076d17bcd0ce607bbf6f921b8d7c43eaeb9be9647dfbd15",
+      "bytes": 147086
+    },
+    {
+      "playerId": "s4-fc26-202126",
+      "name": "凯恩",
+      "sourceFile": "Kane.webp",
+      "asset": "portraits/0f545fd052e691fabc6bcdf0491467ab7d4dc26fcbbba9e6f2a135d99e4cb412.webp",
+      "sha256": "0f545fd052e691fabc6bcdf0491467ab7d4dc26fcbbba9e6f2a135d99e4cb412",
+      "bytes": 161802
+    },
+    {
+      "playerId": "s4-fc26-238794",
+      "name": "维尼修斯",
+      "sourceFile": "Vini_Jr.webp",
+      "asset": "portraits/f910fa8d76bb4135245cbe8ece3252acd7d908df4e8c1d4557bb56cdd995351d.webp",
+      "sha256": "f910fa8d76bb4135245cbe8ece3252acd7d908df4e8c1d4557bb56cdd995351d",
+      "bytes": 95126
+    },
+    {
+      "playerId": "s4-fc26-233731",
+      "name": "伊萨克",
+      "sourceFile": "Isak.webp",
+      "asset": "portraits/2fb565bf37f839f22caf01ca6ee1e873986b3fe84c30055a8c1f000fe6f025e7.webp",
+      "sha256": "2fb565bf37f839f22caf01ca6ee1e873986b3fe84c30055a8c1f000fe6f025e7",
+      "bytes": 131224
+    },
+    {
+      "playerId": "s4-fc26-246669",
+      "name": "萨卡",
+      "sourceFile": "Saka.webp",
+      "asset": "portraits/4a4544826add5a69733a7aba470a0abd872d61ba356c847734cfc723eb719b47.webp",
+      "sha256": "4a4544826add5a69733a7aba470a0abd872d61ba356c847734cfc723eb719b47",
+      "bytes": 58800
+    },
+    {
+      "playerId": "s4-fc26-231478",
+      "name": "劳塔罗马丁内斯",
+      "sourceFile": "Lautaro_Martínez.webp",
+      "asset": "portraits/081aa068545f94e31276e7f79fca50e2344ef21a88533580cc3b53054dea2d05.webp",
+      "sha256": "081aa068545f94e31276e7f79fca50e2344ef21a88533580cc3b53054dea2d05",
+      "bytes": 120438
+    },
+    {
+      "playerId": "s4-fc26-188545",
+      "name": "莱万多夫斯基",
+      "sourceFile": "Lewandowski.webp",
+      "asset": "portraits/4a8a74aee6390b31f9a390be55950aaee73a3df9147db8abe252b7907311e008.webp",
+      "sha256": "4a8a74aee6390b31f9a390be55950aaee73a3df9147db8abe252b7907311e008",
+      "bytes": 72708
+    },
+    {
+      "playerId": "s4-fc26-247635",
+      "name": "克瓦拉茨赫利亚",
+      "sourceFile": "Kvaratskhelia.webp",
+      "asset": "portraits/1fc6181634610a26246a56ca7870b23bd43effc48c749dde0fff7bcccf911a97.webp",
+      "sha256": "1fc6181634610a26246a56ca7870b23bd43effc48c749dde0fff7bcccf911a97",
+      "bytes": 61446
+    },
+    {
+      "playerId": "s4-fc26-246191",
+      "name": "阿尔瓦雷斯",
+      "sourceFile": "Alvarez.webp",
+      "asset": "portraits/7f4a246aa59540460b6fb003812bd6ddd336468ace3a85621a689f713f486a75.webp",
+      "sha256": "7f4a246aa59540460b6fb003812bd6ddd336468ace3a85621a689f713f486a75",
+      "bytes": 57080
+    },
+    {
+      "playerId": "s4-fc26-215441",
+      "name": "吉拉西",
+      "sourceFile": "Guirassy.webp",
+      "asset": "portraits/ff4e5818f073199424dce7f0e1c8db9c94eaaa42a74ba03e0f7dc39ea46ea8b3.webp",
+      "sha256": "ff4e5818f073199424dce7f0e1c8db9c94eaaa42a74ba03e0f7dc39ea46ea8b3",
+      "bytes": 110234
+    },
+    {
+      "playerId": "s4-fc26-232293",
+      "name": "奥斯梅恩",
+      "sourceFile": "Osimhen.webp",
+      "asset": "portraits/c367c6ac63de07813b3c1de4ac44132762285608661df1d41e781854b8983c02.webp",
+      "sha256": "c367c6ac63de07813b3c1de4ac44132762285608661df1d41e781854b8983c02",
+      "bytes": 131670
+    },
+    {
+      "playerId": "s4-fc26-241651",
+      "name": "哲凯赖什",
+      "sourceFile": "Gyökeres.webp",
+      "asset": "portraits/5a14aa948cb09a221287519f3dfc951678021f7ed3853b12b43eac2a44c41b0e.webp",
+      "sha256": "5a14aa948cb09a221287519f3dfc951678021f7ed3853b12b43eac2a44c41b0e",
+      "bytes": 212136
+    },
+    {
+      "playerId": "s4-fc26-194765",
+      "name": "格列兹曼",
+      "sourceFile": "Griezmann.webp",
+      "asset": "portraits/1f1527a541ec5b4e739d5f39b456c8c270f1b98f094e287c80ad3ac4a6263b97.webp",
+      "sha256": "1f1527a541ec5b4e739d5f39b456c8c270f1b98f094e287c80ad3ac4a6263b97",
+      "bytes": 131808
+    },
+    {
+      "playerId": "s4-fc26-243014",
+      "name": "姆伯莫",
+      "sourceFile": "Mbeumo.webp",
+      "asset": "portraits/f52979155d385b4cf80ba134d4cd89e03261bfcead0a8b156088cad1106488a7.webp",
+      "sha256": "f52979155d385b4cf80ba134d4cd89e03261bfcead0a8b156088cad1106488a7",
+      "bytes": 64364
+    },
+    {
+      "playerId": "s4-fc26-271421",
+      "name": "杜埃",
+      "sourceFile": "Doué.webp",
+      "asset": "portraits/873bca2e48e060e509571ef77612d90a795e1f4b34d143bf7745a217336e162f.webp",
+      "sha256": "873bca2e48e060e509571ef77612d90a795e1f4b34d143bf7745a217336e162f",
+      "bytes": 92350
+    },
+    {
+      "playerId": "s4-fc26-200104",
+      "name": "孙兴慜",
+      "sourceFile": "Heung_Min_Son.webp",
+      "asset": "portraits/75ddfcc55896026aa74f07066f3bbd0f3bb825c5921e27aa6dc9592091b25b27.webp",
+      "sha256": "75ddfcc55896026aa74f07066f3bbd0f3bb825c5921e27aa6dc9592091b25b27",
+      "bytes": 94764
+    },
+    {
+      "playerId": "s4-fc26-165153",
+      "name": "本泽马",
+      "sourceFile": "Benzema.webp",
+      "asset": "portraits/0691fdddfe644614f5c7d7a1fb85b64a8a7dc0f3a9e02c3c99e84e723aa96dfc.webp",
+      "sha256": "0691fdddfe644614f5c7d7a1fb85b64a8a7dc0f3a9e02c3c99e84e723aa96dfc",
+      "bytes": 159062
+    },
+    {
+      "playerId": "s4-fc26-228093",
+      "name": "马科斯图拉姆",
+      "sourceFile": "Marcus_Thuram.webp",
+      "asset": "portraits/ff983e3b05ff3009da5c1e1959c8d1482435401d2e7284fdf31ad2332dd009d3.webp",
+      "sha256": "ff983e3b05ff3009da5c1e1959c8d1482435401d2e7284fdf31ad2332dd009d3",
+      "bytes": 65526
+    },
+    {
+      "playerId": "s4-fc26-234236",
+      "name": "希克",
+      "sourceFile": "Schick.webp",
+      "asset": "portraits/5afda4c6632ee07bedb05d0607f684328985a96f8df6606867b704ff165cdf2b.webp",
+      "sha256": "5afda4c6632ee07bedb05d0607f684328985a96f8df6606867b704ff165cdf2b",
+      "bytes": 79842
+    },
+    {
+      "playerId": "s4-fc26-237692",
+      "name": "福登",
+      "sourceFile": "Foden.webp",
+      "asset": "portraits/1255d001a291f659f283919c5a19c038bc716471bdb6f59af95057ae2a52de6b.webp",
+      "sha256": "1255d001a291f659f283919c5a19c038bc716471bdb6f59af95057ae2a52de6b",
+      "bytes": 129398
+    },
+    {
+      "playerId": "s4-fc26-243812",
+      "name": "罗德里戈",
+      "sourceFile": "Rodrygo.webp",
+      "asset": "portraits/2a942469a0dfdbfe36f77338334824607e06fe67f12e23cb7e8802f90960e3fb.webp",
+      "sha256": "2a942469a0dfdbfe36f77338334824607e06fe67f12e23cb7e8802f90960e3fb",
+      "bytes": 100750
+    },
+    {
+      "playerId": "s4-fc26-227796",
+      "name": "普利希奇",
+      "sourceFile": "Pulisic.webp",
+      "asset": "portraits/b9336377dd13127304e91eede86e4da36c24dfe081847badce56a197f819d606.webp",
+      "sha256": "b9336377dd13127304e91eede86e4da36c24dfe081847badce56a197f819d606",
+      "bytes": 109858
+    },
+    {
+      "playerId": "s4-fc26-221697",
+      "name": "沃特金斯",
+      "sourceFile": "Watkins.webp",
+      "asset": "portraits/59e60f6dfcd93df66e40c60c5646fa54b5703717eb9280035e886217f2a2027d.webp",
+      "sha256": "59e60f6dfcd93df66e40c60c5646fa54b5703717eb9280035e886217f2a2027d",
+      "bytes": 129240
+    },
+    {
+      "playerId": "s4-fc26-264652",
+      "name": "巴尔科拉",
+      "sourceFile": "s4-imported/266e7a6e32f8382630c629da.webp",
+      "asset": "portraits/f8dd6fbb381b2c12c39bfd7d7624099629371b9fe753a5bceeed066ab0e110c4.webp",
+      "sha256": "f8dd6fbb381b2c12c39bfd7d7624099629371b9fe753a5bceeed066ab0e110c4",
+      "bytes": 105686
+    },
+    {
+      "playerId": "s4-fc26-241721",
+      "name": "莱奥",
+      "sourceFile": "s4-imported/d4c7af858f09dffa628ea371.webp",
+      "asset": "portraits/7c099f0c80d3315905d02db26fa856b4b66964543fffb5c82f6a186532e0e4d8.webp",
+      "sha256": "7c099f0c80d3315905d02db26fa856b4b66964543fffb5c82f6a186532e0e4d8",
+      "bytes": 80784
+    },
+    {
+      "playerId": "s4-fc26-192505",
+      "name": "卢卡库",
+      "sourceFile": "s4-imported/a285c68d8936225f17c3630d.webp",
+      "asset": "portraits/e4259792ff22441bd8e8ccb32f3436704ff68ee963ab2f8be0217a805373fdeb.webp",
+      "sha256": "e4259792ff22441bd8e8ccb32f3436704ff68ee963ab2f8be0217a805373fdeb",
+      "bytes": 98800
+    },
+    {
+      "playerId": "s4-fc26-183898",
+      "name": "迪马利亚",
+      "sourceFile": "Di_Maria.webp",
+      "asset": "portraits/936e0f85f74658f2e27e061fd1c503e10e172a77347cc9489b8def480c246286.webp",
+      "sha256": "936e0f85f74658f2e27e061fd1c503e10e172a77347cc9489b8def480c246286",
+      "bytes": 102844
+    },
+    {
+      "playerId": "s4-fc26-178509",
+      "name": "吉鲁",
+      "sourceFile": "s4-imported/18c84f74cea262bbed97df77.webp",
+      "asset": "portraits/da8c37b6fda4cba681adfb63f306ae9b8520614bec57e83ef0d54bca920f07b4.webp",
+      "sha256": "da8c37b6fda4cba681adfb63f306ae9b8520614bec57e83ef0d54bca920f07b4",
+      "bytes": 50584
+    },
+    {
+      "playerId": "s4-retired-thierry-henry",
+      "name": "亨利",
+      "sourceFile": "Henry.webp",
+      "asset": "portraits/ab0d86b528f035cedd697591b97b7b961116740372038a4b46979dd091befb3b.webp",
+      "sha256": "ab0d86b528f035cedd697591b97b7b961116740372038a4b46979dd091befb3b",
+      "bytes": 120518
+    },
+    {
+      "playerId": "s4-retired-wayne-rooney",
+      "name": "鲁尼",
+      "sourceFile": "Rooney.webp",
+      "asset": "portraits/5bb9650616e5fa3b7e66adae24a86fe4faf5eebcfe06eee7042871b7430a0c2b.webp",
+      "sha256": "5bb9650616e5fa3b7e66adae24a86fe4faf5eebcfe06eee7042871b7430a0c2b",
+      "bytes": 101454
+    },
+    {
+      "playerId": "s4-retired-didier-drogba",
+      "name": "德罗巴",
+      "sourceFile": "Drogba.webp",
+      "asset": "portraits/8a364d36a755430591cdaa04d96f2a43d3472bb54695d57af190740e79493aa1.webp",
+      "sha256": "8a364d36a755430591cdaa04d96f2a43d3472bb54695d57af190740e79493aa1",
+      "bytes": 129560
+    },
+    {
+      "playerId": "s4-retired-samuel-eto-o",
+      "name": "埃托奥",
+      "sourceFile": "Etoo.webp",
+      "asset": "portraits/3496ed00434a864037f9f165da2324824fc64b5ddae0cb4a4258590e2ea95ef0.webp",
+      "sha256": "3496ed00434a864037f9f165da2324824fc64b5ddae0cb4a4258590e2ea95ef0",
+      "bytes": 68640
+    },
+    {
+      "playerId": "s4-retired-andriy-shevchenko",
+      "name": "舍甫琴科",
+      "sourceFile": "Shevchenko.webp",
+      "asset": "portraits/87e682dfe6b958b6e79f5edd8e477f5e490cb3e1b6812af89b7f09d441817298.webp",
+      "sha256": "87e682dfe6b958b6e79f5edd8e477f5e490cb3e1b6812af89b7f09d441817298",
+      "bytes": 61288
+    },
+    {
+      "playerId": "s4-retired-zlatan-ibrahimovic",
+      "name": "伊布拉希莫维奇",
+      "sourceFile": "Ibrahimović.webp",
+      "asset": "portraits/d0571c6721ae22681b2f833c8fbb36732816000e795e1d1c53fbcbd143521ae8.webp",
+      "sha256": "d0571c6721ae22681b2f833c8fbb36732816000e795e1d1c53fbcbd143521ae8",
+      "bytes": 152866
+    },
+    {
+      "playerId": "s4-retired-sergio-aguero",
+      "name": "阿圭罗",
+      "sourceFile": "s4-imported/11995a68db8d747ee6ce8ae2.webp",
+      "asset": "portraits/90376811a3c14149bcc1eb9d0d704db7c6c5e1df0c3fa34a1835af20a812f608.webp",
+      "sha256": "90376811a3c14149bcc1eb9d0d704db7c6c5e1df0c3fa34a1835af20a812f608",
+      "bytes": 56448
+    },
+    {
+      "playerId": "s4-retired-fernando-torres",
+      "name": "托雷斯",
+      "sourceFile": "Torres.webp",
+      "asset": "portraits/f5bb51319c5e5d530e497584174a1d30dc77d961cb1eceb9b3942777055ff693.webp",
+      "sha256": "f5bb51319c5e5d530e497584174a1d30dc77d961cb1eceb9b3942777055ff693",
+      "bytes": 142402
+    },
+    {
+      "playerId": "s4-retired-gabriel-batistuta",
+      "name": "巴蒂斯图塔",
+      "sourceFile": "Batistuta.webp",
+      "asset": "portraits/ba681153530b3ddde206fcb9f708f1f21f44cac298ee56d25d1b5d5b4fea63a5.webp",
+      "sha256": "ba681153530b3ddde206fcb9f708f1f21f44cac298ee56d25d1b5d5b4fea63a5",
+      "bytes": 70562
+    },
+    {
+      "playerId": "s4-retired-dennis-bergkamp",
+      "name": "博格坎普",
+      "sourceFile": "Bergkamp.webp",
+      "asset": "portraits/e63396d63bd0f4d942b3727554a67fb27b7547cb4590fb6d29273ffef87a826c.webp",
+      "sha256": "e63396d63bd0f4d942b3727554a67fb27b7547cb4590fb6d29273ffef87a826c",
+      "bytes": 115574
+    },
+    {
+      "playerId": "s4-retired-eusebio",
+      "name": "尤西比奥",
+      "sourceFile": "Eusébio.webp",
+      "asset": "portraits/6cdee803ae1c59e48e0067a4907583dbf7175ce6c50e7b1c63c3f7199a94e817.webp",
+      "sha256": "6cdee803ae1c59e48e0067a4907583dbf7175ce6c50e7b1c63c3f7199a94e817",
+      "bytes": 26172
+    },
+    {
+      "playerId": "s4-retired-marco-van-basten",
+      "name": "范巴斯滕",
+      "sourceFile": "Marco_van_Basten.webp",
+      "asset": "portraits/fed2b31f2055595c64da8b652bd8d3fa05ecbd038cc552fe2383eca6a3650745.webp",
+      "sha256": "fed2b31f2055595c64da8b652bd8d3fa05ecbd038cc552fe2383eca6a3650745",
+      "bytes": 56794
+    },
+    {
+      "playerId": "s4-retired-johan-cruyff",
+      "name": "克鲁伊夫",
+      "sourceFile": "Cruyff.webp",
+      "asset": "portraits/6641c525cadf963ff20636380a52c81fc5624b4e445f9d528465407a7e197b62.webp",
+      "sha256": "6641c525cadf963ff20636380a52c81fc5624b4e445f9d528465407a7e197b62",
+      "bytes": 36162
+    },
+    {
+      "playerId": "s4-retired-george-best",
+      "name": "乔治贝斯特",
+      "sourceFile": "George_Best.webp",
+      "asset": "portraits/e78e98de405d973d4c26ae91a23a2ebbf18182b9190d29c496bd38d698986376.webp",
+      "sha256": "e78e98de405d973d4c26ae91a23a2ebbf18182b9190d29c496bd38d698986376",
+      "bytes": 130198
+    },
+    {
+      "playerId": "s4-retired-romario",
+      "name": "罗马里奥",
+      "sourceFile": "Romário.webp",
+      "asset": "portraits/abc4eea62076246935f8202eb66279a7298410eb2606b672d753f3f1672083c5.webp",
+      "sha256": "abc4eea62076246935f8202eb66279a7298410eb2606b672d753f3f1672083c5",
+      "bytes": 155886
+    },
+    {
+      "playerId": "s4-dlc-20260731-002",
+      "name": "加雷斯·贝尔",
+      "sourceFile": "Gareth Bale.webp",
+      "asset": "portraits/8ff7c23a697e0a2a1202b48d3721f21ea44c4cb6b230c9055a4767da279cac77.webp",
+      "sha256": "8ff7c23a697e0a2a1202b48d3721f21ea44c4cb6b230c9055a4767da279cac77",
+      "bytes": 83434
+    },
+    {
+      "playerId": "s4-dlc-20260731-008",
+      "name": "迭戈·米利托",
+      "sourceFile": "Diego Milito.webp",
+      "asset": "portraits/5e64dd4c0641621dcbb8ba647087d87d332b1030e19def1abb0f6e994c1fcb66.webp",
+      "sha256": "5e64dd4c0641621dcbb8ba647087d87d332b1030e19def1abb0f6e994c1fcb66",
+      "bytes": 127082
+    },
+    {
+      "playerId": "s4-dlc-20260731-016",
+      "name": "内马尔",
+      "sourceFile": "Neymar Jr.webp",
+      "asset": "portraits/e57eb6360cb637263b5e2de73af6ce90fedd745aa44db21f8db9c4f3874a318b.webp",
+      "sha256": "e57eb6360cb637263b5e2de73af6ce90fedd745aa44db21f8db9c4f3874a318b",
+      "bytes": 196504
+    },
+    {
+      "playerId": "s4-dlc-20260731-021",
+      "name": "托蒂",
+      "sourceFile": "Francesco Totti.webp",
+      "asset": "portraits/b811af0c9d86deb45b338831840fdd2e09b918c70f00947b1a179700c6495636.webp",
+      "sha256": "b811af0c9d86deb45b338831840fdd2e09b918c70f00947b1a179700c6495636",
+      "bytes": 152356
+    },
+    {
+      "playerId": "s4-dlc-20260731-028",
+      "name": "肯佩斯",
+      "sourceFile": "Mario Kempes.webp",
+      "asset": "portraits/a166a0d7503e857bf5888f7901040a7b73fb53077ed21b6aff48631a4ed4c6fa.webp",
+      "sha256": "a166a0d7503e857bf5888f7901040a7b73fb53077ed21b6aff48631a4ed4c6fa",
+      "bytes": 87108
+    },
+    {
+      "playerId": "s4-dlc-20260731-029",
+      "name": "盖德·穆勒",
+      "sourceFile": "Gerd Müller.webp",
+      "asset": "portraits/96c8d9029aaa14a30cfb5874f2871a05a83780ec1400fd0bb039e9a272a9b344.webp",
+      "sha256": "96c8d9029aaa14a30cfb5874f2871a05a83780ec1400fd0bb039e9a272a9b344",
+      "bytes": 54216
+    },
+    {
+      "playerId": "s4-dlc-20260731-032",
+      "name": "阿扎尔",
+      "sourceFile": "Eden Hazard.webp",
+      "asset": "portraits/19b954d8eacd0b1ac4e914a5ce07022d344f9261a4cc8d23bc1c9333a8208234.webp",
+      "sha256": "19b954d8eacd0b1ac4e914a5ce07022d344f9261a4cc8d23bc1c9333a8208234",
+      "bytes": 124698
+    },
+    {
+      "playerId": "s4-dlc-20260731-033",
+      "name": "法尔考",
+      "sourceFile": "Radamel Falcao.webp",
+      "asset": "portraits/2e76e9c307d0c08d0bdb4c0d2634b2d0590123058600e4c19cc5b5f0bff28b21.webp",
+      "sha256": "2e76e9c307d0c08d0bdb4c0d2634b2d0590123058600e4c19cc5b5f0bff28b21",
+      "bytes": 71912
+    },
+    {
+      "playerId": "s4-dlc-20260731-039",
+      "name": "范佩西",
+      "sourceFile": "Robin van Persie.webp",
+      "asset": "portraits/9959da8e95355f83bc28a1ea40d400837b1595d81f137f538a806d1c2da0b4ff.webp",
+      "sha256": "9959da8e95355f83bc28a1ea40d400837b1595d81f137f538a806d1c2da0b4ff",
+      "bytes": 110096
+    },
+    {
+      "playerId": "s4-dlc-20260731-043",
+      "name": "古德温",
+      "sourceFile": "Craig Goodwin.webp",
+      "asset": "portraits/28c560e2620c6501f43c44554dc010a3a487119e437db7bb45ee7b2ab78421af.webp",
+      "sha256": "28c560e2620c6501f43c44554dc010a3a487119e437db7bb45ee7b2ab78421af",
+      "bytes": 47560
+    },
+    {
+      "playerId": "s4-dlc-20260731-049",
+      "name": "罗比尼奥",
+      "sourceFile": "Robinho.webp",
+      "asset": "portraits/3faccd6d52ce5b685429fec621be1ab11c41789974cb928060d208de3e4f95c7.webp",
+      "sha256": "3faccd6d52ce5b685429fec621be1ab11c41789974cb928060d208de3e4f95c7",
+      "bytes": 62350
+    },
+    {
+      "playerId": "s4-dlc-20260731-051",
+      "name": "萨维奥",
+      "sourceFile": "Sávio Bortolini.webp",
+      "asset": "portraits/4ad707189f780a12271cbd1d947d779fa940eec77f3296f4ba39a5cef18d23d2.webp",
+      "sha256": "4ad707189f780a12271cbd1d947d779fa940eec77f3296f4ba39a5cef18d23d2",
+      "bytes": 52326
+    },
+    {
+      "playerId": "s4-dlc-20260731-053",
+      "name": "克洛泽",
+      "sourceFile": "Miroslav Klose.webp",
+      "asset": "portraits/474c5549dd120cfbf3e61b1e731e50c27986caaf1ed2a5583eb386f679428ccc.webp",
+      "sha256": "474c5549dd120cfbf3e61b1e731e50c27986caaf1ed2a5583eb386f679428ccc",
+      "bytes": 119052
+    },
+    {
+      "playerId": "s4-dlc-20260731-054",
+      "name": "劳尔·冈萨雷斯",
+      "sourceFile": "Raúl González.webp",
+      "asset": "portraits/6497973ce9082711ed1bf5844a4f02655dd7024bcb1973aae9668b51f36d5598.webp",
+      "sha256": "6497973ce9082711ed1bf5844a4f02655dd7024bcb1973aae9668b51f36d5598",
+      "bytes": 81366
+    },
+    {
+      "playerId": "s4-dlc2-20260803-001",
+      "name": "迪斯蒂法诺",
+      "sourceFile": "Di Stéfano.webp",
+      "asset": "portraits/e626ae25af2f71304d3cccf490ff1621dad68717b175f4dd4f1d3b106bb166c2.webp",
+      "sha256": "e626ae25af2f71304d3cccf490ff1621dad68717b175f4dd4f1d3b106bb166c2",
+      "bytes": 52352
+    },
+    {
+      "playerId": "s4-dlc2-20260803-004",
+      "name": "奥马尔·西沃里",
+      "sourceFile": "Omar Sívori.webp",
+      "asset": "portraits/3c5749697ef5a7785c9723d77ef96b702cf22df48d5567d302d45885b25b44e4.webp",
+      "sha256": "3c5749697ef5a7785c9723d77ef96b702cf22df48d5567d302d45885b25b44e4",
+      "bytes": 85890
+    },
+    {
+      "playerId": "s4-dlc2-20260803-010",
+      "name": "克雷斯波",
+      "sourceFile": "Crespo.webp",
+      "asset": "portraits/d1536fb01634a129892f2a87a0d86f19fbb7637d4b2d11c6c8756889fce3d233.webp",
+      "sha256": "d1536fb01634a129892f2a87a0d86f19fbb7637d4b2d11c6c8756889fce3d233",
+      "bytes": 106660
+    },
+    {
+      "playerId": "s4-dlc2-20260803-013",
+      "name": "卡尼吉亚",
+      "sourceFile": "Caniggia.webp",
+      "asset": "portraits/70e6740fe7f61dc42de510841cc823bb8188ec4db101f199d036ac3351eff8cc.webp",
+      "sha256": "70e6740fe7f61dc42de510841cc823bb8188ec4db101f199d036ac3351eff8cc",
+      "bytes": 72170
+    },
+    {
+      "playerId": "s4-dlc2-20260803-016",
+      "name": "伊瓜因",
+      "sourceFile": "Higuaín.webp",
+      "asset": "portraits/956fbe69e82f21539a667f0c445337598df0e5c52b3f07e73edf17991a73799e.webp",
+      "sha256": "956fbe69e82f21539a667f0c445337598df0e5c52b3f07e73edf17991a73799e",
+      "bytes": 64998
+    },
+    {
+      "playerId": "s4-dlc2-20260803-022",
+      "name": "罗本",
+      "sourceFile": "Robben.webp",
+      "asset": "portraits/f82642b1100080a5a5c081e1ce3397bc2c1203ebe41a456144850cd338950693.webp",
+      "sha256": "f82642b1100080a5a5c081e1ce3397bc2c1203ebe41a456144850cd338950693",
+      "bytes": 134226
+    },
+    {
+      "playerId": "s4-dlc2-20260803-027",
+      "name": "范尼斯特鲁伊",
+      "sourceFile": "Nistelrooy.webp",
+      "asset": "portraits/1ed14bc10442ebee3e655c91540a71a97b96d5f78c9169038baa8dfe6e4ef873.webp",
+      "sha256": "1ed14bc10442ebee3e655c91540a71a97b96d5f78c9169038baa8dfe6e4ef873",
+      "bytes": 61872
+    },
+    {
+      "playerId": "s4-dlc2-20260803-031",
+      "name": "克鲁伊维特",
+      "sourceFile": "Kluivert.webp",
+      "asset": "portraits/659bc2664ded1e5505d6de25e34b753f7ddd5f63e9de7d09cdf810d4e0464de9.webp",
+      "sha256": "659bc2664ded1e5505d6de25e34b753f7ddd5f63e9de7d09cdf810d4e0464de9",
+      "bytes": 111622
+    },
+    {
+      "playerId": "s4-dlc2-20260803-047",
+      "name": "保罗·富特雷",
+      "sourceFile": "s4-imported/48e272f3cb8092888f12f2f7.webp",
+      "asset": "portraits/e86e3fa6be6bbb68a77b20dc5df7af78b52fef693549f535ba052d92d8b2a580.webp",
+      "sha256": "e86e3fa6be6bbb68a77b20dc5df7af78b52fef693549f535ba052d92d8b2a580",
+      "bytes": 124028
+    },
+    {
+      "playerId": "s4-dlc2-20260803-050",
+      "name": "费尔南多·戈麦斯",
+      "sourceFile": "Gomes.webp",
+      "asset": "portraits/19b8fcab8931a96c71f2e9d6a096a05bd2994456ea2eb5ea36fab396c40bcf12.webp",
+      "sha256": "19b8fcab8931a96c71f2e9d6a096a05bd2994456ea2eb5ea36fab396c40bcf12",
+      "bytes": 75124
+    },
+    {
+      "playerId": "s4-dlc2-20260803-055",
+      "name": "保莱塔",
+      "sourceFile": "Pauleta.webp",
+      "asset": "portraits/097dfb1e6576945b0223b51bf614f0e45f26fcdf36ce1b70c08c923f93dd55fe.webp",
+      "sha256": "097dfb1e6576945b0223b51bf614f0e45f26fcdf36ce1b70c08c923f93dd55fe",
+      "bytes": 38390
+    },
+    {
+      "playerId": "s4-dlc2-20260803-062",
+      "name": "夸雷斯马",
+      "sourceFile": "s4-imported/8d53c666f36e7a3ddde6fd5c.webp",
+      "asset": "portraits/a22663cb0f411ab641a6745d044b64a0b2bcf59650f5d3642d8000af9cc88798.webp",
+      "sha256": "a22663cb0f411ab641a6745d044b64a0b2bcf59650f5d3642d8000af9cc88798",
+      "bytes": 61554
+    },
+    {
+      "playerId": "s4-dlc2-20260803-063",
+      "name": "朱塞佩·梅阿查",
+      "sourceFile": "Meazza.webp",
+      "asset": "portraits/407871651d2d9cddf7b25ca1ccf4bf12f06ecdc74880b77b72593990a3280449.webp",
+      "sha256": "407871651d2d9cddf7b25ca1ccf4bf12f06ecdc74880b77b72593990a3280449",
+      "bytes": 113740
+    },
+    {
+      "playerId": "s4-dlc2-20260803-064",
+      "name": "罗伯托·巴乔",
+      "sourceFile": "Baggio.webp",
+      "asset": "portraits/870b24e19b7543a8d95d71428b1130014fba58ed1239048a0ec1daa884b19202.webp",
+      "sha256": "870b24e19b7543a8d95d71428b1130014fba58ed1239048a0ec1daa884b19202",
+      "bytes": 100256
+    },
+    {
+      "playerId": "s4-dlc2-20260803-071",
+      "name": "德尔·皮耶罗",
+      "sourceFile": "Del pierro.webp",
+      "asset": "portraits/3b969fb8d07543b322032da143d0a09ffc89c4f7001fa95ced46fe8fbed20660.webp",
+      "sha256": "3b969fb8d07543b322032da143d0a09ffc89c4f7001fa95ced46fe8fbed20660",
+      "bytes": 111500
+    },
+    {
+      "playerId": "s4-dlc3-20260808-005",
+      "name": "阿德里亚诺",
+      "sourceFile": "Adriano.webp",
+      "asset": "portraits/2eca486bc9ad1b8f4bfd7e2443c8cdb8bf6d3e8368ca83d53f6481e31018f50e.webp",
+      "sha256": "2eca486bc9ad1b8f4bfd7e2443c8cdb8bf6d3e8368ca83d53f6481e31018f50e",
+      "bytes": 77762
+    },
+    {
+      "playerId": "s4-dlc3-20260808-010",
+      "name": "普斯卡什",
+      "sourceFile": "Puskás.webp",
+      "asset": "portraits/7b0676679cde3f1f9c7050a30911a1266ad7420f388cfac03c9ac951e23ddde1.webp",
+      "sha256": "7b0676679cde3f1f9c7050a30911a1266ad7420f388cfac03c9ac951e23ddde1",
+      "bytes": 130370
+    },
+    {
+      "playerId": "s4-dlc3-20260808-011",
+      "name": "乌戈·桑切斯",
+      "sourceFile": "Sánchez.webp",
+      "asset": "portraits/9584483b41a5572a4d6063d45c04025bf0e87a2ad789b60c3973e60a9c564195.webp",
+      "sha256": "9584483b41a5572a4d6063d45c04025bf0e87a2ad789b60c3973e60a9c564195",
+      "bytes": 116578
+    },
+    {
+      "playerId": "s4-dlc3-20260808-015",
+      "name": "坎通纳",
+      "sourceFile": "Cantona.webp",
+      "asset": "portraits/7cfabdb78888b9c535aa01ba3195278e8597b7ad06b9497201cb6b505f74770a.webp",
+      "sha256": "7cfabdb78888b9c535aa01ba3195278e8597b7ad06b9497201cb6b505f74770a",
+      "bytes": 69408
+    },
+    {
+      "playerId": "s4-dlc3-20260808-019",
+      "name": "达沃苏克",
+      "sourceFile": "Šuker.webp",
+      "asset": "portraits/20bb8d2cb1c39ad2832ad3a2af1635107c457b3d4da8ef671a3e97378038c748.webp",
+      "sha256": "20bb8d2cb1c39ad2832ad3a2af1635107c457b3d4da8ef671a3e97378038c748",
+      "bytes": 139220
+    },
+    {
+      "playerId": "s4-dlc3-20260808-020",
+      "name": "乔治维阿",
+      "sourceFile": "Weah.webp",
+      "asset": "portraits/8800769038dfbefabce693be54d41e9372d57f88fa9406258f8304ac6a3e805f.webp",
+      "sha256": "8800769038dfbefabce693be54d41e9372d57f88fa9406258f8304ac6a3e805f",
+      "bytes": 42242
+    },
+    {
+      "playerId": "s4-dlc3-20260808-021",
+      "name": "迭戈弗兰",
+      "sourceFile": "Forlán.webp",
+      "asset": "portraits/06611b02b5d934fac7892409e0a9136282d6866a1c012bd6425243d9d8349526.webp",
+      "sha256": "06611b02b5d934fac7892409e0a9136282d6866a1c012bd6425243d9d8349526",
+      "bytes": 89022
+    },
+    {
+      "playerId": "s4-dlc3-20260808-022",
+      "name": "迭戈科斯塔",
+      "sourceFile": "Diego_Costa.webp",
+      "asset": "portraits/4e2c796c76888954ec66df15a76bb2fd3e550f9a380f5bba35e15eeed502b246.webp",
+      "sha256": "4e2c796c76888954ec66df15a76bb2fd3e550f9a380f5bba35e15eeed502b246",
+      "bytes": 77112
+    },
+    {
+      "playerId": "s4-dlc3-20260808-023",
+      "name": "阿内尔卡",
+      "sourceFile": "Anelka.webp",
+      "asset": "portraits/90c98be4e113374de79121e12a77d596df5cab2994329f1f100155a1f381be5b.webp",
+      "sha256": "90c98be4e113374de79121e12a77d596df5cab2994329f1f100155a1f381be5b",
+      "bytes": 118690
+    },
+    {
+      "playerId": "s4-dlc3-20260808-025",
+      "name": "因扎吉",
+      "sourceFile": "Inzaghi.webp",
+      "asset": "portraits/5a0310330b6987e38c905c5a4578aceeec91b31e84bd35985668422ffb740ab6.webp",
+      "sha256": "5a0310330b6987e38c905c5a4578aceeec91b31e84bd35985668422ffb740ab6",
+      "bytes": 240820
+    },
+    {
+      "playerId": "s4-dlc3-20260808-029",
+      "name": "特雷泽盖",
+      "sourceFile": "Trezeguet.webp",
+      "asset": "portraits/522bac8a3845ae5fe5e35ad0f45fc8b44151ea40a935fc7f1b3a9f2ab31d3878.webp",
+      "sha256": "522bac8a3845ae5fe5e35ad0f45fc8b44151ea40a935fc7f1b3a9f2ab31d3878",
+      "bytes": 109054
+    },
+    {
+      "playerId": "s4-dlc3-20260808-031",
+      "name": "托尼",
+      "sourceFile": "Luca_Toni.webp",
+      "asset": "portraits/6e86fd1ab050928196d8a7cffa0d388403a51318b7723f9bbbb712f8190c6160.webp",
+      "sha256": "6e86fd1ab050928196d8a7cffa0d388403a51318b7723f9bbbb712f8190c6160",
+      "bytes": 152724
+    },
+    {
+      "playerId": "s4-dlc3-20260808-039",
+      "name": "努诺戈麦斯",
+      "sourceFile": "Nuno_Gomes.webp",
+      "asset": "portraits/54c39d1b0221305b0a29bf344251e4ad8a886373ef8e5d4a40f6b4be55dcd2c9.webp",
+      "sha256": "54c39d1b0221305b0a29bf344251e4ad8a886373ef8e5d4a40f6b4be55dcd2c9",
+      "bytes": 136208
+    },
+    {
+      "playerId": "s4-dlc3-20260808-047",
+      "name": "亨特拉尔",
+      "sourceFile": "Huntelaar.webp",
+      "asset": "portraits/59a3aec5300749c7dcfe5c7827d491777825d70b85df5a8496bf8247d7b37868.webp",
+      "sha256": "59a3aec5300749c7dcfe5c7827d491777825d70b85df5a8496bf8247d7b37868",
+      "bytes": 116394
+    },
+    {
+      "playerId": "legend-messi-rat",
+      "name": "梅老鼠",
+      "sourceFile": "MessiRat.webp",
+      "asset": "portraits/c0a76af04745d2b2a1e51e363132b342333e569d4d3eda8dd3aa423483f2d02c.webp",
+      "sha256": "c0a76af04745d2b2a1e51e363132b342333e569d4d3eda8dd3aa423483f2d02c",
+      "bytes": 172350
+    },
+    {
+      "playerId": "ydl-custom-b7e9b31d-4cd8-4c03-8fa3-22e96836c5d4",
+      "name": "奥尔特加",
+      "sourceFile": "s4-imported/f2d35c6071df88e062d6cc8e.webp",
+      "asset": "portraits/145bf0d0e7780add444a96505a6900a2da0080505358c44a0bb55870a6e81712.webp",
+      "sha256": "145bf0d0e7780add444a96505a6900a2da0080505358c44a0bb55870a6e81712",
+      "bytes": 84982
+    },
+    {
+      "playerId": "ydl-custom-c1db35f3-5726-40a3-acbc-4569b5effb73",
+      "name": "哈维尔·萨维奥拉",
+      "sourceFile": "s4-imported/1bd66370736810bf6b6a9113.webp",
+      "asset": "portraits/3cf4c0e05b7bf2a1d4355300184ee6b0ac2511fb7233b0e2bd73c1b62f9b9e1f.webp",
+      "sha256": "3cf4c0e05b7bf2a1d4355300184ee6b0ac2511fb7233b0e2bd73c1b62f9b9e1f",
+      "bytes": 49906
+    },
+    {
+      "playerId": "ydl-custom-3f94be44-6dc4-43e4-9e1a-6a709982f474",
+      "name": "卡希尔",
+      "sourceFile": "s4-imported/baf0e98fe0d246a618ce9ce5.webp",
+      "asset": "portraits/77fde936d7e7cb61bc5209aa26ca0b38100e7d075d3cb532f2a898d0475ee580.webp",
+      "sha256": "77fde936d7e7cb61bc5209aa26ca0b38100e7d075d3cb532f2a898d0475ee580",
+      "bytes": 142538
+    },
+    {
+      "playerId": "ydl-custom-dd3beae0-d48a-410d-a13a-4aff5d71d806",
+      "name": "奇拉维特",
+      "sourceFile": "s4-imported/6957c54a7f00292f5ba09366.webp",
+      "asset": "portraits/15616653de03649122c7e2c5b449a01735e20c211ed950faf678cccaffb9e064.webp",
+      "sha256": "15616653de03649122c7e2c5b449a01735e20c211ed950faf678cccaffb9e064",
+      "bytes": 139868
+    },
+    {
+      "playerId": "ydl-custom-5485e645-21b7-4f8e-b449-3ba5924c6ee6",
+      "name": "济科",
+      "sourceFile": "s4-imported/69f53818bdbfc87d7cb62b0f.webp",
+      "asset": "portraits/ff82c5465a6ca763583455d72d994d835b8c7cce669ab1c10c58d497c0bfcb72.webp",
+      "sha256": "ff82c5465a6ca763583455d72d994d835b8c7cce669ab1c10c58d497c0bfcb72",
+      "bytes": 294160
+    },
+    {
+      "playerId": "ydl-custom-bd1ae415-be34-4150-afa2-6d14cc975136",
+      "name": "加林查",
+      "sourceFile": "s4-imported/d9568a5d050543d850b45630.webp",
+      "asset": "portraits/a2fbf9cdbde6d239a43fb1e87796ea2eaffb4a28431051ec8b0885f976b0145b.webp",
+      "sha256": "a2fbf9cdbde6d239a43fb1e87796ea2eaffb4a28431051ec8b0885f976b0145b",
+      "bytes": 38142
+    },
+    {
+      "playerId": "ydl-custom-7b7f69de-b90a-42ca-b3de-d61559d109d2",
+      "name": "迪达",
+      "sourceFile": "s4-imported/0c1eecf5b5f5122d1ae23a4c.webp",
+      "asset": "portraits/85f37ed6efa13366f73a5a61f3aeef77cb33007a56136f6cbd73e2ce6e46a86f.webp",
+      "sha256": "85f37ed6efa13366f73a5a61f3aeef77cb33007a56136f6cbd73e2ce6e46a86f",
+      "bytes": 117322
+    },
+    {
+      "playerId": "ydl-custom-45d357c5-6808-4a35-a247-f2b29622ebef",
+      "name": "菲尔米诺",
+      "sourceFile": "s4-imported/7b04c874a5f9d4e03f463a55.webp",
+      "asset": "portraits/74288445777aa09d79f76befffc0fbff51ae75d14dd95baaf1f6eb1b1ce95936.webp",
+      "sha256": "74288445777aa09d79f76befffc0fbff51ae75d14dd95baaf1f6eb1b1ce95936",
+      "bytes": 132244
+    },
+    {
+      "playerId": "ydl-custom-43b0bbd3-e432-4783-ba32-ebeff528d84c",
+      "name": "埃尔伯",
+      "sourceFile": "s4-imported/1355df66ee8c4526963878f1.webp",
+      "asset": "portraits/7bc82e0248fd605928493a7d99e695f0cb23e0ed335aa55ef2dae0b1ba3879a6.webp",
+      "sha256": "7bc82e0248fd605928493a7d99e695f0cb23e0ed335aa55ef2dae0b1ba3879a6",
+      "bytes": 48522
+    },
+    {
+      "playerId": "ydl-custom-23145c1c-f513-4119-86bc-a536dbb4f4e8",
+      "name": "埃德米尔森",
+      "sourceFile": "s4-imported/6059e033ca228ac8f067fa0e.webp",
+      "asset": "portraits/aa97046bb9180d9a98d7e7d5daa6a916817476aa5d5a51b00373483a992f5bc3.webp",
+      "sha256": "aa97046bb9180d9a98d7e7d5daa6a916817476aa5d5a51b00373483a992f5bc3",
+      "bytes": 86816
+    },
+    {
+      "playerId": "ydl-custom-3b48af14-08a3-45a3-ad46-36a591ae5e7e",
+      "name": "贝尔巴托夫",
+      "sourceFile": "s4-imported/55c278b6f80f4d5cd6472e28.webp",
+      "asset": "portraits/eeb6c3e2c1aae5f7775c13f75b2d29eca3a9d6c5349bac5a64abb3b35bd5daae.webp",
+      "sha256": "eeb6c3e2c1aae5f7775c13f75b2d29eca3a9d6c5349bac5a64abb3b35bd5daae",
+      "bytes": 162952
+    },
+    {
+      "playerId": "ydl-custom-bc837b5f-3547-4999-a709-edc575ad2d7b",
+      "name": "孔帕尼",
+      "sourceFile": "s4-imported/1b90a47c1d0cf2ea9c4a334a.webp",
+      "asset": "portraits/96110817271f75ddc4a4999ae2187d0b11d5ea000d1ce409eea52ddf6ceea11a.webp",
+      "sha256": "96110817271f75ddc4a4999ae2187d0b11d5ea000d1ce409eea52ddf6ceea11a",
+      "bytes": 85116
+    },
+    {
+      "playerId": "ydl-custom-082004f9-10d0-49bb-8b10-77b35155868f",
+      "name": "古德约翰森",
+      "sourceFile": "s4-imported/7055285e37d5db0f7b9ef06e.webp",
+      "asset": "portraits/8328d4c80f314ff0a3cd206c956aa16a6219d53ad2024e02803314c1cac569c7.webp",
+      "sha256": "8328d4c80f314ff0a3cd206c956aa16a6219d53ad2024e02803314c1cac569c7",
+      "bytes": 152892
+    },
+    {
+      "playerId": "ydl-custom-4815fb98-90cb-4a1a-8d6d-0fe49438008a",
+      "name": "舒梅切尔",
+      "sourceFile": "s4-imported/b0828578e0cfe6558aba9132.webp",
+      "asset": "portraits/e0bd17a372cf688bf506a3327cbc40191d41ff94980981f3f2b36336abb5bc26.webp",
+      "sha256": "e0bd17a372cf688bf506a3327cbc40191d41ff94980981f3f2b36336abb5bc26",
+      "bytes": 123142
+    },
+    {
+      "playerId": "ydl-custom-50137f36-ca5f-434b-b2f5-91fdeb9ff9b6",
+      "name": "马特乌斯",
+      "sourceFile": "s4-imported/ed7524ef1f8f03c5f3561732.webp",
+      "asset": "portraits/5e5a476f3c5154595f291d2cf5ea1266e757ed017883260df8745cfd9a24096d.webp",
+      "sha256": "5e5a476f3c5154595f291d2cf5ea1266e757ed017883260df8745cfd9a24096d",
+      "bytes": 77078
+    },
+    {
+      "playerId": "ydl-custom-60b549f5-9f96-450d-a2d1-240aab5ccac0",
+      "name": "鲁梅尼格",
+      "sourceFile": "s4-imported/61c783b230fee9e4422d2d1f.webp",
+      "asset": "portraits/2dbb68e7e521fc507fd0a96b1aa49868d389ca741a215a2dace3d3cb372fb914.webp",
+      "sha256": "2dbb68e7e521fc507fd0a96b1aa49868d389ca741a215a2dace3d3cb372fb914",
+      "bytes": 104478
+    },
+    {
+      "playerId": "ydl-custom-ed32b163-83e0-46c8-8dea-47ffe8905863",
+      "name": "胡梅尔斯",
+      "sourceFile": "s4-imported/76700f0f9409357e6cbe43b6.webp",
+      "asset": "portraits/a3f15186b5b4980d0fabb3a585db2d08161b03dc51913e5d0dedc77e56ce56f0.webp",
+      "sha256": "a3f15186b5b4980d0fabb3a585db2d08161b03dc51913e5d0dedc77e56ce56f0",
+      "bytes": 66958
+    },
+    {
+      "playerId": "ydl-custom-e713a94d-f13e-4e96-a0a5-ae36d289e452",
+      "name": "厄齐尔",
+      "sourceFile": "s4-imported/1615c1e0cc5e9c05e961b064.webp",
+      "asset": "portraits/1a03dd8814be73873240db87702aafa45f3fb196d52cd4a331787c9c98835fdf.webp",
+      "sha256": "1a03dd8814be73873240db87702aafa45f3fb196d52cd4a331787c9c98835fdf",
+      "bytes": 65290
+    },
+    {
+      "playerId": "ydl-custom-7a3161c7-da5a-4671-bf30-38c90adcff8f",
+      "name": "普拉蒂尼",
+      "sourceFile": "s4-imported/e227ff14a275d96541cf1639.webp",
+      "asset": "portraits/7b30e658c2de5d24a759c944fdc0078758d052424ca69bee0aa8fbc7c023546b.webp",
+      "sha256": "7b30e658c2de5d24a759c944fdc0078758d052424ca69bee0aa8fbc7c023546b",
+      "bytes": 80398
+    },
+    {
+      "playerId": "ydl-custom-c4e88e32-4427-4a0c-afae-74489fc75ba7",
+      "name": "皮雷",
+      "sourceFile": "s4-imported/2bcff724e73de079cb4a7874.webp",
+      "asset": "portraits/bfb20cb0cf492cb094052945e54db4a91435763abea5ec1c6ce8d341433b0876.webp",
+      "sha256": "bfb20cb0cf492cb094052945e54db4a91435763abea5ec1c6ce8d341433b0876",
+      "bytes": 66922
+    },
+    {
+      "playerId": "ydl-custom-173326ec-00e3-4fe7-b8e3-0041b76033cc",
+      "name": "佩蒂特",
+      "sourceFile": "s4-imported/28a6fd33a76a2d013db38b1c.webp",
+      "asset": "portraits/233d992b2a989e685e9a54340b0c0a67cc2d978760aa67edf6cbd579ecc743f2.webp",
+      "sha256": "233d992b2a989e685e9a54340b0c0a67cc2d978760aa67edf6cbd579ecc743f2",
+      "bytes": 129960
+    },
+    {
+      "playerId": "ydl-custom-aa8e6124-8c1d-46ff-8f86-dc919f7bd065",
+      "name": "久利",
+      "sourceFile": "s4-imported/44263cb3d8617f204f7af42c.webp",
+      "asset": "portraits/cc25193c1ff799b6b0bd97ac1ad73f625874bce99f58971192fc65fa6089cdfc.webp",
+      "sha256": "cc25193c1ff799b6b0bd97ac1ad73f625874bce99f58971192fc65fa6089cdfc",
+      "bytes": 43178
+    },
+    {
+      "playerId": "ydl-custom-3f29b3cd-1c28-4fd4-86d8-a9826db97d24",
+      "name": "西尔万·维尔托德",
+      "sourceFile": "s4-imported/28d7fcec9544b7c6e1d50398.webp",
+      "asset": "portraits/a9325e1640ffb929b79041b191891d9982c22320bf1693fd9e3158491d1629e3.webp",
+      "sha256": "a9325e1640ffb929b79041b191891d9982c22320bf1693fd9e3158491d1629e3",
+      "bytes": 89040
+    },
+    {
+      "playerId": "ydl-custom-333b64f2-0fb8-4b9d-bb09-b43e7ec70a4c",
+      "name": "马塞尔·德塞利",
+      "sourceFile": "s4-imported/b0ecf154543189424a5a321b.webp",
+      "asset": "portraits/3bad17f6e1228b575968706458c727f3663a72f97ade97d90790b73cec7cfd54.webp",
+      "sha256": "3bad17f6e1228b575968706458c727f3663a72f97ade97d90790b73cec7cfd54",
+      "bytes": 88694
+    },
+    {
+      "playerId": "ydl-custom-eae464c1-428a-404f-8d7c-33de1bb34c03",
+      "name": "洛朗·布兰克",
+      "sourceFile": "s4-imported/a5a7aaf425ca697d3a60876d.webp",
+      "asset": "portraits/1b91e1283ee34a0555f023a9b3698c6794cdd983c6e1528067a33db3231539f5.webp",
+      "sha256": "1b91e1283ee34a0555f023a9b3698c6794cdd983c6e1528067a33db3231539f5",
+      "bytes": 48372
+    },
+    {
+      "playerId": "ydl-custom-50f36e4f-28cf-4d07-b38a-a0ec0dde431e",
+      "name": "利特马宁",
+      "sourceFile": "s4-imported/61e7a84c5971027d52ee739f.webp",
+      "asset": "portraits/2fd2ebb48c89f0e829743bc3e496252cf754d85d24ea7b53fd1fdf49e82f1199.webp",
+      "sha256": "2fd2ebb48c89f0e829743bc3e496252cf754d85d24ea7b53fd1fdf49e82f1199",
+      "bytes": 85250
+    },
+    {
+      "playerId": "ydl-custom-4ed5b648-3a04-44ff-9679-a9377469c0a4",
+      "name": "海皮亚",
+      "sourceFile": "s4-imported/e60c3a1836da3031fd53663d.webp",
+      "asset": "portraits/44b2e484afc740cbbe8d951c9fdad633e9e4f8c66de8f4216e03afb3655fe1fe.webp",
+      "sha256": "44b2e484afc740cbbe8d951c9fdad633e9e4f8c66de8f4216e03afb3655fe1fe",
+      "bytes": 148396
+    },
+    {
+      "playerId": "ydl-custom-33a821ad-3d6b-409d-a81b-387c6cdb9f7a",
+      "name": "伊基塔",
+      "sourceFile": "s4-imported/5aef2a592694cb1ccb7c9853.webp",
+      "asset": "portraits/1a850ee17fef34ea061de5db23961574c1b219bdfc6171d4ae71ea28bab2909e.webp",
+      "sha256": "1a850ee17fef34ea061de5db23961574c1b219bdfc6171d4ae71ea28bab2909e",
+      "bytes": 81022
+    },
+    {
+      "playerId": "ydl-custom-6fef7ed0-44a2-4127-a608-bf36f935d548",
+      "name": "朴智星",
+      "sourceFile": "s4-imported/4a2c4b26dbdfecb9343dcfc9.webp",
+      "asset": "portraits/60c3229c52ec8b2d7cf46b39f319c8c048d1448ff25f22ee657553b8699d113a.webp",
+      "sha256": "60c3229c52ec8b2d7cf46b39f319c8c048d1448ff25f22ee657553b8699d113a",
+      "bytes": 70264
+    },
+    {
+      "playerId": "ydl-custom-ada6ef58-fca2-4f2d-a120-848ae54c88dc",
+      "name": "埃辛",
+      "sourceFile": "s4-imported/2ccb05106110be93e5cdc571.webp",
+      "asset": "portraits/36becca4d1faff29b46e19aa226a1de6929e444653c4eca1d3e846c5486236be.webp",
+      "sha256": "36becca4d1faff29b46e19aa226a1de6929e444653c4eca1d3e846c5486236be",
+      "bytes": 80050
+    },
+    {
+      "playerId": "ydl-custom-3a9f3a06-69b6-4576-a8e8-376a3099050d",
+      "name": "托马斯·罗西基",
+      "sourceFile": "s4-imported/006274fdd769d72066da36dc.webp",
+      "asset": "portraits/6d2013f6f30cf34e066ca1a7e94927835bc3e28b405686c632c9789cf4283161.webp",
+      "sha256": "6d2013f6f30cf34e066ca1a7e94927835bc3e28b405686c632c9789cf4283161",
+      "bytes": 113512
+    },
+    {
+      "playerId": "ydl-custom-e922ea7d-2b4e-4be4-a4a8-a428bc66d0db",
+      "name": "小豌豆",
+      "sourceFile": "s4-imported/6644ff6f43c0c205e3d364bf.webp",
+      "asset": "portraits/903b8cf85917c3cab478add8730948e98c2de460673675de13c73961f24c4d96.webp",
+      "sha256": "903b8cf85917c3cab478add8730948e98c2de460673675de13c73961f24c4d96",
+      "bytes": 135166
+    },
+    {
+      "playerId": "ydl-custom-3483c98f-b433-4df6-be26-12b89c9ca415",
+      "name": "奥科查",
+      "sourceFile": "s4-imported/0851effa1db5e1b3b8d92567.webp",
+      "asset": "portraits/ef4424e8449914a570927e68453d2fcae90399aeb41e633116a91b4cd8c8db08.webp",
+      "sha256": "ef4424e8449914a570927e68453d2fcae90399aeb41e633116a91b4cd8c8db08",
+      "bytes": 79516
+    },
+    {
+      "playerId": "ydl-custom-bd33b41d-f647-4012-831b-fdcea384cc19",
+      "name": "菲利克斯",
+      "sourceFile": "s4-imported/856011a7419440e777fd4151.webp",
+      "asset": "portraits/952180990394dc782dcaf47c8f11bdfe6f95d4700bb8ae0a51fe4a956e12f942.webp",
+      "sha256": "952180990394dc782dcaf47c8f11bdfe6f95d4700bb8ae0a51fe4a956e12f942",
+      "bytes": 105712
+    },
+    {
+      "playerId": "ydl-custom-c6b73f73-004e-4f21-be61-722f59795256",
+      "name": "迪奥戈·若塔",
+      "sourceFile": "s4-imported/6dfd5368553d99f3bb7a7e18.webp",
+      "asset": "portraits/c634c72c27d66fd4b97b4853829c4f61a0462cadcab100f811b5ce4323b767da.webp",
+      "sha256": "c634c72c27d66fd4b97b4853829c4f61a0462cadcab100f811b5ce4323b767da",
+      "bytes": 110738
+    },
+    {
+      "playerId": "ydl-custom-fa9ab577-1c3e-4a44-a94a-9f36dc8b82e4",
+      "name": "博辛瓦",
+      "sourceFile": "s4-imported/dc5ce920a2ca23bfc1e1b615.webp",
+      "asset": "portraits/f5d6223e0b0c4e7b471d8519c449352fe8e00adbc8c5981c832f0409f9d76b0a.webp",
+      "sha256": "f5d6223e0b0c4e7b471d8519c449352fe8e00adbc8c5981c832f0409f9d76b0a",
+      "bytes": 148832
+    },
+    {
+      "playerId": "ydl-custom-f7d60f31-2575-4c8c-acc8-bd4df539a8f0",
+      "name": "劳尔·梅雷莱斯",
+      "sourceFile": "s4-imported/a664225a4258684f5264383b.webp",
+      "asset": "portraits/28aff541f43b1e9ad9e37a3e766e849a15a6171b3bd97a546b50b839c032f6b3.webp",
+      "sha256": "28aff541f43b1e9ad9e37a3e766e849a15a6171b3bd97a546b50b839c032f6b3",
+      "bytes": 72024
+    },
+    {
+      "playerId": "ydl-custom-f764a5de-a1f7-483f-86bd-dfec9520d573",
+      "name": "阿尔梅达",
+      "sourceFile": "s4-imported/52f597e0837af42c44cbd92b.webp",
+      "asset": "portraits/55879401d1df60b81d94d7a33ded92c040ad7178fef7a3adc47b220252159d83.webp",
+      "sha256": "55879401d1df60b81d94d7a33ded92c040ad7178fef7a3adc47b220252159d83",
+      "bytes": 111186
+    },
+    {
+      "playerId": "ydl-custom-32ad2017-9f40-4d48-ba30-454d01f95b30",
+      "name": "若昂·马里奥",
+      "sourceFile": "s4-imported/46debe8df8a202e040071dde.webp",
+      "asset": "portraits/42e083bee66d2029b3c28b90d3c41afb2eff3ca776e90c53600395763510863f.webp",
+      "sha256": "42e083bee66d2029b3c28b90d3c41afb2eff3ca776e90c53600395763510863f",
+      "bytes": 150968
+    },
+    {
+      "playerId": "ydl-custom-82edaf36-27dd-4a12-8890-18a5d99ee471",
+      "name": "威廉·卡瓦略",
+      "sourceFile": "s4-imported/ce7018c476d8a908f9146c67.webp",
+      "asset": "portraits/a5fe69521618342a3f4304c3157bd41c0c298ab2766f9dc678ba3ebf2d354b1a.webp",
+      "sha256": "a5fe69521618342a3f4304c3157bd41c0c298ab2766f9dc678ba3ebf2d354b1a",
+      "bytes": 100826
+    },
+    {
+      "playerId": "ydl-custom-b859c092-34e7-4473-b907-35f96f5bb7c0",
+      "name": "雷纳托·桑谢斯",
+      "sourceFile": "s4-imported/cb764b3fd356da58c4ec3ca2.webp",
+      "asset": "portraits/601dc07d0f254e59d23df411c9344920596ee005bd74be5afa765498467e0499.webp",
+      "sha256": "601dc07d0f254e59d23df411c9344920596ee005bd74be5afa765498467e0499",
+      "bytes": 119270
+    },
+    {
+      "playerId": "ydl-custom-f0fcbbd9-9cf3-431c-b90f-6821d702120f",
+      "name": "安德烈·席尔瓦",
+      "sourceFile": "s4-imported/c4378e31628f58c017f3a9c6.webp",
+      "asset": "portraits/94d731e66f3ec8210eb91612d89b5970df4e4d02868b4efca947d0078d3237ef.webp",
+      "sha256": "94d731e66f3ec8210eb91612d89b5970df4e4d02868b4efca947d0078d3237ef",
+      "bytes": 124654
+    },
+    {
+      "playerId": "ydl-custom-413f349b-f99c-41d8-978a-122cfd39e02a",
+      "name": "贡萨洛·格德斯",
+      "sourceFile": "s4-imported/d37e1600bd0ed20e00f66714.webp",
+      "asset": "portraits/92caa7a0f69236387139fce87c1df3807c97f6fbbc911edd657c118a63f25962.webp",
+      "sha256": "92caa7a0f69236387139fce87c1df3807c97f6fbbc911edd657c118a63f25962",
+      "bytes": 98444
+    },
+    {
+      "playerId": "ydl-custom-96dabe0f-23b3-425f-a29d-ea56f78b98f6",
+      "name": "佩德罗·内托",
+      "sourceFile": "s4-imported/ee20e931f65d7b6998d7d5eb.webp",
+      "asset": "portraits/6026aed57ec93ab2eafe3f2f1e28d175cda10058d5868105a9903caef166940e.webp",
+      "sha256": "6026aed57ec93ab2eafe3f2f1e28d175cda10058d5868105a9903caef166940e",
+      "bytes": 98738
+    },
+    {
+      "playerId": "ydl-custom-1157a7f7-d124-4cc0-a2a2-c97100e5979e",
+      "name": "弗朗西斯科·孔塞桑",
+      "sourceFile": "s4-imported/ec5b9348efeb1781c763bf56.webp",
+      "asset": "portraits/9ad0280c1de2f4f07bc2f231e9a59c4d5ff406bd81a4c080c6a34031220f9044.webp",
+      "sha256": "9ad0280c1de2f4f07bc2f231e9a59c4d5ff406bd81a4c080c6a34031220f9044",
+      "bytes": 274128
+    },
+    {
+      "playerId": "ydl-custom-bc2e14b8-4950-435c-ac44-4fdef557d68f",
+      "name": "若泽·丰特",
+      "sourceFile": "s4-imported/210b9436ac3b09a37281dddb.webp",
+      "asset": "portraits/b9186047a542299f84e1d042dc2875375c8da5493b3306ddb6f091666eba2843.webp",
+      "sha256": "b9186047a542299f84e1d042dc2875375c8da5493b3306ddb6f091666eba2843",
+      "bytes": 181046
+    },
+    {
+      "playerId": "ydl-custom-a479ac3e-de77-4a58-8ec7-9eec2b438dd5",
+      "name": "埃德尔",
+      "sourceFile": "s4-imported/a17af5a8354270d22c5f6ecc.webp",
+      "asset": "portraits/e38be7c5cc4c01f2dc8187c4f3e7826b3b618f8e839446a93945a7b3c1af0b9d.webp",
+      "sha256": "e38be7c5cc4c01f2dc8187c4f3e7826b3b618f8e839446a93945a7b3c1af0b9d",
+      "bytes": 187964
+    },
+    {
+      "playerId": "ydl-custom-10c722cc-97f3-4f15-a0aa-a78bb518670d",
+      "name": "安德烈·戈麦斯",
+      "sourceFile": "s4-imported/9ba6c98563a7ea0dcc5d0cab.webp",
+      "asset": "portraits/12a5bd9b05fca1c16a8aa52d7aa0873536182d096db73ce43cfa22d33132d1a5.webp",
+      "sha256": "12a5bd9b05fca1c16a8aa52d7aa0873536182d096db73ce43cfa22d33132d1a5",
+      "bytes": 91556
+    },
+    {
+      "playerId": "ydl-custom-a8ba04a7-7ed7-4a1d-9dff-85d6faacc72b",
+      "name": "鲁本·阿莫林",
+      "sourceFile": "s4-imported/d245f972cc3c48d32ddbe136.webp",
+      "asset": "portraits/d4a333aec1c75012b25d7e521e4eac34004f5d8d44b9a11a1158b462eb743aed.webp",
+      "sha256": "d4a333aec1c75012b25d7e521e4eac34004f5d8d44b9a11a1158b462eb743aed",
+      "bytes": 64688
+    },
+    {
+      "playerId": "ydl-custom-e7299ab0-55aa-486f-8fd2-cbdec672e971",
+      "name": "埃尔德·波斯蒂加",
+      "sourceFile": "s4-imported/e4db19f53b7e77969d9f9823.webp",
+      "asset": "portraits/defa67597e3234db4979192a960a1a4ee7be8c32fd79ba94f6ad7388a81cfb19.webp",
+      "sha256": "defa67597e3234db4979192a960a1a4ee7be8c32fd79ba94f6ad7388a81cfb19",
+      "bytes": 170406
+    },
+    {
+      "playerId": "ydl-custom-a72c95e7-27b2-4cb5-8db5-425ac3e41bd7",
+      "name": "里卡多",
+      "sourceFile": "s4-imported/88e7ef54544b29da153480ff.webp",
+      "asset": "portraits/f728886bd48c64a9294063cc4619a9e9cd1a8233d4f22653950a768bfda028d0.webp",
+      "sha256": "f728886bd48c64a9294063cc4619a9e9cd1a8233d4f22653950a768bfda028d0",
+      "bytes": 114816
+    },
+    {
+      "playerId": "ydl-custom-e314f55c-7b35-4e5e-b9d0-4a4b27636e4e",
+      "name": "中田英寿",
+      "sourceFile": "s4-imported/eb6483a6756dd74ffe3344a5.webp",
+      "asset": "portraits/529832fd44a3e4cb497fb8161eb8f14af8ddc5f5fad7925a1b9c9fe349cf2788.webp",
+      "sha256": "529832fd44a3e4cb497fb8161eb8f14af8ddc5f5fad7925a1b9c9fe349cf2788",
+      "bytes": 134862
+    },
+    {
+      "playerId": "ydl-custom-1ad98ab6-9001-40bc-b2e7-283c68d2beab",
+      "name": "本田圭佑",
+      "sourceFile": "s4-imported/42f7bbea0e398c6b14b38197.webp",
+      "asset": "portraits/0fd4e4160a106349e8cad162f9b51e9a20824667e2bc735462706dbd1ab75384.webp",
+      "sha256": "0fd4e4160a106349e8cad162f9b51e9a20824667e2bc735462706dbd1ab75384",
+      "bytes": 98120
+    },
+    {
+      "playerId": "ydl-custom-0a013050-d9cb-485f-b50b-c5e94dbf01a5",
+      "name": "香川真司",
+      "sourceFile": "s4-imported/7d15f118d36bd3db87ed80ac.webp",
+      "asset": "portraits/16c2fa4053fe654a7eff08a0bcecc4cb115d88d34dd5b83a23672bc059c372b5.webp",
+      "sha256": "16c2fa4053fe654a7eff08a0bcecc4cb115d88d34dd5b83a23672bc059c372b5",
+      "bytes": 62542
+    },
+    {
+      "playerId": "ydl-custom-18c793f2-08ac-43f6-864a-63b112da36ac",
+      "name": "永贝里",
+      "sourceFile": "s4-imported/918860b4271f8e189b1778cc.webp",
+      "asset": "portraits/6273d2d1509c670b8709490f3741f51abfb841dda1ab541e7bb5b22ef69a8bd4.webp",
+      "sha256": "6273d2d1509c670b8709490f3741f51abfb841dda1ab541e7bb5b22ef69a8bd4",
+      "bytes": 52896
+    },
+    {
+      "playerId": "ydl-custom-fe02129f-ce7f-4320-9b66-2f91e0eb433f",
+      "name": "伊万诺维奇",
+      "sourceFile": "s4-imported/bf445b2a2bf2f6700b256c63.webp",
+      "asset": "portraits/eda632df6213aceb56458e45b8fe5d424f85bd88b322fda33ecaebec64d0febc.webp",
+      "sha256": "eda632df6213aceb56458e45b8fe5d424f85bd88b322fda33ecaebec64d0febc",
+      "bytes": 111466
+    },
+    {
+      "playerId": "ydl-custom-972e8f81-2489-427c-8ad9-22a0fe5cd55d",
+      "name": "约克",
+      "sourceFile": "s4-imported/72b16a84aa09722419c73a59.webp",
+      "asset": "portraits/ef8bc9df89a7509b54100e76db1583c58aa2646f45f25fbe4459cfc69fddabfc.webp",
+      "sha256": "ef8bc9df89a7509b54100e76db1583c58aa2646f45f25fbe4459cfc69fddabfc",
+      "bytes": 108206
+    },
+    {
+      "playerId": "ydl-custom-61a2b1e6-0f21-4890-a9a1-32687d21838e",
+      "name": "吉格斯",
+      "sourceFile": "s4-imported/5a6b591a30215ee79e03e800.webp",
+      "asset": "portraits/c20ab983c2a84c1a5175a53906bdcb1951b2a1b4a9d2bb8d9418e14d43a65a30.webp",
+      "sha256": "c20ab983c2a84c1a5175a53906bdcb1951b2a1b4a9d2bb8d9418e14d43a65a30",
+      "bytes": 56652
+    },
+    {
+      "playerId": "ydl-custom-584166e8-285c-4d5e-bdd8-a879d564f308",
+      "name": "戈丁",
+      "sourceFile": "s4-imported/695b9634af395e640f9313c7.webp",
+      "asset": "portraits/fca410ffc6dd367cd0c8585596ff70c95124e98297a5101815bdf7a9966cb805.webp",
+      "sha256": "fca410ffc6dd367cd0c8585596ff70c95124e98297a5101815bdf7a9966cb805",
+      "bytes": 134018
+    },
+    {
+      "playerId": "ydl-custom-e5c3cfed-e50c-435b-a47c-37034161884b",
+      "name": "卡瓦尼",
+      "sourceFile": "s4-imported/b9dc2064bf6b75ff78dc25df.webp",
+      "asset": "portraits/2c6fd3fc1de321f5ee2d4f586da94593f700c1cc8e197e3973310e70aa0d0716.webp",
+      "sha256": "2c6fd3fc1de321f5ee2d4f586da94593f700c1cc8e197e3973310e70aa0d0716",
+      "bytes": 82066
+    },
+    {
+      "playerId": "ydl-custom-1742885a-9835-49f5-820a-d746a5460d31",
+      "name": "雷科巴",
+      "sourceFile": "s4-imported/cbad95ef63fccc5ff2bdd46c.webp",
+      "asset": "portraits/4955d7e24761c67e6b901af894867365f751d8269f27ea57f952891cf8b3a515.webp",
+      "sha256": "4955d7e24761c67e6b901af894867365f751d8269f27ea57f952891cf8b3a515",
+      "bytes": 37664
+    },
+    {
+      "playerId": "ydl-custom-963b8b01-19eb-4ef3-9d26-b9466bb778f8",
+      "name": "阿尔巴",
+      "sourceFile": "s4-imported/081ef8e7c3e8aa2472392977.webp",
+      "asset": "portraits/2b2f329fa0cd2e5876286fd5d67a092cebf7a968f2631731f242e394508eddf1.webp",
+      "sha256": "2b2f329fa0cd2e5876286fd5d67a092cebf7a968f2631731f242e394508eddf1",
+      "bytes": 110578
+    },
+    {
+      "playerId": "ydl-custom-be4f2de2-ce2d-467b-9656-3f04c876b83e",
+      "name": "蒂亚戈",
+      "sourceFile": "s4-imported/e3f2726a26100a9a8fd00c39.webp",
+      "asset": "portraits/1cdbd7d1d0b5263fd8c551666d57f73fe8aac7bd8a06028ac9ad9db84aa33f54.webp",
+      "sha256": "1cdbd7d1d0b5263fd8c551666d57f73fe8aac7bd8a06028ac9ad9db84aa33f54",
+      "bytes": 101794
+    },
+    {
+      "playerId": "ydl-custom-e82b07b4-fdfb-495c-b434-7b48e209fc5b",
+      "name": "瓜迪奥拉",
+      "sourceFile": "s4-imported/e869716e92d6b00ed56613f0.webp",
+      "asset": "portraits/a30a97f42a0615ca2fcd4fb8d043efd5d7a6dbf7379579d493b4dc6d1b110f7d.webp",
+      "sha256": "a30a97f42a0615ca2fcd4fb8d043efd5d7a6dbf7379579d493b4dc6d1b110f7d",
+      "bytes": 70506
+    },
+    {
+      "playerId": "ydl-custom-536ba6c0-6ce4-4a5e-b477-c5745d6eb8dc",
+      "name": "路易斯·恩里克",
+      "sourceFile": "s4-imported/f6e444ddea0e239ca00420a4.webp",
+      "asset": "portraits/841e58e51858e2fb847df70dbdfa9babda75c2285547d7813191e8f25f159f52.webp",
+      "sha256": "841e58e51858e2fb847df70dbdfa9babda75c2285547d7813191e8f25f159f52",
+      "bytes": 104966
+    },
+    {
+      "playerId": "ydl-custom-8b0ffd39-160b-45b7-b36f-d93d71411045",
+      "name": "佩佩·雷纳",
+      "sourceFile": "s4-imported/47cb9e8dc0b44179a494e721.webp",
+      "asset": "portraits/43436a39551feffbf4e778f0723d7dd79f94111ddf048294ecd73285d2ef7037.webp",
+      "sha256": "43436a39551feffbf4e778f0723d7dd79f94111ddf048294ecd73285d2ef7037",
+      "bytes": 49018
+    },
+    {
+      "playerId": "ydl-custom-5092cbb5-589f-4cc5-aa02-0e71aff8d2c7",
+      "name": "门迭塔",
+      "sourceFile": "s4-imported/a8c12029a5002b7b56fbd735.webp",
+      "asset": "portraits/faad9f012bd70f518064b76d345379720fd54d4d4abf2260d4fe0d2b76e92345.webp",
+      "sha256": "faad9f012bd70f518064b76d345379720fd54d4d4abf2260d4fe0d2b76e92345",
+      "bytes": 45902
+    },
+    {
+      "playerId": "ydl-custom-53637c77-8034-47b3-9c7d-e2278196f49f",
+      "name": "莫伦特斯",
+      "sourceFile": "s4-imported/7cdbd5b916fd2b0e45eee4cd.webp",
+      "asset": "portraits/ac020d8145af3062f32b72d3d2664d590db96e723a12e68fd37242c5dfca757c.webp",
+      "sha256": "ac020d8145af3062f32b72d3d2664d590db96e723a12e68fd37242c5dfca757c",
+      "bytes": 115286
+    },
+    {
+      "playerId": "ydl-custom-8000ab67-9bed-46ef-8294-204782790a77",
+      "name": "米歇尔·萨尔加多",
+      "sourceFile": "s4-imported/850177fb381f6360cb1c69a0.webp",
+      "asset": "portraits/4fb97ea5525547877215dea9b9b52cb4cb6d3ae183a3f80db7d02c90362e15ac.webp",
+      "sha256": "4fb97ea5525547877215dea9b9b52cb4cb6d3ae183a3f80db7d02c90362e15ac",
+      "bytes": 137352
+    },
+    {
+      "playerId": "ydl-custom-368f16b1-e801-4ee2-9a55-a04268009764",
+      "name": "巴莱隆",
+      "sourceFile": "s4-imported/c37ae509adf16ad84764cbd0.webp",
+      "asset": "portraits/e1d667b9d91a98d98f7ffa378d644b1f9a3175b4cf54de3c2a5bfbf58aa89fa5.webp",
+      "sha256": "e1d667b9d91a98d98f7ffa378d644b1f9a3175b4cf54de3c2a5bfbf58aa89fa5",
+      "bytes": 52702
+    },
+    {
+      "playerId": "ydl-custom-2bd68760-012f-4987-b89e-b44cb1e09e7f",
+      "name": "维埃里",
+      "sourceFile": "s4-imported/8d913bec60e473cb69080c4b.webp",
+      "asset": "portraits/37230e573c6f2c08243bf28b07276968af6b544a7a51475c222e29daccc824e0.webp",
+      "sha256": "37230e573c6f2c08243bf28b07276968af6b544a7a51475c222e29daccc824e0",
+      "bytes": 110548
+    },
+    {
+      "playerId": "ydl-custom-28b3c1ae-484a-4746-b998-63e1ebcae863",
+      "name": "迪纳塔莱",
+      "sourceFile": "s4-imported/3eeb52e11f735bba3934f410.webp",
+      "asset": "portraits/35770d1a8e3d31819c97ebf20c011be3b3269d63d532e3c6db4c3c73d8cc2493.webp",
+      "sha256": "35770d1a8e3d31819c97ebf20c011be3b3269d63d532e3c6db4c3c73d8cc2493",
+      "bytes": 66640
+    },
+    {
+      "playerId": "ydl-custom-e16f1874-1e99-480c-9864-2e5793304531",
+      "name": "托尔多",
+      "sourceFile": "s4-imported/6bc4b4c9610f50a20a964d58.webp",
+      "asset": "portraits/4f620f4f85ccd9419b74be6ed00c2d731827ce862821648b9ea25fa77d5c1c54.webp",
+      "sha256": "4f620f4f85ccd9419b74be6ed00c2d731827ce862821648b9ea25fa77d5c1c54",
+      "bytes": 39150
+    },
+    {
+      "playerId": "ydl-custom-400715fe-8aae-409f-b484-5f85ee25d385",
+      "name": "巴尔扎利",
+      "sourceFile": "s4-imported/cbb9d32651b968326ac9713c.webp",
+      "asset": "portraits/2bb154ec49af4c41787caf7b6de8ad2eefad6b41f01751545e0c728e99fcb68e.webp",
+      "sha256": "2bb154ec49af4c41787caf7b6de8ad2eefad6b41f01751545e0c728e99fcb68e",
+      "bytes": 97448
+    },
+    {
+      "playerId": "ydl-custom-015108ba-24a2-435f-96ec-2f1483d6c150",
+      "name": "帕努奇",
+      "sourceFile": "s4-imported/f560cf2daf49ee30a11df174.webp",
+      "asset": "portraits/f672ae250790f318756f50d96b605cb5d10bb7d3de990d3a516f3388f9074fbb.webp",
+      "sha256": "f672ae250790f318756f50d96b605cb5d10bb7d3de990d3a516f3388f9074fbb",
+      "bytes": 180152
+    },
+    {
+      "playerId": "ydl-custom-5221e70f-b23d-4acf-a892-fbce96102435",
+      "name": "博比·查尔顿",
+      "sourceFile": "s4-imported/7a1cdb4bf4b02ba1436065cb.webp",
+      "asset": "portraits/fbbee99582e03278c03ef5498c083626de9f6dd8464157ceca8bcbaca5b23cee.webp",
+      "sha256": "fbbee99582e03278c03ef5498c083626de9f6dd8464157ceca8bcbaca5b23cee",
+      "bytes": 35556
+    },
+    {
+      "playerId": "ydl-custom-d0675037-a590-4d0d-b1a5-45acb71b2ba7",
+      "name": "博比·摩尔",
+      "sourceFile": "s4-imported/1696b93cdcd6e9f2d70b9274.webp",
+      "asset": "portraits/8195cd6fdc14896cbca6cc5064da62ea31f57cb4ffd7fbbd8d73530813b84208.webp",
+      "sha256": "8195cd6fdc14896cbca6cc5064da62ea31f57cb4ffd7fbbd8d73530813b84208",
+      "bytes": 53296
+    },
+    {
+      "playerId": "ydl-custom-ff48146f-4540-4ebf-9368-812cf6e9a492",
+      "name": "拉什福德",
+      "sourceFile": "s4-imported/77d9cdc735c902ffdffb4ec8.webp",
+      "asset": "portraits/eb8fc3b870c6739dcbdf7a1f50a787af7d34b78896f5eec386b48b799eb00cf1.webp",
+      "sha256": "eb8fc3b870c6739dcbdf7a1f50a787af7d34b78896f5eec386b48b799eb00cf1",
+      "bytes": 53110
+    },
+    {
+      "playerId": "ydl-custom-f13ba911-8bd9-460c-8337-1224d1c674cb",
+      "name": "迈克尔·欧文",
+      "sourceFile": "s4-imported/4cfacf43636c2b36abd0b5a5.webp",
+      "asset": "portraits/98de883a0696c85d961b77852576fed904f465c3993a1f220c44b258c56bf026.webp",
+      "sha256": "98de883a0696c85d961b77852576fed904f465c3993a1f220c44b258c56bf026",
+      "bytes": 116180
+    },
+    {
+      "playerId": "ydl-custom-20d636f5-fa20-429d-9b46-de08b065cd4d",
+      "name": "阿兰·希勒",
+      "sourceFile": "s4-imported/b8eef7d786dbdb8955071edb.webp",
+      "asset": "portraits/d65b6a29579c694ae9dce2d4240ead2e706e0086b6877de97490a87a8a4a6a33.webp",
+      "sha256": "d65b6a29579c694ae9dce2d4240ead2e706e0086b6877de97490a87a8a4a6a33",
+      "bytes": 179404
+    },
+    {
+      "playerId": "ydl-custom-96a3629f-2e03-4365-af54-6fd0ba895001",
+      "name": "索尔·坎贝尔",
+      "sourceFile": "s4-imported/e8d141096213b3e96bfb7d50.webp",
+      "asset": "portraits/6166adbc87c23e34165df832c176197225f49008b7e43fc857cf9afbcda6b979.webp",
+      "sha256": "6166adbc87c23e34165df832c176197225f49008b7e43fc857cf9afbcda6b979",
+      "bytes": 127996
+    },
+    {
+      "playerId": "ydl-custom-301d0f76-5180-4c5a-aee5-ec000a0ee027",
+      "name": "安迪·科尔",
+      "sourceFile": "s4-imported/742899da99360d02184a181f.webp",
+      "asset": "portraits/3aa9cc6e3faf31a6dac04c3164185a25dc1158dbe1a72c14d0d17888f9b683a3.webp",
+      "sha256": "3aa9cc6e3faf31a6dac04c3164185a25dc1158dbe1a72c14d0d17888f9b683a3",
+      "bytes": 113406
+    },
+    {
+      "playerId": "ydl-custom-11296a2d-a23d-4a97-874f-cba15d5f9eed",
+      "name": "罗比·福勒",
+      "sourceFile": "s4-imported/7a172a01715f0b72e5d63951.webp",
+      "asset": "portraits/7521ca9beb1c22ca2d5f6b73c8b8d7b841e146e2340ff8cb501075251bb2c97a.webp",
+      "sha256": "7521ca9beb1c22ca2d5f6b73c8b8d7b841e146e2340ff8cb501075251bb2c97a",
+      "bytes": 85412
+    },
+    {
+      "playerId": "ydl-custom-e5646403-af14-4945-85cb-cac20c99ca4d",
+      "name": "卡拉格",
+      "sourceFile": "s4-imported/20a73b1c9433a26ab4d6b4a6.webp",
+      "asset": "portraits/aa558d148085fcce06b672fd4d572d501529255c756e6b20fffd6a291be7a1ca.webp",
+      "sha256": "aa558d148085fcce06b672fd4d572d501529255c756e6b20fffd6a291be7a1ca",
+      "bytes": 156736
+    },
+    {
+      "playerId": "ydl-custom-b1d12633-7d58-4e7f-b6af-33e7231f2bb4",
+      "name": "克劳奇",
+      "sourceFile": "s4-imported/0c79d77154451320c36d914a.webp",
+      "asset": "portraits/6b40ac8aad006703b786fab623828af8f84692d52001c3582e8882989d5d8240.webp",
+      "sha256": "6b40ac8aad006703b786fab623828af8f84692d52001c3582e8882989d5d8240",
+      "bytes": 118388
+    },
+    {
+      "playerId": "ydl-custom-057d8b95-e450-4e00-a567-d7b369b2d908",
+      "name": "大卫·希曼",
+      "sourceFile": "s4-imported/e9d6d4ef05e2e64fdb009f01.webp",
+      "asset": "portraits/0108a51de0adca20eada519199f045401df92f18d5200490c158c3f426c0edb4.webp",
+      "sha256": "0108a51de0adca20eada519199f045401df92f18d5200490c158c3f426c0edb4",
+      "bytes": 44724
+    },
+    {
+      "playerId": "ydl-custom-8178da9c-789f-4715-abfc-13c4bf1acdfc",
+      "name": "亚历克西斯·桑切斯",
+      "sourceFile": "s4-imported/7076471e61e11d3bb9796271.webp",
+      "asset": "portraits/7bdb482790dfe327b38978ba3864a81141c4f2872810fca56e78f86db8e0db02.webp",
+      "sha256": "7bdb482790dfe327b38978ba3864a81141c4f2872810fca56e78f86db8e0db02",
+      "bytes": 87916
+    },
+    {
+      "playerId": "ydl-custom-1623a741-d51f-422b-9601-d90b3b8e9b54",
+      "name": "比达尔",
+      "sourceFile": "s4-imported/66a190f2df9b942748cd34f8.webp",
+      "asset": "portraits/c93a61cb60a59b41aec62687baa7ce8df0eca82137ebd3b5cfc4cd78a7c51d31.webp",
+      "sha256": "c93a61cb60a59b41aec62687baa7ce8df0eca82137ebd3b5cfc4cd78a7c51d31",
+      "bytes": 99328
+    },
+    {
+      "playerId": "ydl-custom-bd2ffdbe-0fbd-4355-810b-7ed497d9f6cb",
+      "name": "萨拉斯",
+      "sourceFile": "s4-imported/6e32ce86934320d3a25675fe.webp",
+      "asset": "portraits/ddf45a0fc2f302ad9c1d5602ae27cb0f60c008a42c89570870a29e18330cc70e.webp",
+      "sha256": "ddf45a0fc2f302ad9c1d5602ae27cb0f60c008a42c89570870a29e18330cc70e",
+      "bytes": 42162
+    },
+    {
+      "playerId": "ydl-custom-18bb8269-6e65-400e-b818-da7bc202fa13",
+      "name": "布拉沃",
+      "sourceFile": "s4-imported/2fbc4e895fa4a824a33a412f.webp",
+      "asset": "portraits/045a6feb64ad31ac00475cdef8a6acb0c4ac67162a8e28ad3c12e172ad076c60.webp",
+      "sha256": "045a6feb64ad31ac00475cdef8a6acb0c4ac67162a8e28ad3c12e172ad076c60",
+      "bytes": 115782
+    }
+  ]
+}

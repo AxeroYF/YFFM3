@@ -1,0 +1,17 @@
+{
+  "source": "https://github.com/makehumancommunity/makehuman",
+  "license": "CC0-1.0 (assets)",
+  "revision": "a8bc2d54ff0ac92e78ff71431b1023eda42bf482",
+  "files": [
+    "LICENSE.md",
+    "LICENSE.ASSETS.md",
+    "makehuman/data/3dobjs/base.obj",
+    "makehuman/data/rigs/default.mhskel",
+    "makehuman/data/rigs/default_weights.mhw",
+    "makehuman/data/targets/macrodetails/caucasian-male-young.target",
+    "makehuman/data/targets/macrodetails/universal-male-young-maxmuscle-averageweight.target",
+    "makehuman/data/eyes/low-poly/low-poly.obj",
+    "makehuman/data/eyes/low-poly/low-poly.mhclo",
+    "makehuman/data/eyes/materials/brown_eye.png"
+  ]
+}

@@ -1,0 +1,46 @@
+YFFM3 本地 Godot 开发环境
+
+安装版本：Godot 4.7.2 stable，Windows x86_64 标准版，使用 GDScript。
+官方来源：https://github.com/godotengine/godot-builds/releases/tag/4.7.2-stable
+
+启动方式
+双击项目根目录的 Start-Godot.cmd，打开中文项目管理器。
+以后可从项目管理器新建游戏，或导入已有 project.godot。
+当前仅安装开发环境，tools/verification 内为安装验证用的小项目。
+
+命令行
+在 YFFM3 目录执行：
+  .\godot.cmd --version
+  .\godot.cmd --editor --path <游戏项目目录>
+
+目录说明
+tools/godot/                       编辑器及便携数据
+tools/godot/editor_data/           编辑器设置、缓存及导出模板
+tools/godot/user_data/             通过启动脚本运行时的项目用户数据
+tools/downloads/                   保留的官方安装压缩包
+tools/verification/                导入、运行、图形及 Windows 导出验证
+
+请通过根目录的启动脚本打开 Godot。
+_sc_ 文件使编辑器设置和缓存保持便携；启动脚本只为子进程设置 APPDATA，
+将开发项目用户数据也放在本目录，不修改系统环境变量。
+发布给玩家的游戏使用玩家电脑的正常用户数据目录，不依赖这些开发脚本。
+
+导出模板
+使用与编辑器匹配的 4.7.2.stable 标准模板。
+完整模板包包含多个平台；Android/iOS 正式构建仍需要对应平台 SDK。
+当前 Windows GDScript 开发不需要额外安装 .NET SDK、Python 或 C++ 编译器。
+
+安装验证结果
+编辑器和模板 SHA256 与官方发布资产一致；编辑器数字签名有效。
+项目管理器、项目导入、GDScript 执行均通过。
+显卡验证：NVIDIA GeForce RTX 5070 Ti，Vulkan 1.4.351 / Forward+ 正常。
+已成功导出最小 Windows Release 程序，并运行通过。
+具体记录见 tools/godot-installation.json 和 tools/verification/*.log。
+
+服务端
+沿用电脑上现有 Node.js v22.17.1、npm 10.9.2 与 Git。
+Node.js 不属于 Godot 运行依赖；它用于后续独立的游戏服务端。
+
+版本管理
+.gitignore 已排除本地编辑器、下载压缩包、验证目录及 .godot 缓存。
+tools/.gdignore 可防止将工具目录当作 Godot 游戏资源扫描。

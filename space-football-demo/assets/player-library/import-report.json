@@ -1,0 +1,31 @@
+{
+  "imported": 386,
+  "uniqueArt": 386,
+  "artBytes": 40666520,
+  "sourceRecords": 842,
+  "excludedNoArt": 456,
+  "attributeValues": 10036,
+  "roles": {
+    "GK": 36,
+    "CB": 59,
+    "RB": 22,
+    "LB": 17,
+    "DM": 45,
+    "AM": 59,
+    "RM": 10,
+    "LM": 9,
+    "RW": 21,
+    "LW": 16,
+    "ST": 92
+  },
+  "grades": {
+    "S": 88,
+    "A": 296,
+    "B": 2
+  },
+  "missingHeight": 0,
+  "missingWeakFoot": 151,
+  "missingSkillMoves": 151,
+  "attributesOutside1to99": [],
+  "verification": "All original records preserved; all copied art SHA-256 verified; no source files modified."
+}

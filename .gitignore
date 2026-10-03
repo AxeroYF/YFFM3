@@ -1,0 +1,39 @@
+# Portable editor, downloaded installers, export templates, and user saves.
+/tools/godot/
+/tools/downloads/
+/tools/verification/
+
+# Godot import cache and local editor/export credentials. Keep source .import/.uid files.
+.godot/
+.godot-test/
+.godot-check/
+.godot-export/
+.godot_uid_cache.bin
+export_credentials.cfg
+
+# Generated screenshots, test logs, backups, and executable builds.
+**/artifacts/
+*.log
+*.pid
+*.tmp
+*.bak
+*.pck
+*.exe
+*.apk
+*.aab
+*.dmg
+
+# Local configuration and credentials.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+node_modules/

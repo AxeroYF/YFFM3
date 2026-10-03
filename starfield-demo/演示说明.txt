@@ -1,0 +1,30 @@
+YFFM3 · 星际远征 / Godot 星空演示
+
+从项目根目录双击 Start-Starfield-Demo.cmd 运行。
+双击 Edit-Starfield-Demo.cmd 可在 Godot 编辑器内打开源项目。
+
+操作
+鼠标左键或右键拖动：旋转视角
+鼠标滚轮：缩放
+点击星球或下方目的地按钮：选择星球，查看资料
+双击星球 / F：聚焦当前选中的星球
+1—4：切换目的地
+设为航行目的地：飞船前往当前选中星球的轨道，约 7 秒
+空格 / 暂停时间：暂停或继续行星自转与飞船航行
+环绕视角：开启或关闭自动环绕
+R / Esc / 总览：恢复默认视角
+关闭窗口：退出演示
+
+内容
+Godot 4.7.2 标准版，Forward+ / Vulkan 实时渲染。
+程序生成星云、星空、四种星球、大气、行星环、恒星和小型飞船。
+采用中文系统字体，不需要额外下载美术素材或插件。
+画面为美术化星系构图，大小、轨道、重力和航程用于展示，不是天文模拟。
+当前为本地视觉及交互原型；还没有接入服务器或足球比赛。
+
+验证与交付
+artifacts/starfield-preview.png：Godot 实际渲染的默认视角
+artifacts/planet-closeup.png：聚焦蓝色行星的实际画面
+artifacts/verify.log：GPU、脚本与交互验证日志
+artifacts/build/YFFM3-Starfield.exe：可独立运行的 Windows x64 版本
+独立 exe 无需安装 Godot；源项目可通过上方编辑入口继续修改。

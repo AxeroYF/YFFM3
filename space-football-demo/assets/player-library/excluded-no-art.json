@@ -1,0 +1,2282 @@
+[
+  {
+    "id": "s4-fc26-193080",
+    "name": "德赫亚",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-185122",
+    "name": "古拉奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-230869",
+    "name": "乌奈西蒙",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-204935",
+    "name": "皮克福德",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-262621",
+    "name": "马马尔达什维利",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-186153",
+    "name": "什琴斯尼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-252154",
+    "name": "卡尔内塞基",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-259532",
+    "name": "霍安加西亚",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-227127",
+    "name": "雷米罗",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-251752",
+    "name": "舍瓦利耶",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-199641",
+    "name": "塞尔斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-193698",
+    "name": "鲍曼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-215316",
+    "name": "鲁利",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-240091",
+    "name": "维卡里奥",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-230872",
+    "name": "斯韦拉尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-225116",
+    "name": "梅里特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-224987",
+    "name": "普罗韦代尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-192984",
+    "name": "卡斯特尔斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-209981",
+    "name": "布努",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-223885",
+    "name": "努贝尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-233306",
+    "name": "迪恩亨德森",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-235840",
+    "name": "迪格里格里奥",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-243952",
+    "name": "卢宁",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-223952",
+    "name": "索里亚",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-188943",
+    "name": "特拉普",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-203841",
+    "name": "波普",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-230670",
+    "name": "卢卡斯佩里",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-190941",
+    "name": "赫拉德茨基",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-210385",
+    "name": "鲁伊席尔瓦",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-210676",
+    "name": "法尔科内",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-226753",
+    "name": "奥辣辣",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-192563",
+    "name": "莱诺",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-204883",
+    "name": "桑巴",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-241671",
+    "name": "利瓦科维奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-250753",
+    "name": "特鲁宾",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-201269",
+    "name": "伦诺夫",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-226300",
+    "name": "卡科尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-retired-petr-cech",
+    "name": "切赫",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-retired-edwin-van-der-sar",
+    "name": "范德萨",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc-20260731-044",
+    "name": "拉姆斯代尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-007",
+    "name": "乌巴尔多·菲洛尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-040",
+    "name": "汉斯·范布鲁克伦",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-234396",
+    "name": "阿方索戴维斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-251517",
+    "name": "格瓦迪奥尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-248550",
+    "name": "维维安",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-199845",
+    "name": "阿切尔比",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-198176",
+    "name": "德弗里",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-204638",
+    "name": "奥尔班",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-263578",
+    "name": "巴尔德",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-247103",
+    "name": "汉茨科",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-217870",
+    "name": "迪洛伦佐",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-253149",
+    "name": "弗林鹏",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-278016",
+    "name": "穆里略",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-208920",
+    "name": "阿克",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-256197",
+    "name": "因卡皮耶",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-244263",
+    "name": "拉赫马尼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-229582",
+    "name": "曼奇尼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-216460",
+    "name": "希门内斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-238095",
+    "name": "米林科维奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-233486",
+    "name": "勒诺尔芒",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-253163",
+    "name": "阿劳霍",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-208333",
+    "name": "埃姆雷詹",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-225375",
+    "name": "莱默尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-243576",
+    "name": "波罗",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-216267",
+    "name": "罗伯逊",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-229348",
+    "name": "罗宾逊",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-197445",
+    "name": "阿拉巴",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-236703",
+    "name": "劳姆",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-220793",
+    "name": "达文森桑切斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-227678",
+    "name": "孔萨",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-251805",
+    "name": "廷伯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-227647",
+    "name": "米特尔施泰特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-264453",
+    "name": "范德芬",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-260908",
+    "name": "凯尔凯兹",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-278349",
+    "name": "赫伊森",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-210047",
+    "name": "法比安舍尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-203574",
+    "name": "斯通斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-201024",
+    "name": "库利巴利",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-229237",
+    "name": "阿坎吉",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-241159",
+    "name": "马克盖伊",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-235243",
+    "name": "徳利赫特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-229476",
+    "name": "安东",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-243241",
+    "name": "布翁焦尔诺",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-210413",
+    "name": "罗马尼奥利",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-232488",
+    "name": "罗梅罗",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-247257",
+    "name": "伊巴涅斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-237086",
+    "name": "金玟哉",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-207862",
+    "name": "金特尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-200724",
+    "name": "纳乔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-236532",
+    "name": "科赫",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-251809",
+    "name": "波特曼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-258648",
+    "name": "奥古斯托",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-237646",
+    "name": "穆尼奥斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-247263",
+    "name": "塔普索巴",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-228618",
+    "name": "费兰门迪",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-211688",
+    "name": "加亚",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-239301",
+    "name": "利马",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-184392",
+    "name": "达米安",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-261865",
+    "name": "古铁雷斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-242641",
+    "name": "艾特努里",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-238074",
+    "name": "里斯詹姆斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-236403",
+    "name": "恩迪卡",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-232756",
+    "name": "托莫里",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-257179",
+    "name": "伊纳西奥",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-242835",
+    "name": "巴莱尔迪",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-220814",
+    "name": "卢卡斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-232363",
+    "name": "什克里尼亚尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-243854",
+    "name": "西马坎",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-244749",
+    "name": "阿格尔德",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-212190",
+    "name": "聚勒",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-228805",
+    "name": "赖略",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-251479",
+    "name": "德克伊珀",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-268889",
+    "name": "卡雷拉斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-259583",
+    "name": "乌多吉",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-231591",
+    "name": "加兰",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-239093",
+    "name": "克洛斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-186345",
+    "name": "特里皮尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-200458",
+    "name": "迪涅",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-259694",
+    "name": "明戈萨",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-236401",
+    "name": "马兹拉维",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-224656",
+    "name": "奥拉艾纳",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-223697",
+    "name": "戈森斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-252802",
+    "name": "辛戈",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-229880",
+    "name": "万比萨卡",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-229905",
+    "name": "巴尔达奇克",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-257278",
+    "name": "泰亚特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-228579",
+    "name": "亨里希斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-262138",
+    "name": "卢克巴",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-258908",
+    "name": "范黑克",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-262859",
+    "name": "科尔维尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-266127",
+    "name": "刘易斯霍尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-229668",
+    "name": "埃尔莫索",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-241464",
+    "name": "保托雷斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-255654",
+    "name": "卡卢卢",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-262118",
+    "name": "利夫拉门托",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-269493",
+    "name": "阿莱克斯桑德罗",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-213661",
+    "name": "克里斯藤森",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-189881",
+    "name": "斯莫林",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-220440",
+    "name": "朗格莱",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-212602",
+    "name": "迭戈略伦特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-266872",
+    "name": "加蒂",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-202695",
+    "name": "塔尔科夫斯基",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-246875",
+    "name": "科苏努",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-270531",
+    "name": "奥斯曼迪奥曼德",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-183512",
+    "name": "贝尔奇切",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-248165",
+    "name": "拉蒂乌",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-220651",
+    "name": "安赫尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-235152",
+    "name": "卡德奥卢",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-248465",
+    "name": "马特森",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-233084",
+    "name": "莫里纳",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-224196",
+    "name": "本塞拜尼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-212091",
+    "name": "罗迪涅",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-251804",
+    "name": "德斯特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-retired-ashley-cole",
+    "name": "阿什利科尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-retired-giorgio-chiellini",
+    "name": "基耶利尼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc-20260731-006",
+    "name": "德米凯利斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc-20260731-009",
+    "name": "加里·内维尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-019",
+    "name": "塔利亚菲科",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-020",
+    "name": "蒙铁尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-025",
+    "name": "鲁德·克罗尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-033",
+    "name": "弗兰克·德波尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-058",
+    "name": "费尔南多·库托",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc3-20260808-002",
+    "name": "阿比达尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc3-20260808-009",
+    "name": "萨巴莱塔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc3-20260808-036",
+    "name": "梅策尔德",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc3-20260808-041",
+    "name": "卡普德维拉",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc3-20260808-046",
+    "name": "范德维尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-208128",
+    "name": "恰尔汗奥卢",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-256516",
+    "name": "尼科威廉姆斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-241096",
+    "name": "托纳利",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-240638",
+    "name": "赖因德斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-237238",
+    "name": "麦克托米奈",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-244260",
+    "name": "奥尔莫",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-226271",
+    "name": "法比安卢伊斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-199503",
+    "name": "扎卡",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-241084",
+    "name": "路易斯迪亚斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-216393",
+    "name": "蒂勒曼斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-212616",
+    "name": "德保罗",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-244675",
+    "name": "桑塞特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-223848",
+    "name": "米林科维奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-257279",
+    "name": "巴埃纳",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-242516",
+    "name": "加克波",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-247090",
+    "name": "恩佐费尔南德斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-231521",
+    "name": "帕拉西奥斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-210035",
+    "name": "格里马尔多",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-222077",
+    "name": "洛卡特利",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-220502",
+    "name": "扎卡尼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-245367",
+    "name": "哈维西蒙斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-220697",
+    "name": "麦迪逊",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-241852",
+    "name": "迪亚比",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-204485",
+    "name": "马赫雷斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-210008",
+    "name": "拉比奥特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-236772",
+    "name": "索博斯洛伊",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-248243",
+    "name": "卡马文加",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-192883",
+    "name": "姆希塔良",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-223959",
+    "name": "卢卡斯托雷拉",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-244669",
+    "name": "尤尔曼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-228813",
+    "name": "加西亚",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-247394",
+    "name": "库卢塞夫斯基",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-216201",
+    "name": "伊尼亚基威廉姆斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-240243",
+    "name": "库尼亚",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-225193",
+    "name": "梅里诺",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-240950",
+    "name": "贡萨尔维斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-208722",
+    "name": "马内",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-216435",
+    "name": "洛伯特卡",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-209989",
+    "name": "托马斯帕特伊",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-250959",
+    "name": "斯蒂勒",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-236987",
+    "name": "卡马拉",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-235794",
+    "name": "埃泽",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-264240",
+    "name": "加维",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-186942",
+    "name": "京多安",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-224371",
+    "name": "鲍温",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-212194",
+    "name": "布兰特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-213345",
+    "name": "金斯利科曼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-248148",
+    "name": "苏比门迪",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-227236",
+    "name": "安吉萨",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-229261",
+    "name": "扎卡里亚",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-266866",
+    "name": "埃德松",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-246863",
+    "name": "恩梅查",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-223334",
+    "name": "乔林顿",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-209658",
+    "name": "格雷茨卡",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-256853",
+    "name": "蒂尔曼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-243245",
+    "name": "科克曲",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-210411",
+    "name": "奥塔维奥",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-225201",
+    "name": "贝伦格尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-209499",
+    "name": "法比尼奥",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-226226",
+    "name": "洛塞尔索",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-255565",
+    "name": "三笘薰",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-222492",
+    "name": "萨内",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-222737",
+    "name": "马尔科姆",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-236496",
+    "name": "贡多齐",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-236015",
+    "name": "怀特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-272449",
+    "name": "巴里奥斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-233556",
+    "name": "奥尔索利尼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-210602",
+    "name": "道萨里",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-251470",
+    "name": "德凯特拉雷",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-231416",
+    "name": "卢克巴吉奥",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-192318",
+    "name": "格策",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-246147",
+    "name": "格林伍德",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-189513",
+    "name": "帕雷霍",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-213648",
+    "name": "赫伊别尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-216547",
+    "name": "拉法",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-232639",
+    "name": "堂安律",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-206113",
+    "name": "格纳布里",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-237681",
+    "name": "久保健英",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-244778",
+    "name": "特林康",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-231410",
+    "name": "布拉欣",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-272500",
+    "name": "巴勒巴",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-238216",
+    "name": "加拉格尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-219683",
+    "name": "托利索",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-239807",
+    "name": "弗拉泰西",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-208574",
+    "name": "科斯蒂奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-210881",
+    "name": "麦金",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-247246",
+    "name": "图拉姆",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-202648",
+    "name": "达德尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-240679",
+    "name": "库普梅纳斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-234060",
+    "name": "扬赫尔埃雷拉",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-212523",
+    "name": "塔利斯卡",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-235944",
+    "name": "布莱斯门德斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-235805",
+    "name": "基耶萨",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-253396",
+    "name": "小西蒙尼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-259516",
+    "name": "卡尔多索",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-193747",
+    "name": "科克曲",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-216352",
+    "name": "布罗佐维奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-208461",
+    "name": "德卢恩",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-225309",
+    "name": "阿米里",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-212242",
+    "name": "安德里希",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-245630",
+    "name": "福法纳",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-216354",
+    "name": "克拉马里奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-232411",
+    "name": "恩昆库",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-222509",
+    "name": "塞瓦略斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-239482",
+    "name": "加莱诺",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-232498",
+    "name": "伊西",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-251852",
+    "name": "阿德耶米",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-202024",
+    "name": "弗罗伊勒",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-213516",
+    "name": "里卡多奥尔塔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-263205",
+    "name": "伊尔马兹",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-213666",
+    "name": "奇克",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-260247",
+    "name": "摩根·罗杰斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc-20260731-018",
+    "name": "德扬·斯坦科维奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc-20260731-019",
+    "name": "本阿尔法",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc-20260731-027",
+    "name": "华金",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc-20260731-037",
+    "name": "马斯切拉诺",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc-20260731-038",
+    "name": "法布雷加斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc-20260731-041",
+    "name": "拉基蒂奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-207410",
+    "name": "科瓦契奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-009",
+    "name": "里卡多·博奇尼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-018",
+    "name": "帕雷德斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-028",
+    "name": "威廉·范哈内亨",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-035",
+    "name": "拉斐尔·范德法特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-036",
+    "name": "马克·奥维马斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-037",
+    "name": "范布隆克霍斯特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-038",
+    "name": "菲利普·科库",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-043",
+    "name": "维纳尔杜姆",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-046",
+    "name": "马里奥·科卢纳",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-230899",
+    "name": "卢克曼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-216549",
+    "name": "瑟洛特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-256675",
+    "name": "马尔穆什",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-215590",
+    "name": "阿约塞",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-242964",
+    "name": "安东尼戈登",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-242458",
+    "name": "多夫比克",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-241461",
+    "name": "费兰托雷斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-257289",
+    "name": "埃基蒂克",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-192629",
+    "name": "阿斯帕斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-207421",
+    "name": "特罗萨德",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-243580",
+    "name": "奥鹏达",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-241850",
+    "name": "雷特吉",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-236610",
+    "name": "莫伊斯基恩",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-229188",
+    "name": "帕维里迪斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-210935",
+    "name": "贝拉尔迪",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-246430",
+    "name": "弗拉霍维奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-236461",
+    "name": "马特塔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-244257",
+    "name": "布尔卡特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-243630",
+    "name": "乔纳森戴维",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-235790",
+    "name": "哈夫茨",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-230142",
+    "name": "奥雅萨瓦尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-234824",
+    "name": "维萨",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-235410",
+    "name": "恩内斯里",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-188335",
+    "name": "布迪米尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-192123",
+    "name": "克里斯伍德",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-215333",
+    "name": "萨帕塔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-270409",
+    "name": "萨维尼奥",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-255475",
+    "name": "安东尼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-251566",
+    "name": "马丁内利",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-181458",
+    "name": "佩里西奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-212228",
+    "name": "伊万托尼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-206085",
+    "name": "墨菲",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-208418",
+    "name": "卡拉斯科",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-257470",
+    "name": "埃兰加",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-236632",
+    "name": "内雷斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-208093",
+    "name": "莫雷诺",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-216409",
+    "name": "波利塔诺",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-188567",
+    "name": "奥巴梅扬",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-237679",
+    "name": "穆阿尼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-231652",
+    "name": "班萨",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-214096",
+    "name": "蒂姆",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-247679",
+    "name": "博尼费斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-180930",
+    "name": "哲科",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-201399",
+    "name": "伊卡尔迪",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-251570",
+    "name": "谢尔基",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-260592",
+    "name": "舍什科",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-206517",
+    "name": "格拉利什",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-234579",
+    "name": "基尼奥内斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-264697",
+    "name": "阿穆拉",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-245155",
+    "name": "库杜斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-239380",
+    "name": "诺亚朗",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-254796",
+    "name": "马杜埃凯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-243586",
+    "name": "阿尤布卡比",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-246242",
+    "name": "布莱迪亚",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-225539",
+    "name": "索兰克",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-238900",
+    "name": "德米罗维奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-230666",
+    "name": "赫苏斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-256903",
+    "name": "贡萨洛拉莫斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-234742",
+    "name": "哈维巴恩斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-246420",
+    "name": "多库",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-259197",
+    "name": "杰克逊",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-237712",
+    "name": "卡斯特利亚诺斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-243593",
+    "name": "劳里恩特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-224179",
+    "name": "伊格尼西亚斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-244176",
+    "name": "昂达夫",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-256612",
+    "name": "伊万尼尔逊",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-233049",
+    "name": "桑乔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-258580",
+    "name": "阿克蒂尔科奥卢",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-220834",
+    "name": "阿森西奥",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-246172",
+    "name": "丘库埃泽",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-246321",
+    "name": "前田大然",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-253072",
+    "name": "达尔文努内斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-225951",
+    "name": "德尼布安加",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-238004",
+    "name": "古德蒙德松",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-193301",
+    "name": "拉卡泽特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-240753",
+    "name": "古伊里",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-258444",
+    "name": "盖桑",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-231184",
+    "name": "古鲁泽塔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-252042",
+    "name": "若昂佩德罗",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-243780",
+    "name": "李刚仁",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-205855",
+    "name": "马尔科科瓦亚",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-236786",
+    "name": "马丁特里尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-254117",
+    "name": "拜尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-245152",
+    "name": "圣地亚哥吉梅内斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-213761",
+    "name": "哈默德",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-251421",
+    "name": "布伦兰约翰逊",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-252037",
+    "name": "法比奥席尔瓦",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-226710",
+    "name": "斯卡马卡",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-247172",
+    "name": "杜兰",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-176580",
+    "name": "苏亚雷斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-254022",
+    "name": "沃尔特马德",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-205431",
+    "name": "菲尔克鲁格",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-277581",
+    "name": "萨穆",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-258911",
+    "name": "阿罗科达雷",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-205175",
+    "name": "米利克",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-277797",
+    "name": "阿尔梅达",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-223710",
+    "name": "穆里奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-255223",
+    "name": "阿迪利",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-237034",
+    "name": "库乔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-225403",
+    "name": "詹卡赫韦奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-241602",
+    "name": "阿里亚斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-239977",
+    "name": "尼古拉斯库恩",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-244622",
+    "name": "普阿多",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-231943",
+    "name": "里查利森",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-206467",
+    "name": "普利亚",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-211368",
+    "name": "布鲁马",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-217998",
+    "name": "阿朗戈",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-186146",
+    "name": "维尔贝克",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-221992",
+    "name": "洛萨诺",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-243032",
+    "name": "杜罗",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-241788",
+    "name": "塔雷米",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-242374",
+    "name": "穆萨巴罗",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-208919",
+    "name": "瑞安高尔德",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-200260",
+    "name": "伯古伊斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-fc26-201153",
+    "name": "莫拉塔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc-20260731-026",
+    "name": "大卫·比利亚",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc-20260731-042",
+    "name": "曼朱基奇",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc-20260731-050",
+    "name": "卡纳里奥",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-005",
+    "name": "何塞·曼努埃尔·莫雷诺",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-006",
+    "name": "阿道夫·佩德内拉",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-017",
+    "name": "特维斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-032",
+    "name": "罗布·伦森布林克",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-034",
+    "name": "孟菲斯·德佩",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-039",
+    "name": "库伊特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-042",
+    "name": "约翰尼·雷普",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-048",
+    "name": "费尔南多·佩罗特奥",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-049",
+    "name": "若泽·阿瓜斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-057",
+    "name": "若昂·维埃拉·平托",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-068",
+    "name": "保罗·罗西",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc2-20260803-070",
+    "name": "路易吉·里瓦",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc3-20260808-032",
+    "name": "亚昆塔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "s4-dlc3-20260808-038",
+    "name": "波多尔斯基",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-bb2ad442-69c0-4a92-b2cc-a18e6945c262",
+    "name": "克劳迪奥·洛佩斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-edccd715-447a-402a-9c4b-71393525b446",
+    "name": "伊万·科尔多巴",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-32d79730-ae7c-4d11-9981-e993a2e51db3",
+    "name": "罗伊·马凯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-b2da618d-9580-435d-b91b-f5630050f15b",
+    "name": "哈塞尔巴因克",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-f58deed9-bad3-4463-8735-00da08837af5",
+    "name": "罗纳德·德波尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-de09f94c-3ea3-4e61-b28e-5ee956a235ff",
+    "name": "蒂姆·霍华德",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-9628183b-4fa5-4e9e-a25b-1b490e0f99e0",
+    "name": "多诺万",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-9e133df3-7ef8-48ce-903b-0d5fc872b7b8",
+    "name": "克劳迪奥·皮萨罗",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-8662ea13-c7d4-49b3-9f70-72fc29034ca9",
+    "name": "拉斐尔·马尔克斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-1cb31a92-3c4b-4852-9b6f-ade036b84c6f",
+    "name": "卡努",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-3b542128-80f2-4120-bd0a-f901cc57d0bd",
+    "name": "里瑟",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-1beab11f-ce50-4927-ae16-182f91ad2855",
+    "name": "西芒·萨布罗萨",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-d6f408b4-471b-4a69-a2bd-bab267040c7c",
+    "name": "马尼切",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-c0e790e7-e965-413c-b43e-c31ba6d77365",
+    "name": "科斯蒂尼亚",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-6a3c39f6-0f58-48d0-85db-d98c264c9761",
+    "name": "蒂亚戈·门德斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-62bc741e-f037-4703-80a2-0b5537c93c2b",
+    "name": "保罗·费雷拉",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-b35f4513-5ae9-4f48-8d6f-9ee8bb300dd4",
+    "name": "努诺·瓦伦特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-c9700bb7-4ba5-4d62-aabb-d1094533748f",
+    "name": "若热·安德拉德",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-7332c0d7-d6a6-433e-a6a4-0658afba6f62",
+    "name": "若热·科斯塔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-f6b57343-fc87-4f2c-a215-44a2cb5ac906",
+    "name": "阿贝尔·沙维尔",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-e17c5382-499d-4af6-9ff6-94c01a2d5e37",
+    "name": "塞尔吉奥·孔塞桑",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-d59128c3-ef0e-4145-bbed-654b49e0b2ea",
+    "name": "米格尔·蒙泰罗",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-e8c65b99-d1da-4cba-9751-48f7579ebb26",
+    "name": "费尔南多·梅拉",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-4d4f5837-dde5-4bbd-990a-3500ad874eee",
+    "name": "佩蒂特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-23c4c870-e5e7-4453-905e-e860b5c90e59",
+    "name": "丹尼",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-a5c87549-25a3-4de6-a8c2-5a4b8d62310a",
+    "name": "路易斯·博阿莫特",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-127d29c9-dd16-44fe-9578-14f5a7f9123a",
+    "name": "塞德里克·苏亚雷斯",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-4615e1aa-432c-4f6f-ab52-450b5355ae8d",
+    "name": "里卡多·佩雷拉",
+    "reason": "no_registered_card_art"
+  },
+  {
+    "id": "ydl-custom-cfa35639-b698-4491-b3d4-d42e78ac320b",
+    "name": "亨里克·拉尔森",
+    "reason": "no_registered_card_art"
+  }
+]

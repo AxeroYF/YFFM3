@@ -1,0 +1,47 @@
+{
+  "source": "https://github.com/makehumancommunity/makehuman",
+  "revision": "a8bc2d54ff0ac92e78ff71431b1023eda42bf482",
+  "systemPack": "https://files.makehumancommunity.org/asset_packs/makehuman_system_assets/makehuman_system_assets_cc0.zip",
+  "assetLicense": "CC0-1.0",
+  "modifications": [
+    "male/adult and muscular morphs",
+    "normalized body dimensions",
+    "clothing lower legs cut to shorts",
+    "top four bone weights normalized",
+    "per-player proportions applied at runtime"
+  ],
+  "bones": 163,
+  "vertices": 26311,
+  "triangles": 31340,
+  "surfaces": [
+    {
+      "material": "jersey",
+      "triangles": 5456
+    },
+    {
+      "material": "shorts",
+      "triangles": 800
+    },
+    {
+      "material": "boots",
+      "triangles": 2836
+    },
+    {
+      "material": "hair",
+      "triangles": 3344
+    },
+    {
+      "material": "eyes",
+      "triangles": 172
+    },
+    {
+      "material": "skin",
+      "triangles": 17836
+    },
+    {
+      "material": "socks",
+      "triangles": 896
+    }
+  ],
+  "sha256": "d0189af438534af3172169fb336c84420a0f71b07fc79519ad5e76dcab06ae9e"
+}

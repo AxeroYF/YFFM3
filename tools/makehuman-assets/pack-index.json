@@ -1,0 +1,3621 @@
+[
+  {
+    "name": "skins/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 0
+  },
+  {
+    "name": "skins/old_african_female/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 64
+  },
+  {
+    "name": "skins/old_african_female/old_african_female.mhmat",
+    "method": 8,
+    "compressed": 701,
+    "size": 1451,
+    "offset": 147
+  },
+  {
+    "name": "skins/old_african_female/old_african_female.thumb",
+    "method": 8,
+    "compressed": 77357,
+    "size": 77565,
+    "offset": 955
+  },
+  {
+    "name": "skins/old_african_female/old_darkskinned_female_diffuse.png",
+    "method": 8,
+    "compressed": 4230025,
+    "size": 4229797,
+    "offset": 78419
+  },
+  {
+    "name": "skins/young_caucasian_male_special_suit/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 4308561
+  },
+  {
+    "name": "skins/young_caucasian_male_special_suit/young_caucasian_male_special_suit.mhmat",
+    "method": 8,
+    "compressed": 702,
+    "size": 1478,
+    "offset": 4308659
+  },
+  {
+    "name": "skins/young_caucasian_male_special_suit/young_caucasian_male_special_suit.png",
+    "method": 8,
+    "compressed": 4360216,
+    "size": 4367336,
+    "offset": 4309498
+  },
+  {
+    "name": "skins/young_caucasian_male_special_suit/young_caucasian_male_special_suit.thumb",
+    "method": 8,
+    "compressed": 83702,
+    "size": 83891,
+    "offset": 8669849
+  },
+  {
+    "name": "skins/young_african_male/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 8753688
+  },
+  {
+    "name": "skins/young_african_male/young_african_male.thumb",
+    "method": 8,
+    "compressed": 78504,
+    "size": 78682,
+    "offset": 8753771
+  },
+  {
+    "name": "skins/young_african_male/young_darkskinned_male_diffuse.png",
+    "method": 8,
+    "compressed": 2972845,
+    "size": 2976491,
+    "offset": 8832382
+  },
+  {
+    "name": "skins/young_african_male/young_african_male.mhmat",
+    "method": 8,
+    "compressed": 697,
+    "size": 1453,
+    "offset": 11805344
+  },
+  {
+    "name": "skins/middleage_asian_male/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 11806148
+  },
+  {
+    "name": "skins/middleage_asian_male/middleage_asian_male.thumb",
+    "method": 8,
+    "compressed": 80258,
+    "size": 80426,
+    "offset": 11806233
+  },
+  {
+    "name": "skins/middleage_asian_male/middleage_asian_male.mhmat",
+    "method": 8,
+    "compressed": 704,
+    "size": 1463,
+    "offset": 11886602
+  },
+  {
+    "name": "skins/middleage_asian_male/middleage_lightskinned_male_diffuse2.png",
+    "method": 8,
+    "compressed": 3726706,
+    "size": 3730636,
+    "offset": 11887417
+  },
+  {
+    "name": "skins/middleage_asian_female/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 15614248
+  },
+  {
+    "name": "skins/middleage_asian_female/middleage_asian_female.mhmat",
+    "method": 8,
+    "compressed": 705,
+    "size": 1468,
+    "offset": 15614335
+  },
+  {
+    "name": "skins/middleage_asian_female/middleage_asian_female.thumb",
+    "method": 8,
+    "compressed": 80279,
+    "size": 80500,
+    "offset": 15615155
+  },
+  {
+    "name": "skins/middleage_asian_female/middleage_lightskinned_female_diffuse2.png",
+    "method": 8,
+    "compressed": 3808476,
+    "size": 3810424,
+    "offset": 15695549
+  },
+  {
+    "name": "skins/toon01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 19504154
+  },
+  {
+    "name": "skins/toon01/toon01.thumb",
+    "method": 8,
+    "compressed": 86649,
+    "size": 86805,
+    "offset": 19504225
+  },
+  {
+    "name": "skins/toon01/toon01.mhmat",
+    "method": 8,
+    "compressed": 582,
+    "size": 1155,
+    "offset": 19590957
+  },
+  {
+    "name": "skins/young_caucasian_female2/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 19591622
+  },
+  {
+    "name": "skins/young_caucasian_female2/young_caucasian_female2.mhmat",
+    "method": 8,
+    "compressed": 706,
+    "size": 1465,
+    "offset": 19591710
+  },
+  {
+    "name": "skins/young_caucasian_female2/young_lightskinned_female_diffuse2.png",
+    "method": 8,
+    "compressed": 3724586,
+    "size": 3724137,
+    "offset": 19592533
+  },
+  {
+    "name": "skins/young_caucasian_female2/young_caucasian_female2.thumb",
+    "method": 8,
+    "compressed": 77405,
+    "size": 77592,
+    "offset": 23317245
+  },
+  {
+    "name": "skins/young_caucasian_male/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 23394767
+  },
+  {
+    "name": "skins/young_caucasian_male/young_lightskinned_male_diffuse.png",
+    "method": 8,
+    "compressed": 3690012,
+    "size": 3693828,
+    "offset": 23394852
+  },
+  {
+    "name": "skins/young_caucasian_male/young_caucasian_male.thumb",
+    "method": 8,
+    "compressed": 78826,
+    "size": 79031,
+    "offset": 27084984
+  },
+  {
+    "name": "skins/young_caucasian_male/young_caucasian_male.mhmat",
+    "method": 8,
+    "compressed": 703,
+    "size": 1462,
+    "offset": 27163921
+  },
+  {
+    "name": "skins/young_african_female/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 27164735
+  },
+  {
+    "name": "skins/young_african_female/young_african_female.thumb",
+    "method": 8,
+    "compressed": 73926,
+    "size": 74156,
+    "offset": 27164820
+  },
+  {
+    "name": "skins/young_african_female/young_african_female.mhmat",
+    "method": 8,
+    "compressed": 699,
+    "size": 1457,
+    "offset": 27238857
+  },
+  {
+    "name": "skins/young_african_female/young_darkskinned_female_diffuse.png",
+    "method": 8,
+    "compressed": 4427955,
+    "size": 4427634,
+    "offset": 27239667
+  },
+  {
+    "name": "skins/young_asian_female/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 31667743
+  },
+  {
+    "name": "skins/young_asian_female/young_asian_female.mhmat",
+    "method": 8,
+    "compressed": 708,
+    "size": 1459,
+    "offset": 31667826
+  },
+  {
+    "name": "skins/young_asian_female/young_asian_female.thumb",
+    "method": 8,
+    "compressed": 78823,
+    "size": 79011,
+    "offset": 31668641
+  },
+  {
+    "name": "skins/young_asian_female/young_lightskinned_female_diffuse3.png",
+    "method": 8,
+    "compressed": 3884836,
+    "size": 3884420,
+    "offset": 31747571
+  },
+  {
+    "name": "skins/young_caucasian_male2/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 35632528
+  },
+  {
+    "name": "skins/young_caucasian_male2/young_lightskinned_male_diffuse2.png",
+    "method": 8,
+    "compressed": 3591956,
+    "size": 3595270,
+    "offset": 35632614
+  },
+  {
+    "name": "skins/young_caucasian_male2/young_caucasian_male2.mhmat",
+    "method": 8,
+    "compressed": 705,
+    "size": 1464,
+    "offset": 39224692
+  },
+  {
+    "name": "skins/young_caucasian_male2/young_caucasian_male2.thumb",
+    "method": 8,
+    "compressed": 80967,
+    "size": 81183,
+    "offset": 39225510
+  },
+  {
+    "name": "skins/old_asian_male/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 39306590
+  },
+  {
+    "name": "skins/old_asian_male/old_lightskinned_male_diffuse2.png",
+    "method": 8,
+    "compressed": 4480595,
+    "size": 4485072,
+    "offset": 39306669
+  },
+  {
+    "name": "skins/old_asian_male/old_asian_male.mhmat",
+    "method": 8,
+    "compressed": 691,
+    "size": 1442,
+    "offset": 43787377
+  },
+  {
+    "name": "skins/old_asian_male/old_asian_male.thumb",
+    "method": 8,
+    "compressed": 80267,
+    "size": 80465,
+    "offset": 43788167
+  },
+  {
+    "name": "skins/middleage_caucasian_male/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 43868533
+  },
+  {
+    "name": "skins/middleage_caucasian_male/middleage_lightskinned_male_diffuse.png",
+    "method": 8,
+    "compressed": 3664897,
+    "size": 3668589,
+    "offset": 43868622
+  },
+  {
+    "name": "skins/middleage_caucasian_male/middleage_caucasian_male.thumb",
+    "method": 8,
+    "compressed": 81110,
+    "size": 81315,
+    "offset": 47533647
+  },
+  {
+    "name": "skins/middleage_caucasian_male/middleage_caucasian_male.mhmat",
+    "method": 8,
+    "compressed": 707,
+    "size": 1469,
+    "offset": 47614876
+  },
+  {
+    "name": "skins/middleage_african_female/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 47615702
+  },
+  {
+    "name": "skins/middleage_african_female/middleage_african_female.mhmat",
+    "method": 8,
+    "compressed": 709,
+    "size": 1472,
+    "offset": 47615791
+  },
+  {
+    "name": "skins/middleage_african_female/middleage_african_female.thumb",
+    "method": 8,
+    "compressed": 75890,
+    "size": 76080,
+    "offset": 47616619
+  },
+  {
+    "name": "skins/middleage_african_female/middleage_darkskinned_female_diffuse.png",
+    "method": 8,
+    "compressed": 4197913,
+    "size": 4197671,
+    "offset": 47692628
+  },
+  {
+    "name": "skins/middleage_african_male/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 51890670
+  },
+  {
+    "name": "skins/middleage_african_male/middleage_darkskinned_male_diffuse.png",
+    "method": 8,
+    "compressed": 3043083,
+    "size": 3046762,
+    "offset": 51890757
+  },
+  {
+    "name": "skins/middleage_african_male/middleage_african_male.thumb",
+    "method": 8,
+    "compressed": 79098,
+    "size": 79294,
+    "offset": 54933965
+  },
+  {
+    "name": "skins/middleage_african_male/middleage_african_male.mhmat",
+    "method": 8,
+    "compressed": 704,
+    "size": 1465,
+    "offset": 55013178
+  },
+  {
+    "name": "skins/young_asian_male/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 55013997
+  },
+  {
+    "name": "skins/young_asian_male/young_asian_male.mhmat",
+    "method": 8,
+    "compressed": 700,
+    "size": 1452,
+    "offset": 55014078
+  },
+  {
+    "name": "skins/young_asian_male/young_asian_male.thumb",
+    "method": 8,
+    "compressed": 79134,
+    "size": 79327,
+    "offset": 55014881
+  },
+  {
+    "name": "skins/young_asian_male/young_lightskinned_male_diffuse3.png",
+    "method": 8,
+    "compressed": 3589718,
+    "size": 3593099,
+    "offset": 55094118
+  },
+  {
+    "name": "skins/young_caucasian_female/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 58683953
+  },
+  {
+    "name": "skins/young_caucasian_female/young_caucasian_female.mhmat",
+    "method": 8,
+    "compressed": 704,
+    "size": 1464,
+    "offset": 58684040
+  },
+  {
+    "name": "skins/young_caucasian_female/young_caucasian_female.thumb",
+    "method": 8,
+    "compressed": 78139,
+    "size": 78304,
+    "offset": 58684859
+  },
+  {
+    "name": "skins/young_caucasian_female/young_lightskinned_female_diffuse.png",
+    "method": 8,
+    "compressed": 4391823,
+    "size": 4391156,
+    "offset": 58763113
+  },
+  {
+    "name": "skins/old_african_male/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 63155060
+  },
+  {
+    "name": "skins/old_african_male/old_african_male.mhmat",
+    "method": 8,
+    "compressed": 692,
+    "size": 1444,
+    "offset": 63155141
+  },
+  {
+    "name": "skins/old_african_male/old_african_male.thumb",
+    "method": 8,
+    "compressed": 81751,
+    "size": 81929,
+    "offset": 63155936
+  },
+  {
+    "name": "skins/old_african_male/old_darkskinned_male_diffuse.png",
+    "method": 8,
+    "compressed": 3332979,
+    "size": 3336963,
+    "offset": 63237790
+  },
+  {
+    "name": "skins/old_asian_female/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 66570882
+  },
+  {
+    "name": "skins/old_asian_female/old_asian_female.thumb",
+    "method": 8,
+    "compressed": 81708,
+    "size": 81888,
+    "offset": 66570963
+  },
+  {
+    "name": "skins/old_asian_female/old_asian_female.mhmat",
+    "method": 8,
+    "compressed": 700,
+    "size": 1450,
+    "offset": 66652774
+  },
+  {
+    "name": "skins/old_asian_female/old_lightskinned_female_diffuse2.png",
+    "method": 8,
+    "compressed": 4762680,
+    "size": 4766265,
+    "offset": 66653577
+  },
+  {
+    "name": "skins/old_caucasian_male/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 71416374
+  },
+  {
+    "name": "skins/old_caucasian_male/old_caucasian_male.mhmat",
+    "method": 8,
+    "compressed": 694,
+    "size": 1449,
+    "offset": 71416457
+  },
+  {
+    "name": "skins/old_caucasian_male/old_caucasian_male.thumb",
+    "method": 8,
+    "compressed": 82571,
+    "size": 82772,
+    "offset": 71417258
+  },
+  {
+    "name": "skins/old_caucasian_male/old_lightskinned_male_diffuse.png",
+    "method": 8,
+    "compressed": 4301174,
+    "size": 4306141,
+    "offset": 71499936
+  },
+  {
+    "name": "skins/old_caucasian_female/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 75801226
+  },
+  {
+    "name": "skins/old_caucasian_female/old_caucasian_female.mhmat",
+    "method": 8,
+    "compressed": 702,
+    "size": 1457,
+    "offset": 75801311
+  },
+  {
+    "name": "skins/old_caucasian_female/old_lightskinned_female_diffuse.png",
+    "method": 8,
+    "compressed": 4712799,
+    "size": 4716109,
+    "offset": 75802124
+  },
+  {
+    "name": "skins/old_caucasian_female/old_caucasian_female.thumb",
+    "method": 8,
+    "compressed": 81484,
+    "size": 81695,
+    "offset": 80515043
+  },
+  {
+    "name": "skins/young_caucasian_female_special_suit/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 80596638
+  },
+  {
+    "name": "skins/young_caucasian_female_special_suit/young_caucasian_female_special_suit.png",
+    "method": 8,
+    "compressed": 3680862,
+    "size": 3680870,
+    "offset": 80596738
+  },
+  {
+    "name": "skins/young_caucasian_female_special_suit/young_caucasian_female_special_suit.mhmat",
+    "method": 8,
+    "compressed": 706,
+    "size": 1482,
+    "offset": 84277739
+  },
+  {
+    "name": "skins/young_caucasian_female_special_suit/young_caucasian_female_special_suit.thumb",
+    "method": 8,
+    "compressed": 81040,
+    "size": 81249,
+    "offset": 84278586
+  },
+  {
+    "name": "skins/middleage_caucasian_female/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 84359767
+  },
+  {
+    "name": "skins/middleage_caucasian_female/middleage_caucasian_female.mhmat",
+    "method": 8,
+    "compressed": 705,
+    "size": 1475,
+    "offset": 84359858
+  },
+  {
+    "name": "skins/middleage_caucasian_female/middleage_caucasian_female.thumb",
+    "method": 8,
+    "compressed": 78280,
+    "size": 78480,
+    "offset": 84360686
+  },
+  {
+    "name": "skins/middleage_caucasian_female/middleage_lightskinned_female_diffuse.png",
+    "method": 8,
+    "compressed": 4364342,
+    "size": 4363877,
+    "offset": 84439089
+  },
+  {
+    "name": "clothes/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 88803563
+  },
+  {
+    "name": "clothes/fedora_cocked/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 88803629
+  },
+  {
+    "name": "clothes/fedora_cocked/fedora_cocked.thumb",
+    "method": 8,
+    "compressed": 31078,
+    "size": 32211,
+    "offset": 88803709
+  },
+  {
+    "name": "clothes/fedora_cocked/fedora.mhmat",
+    "method": 8,
+    "compressed": 626,
+    "size": 1394,
+    "offset": 88834886
+  },
+  {
+    "name": "clothes/fedora_cocked/fedora_cocked.obj",
+    "method": 8,
+    "compressed": 17213,
+    "size": 47872,
+    "offset": 88835604
+  },
+  {
+    "name": "clothes/fedora_cocked/fedora_normal.png",
+    "method": 8,
+    "compressed": 158135,
+    "size": 158434,
+    "offset": 88852914
+  },
+  {
+    "name": "clothes/fedora_cocked/fedora_diffuse.png",
+    "method": 8,
+    "compressed": 7397906,
+    "size": 7418240,
+    "offset": 89011146
+  },
+  {
+    "name": "clothes/fedora_cocked/fedora_cocked.mhclo",
+    "method": 8,
+    "compressed": 15704,
+    "size": 43504,
+    "offset": 96409150
+  },
+  {
+    "name": "clothes/shoes04/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 96424953
+  },
+  {
+    "name": "clothes/shoes04/shoes04.obj",
+    "method": 8,
+    "compressed": 37631,
+    "size": 136910,
+    "offset": 96425027
+  },
+  {
+    "name": "clothes/shoes04/shoes04.mhmat",
+    "method": 8,
+    "compressed": 556,
+    "size": 1161,
+    "offset": 96462743
+  },
+  {
+    "name": "clothes/shoes04/shoes04_diffuse.png",
+    "method": 8,
+    "compressed": 712627,
+    "size": 714208,
+    "offset": 96463386
+  },
+  {
+    "name": "clothes/shoes04/shoes04_normal.png",
+    "method": 8,
+    "compressed": 875242,
+    "size": 875473,
+    "offset": 97176106
+  },
+  {
+    "name": "clothes/shoes04/shoes04.thumb",
+    "method": 8,
+    "compressed": 36498,
+    "size": 37350,
+    "offset": 98051440
+  },
+  {
+    "name": "clothes/shoes04/shoes04.mhclo",
+    "method": 8,
+    "compressed": 37559,
+    "size": 119049,
+    "offset": 98088025
+  },
+  {
+    "name": "clothes/shoes04/shoes04.mhw",
+    "method": 8,
+    "compressed": 25130,
+    "size": 324727,
+    "offset": 98125671
+  },
+  {
+    "name": "clothes/male_casualsuit04/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 98150886
+  },
+  {
+    "name": "clothes/male_casualsuit04/male_casualsuit04_normal.png",
+    "method": 8,
+    "compressed": 6053909,
+    "size": 6112410,
+    "offset": 98150970
+  },
+  {
+    "name": "clothes/male_casualsuit04/male_casualsuit04.thumb",
+    "method": 8,
+    "compressed": 32258,
+    "size": 32838,
+    "offset": 104204991
+  },
+  {
+    "name": "clothes/male_casualsuit04/male_casualsuit04.obj",
+    "method": 8,
+    "compressed": 43117,
+    "size": 133848,
+    "offset": 104237356
+  },
+  {
+    "name": "clothes/male_casualsuit04/male_casualsuit04_diffuse.png",
+    "method": 8,
+    "compressed": 2732840,
+    "size": 2742499,
+    "offset": 104280578
+  },
+  {
+    "name": "clothes/male_casualsuit04/male_casualsuit04.mhclo",
+    "method": 8,
+    "compressed": 42767,
+    "size": 116682,
+    "offset": 107013531
+  },
+  {
+    "name": "clothes/male_casualsuit04/male_casualsuit04_ao.png",
+    "method": 8,
+    "compressed": 1740944,
+    "size": 1755179,
+    "offset": 107056405
+  },
+  {
+    "name": "clothes/male_casualsuit04/male_casualsuit04.mhmat",
+    "method": 8,
+    "compressed": 634,
+    "size": 1396,
+    "offset": 108797457
+  },
+  {
+    "name": "clothes/shoes05/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 108798198
+  },
+  {
+    "name": "clothes/shoes05/shoes05.mhmat",
+    "method": 8,
+    "compressed": 586,
+    "size": 1184,
+    "offset": 108798272
+  },
+  {
+    "name": "clothes/shoes05/shoes05_diffuse.png",
+    "method": 8,
+    "compressed": 1289694,
+    "size": 1291907,
+    "offset": 108798945
+  },
+  {
+    "name": "clothes/shoes05/shoes05.thumb",
+    "method": 8,
+    "compressed": 40368,
+    "size": 41218,
+    "offset": 110088732
+  },
+  {
+    "name": "clothes/shoes05/shoes05.obj",
+    "method": 8,
+    "compressed": 34275,
+    "size": 125457,
+    "offset": 110129187
+  },
+  {
+    "name": "clothes/shoes05/shoes05.mhw",
+    "method": 8,
+    "compressed": 24109,
+    "size": 309023,
+    "offset": 110163547
+  },
+  {
+    "name": "clothes/shoes05/shoes05.mhclo",
+    "method": 8,
+    "compressed": 25723,
+    "size": 110217,
+    "offset": 110187741
+  },
+  {
+    "name": "clothes/male_casualsuit02/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 110213551
+  },
+  {
+    "name": "clothes/male_casualsuit02/male_casualsuit02.mhclo",
+    "method": 8,
+    "compressed": 55662,
+    "size": 145975,
+    "offset": 110213635
+  },
+  {
+    "name": "clothes/male_casualsuit02/male_casualsuit02_diffuse.png",
+    "method": 8,
+    "compressed": 3090328,
+    "size": 3094130,
+    "offset": 110269404
+  },
+  {
+    "name": "clothes/male_casualsuit02/male_casualsuit02.mhmat",
+    "method": 8,
+    "compressed": 633,
+    "size": 1396,
+    "offset": 113359845
+  },
+  {
+    "name": "clothes/male_casualsuit02/male_casualsuit02.thumb",
+    "method": 8,
+    "compressed": 37451,
+    "size": 37906,
+    "offset": 113360585
+  },
+  {
+    "name": "clothes/male_casualsuit02/male_casualsuit02_normal.png",
+    "method": 8,
+    "compressed": 5977953,
+    "size": 6036834,
+    "offset": 113398143
+  },
+  {
+    "name": "clothes/male_casualsuit02/male_casualsuit02_ao.png",
+    "method": 8,
+    "compressed": 717238,
+    "size": 722980,
+    "offset": 119376208
+  },
+  {
+    "name": "clothes/male_casualsuit02/male_casualsuit02.obj",
+    "method": 8,
+    "compressed": 53781,
+    "size": 170324,
+    "offset": 120093554
+  },
+  {
+    "name": "clothes/female_casualsuit02/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 120147440
+  },
+  {
+    "name": "clothes/female_casualsuit02/female_casualsuit02_diffuse.png",
+    "method": 8,
+    "compressed": 4338517,
+    "size": 4340869,
+    "offset": 120147526
+  },
+  {
+    "name": "clothes/female_casualsuit02/female_casualsuit02.mhmat",
+    "method": 8,
+    "compressed": 634,
+    "size": 1404,
+    "offset": 124486160
+  },
+  {
+    "name": "clothes/female_casualsuit02/female_casualsuit02_ao.png",
+    "method": 8,
+    "compressed": 1638936,
+    "size": 1653679,
+    "offset": 124486905
+  },
+  {
+    "name": "clothes/female_casualsuit02/female_casualsuit02.mhclo",
+    "method": 8,
+    "compressed": 68634,
+    "size": 196616,
+    "offset": 126125953
+  },
+  {
+    "name": "clothes/female_casualsuit02/female_casualsuit02.thumb",
+    "method": 8,
+    "compressed": 52031,
+    "size": 52518,
+    "offset": 126194698
+  },
+  {
+    "name": "clothes/female_casualsuit02/female_casualsuit02.obj",
+    "method": 8,
+    "compressed": 77272,
+    "size": 231599,
+    "offset": 126246840
+  },
+  {
+    "name": "clothes/female_casualsuit02/female_casualsuit02_normal.png",
+    "method": 8,
+    "compressed": 1589189,
+    "size": 1646961,
+    "offset": 126324221
+  },
+  {
+    "name": "clothes/male_casualsuit05/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 127913526
+  },
+  {
+    "name": "clothes/male_casualsuit05/male_casualsuit05.mhclo",
+    "method": 8,
+    "compressed": 78965,
+    "size": 217422,
+    "offset": 127913610
+  },
+  {
+    "name": "clothes/male_casualsuit05/male_casualsuit05.thumb",
+    "method": 8,
+    "compressed": 38934,
+    "size": 39378,
+    "offset": 127992682
+  },
+  {
+    "name": "clothes/male_casualsuit05/male_casualsuit05.mhmat",
+    "method": 8,
+    "compressed": 634,
+    "size": 1396,
+    "offset": 128031723
+  },
+  {
+    "name": "clothes/male_casualsuit05/male_casualsuit05_ao.png",
+    "method": 8,
+    "compressed": 1710818,
+    "size": 1724222,
+    "offset": 128032464
+  },
+  {
+    "name": "clothes/male_casualsuit05/male_casualsuit05.obj",
+    "method": 8,
+    "compressed": 85137,
+    "size": 261223,
+    "offset": 129743390
+  },
+  {
+    "name": "clothes/male_casualsuit05/male_casualsuit05_normal.png",
+    "method": 8,
+    "compressed": 9260982,
+    "size": 9295328,
+    "offset": 129828632
+  },
+  {
+    "name": "clothes/male_casualsuit05/male_casualsuit05_diffuse.png",
+    "method": 8,
+    "compressed": 3336906,
+    "size": 3345738,
+    "offset": 139089726
+  },
+  {
+    "name": "clothes/male_worksuit01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 142426745
+  },
+  {
+    "name": "clothes/male_worksuit01/male_worksuit01.obj",
+    "method": 8,
+    "compressed": 99631,
+    "size": 302272,
+    "offset": 142426827
+  },
+  {
+    "name": "clothes/male_worksuit01/male_worksuit01.thumb",
+    "method": 8,
+    "compressed": 33376,
+    "size": 33917,
+    "offset": 142526559
+  },
+  {
+    "name": "clothes/male_worksuit01/male_worksuit01_diffuse.png",
+    "method": 8,
+    "compressed": 3223344,
+    "size": 3230491,
+    "offset": 142560038
+  },
+  {
+    "name": "clothes/male_worksuit01/male_worksuit01_normal.png",
+    "method": 8,
+    "compressed": 7339643,
+    "size": 7345267,
+    "offset": 145783491
+  },
+  {
+    "name": "clothes/male_worksuit01/male_worksuit01.mhmat",
+    "method": 8,
+    "compressed": 633,
+    "size": 1389,
+    "offset": 153123242
+  },
+  {
+    "name": "clothes/male_worksuit01/male_worksuit01.mhclo",
+    "method": 8,
+    "compressed": 93877,
+    "size": 254911,
+    "offset": 153123978
+  },
+  {
+    "name": "clothes/male_worksuit01/male_worksuit01_ao.png",
+    "method": 8,
+    "compressed": 1203092,
+    "size": 1205288,
+    "offset": 153217958
+  },
+  {
+    "name": "clothes/male_casualsuit03/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 154421154
+  },
+  {
+    "name": "clothes/male_casualsuit03/male_casualsuit03.obj",
+    "method": 8,
+    "compressed": 66669,
+    "size": 200956,
+    "offset": 154421238
+  },
+  {
+    "name": "clothes/male_casualsuit03/male_casualsuit03_normal.png",
+    "method": 8,
+    "compressed": 9574331,
+    "size": 9610278,
+    "offset": 154488012
+  },
+  {
+    "name": "clothes/male_casualsuit03/male_casualsuit03_ao.png",
+    "method": 8,
+    "compressed": 2202083,
+    "size": 2214964,
+    "offset": 164062455
+  },
+  {
+    "name": "clothes/male_casualsuit03/male_casualsuit03_diffuse.png",
+    "method": 8,
+    "compressed": 3435986,
+    "size": 3439064,
+    "offset": 166264646
+  },
+  {
+    "name": "clothes/male_casualsuit03/male_casualsuit03.mhclo",
+    "method": 8,
+    "compressed": 65267,
+    "size": 170546,
+    "offset": 169700745
+  },
+  {
+    "name": "clothes/male_casualsuit03/male_casualsuit03.thumb",
+    "method": 8,
+    "compressed": 40108,
+    "size": 40578,
+    "offset": 169766119
+  },
+  {
+    "name": "clothes/male_casualsuit03/male_casualsuit03.mhmat",
+    "method": 8,
+    "compressed": 634,
+    "size": 1396,
+    "offset": 169806334
+  },
+  {
+    "name": "clothes/shoes01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 169807075
+  },
+  {
+    "name": "clothes/shoes01/shoes01.mhclo",
+    "method": 8,
+    "compressed": 37561,
+    "size": 119049,
+    "offset": 169807149
+  },
+  {
+    "name": "clothes/shoes01/shoes01_diffuse.png",
+    "method": 8,
+    "compressed": 1331187,
+    "size": 1335772,
+    "offset": 169844797
+  },
+  {
+    "name": "clothes/shoes01/shoes01.thumb",
+    "method": 8,
+    "compressed": 39421,
+    "size": 40319,
+    "offset": 171176077
+  },
+  {
+    "name": "clothes/shoes01/shoes01_normal.png",
+    "method": 8,
+    "compressed": 875242,
+    "size": 875473,
+    "offset": 171215585
+  },
+  {
+    "name": "clothes/shoes01/shoes01.mhw",
+    "method": 8,
+    "compressed": 25130,
+    "size": 324727,
+    "offset": 172090919
+  },
+  {
+    "name": "clothes/shoes01/shoes01.mhmat",
+    "method": 8,
+    "compressed": 556,
+    "size": 1161,
+    "offset": 172116134
+  },
+  {
+    "name": "clothes/shoes01/shoes01.obj",
+    "method": 8,
+    "compressed": 37631,
+    "size": 136910,
+    "offset": 172116777
+  },
+  {
+    "name": "clothes/male_casualsuit06/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 172154493
+  },
+  {
+    "name": "clothes/male_casualsuit06/male_casualsuit06.thumb",
+    "method": 8,
+    "compressed": 31116,
+    "size": 31691,
+    "offset": 172154577
+  },
+  {
+    "name": "clothes/male_casualsuit06/male_casualsuit06.obj",
+    "method": 8,
+    "compressed": 100775,
+    "size": 300507,
+    "offset": 172185800
+  },
+  {
+    "name": "clothes/male_casualsuit06/male_casualsuit06.mhmat",
+    "method": 8,
+    "compressed": 634,
+    "size": 1396,
+    "offset": 172286680
+  },
+  {
+    "name": "clothes/male_casualsuit06/male_casualsuit06_ao.png",
+    "method": 8,
+    "compressed": 1648980,
+    "size": 1663549,
+    "offset": 172287421
+  },
+  {
+    "name": "clothes/male_casualsuit06/male_casualsuit06.mhclo",
+    "method": 8,
+    "compressed": 96135,
+    "size": 252642,
+    "offset": 173936509
+  },
+  {
+    "name": "clothes/male_casualsuit06/male_casualsuit06_normal.png",
+    "method": 8,
+    "compressed": 2227595,
+    "size": 2235477,
+    "offset": 174032751
+  },
+  {
+    "name": "clothes/male_casualsuit06/male_casualsuit06_diffuse.png",
+    "method": 8,
+    "compressed": 1913786,
+    "size": 1923464,
+    "offset": 176260458
+  },
+  {
+    "name": "clothes/shoes03/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 178174357
+  },
+  {
+    "name": "clothes/shoes03/shoes03_diffuse.png",
+    "method": 8,
+    "compressed": 305551,
+    "size": 309009,
+    "offset": 178174431
+  },
+  {
+    "name": "clothes/shoes03/shoes03.obj",
+    "method": 8,
+    "compressed": 49614,
+    "size": 177420,
+    "offset": 178480075
+  },
+  {
+    "name": "clothes/shoes03/shoes03.thumb",
+    "method": 8,
+    "compressed": 36927,
+    "size": 37720,
+    "offset": 178529774
+  },
+  {
+    "name": "clothes/shoes03/shoes03.mhmat",
+    "method": 8,
+    "compressed": 583,
+    "size": 1184,
+    "offset": 178566788
+  },
+  {
+    "name": "clothes/shoes03/shoes03.mhclo",
+    "method": 8,
+    "compressed": 48615,
+    "size": 152873,
+    "offset": 178567458
+  },
+  {
+    "name": "clothes/shoes03/shoes03.mhw",
+    "method": 8,
+    "compressed": 31210,
+    "size": 410069,
+    "offset": 178616160
+  },
+  {
+    "name": "clothes/shoes06/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 178647455
+  },
+  {
+    "name": "clothes/shoes06/shoes06_diffuse.png",
+    "method": 8,
+    "compressed": 1461229,
+    "size": 1463398,
+    "offset": 178647529
+  },
+  {
+    "name": "clothes/shoes06/shoes06.obj",
+    "method": 8,
+    "compressed": 34275,
+    "size": 125457,
+    "offset": 180108851
+  },
+  {
+    "name": "clothes/shoes06/shoes06.mhclo",
+    "method": 8,
+    "compressed": 25724,
+    "size": 110217,
+    "offset": 180143211
+  },
+  {
+    "name": "clothes/shoes06/shoes06.mhw",
+    "method": 8,
+    "compressed": 24109,
+    "size": 309023,
+    "offset": 180169022
+  },
+  {
+    "name": "clothes/shoes06/shoes06.mhmat",
+    "method": 8,
+    "compressed": 587,
+    "size": 1184,
+    "offset": 180193216
+  },
+  {
+    "name": "clothes/shoes06/shoes06.thumb",
+    "method": 8,
+    "compressed": 42429,
+    "size": 43267,
+    "offset": 180193890
+  },
+  {
+    "name": "clothes/fedora01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 180236406
+  },
+  {
+    "name": "clothes/fedora01/fedora01.thumb",
+    "method": 8,
+    "compressed": 26357,
+    "size": 27659,
+    "offset": 180236481
+  },
+  {
+    "name": "clothes/fedora01/fedora.obj",
+    "method": 8,
+    "compressed": 16808,
+    "size": 47959,
+    "offset": 180262927
+  },
+  {
+    "name": "clothes/fedora01/fedora01.mhclo",
+    "method": 8,
+    "compressed": 15642,
+    "size": 43570,
+    "offset": 180279820
+  },
+  {
+    "name": "clothes/fedora01/fedora.mhmat",
+    "method": 8,
+    "compressed": 626,
+    "size": 1394,
+    "offset": 180295551
+  },
+  {
+    "name": "clothes/fedora01/fedora_normal.png",
+    "method": 8,
+    "compressed": 158135,
+    "size": 158434,
+    "offset": 180296264
+  },
+  {
+    "name": "clothes/fedora01/fedora_diffuse.png",
+    "method": 8,
+    "compressed": 7397906,
+    "size": 7418240,
+    "offset": 180454491
+  },
+  {
+    "name": "clothes/female_sportsuit01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 187852490
+  },
+  {
+    "name": "clothes/female_sportsuit01/female_sportsuit01_ao.png",
+    "method": 8,
+    "compressed": 1676641,
+    "size": 1692805,
+    "offset": 187852575
+  },
+  {
+    "name": "clothes/female_sportsuit01/female_sportsuit01.mhclo",
+    "method": 8,
+    "compressed": 46737,
+    "size": 124049,
+    "offset": 189529326
+  },
+  {
+    "name": "clothes/female_sportsuit01/female_sportsuit01.thumb",
+    "method": 8,
+    "compressed": 24995,
+    "size": 25816,
+    "offset": 189576172
+  },
+  {
+    "name": "clothes/female_sportsuit01/female_sportsuit01.mhmat",
+    "method": 8,
+    "compressed": 633,
+    "size": 1400,
+    "offset": 189601276
+  },
+  {
+    "name": "clothes/female_sportsuit01/female_sportsuit01_normal.png",
+    "method": 8,
+    "compressed": 249312,
+    "size": 250945,
+    "offset": 189602018
+  },
+  {
+    "name": "clothes/female_sportsuit01/female_sportsuit01_diffuse.png",
+    "method": 8,
+    "compressed": 1386038,
+    "size": 1396429,
+    "offset": 189851444
+  },
+  {
+    "name": "clothes/female_sportsuit01/female_sportsuit01.obj",
+    "method": 8,
+    "compressed": 48797,
+    "size": 142064,
+    "offset": 191237597
+  },
+  {
+    "name": "clothes/female_casualsuit01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 191286501
+  },
+  {
+    "name": "clothes/female_casualsuit01/female_casualsuit01.mhmat",
+    "method": 8,
+    "compressed": 634,
+    "size": 1404,
+    "offset": 191286587
+  },
+  {
+    "name": "clothes/female_casualsuit01/female_casualsuit01_ao.png",
+    "method": 8,
+    "compressed": 2140214,
+    "size": 2153148,
+    "offset": 191287332
+  },
+  {
+    "name": "clothes/female_casualsuit01/female_casualsuit01_diffuse.png",
+    "method": 8,
+    "compressed": 3013925,
+    "size": 3019656,
+    "offset": 193427658
+  },
+  {
+    "name": "clothes/female_casualsuit01/female_casualsuit01.thumb",
+    "method": 8,
+    "compressed": 30658,
+    "size": 31184,
+    "offset": 196441700
+  },
+  {
+    "name": "clothes/female_casualsuit01/female_casualsuit01.mhclo",
+    "method": 8,
+    "compressed": 56690,
+    "size": 150568,
+    "offset": 196472469
+  },
+  {
+    "name": "clothes/female_casualsuit01/female_casualsuit01.obj",
+    "method": 8,
+    "compressed": 59617,
+    "size": 175427,
+    "offset": 196529270
+  },
+  {
+    "name": "clothes/female_casualsuit01/female_casualsuit01_normal.png",
+    "method": 8,
+    "compressed": 5682822,
+    "size": 5744103,
+    "offset": 196588996
+  },
+  {
+    "name": "clothes/male_elegantsuit01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 202271934
+  },
+  {
+    "name": "clothes/male_elegantsuit01/male_elegantsuit01.mhclo",
+    "method": 8,
+    "compressed": 183353,
+    "size": 515810,
+    "offset": 202272019
+  },
+  {
+    "name": "clothes/male_elegantsuit01/male_elegantsuit01.thumb",
+    "method": 8,
+    "compressed": 36222,
+    "size": 36659,
+    "offset": 202455481
+  },
+  {
+    "name": "clothes/male_elegantsuit01/male_elegantsuit01.mhmat",
+    "method": 8,
+    "compressed": 614,
+    "size": 1293,
+    "offset": 202491812
+  },
+  {
+    "name": "clothes/male_elegantsuit01/male_elegantsuit01_diffuse.png",
+    "method": 8,
+    "compressed": 1924154,
+    "size": 1945326,
+    "offset": 202492535
+  },
+  {
+    "name": "clothes/male_elegantsuit01/male_elegantsuit01.obj",
+    "method": 8,
+    "compressed": 210399,
+    "size": 633330,
+    "offset": 204416804
+  },
+  {
+    "name": "clothes/shoes02/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 204627310
+  },
+  {
+    "name": "clothes/shoes02/shoes02.mhw",
+    "method": 8,
+    "compressed": 24109,
+    "size": 309023,
+    "offset": 204627384
+  },
+  {
+    "name": "clothes/shoes02/shoes02.mhclo",
+    "method": 8,
+    "compressed": 25726,
+    "size": 110217,
+    "offset": 204651578
+  },
+  {
+    "name": "clothes/shoes02/shoes02.mhmat",
+    "method": 8,
+    "compressed": 586,
+    "size": 1184,
+    "offset": 204677391
+  },
+  {
+    "name": "clothes/shoes02/shoes02_diffuse.png",
+    "method": 8,
+    "compressed": 1280653,
+    "size": 1282057,
+    "offset": 204678064
+  },
+  {
+    "name": "clothes/shoes02/shoes02.obj",
+    "method": 8,
+    "compressed": 34275,
+    "size": 125457,
+    "offset": 205958810
+  },
+  {
+    "name": "clothes/shoes02/shoes02.thumb",
+    "method": 8,
+    "compressed": 43142,
+    "size": 43978,
+    "offset": 205993170
+  },
+  {
+    "name": "clothes/male_casualsuit01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 206036399
+  },
+  {
+    "name": "clothes/male_casualsuit01/male_casualsuit01_diffuse.png",
+    "method": 8,
+    "compressed": 5525333,
+    "size": 5531728,
+    "offset": 206036483
+  },
+  {
+    "name": "clothes/male_casualsuit01/male_casualsuit01_normal.png",
+    "method": 8,
+    "compressed": 1729674,
+    "size": 1738660,
+    "offset": 211561929
+  },
+  {
+    "name": "clothes/male_casualsuit01/male_casualsuit01.thumb",
+    "method": 8,
+    "compressed": 38960,
+    "size": 39401,
+    "offset": 213291715
+  },
+  {
+    "name": "clothes/male_casualsuit01/male_casualsuit01.mhmat",
+    "method": 8,
+    "compressed": 606,
+    "size": 1345,
+    "offset": 213330782
+  },
+  {
+    "name": "clothes/male_casualsuit01/male_casualsuit01.mhclo",
+    "method": 8,
+    "compressed": 199174,
+    "size": 570419,
+    "offset": 213331495
+  },
+  {
+    "name": "clothes/male_casualsuit01/male_casualsuit01_ao.png",
+    "method": 8,
+    "compressed": 753676,
+    "size": 785596,
+    "offset": 213530776
+  },
+  {
+    "name": "clothes/male_casualsuit01/male_casualsuit01.obj",
+    "method": 8,
+    "compressed": 232791,
+    "size": 699545,
+    "offset": 214284560
+  },
+  {
+    "name": "clothes/female_elegantsuit01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 214517456
+  },
+  {
+    "name": "clothes/female_elegantsuit01/female_elegantsuit01_ao.png",
+    "method": 8,
+    "compressed": 1342328,
+    "size": 1350953,
+    "offset": 214517543
+  },
+  {
+    "name": "clothes/female_elegantsuit01/female_elegantsuit01.mhmat",
+    "method": 8,
+    "compressed": 633,
+    "size": 1408,
+    "offset": 215859985
+  },
+  {
+    "name": "clothes/female_elegantsuit01/female_elegantsuit01_diffuse.png",
+    "method": 8,
+    "compressed": 1969155,
+    "size": 1996561,
+    "offset": 215860731
+  },
+  {
+    "name": "clothes/female_elegantsuit01/female_elegantsuit01.obj",
+    "method": 8,
+    "compressed": 58815,
+    "size": 174924,
+    "offset": 217830005
+  },
+  {
+    "name": "clothes/female_elegantsuit01/female_elegantsuit01_normal.png",
+    "method": 8,
+    "compressed": 1523337,
+    "size": 1549042,
+    "offset": 217888931
+  },
+  {
+    "name": "clothes/female_elegantsuit01/female_elegantsuit01.thumb",
+    "method": 8,
+    "compressed": 49463,
+    "size": 50008,
+    "offset": 219412386
+  },
+  {
+    "name": "clothes/female_elegantsuit01/female_elegantsuit01.mhclo",
+    "method": 8,
+    "compressed": 55164,
+    "size": 151008,
+    "offset": 219461962
+  },
+  {
+    "name": "teeth/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 219517239
+  },
+  {
+    "name": "teeth/teeth_shape02/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 219517303
+  },
+  {
+    "name": "teeth/teeth_shape02/teeth_shape02.thumb",
+    "method": 8,
+    "compressed": 51284,
+    "size": 52201,
+    "offset": 219517381
+  },
+  {
+    "name": "teeth/teeth_shape02/teeth_shape02.mhclo",
+    "method": 8,
+    "compressed": 70038,
+    "size": 263309,
+    "offset": 219568762
+  },
+  {
+    "name": "teeth/teeth_shape02/teeth.mhmat",
+    "method": 8,
+    "compressed": 531,
+    "size": 1086,
+    "offset": 219638897
+  },
+  {
+    "name": "teeth/teeth_shape02/teeth.png",
+    "method": 8,
+    "compressed": 1791924,
+    "size": 1799930,
+    "offset": 219639517
+  },
+  {
+    "name": "teeth/teeth_shape02/teeth_shape02.obj",
+    "method": 8,
+    "compressed": 92273,
+    "size": 313139,
+    "offset": 221431528
+  },
+  {
+    "name": "teeth/teeth_shape01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 221523896
+  },
+  {
+    "name": "teeth/teeth_shape01/teeth_shape01.mhclo",
+    "method": 8,
+    "compressed": 69652,
+    "size": 263298,
+    "offset": 221523974
+  },
+  {
+    "name": "teeth/teeth_shape01/teeth_shape01.obj",
+    "method": 8,
+    "compressed": 92330,
+    "size": 313110,
+    "offset": 221593723
+  },
+  {
+    "name": "teeth/teeth_shape01/teeth.mhmat",
+    "method": 8,
+    "compressed": 531,
+    "size": 1086,
+    "offset": 221686148
+  },
+  {
+    "name": "teeth/teeth_shape01/teeth.png",
+    "method": 8,
+    "compressed": 1791924,
+    "size": 1799930,
+    "offset": 221686768
+  },
+  {
+    "name": "teeth/teeth_shape01/teeth_shape01.thumb",
+    "method": 8,
+    "compressed": 49489,
+    "size": 50417,
+    "offset": 223478779
+  },
+  {
+    "name": "teeth/teeth_base/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 223528365
+  },
+  {
+    "name": "teeth/teeth_base/teeth_base.obj",
+    "method": 8,
+    "compressed": 92301,
+    "size": 313110,
+    "offset": 223528440
+  },
+  {
+    "name": "teeth/teeth_base/teeth_base.mhclo",
+    "method": 8,
+    "compressed": 69749,
+    "size": 263220,
+    "offset": 223620830
+  },
+  {
+    "name": "teeth/teeth_base/teeth.mhmat",
+    "method": 8,
+    "compressed": 531,
+    "size": 1086,
+    "offset": 223690670
+  },
+  {
+    "name": "teeth/teeth_base/teeth.png",
+    "method": 8,
+    "compressed": 1791924,
+    "size": 1799930,
+    "offset": 223691287
+  },
+  {
+    "name": "teeth/teeth_base/teeth_base.thumb",
+    "method": 8,
+    "compressed": 49218,
+    "size": 50147,
+    "offset": 225483295
+  },
+  {
+    "name": "teeth/teeth_shape05/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 225532604
+  },
+  {
+    "name": "teeth/teeth_shape05/teeth_shape05.thumb",
+    "method": 8,
+    "compressed": 49464,
+    "size": 50387,
+    "offset": 225532682
+  },
+  {
+    "name": "teeth/teeth_shape05/teeth_shape05.mhclo",
+    "method": 8,
+    "compressed": 69725,
+    "size": 263247,
+    "offset": 225582243
+  },
+  {
+    "name": "teeth/teeth_shape05/teeth.mhmat",
+    "method": 8,
+    "compressed": 531,
+    "size": 1086,
+    "offset": 225652065
+  },
+  {
+    "name": "teeth/teeth_shape05/teeth_shape05.obj",
+    "method": 8,
+    "compressed": 92301,
+    "size": 313110,
+    "offset": 225652685
+  },
+  {
+    "name": "teeth/teeth_shape05/teeth.png",
+    "method": 8,
+    "compressed": 1791924,
+    "size": 1799930,
+    "offset": 225745081
+  },
+  {
+    "name": "teeth/teeth_shape03/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 227537092
+  },
+  {
+    "name": "teeth/teeth_shape03/teeth_shape03.thumb",
+    "method": 8,
+    "compressed": 49437,
+    "size": 50360,
+    "offset": 227537170
+  },
+  {
+    "name": "teeth/teeth_shape03/teeth_shape03.mhclo",
+    "method": 8,
+    "compressed": 69727,
+    "size": 263281,
+    "offset": 227586704
+  },
+  {
+    "name": "teeth/teeth_shape03/teeth.mhmat",
+    "method": 8,
+    "compressed": 531,
+    "size": 1086,
+    "offset": 227656528
+  },
+  {
+    "name": "teeth/teeth_shape03/teeth.png",
+    "method": 8,
+    "compressed": 1791924,
+    "size": 1799930,
+    "offset": 227657148
+  },
+  {
+    "name": "teeth/teeth_shape03/teeth_shape03.obj",
+    "method": 8,
+    "compressed": 92339,
+    "size": 313140,
+    "offset": 229449159
+  },
+  {
+    "name": "teeth/teeth_shape04/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 229541593
+  },
+  {
+    "name": "teeth/teeth_shape04/teeth_shape04.thumb",
+    "method": 8,
+    "compressed": 50121,
+    "size": 51052,
+    "offset": 229541671
+  },
+  {
+    "name": "teeth/teeth_shape04/teeth_shape04.mhclo",
+    "method": 8,
+    "compressed": 69771,
+    "size": 263244,
+    "offset": 229591889
+  },
+  {
+    "name": "teeth/teeth_shape04/teeth.mhmat",
+    "method": 8,
+    "compressed": 531,
+    "size": 1086,
+    "offset": 229661757
+  },
+  {
+    "name": "teeth/teeth_shape04/teeth.png",
+    "method": 8,
+    "compressed": 1791924,
+    "size": 1799930,
+    "offset": 229662377
+  },
+  {
+    "name": "teeth/teeth_shape04/teeth_shape04.obj",
+    "method": 8,
+    "compressed": 92315,
+    "size": 313110,
+    "offset": 231454388
+  },
+  {
+    "name": "eyelashes/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 231546798
+  },
+  {
+    "name": "eyelashes/eyelashes01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 231546866
+  },
+  {
+    "name": "eyelashes/eyelashes01/eyelashes01.obj",
+    "method": 8,
+    "compressed": 6080,
+    "size": 18832,
+    "offset": 231546946
+  },
+  {
+    "name": "eyelashes/eyelashes01/eyelashes01.mhclo",
+    "method": 8,
+    "compressed": 952,
+    "size": 2265,
+    "offset": 231553121
+  },
+  {
+    "name": "eyelashes/eyelashes01/eyelashes01.png",
+    "method": 8,
+    "compressed": 90109,
+    "size": 91600,
+    "offset": 231554170
+  },
+  {
+    "name": "eyelashes/eyelashes01/eyelashes01.mhmat",
+    "method": 8,
+    "compressed": 553,
+    "size": 1074,
+    "offset": 231644374
+  },
+  {
+    "name": "eyelashes/eyelashes01/eyelashes01.thumb",
+    "method": 8,
+    "compressed": 140570,
+    "size": 140641,
+    "offset": 231645024
+  },
+  {
+    "name": "eyelashes/eyelashes03/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 231785691
+  },
+  {
+    "name": "eyelashes/eyelashes03/eyelashes03.png",
+    "method": 8,
+    "compressed": 131286,
+    "size": 132260,
+    "offset": 231785771
+  },
+  {
+    "name": "eyelashes/eyelashes03/eyelashes03.mhmat",
+    "method": 8,
+    "compressed": 553,
+    "size": 1074,
+    "offset": 231917152
+  },
+  {
+    "name": "eyelashes/eyelashes03/eyelashes03.thumb",
+    "method": 8,
+    "compressed": 141160,
+    "size": 141232,
+    "offset": 231917802
+  },
+  {
+    "name": "eyelashes/eyelashes03/eyelashes03.mhclo",
+    "method": 8,
+    "compressed": 2341,
+    "size": 8191,
+    "offset": 232059059
+  },
+  {
+    "name": "eyelashes/eyelashes03/eyelashes03.obj",
+    "method": 8,
+    "compressed": 6092,
+    "size": 18836,
+    "offset": 232061497
+  },
+  {
+    "name": "eyelashes/eyelashes02/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 232067684
+  },
+  {
+    "name": "eyelashes/eyelashes02/eyelashes02.png",
+    "method": 8,
+    "compressed": 131313,
+    "size": 132278,
+    "offset": 232067764
+  },
+  {
+    "name": "eyelashes/eyelashes02/eyelashes02.mhclo",
+    "method": 8,
+    "compressed": 2093,
+    "size": 6717,
+    "offset": 232199172
+  },
+  {
+    "name": "eyelashes/eyelashes02/eyelashes02.thumb",
+    "method": 8,
+    "compressed": 140911,
+    "size": 140984,
+    "offset": 232201362
+  },
+  {
+    "name": "eyelashes/eyelashes02/eyelashes02.mhmat",
+    "method": 8,
+    "compressed": 553,
+    "size": 1074,
+    "offset": 232342370
+  },
+  {
+    "name": "eyelashes/eyelashes02/eyelashes02.obj",
+    "method": 8,
+    "compressed": 6079,
+    "size": 18832,
+    "offset": 232343020
+  },
+  {
+    "name": "eyelashes/eyelashes04/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 232349194
+  },
+  {
+    "name": "eyelashes/eyelashes04/eyelashes04.png",
+    "method": 8,
+    "compressed": 93083,
+    "size": 93914,
+    "offset": 232349274
+  },
+  {
+    "name": "eyelashes/eyelashes04/eyelashes04.mhclo",
+    "method": 8,
+    "compressed": 2893,
+    "size": 8271,
+    "offset": 232442452
+  },
+  {
+    "name": "eyelashes/eyelashes04/eyelashes04.obj",
+    "method": 8,
+    "compressed": 5451,
+    "size": 16389,
+    "offset": 232445442
+  },
+  {
+    "name": "eyelashes/eyelashes04/eyelashes04.mhmat",
+    "method": 8,
+    "compressed": 551,
+    "size": 1072,
+    "offset": 232450988
+  },
+  {
+    "name": "eyelashes/eyelashes04/eyelashes04.thumb",
+    "method": 8,
+    "compressed": 140519,
+    "size": 140585,
+    "offset": 232451636
+  },
+  {
+    "name": "hair/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 232592252
+  },
+  {
+    "name": "hair/bob02/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 232592315
+  },
+  {
+    "name": "hair/bob02/bob02.mhclo",
+    "method": 8,
+    "compressed": 42079,
+    "size": 112326,
+    "offset": 232592384
+  },
+  {
+    "name": "hair/bob02/bob02_diffuse.png",
+    "method": 8,
+    "compressed": 3363284,
+    "size": 3373723,
+    "offset": 232634543
+  },
+  {
+    "name": "hair/bob02/bob02.thumb",
+    "method": 8,
+    "compressed": 53958,
+    "size": 54657,
+    "offset": 235997913
+  },
+  {
+    "name": "hair/bob02/bob02.obj",
+    "method": 8,
+    "compressed": 40254,
+    "size": 109498,
+    "offset": 236051951
+  },
+  {
+    "name": "hair/bob02/bob02.mhmat",
+    "method": 8,
+    "compressed": 644,
+    "size": 1319,
+    "offset": 236092283
+  },
+  {
+    "name": "hair/short01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 236093007
+  },
+  {
+    "name": "hair/short01/short01.thumb",
+    "method": 8,
+    "compressed": 34218,
+    "size": 35055,
+    "offset": 236093078
+  },
+  {
+    "name": "hair/short01/short01.mhclo",
+    "method": 8,
+    "compressed": 68368,
+    "size": 201588,
+    "offset": 236127380
+  },
+  {
+    "name": "hair/short01/short01.mhmat",
+    "method": 8,
+    "compressed": 642,
+    "size": 1314,
+    "offset": 236195832
+  },
+  {
+    "name": "hair/short01/short01.obj",
+    "method": 8,
+    "compressed": 67065,
+    "size": 194450,
+    "offset": 236196558
+  },
+  {
+    "name": "hair/short01/short01_diffuse.png",
+    "method": 8,
+    "compressed": 2338834,
+    "size": 2354146,
+    "offset": 236263705
+  },
+  {
+    "name": "hair/afro01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 238602629
+  },
+  {
+    "name": "hair/afro01/afro01.thumb",
+    "method": 8,
+    "compressed": 46616,
+    "size": 47414,
+    "offset": 238602699
+  },
+  {
+    "name": "hair/afro01/afro01.mhclo",
+    "method": 8,
+    "compressed": 51632,
+    "size": 149574,
+    "offset": 238649397
+  },
+  {
+    "name": "hair/afro01/afro01.mhmat",
+    "method": 8,
+    "compressed": 531,
+    "size": 1030,
+    "offset": 238701111
+  },
+  {
+    "name": "hair/afro01/afro01.obj",
+    "method": 8,
+    "compressed": 34735,
+    "size": 130040,
+    "offset": 238701724
+  },
+  {
+    "name": "hair/afro01/afro_diffuse.png",
+    "method": 8,
+    "compressed": 4807104,
+    "size": 4817185,
+    "offset": 238736539
+  },
+  {
+    "name": "hair/short03/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 243543729
+  },
+  {
+    "name": "hair/short03/short03.thumb",
+    "method": 8,
+    "compressed": 38550,
+    "size": 39414,
+    "offset": 243543800
+  },
+  {
+    "name": "hair/short03/short03_diffuse.png",
+    "method": 8,
+    "compressed": 2379485,
+    "size": 2392930,
+    "offset": 243582434
+  },
+  {
+    "name": "hair/short03/short03.obj",
+    "method": 8,
+    "compressed": 27104,
+    "size": 74766,
+    "offset": 245962009
+  },
+  {
+    "name": "hair/short03/short03.mhclo",
+    "method": 8,
+    "compressed": 25622,
+    "size": 69048,
+    "offset": 245989195
+  },
+  {
+    "name": "hair/short03/short03.mhmat",
+    "method": 8,
+    "compressed": 634,
+    "size": 1309,
+    "offset": 246014901
+  },
+  {
+    "name": "hair/bob01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 246015619
+  },
+  {
+    "name": "hair/bob01/bob01.thumb",
+    "method": 8,
+    "compressed": 52918,
+    "size": 53628,
+    "offset": 246015688
+  },
+  {
+    "name": "hair/bob01/bob01.mhclo",
+    "method": 8,
+    "compressed": 116992,
+    "size": 352019,
+    "offset": 246068686
+  },
+  {
+    "name": "hair/bob01/bob01.mhmat",
+    "method": 8,
+    "compressed": 640,
+    "size": 1312,
+    "offset": 246185758
+  },
+  {
+    "name": "hair/bob01/bob01_diffuse.png",
+    "method": 8,
+    "compressed": 4241081,
+    "size": 4243598,
+    "offset": 246186478
+  },
+  {
+    "name": "hair/bob01/bob01.obj",
+    "method": 8,
+    "compressed": 136544,
+    "size": 396190,
+    "offset": 250427645
+  },
+  {
+    "name": "hair/ponytail01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 250564267
+  },
+  {
+    "name": "hair/ponytail01/ponytail01.obj",
+    "method": 8,
+    "compressed": 87120,
+    "size": 264384,
+    "offset": 250564341
+  },
+  {
+    "name": "hair/ponytail01/ponytail01_diffuse.png",
+    "method": 8,
+    "compressed": 3906581,
+    "size": 3910782,
+    "offset": 250651549
+  },
+  {
+    "name": "hair/ponytail01/ponytail01.mhclo",
+    "method": 8,
+    "compressed": 82028,
+    "size": 252080,
+    "offset": 254558226
+  },
+  {
+    "name": "hair/ponytail01/ponytail01.thumb",
+    "method": 8,
+    "compressed": 47809,
+    "size": 47981,
+    "offset": 254640344
+  },
+  {
+    "name": "hair/ponytail01/ponytail01.mhmat",
+    "method": 8,
+    "compressed": 631,
+    "size": 1305,
+    "offset": 254688243
+  },
+  {
+    "name": "hair/short02/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 254688964
+  },
+  {
+    "name": "hair/short02/short02.thumb",
+    "method": 8,
+    "compressed": 40255,
+    "size": 41127,
+    "offset": 254689035
+  },
+  {
+    "name": "hair/short02/short02.obj",
+    "method": 8,
+    "compressed": 50161,
+    "size": 139742,
+    "offset": 254729374
+  },
+  {
+    "name": "hair/short02/short02.mhclo",
+    "method": 8,
+    "compressed": 43333,
+    "size": 119240,
+    "offset": 254779617
+  },
+  {
+    "name": "hair/short02/short02.mhmat",
+    "method": 8,
+    "compressed": 644,
+    "size": 1323,
+    "offset": 254823034
+  },
+  {
+    "name": "hair/short02/short02_diffuse.png",
+    "method": 8,
+    "compressed": 3526253,
+    "size": 3553543,
+    "offset": 254823762
+  },
+  {
+    "name": "hair/short02/short02_normal.png",
+    "method": 8,
+    "compressed": 1608604,
+    "size": 1626745,
+    "offset": 258350105
+  },
+  {
+    "name": "hair/braid01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 259958798
+  },
+  {
+    "name": "hair/braid01/braid01.obj",
+    "method": 8,
+    "compressed": 101271,
+    "size": 302165,
+    "offset": 259958869
+  },
+  {
+    "name": "hair/braid01/braid01.mhclo",
+    "method": 8,
+    "compressed": 94741,
+    "size": 305086,
+    "offset": 260060222
+  },
+  {
+    "name": "hair/braid01/braid01.thumb",
+    "method": 8,
+    "compressed": 28475,
+    "size": 28768,
+    "offset": 260155047
+  },
+  {
+    "name": "hair/braid01/braid01.mhmat",
+    "method": 8,
+    "compressed": 630,
+    "size": 1299,
+    "offset": 260183606
+  },
+  {
+    "name": "hair/braid01/braid01_diffuse.png",
+    "method": 8,
+    "compressed": 2604367,
+    "size": 2615248,
+    "offset": 260184320
+  },
+  {
+    "name": "hair/long01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 262788777
+  },
+  {
+    "name": "hair/long01/long01_diffuse.png",
+    "method": 8,
+    "compressed": 2906544,
+    "size": 2915253,
+    "offset": 262788847
+  },
+  {
+    "name": "hair/long01/long01.mhmat",
+    "method": 8,
+    "compressed": 629,
+    "size": 1297,
+    "offset": 265695479
+  },
+  {
+    "name": "hair/long01/long01.obj",
+    "method": 8,
+    "compressed": 72272,
+    "size": 215324,
+    "offset": 265696190
+  },
+  {
+    "name": "hair/long01/long01.mhclo",
+    "method": 8,
+    "compressed": 73147,
+    "size": 220891,
+    "offset": 265768542
+  },
+  {
+    "name": "hair/long01/long01.thumb",
+    "method": 8,
+    "compressed": 35140,
+    "size": 35530,
+    "offset": 265841771
+  },
+  {
+    "name": "hair/short04/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 265876993
+  },
+  {
+    "name": "hair/short04/short04.mhmat",
+    "method": 8,
+    "compressed": 641,
+    "size": 1316,
+    "offset": 265877064
+  },
+  {
+    "name": "hair/short04/short04.obj",
+    "method": 8,
+    "compressed": 20042,
+    "size": 55152,
+    "offset": 265877789
+  },
+  {
+    "name": "hair/short04/short04.mhclo",
+    "method": 8,
+    "compressed": 20793,
+    "size": 59195,
+    "offset": 265897913
+  },
+  {
+    "name": "hair/short04/short04_diffuse.png",
+    "method": 8,
+    "compressed": 2294596,
+    "size": 2308132,
+    "offset": 265918790
+  },
+  {
+    "name": "hair/short04/short04.thumb",
+    "method": 8,
+    "compressed": 40914,
+    "size": 41792,
+    "offset": 268213476
+  },
+  {
+    "name": "tongue/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 268254474
+  },
+  {
+    "name": "tongue/tongue01/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 268254539
+  },
+  {
+    "name": "tongue/tongue01/tongue01.thumb",
+    "method": 8,
+    "compressed": 49112,
+    "size": 49815,
+    "offset": 268254613
+  },
+  {
+    "name": "tongue/tongue01/tongue01.obj",
+    "method": 8,
+    "compressed": 5666,
+    "size": 17155,
+    "offset": 268303813
+  },
+  {
+    "name": "tongue/tongue01/tongue01.mhmat",
+    "method": 8,
+    "compressed": 599,
+    "size": 1261,
+    "offset": 268309565
+  },
+  {
+    "name": "tongue/tongue01/tongue01_diffuse.png",
+    "method": 8,
+    "compressed": 621916,
+    "size": 625419,
+    "offset": 268310252
+  },
+  {
+    "name": "tongue/tongue01/tongue01.mhclo",
+    "method": 8,
+    "compressed": 906,
+    "size": 2113,
+    "offset": 268932262
+  },
+  {
+    "name": "packs/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 268933256
+  },
+  {
+    "name": "packs/makehuman_system_assets.json",
+    "method": 8,
+    "compressed": 1219,
+    "size": 39220,
+    "offset": 268933320
+  },
+  {
+    "name": "proxymeshes/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 268934631
+  },
+  {
+    "name": "proxymeshes/female_muscle_13442/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 268934701
+  },
+  {
+    "name": "proxymeshes/female_muscle_13442/female_muscle_13442.obj",
+    "method": 8,
+    "compressed": 419591,
+    "size": 1300679,
+    "offset": 268934791
+  },
+  {
+    "name": "proxymeshes/female_muscle_13442/female_muscle_13442.proxy",
+    "method": 8,
+    "compressed": 115517,
+    "size": 323533,
+    "offset": 269354495
+  },
+  {
+    "name": "proxymeshes/female_muscle_13442/female_muscle_13442.thumb",
+    "method": 8,
+    "compressed": 70695,
+    "size": 70929,
+    "offset": 269470127
+  },
+  {
+    "name": "proxymeshes/male_generic/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 269540937
+  },
+  {
+    "name": "proxymeshes/male_generic/male_generic.thumb",
+    "method": 8,
+    "compressed": 71961,
+    "size": 72166,
+    "offset": 269541020
+  },
+  {
+    "name": "proxymeshes/male_generic/male_generic.proxy",
+    "method": 8,
+    "compressed": 81452,
+    "size": 233465,
+    "offset": 269613082
+  },
+  {
+    "name": "proxymeshes/male_generic/male_generic.obj",
+    "method": 8,
+    "compressed": 394846,
+    "size": 1315832,
+    "offset": 269694635
+  },
+  {
+    "name": "proxymeshes/male_muscle_13290/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 270089580
+  },
+  {
+    "name": "proxymeshes/male_muscle_13290/male_muscle_13290.thumb",
+    "method": 8,
+    "compressed": 72046,
+    "size": 72231,
+    "offset": 270089668
+  },
+  {
+    "name": "proxymeshes/male_muscle_13290/male_muscle_13290.proxy",
+    "method": 8,
+    "compressed": 118105,
+    "size": 324446,
+    "offset": 270161825
+  },
+  {
+    "name": "proxymeshes/male_muscle_13290/male_muscle_13290.obj",
+    "method": 8,
+    "compressed": 367157,
+    "size": 1168318,
+    "offset": 270280041
+  },
+  {
+    "name": "proxymeshes/female_generic/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 270647307
+  },
+  {
+    "name": "proxymeshes/female_generic/female_generic.thumb",
+    "method": 8,
+    "compressed": 69904,
+    "size": 70139,
+    "offset": 270647392
+  },
+  {
+    "name": "proxymeshes/female_generic/female_generic.obj",
+    "method": 8,
+    "compressed": 376758,
+    "size": 1216200,
+    "offset": 270717401
+  },
+  {
+    "name": "proxymeshes/female_generic/female_generic.proxy",
+    "method": 8,
+    "compressed": 73204,
+    "size": 208044,
+    "offset": 271094262
+  },
+  {
+    "name": "proxymeshes/female1605/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 271167571
+  },
+  {
+    "name": "proxymeshes/female1605/female1605.thumb",
+    "method": 8,
+    "compressed": 60989,
+    "size": 61202,
+    "offset": 271167652
+  },
+  {
+    "name": "proxymeshes/female1605/female1605.obj",
+    "method": 8,
+    "compressed": 41213,
+    "size": 131067,
+    "offset": 271228738
+  },
+  {
+    "name": "proxymeshes/female1605/female1605.proxy",
+    "method": 8,
+    "compressed": 41559,
+    "size": 109182,
+    "offset": 271270046
+  },
+  {
+    "name": "proxymeshes/male1591/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 271311702
+  },
+  {
+    "name": "proxymeshes/male1591/male1591.thumb",
+    "method": 8,
+    "compressed": 62636,
+    "size": 62851,
+    "offset": 271311781
+  },
+  {
+    "name": "proxymeshes/male1591/male1591.proxy",
+    "method": 8,
+    "compressed": 39038,
+    "size": 108133,
+    "offset": 271374510
+  },
+  {
+    "name": "proxymeshes/male1591/male1591.obj",
+    "method": 8,
+    "compressed": 40247,
+    "size": 129940,
+    "offset": 271413641
+  },
+  {
+    "name": "proxymeshes/proxy741/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 271453979
+  },
+  {
+    "name": "proxymeshes/proxy741/proxy741.obj",
+    "method": 8,
+    "compressed": 19339,
+    "size": 58768,
+    "offset": 271454058
+  },
+  {
+    "name": "proxymeshes/proxy741/proxy741.proxy",
+    "method": 8,
+    "compressed": 18148,
+    "size": 50775,
+    "offset": 271473488
+  },
+  {
+    "name": "proxymeshes/proxy741/proxy741.thumb",
+    "method": 8,
+    "compressed": 58204,
+    "size": 58430,
+    "offset": 271491729
+  },
+  {
+    "name": "eyebrows/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 271550026
+  },
+  {
+    "name": "eyebrows/eyebrow001/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 271550093
+  },
+  {
+    "name": "eyebrows/eyebrow001/eyebrow001.obj",
+    "method": 8,
+    "compressed": 2873,
+    "size": 8227,
+    "offset": 271550171
+  },
+  {
+    "name": "eyebrows/eyebrow001/eyebrow001.png",
+    "method": 8,
+    "compressed": 88049,
+    "size": 89619,
+    "offset": 271553136
+  },
+  {
+    "name": "eyebrows/eyebrow001/eyebrow001.mhclo",
+    "method": 8,
+    "compressed": 3038,
+    "size": 9141,
+    "offset": 271641277
+  },
+  {
+    "name": "eyebrows/eyebrow001/eyebrow001.thumb",
+    "method": 8,
+    "compressed": 137464,
+    "size": 137534,
+    "offset": 271644409
+  },
+  {
+    "name": "eyebrows/eyebrow001/eyebrow001.mhmat",
+    "method": 8,
+    "compressed": 555,
+    "size": 1098,
+    "offset": 271781967
+  },
+  {
+    "name": "eyebrows/eyebrow005/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 271782616
+  },
+  {
+    "name": "eyebrows/eyebrow005/eyebrow005.obj",
+    "method": 8,
+    "compressed": 2836,
+    "size": 8227,
+    "offset": 271782694
+  },
+  {
+    "name": "eyebrows/eyebrow005/eyebrow005.mhmat",
+    "method": 8,
+    "compressed": 555,
+    "size": 1098,
+    "offset": 271785622
+  },
+  {
+    "name": "eyebrows/eyebrow005/eyebrow005.png",
+    "method": 8,
+    "compressed": 74340,
+    "size": 75733,
+    "offset": 271786271
+  },
+  {
+    "name": "eyebrows/eyebrow005/eyebrow005.thumb",
+    "method": 8,
+    "compressed": 136748,
+    "size": 136820,
+    "offset": 271860703
+  },
+  {
+    "name": "eyebrows/eyebrow005/eyebrow005.mhclo",
+    "method": 8,
+    "compressed": 2950,
+    "size": 9120,
+    "offset": 271997545
+  },
+  {
+    "name": "eyebrows/eyebrow009/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 272000589
+  },
+  {
+    "name": "eyebrows/eyebrow009/eyebrow009.mhmat",
+    "method": 8,
+    "compressed": 556,
+    "size": 1098,
+    "offset": 272000667
+  },
+  {
+    "name": "eyebrows/eyebrow009/eyebrow009.png",
+    "method": 8,
+    "compressed": 229383,
+    "size": 230800,
+    "offset": 272001317
+  },
+  {
+    "name": "eyebrows/eyebrow009/eyebrow009.mhclo",
+    "method": 8,
+    "compressed": 3173,
+    "size": 9122,
+    "offset": 272230792
+  },
+  {
+    "name": "eyebrows/eyebrow009/eyebrow009.thumb",
+    "method": 8,
+    "compressed": 137295,
+    "size": 137369,
+    "offset": 272234059
+  },
+  {
+    "name": "eyebrows/eyebrow009/eyebrow009.obj",
+    "method": 8,
+    "compressed": 2894,
+    "size": 8227,
+    "offset": 272371448
+  },
+  {
+    "name": "eyebrows/eyebrow007/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 272374434
+  },
+  {
+    "name": "eyebrows/eyebrow007/eyebrow007.thumb",
+    "method": 8,
+    "compressed": 136486,
+    "size": 136558,
+    "offset": 272374512
+  },
+  {
+    "name": "eyebrows/eyebrow007/eyebrow007.mhmat",
+    "method": 8,
+    "compressed": 555,
+    "size": 1098,
+    "offset": 272511092
+  },
+  {
+    "name": "eyebrows/eyebrow007/eyebrow007.mhclo",
+    "method": 8,
+    "compressed": 2859,
+    "size": 9134,
+    "offset": 272511741
+  },
+  {
+    "name": "eyebrows/eyebrow007/eyebrow007.obj",
+    "method": 8,
+    "compressed": 2797,
+    "size": 8227,
+    "offset": 272514694
+  },
+  {
+    "name": "eyebrows/eyebrow007/eyebrow007.png",
+    "method": 8,
+    "compressed": 17410,
+    "size": 18685,
+    "offset": 272517583
+  },
+  {
+    "name": "eyebrows/eyebrow011/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 272535085
+  },
+  {
+    "name": "eyebrows/eyebrow011/eyebrow011.png",
+    "method": 8,
+    "compressed": 41078,
+    "size": 42634,
+    "offset": 272535163
+  },
+  {
+    "name": "eyebrows/eyebrow011/eyebrow011.mhclo",
+    "method": 8,
+    "compressed": 3058,
+    "size": 9156,
+    "offset": 272576333
+  },
+  {
+    "name": "eyebrows/eyebrow011/eyebrow011.obj",
+    "method": 8,
+    "compressed": 2885,
+    "size": 8227,
+    "offset": 272579485
+  },
+  {
+    "name": "eyebrows/eyebrow011/eyebrow011.thumb",
+    "method": 8,
+    "compressed": 137037,
+    "size": 137113,
+    "offset": 272582462
+  },
+  {
+    "name": "eyebrows/eyebrow011/eyebrow011.mhmat",
+    "method": 8,
+    "compressed": 556,
+    "size": 1099,
+    "offset": 272719593
+  },
+  {
+    "name": "eyebrows/eyebrow010/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 272720243
+  },
+  {
+    "name": "eyebrows/eyebrow010/eyebrow010.mhmat",
+    "method": 8,
+    "compressed": 555,
+    "size": 1099,
+    "offset": 272720321
+  },
+  {
+    "name": "eyebrows/eyebrow010/eyebrow010.obj",
+    "method": 8,
+    "compressed": 2877,
+    "size": 8227,
+    "offset": 272720970
+  },
+  {
+    "name": "eyebrows/eyebrow010/eyebrow010.thumb",
+    "method": 8,
+    "compressed": 137215,
+    "size": 137287,
+    "offset": 272723939
+  },
+  {
+    "name": "eyebrows/eyebrow010/eyebrow010.png",
+    "method": 8,
+    "compressed": 70491,
+    "size": 72383,
+    "offset": 272861248
+  },
+  {
+    "name": "eyebrows/eyebrow010/eyebrow010.mhclo",
+    "method": 8,
+    "compressed": 3031,
+    "size": 9142,
+    "offset": 272931831
+  },
+  {
+    "name": "eyebrows/eyebrow002/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 272934956
+  },
+  {
+    "name": "eyebrows/eyebrow002/eyebrow002.thumb",
+    "method": 8,
+    "compressed": 137774,
+    "size": 137855,
+    "offset": 272935034
+  },
+  {
+    "name": "eyebrows/eyebrow002/eyebrow002.mhmat",
+    "method": 8,
+    "compressed": 555,
+    "size": 1098,
+    "offset": 273072902
+  },
+  {
+    "name": "eyebrows/eyebrow002/eyebrow002.mhclo",
+    "method": 8,
+    "compressed": 2993,
+    "size": 9132,
+    "offset": 273073551
+  },
+  {
+    "name": "eyebrows/eyebrow002/eyebrow002.png",
+    "method": 8,
+    "compressed": 94747,
+    "size": 96277,
+    "offset": 273076638
+  },
+  {
+    "name": "eyebrows/eyebrow002/eyebrow002.obj",
+    "method": 8,
+    "compressed": 2874,
+    "size": 8227,
+    "offset": 273171477
+  },
+  {
+    "name": "eyebrows/eyebrow012/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 273174443
+  },
+  {
+    "name": "eyebrows/eyebrow012/eyebrow012.thumb",
+    "method": 8,
+    "compressed": 136606,
+    "size": 136682,
+    "offset": 273174521
+  },
+  {
+    "name": "eyebrows/eyebrow012/eyebrow012.png",
+    "method": 8,
+    "compressed": 92558,
+    "size": 94186,
+    "offset": 273311221
+  },
+  {
+    "name": "eyebrows/eyebrow012/eyebrow012.obj",
+    "method": 8,
+    "compressed": 2881,
+    "size": 8227,
+    "offset": 273403871
+  },
+  {
+    "name": "eyebrows/eyebrow012/eyebrow012.mhmat",
+    "method": 8,
+    "compressed": 556,
+    "size": 1099,
+    "offset": 273406844
+  },
+  {
+    "name": "eyebrows/eyebrow012/eyebrow012.mhclo",
+    "method": 8,
+    "compressed": 3196,
+    "size": 9158,
+    "offset": 273407494
+  },
+  {
+    "name": "eyebrows/eyebrow006/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 273410784
+  },
+  {
+    "name": "eyebrows/eyebrow006/eyebrow006.png",
+    "method": 8,
+    "compressed": 18324,
+    "size": 19381,
+    "offset": 273410862
+  },
+  {
+    "name": "eyebrows/eyebrow006/eyebrow006.thumb",
+    "method": 8,
+    "compressed": 136766,
+    "size": 136833,
+    "offset": 273429278
+  },
+  {
+    "name": "eyebrows/eyebrow006/eyebrow006.obj",
+    "method": 8,
+    "compressed": 2845,
+    "size": 8227,
+    "offset": 273566138
+  },
+  {
+    "name": "eyebrows/eyebrow006/eyebrow006.mhclo",
+    "method": 8,
+    "compressed": 2898,
+    "size": 9142,
+    "offset": 273569075
+  },
+  {
+    "name": "eyebrows/eyebrow006/eyebrow006.mhmat",
+    "method": 8,
+    "compressed": 556,
+    "size": 1098,
+    "offset": 273572067
+  },
+  {
+    "name": "eyebrows/eyebrow004/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 273572717
+  },
+  {
+    "name": "eyebrows/eyebrow004/eyebrow004.png",
+    "method": 8,
+    "compressed": 87675,
+    "size": 88931,
+    "offset": 273572795
+  },
+  {
+    "name": "eyebrows/eyebrow004/eyebrow004.obj",
+    "method": 8,
+    "compressed": 2828,
+    "size": 8227,
+    "offset": 273660562
+  },
+  {
+    "name": "eyebrows/eyebrow004/eyebrow004.mhclo",
+    "method": 8,
+    "compressed": 3013,
+    "size": 9147,
+    "offset": 273663482
+  },
+  {
+    "name": "eyebrows/eyebrow004/eyebrow004.thumb",
+    "method": 8,
+    "compressed": 136548,
+    "size": 136616,
+    "offset": 273666589
+  },
+  {
+    "name": "eyebrows/eyebrow004/eyebrow004.mhmat",
+    "method": 8,
+    "compressed": 555,
+    "size": 1098,
+    "offset": 273803231
+  },
+  {
+    "name": "eyebrows/eyebrow008/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 273803880
+  },
+  {
+    "name": "eyebrows/eyebrow008/eyebrow008.png",
+    "method": 8,
+    "compressed": 98981,
+    "size": 100364,
+    "offset": 273803958
+  },
+  {
+    "name": "eyebrows/eyebrow008/eyebrow008.mhclo",
+    "method": 8,
+    "compressed": 3033,
+    "size": 9142,
+    "offset": 273903031
+  },
+  {
+    "name": "eyebrows/eyebrow008/eyebrow008.obj",
+    "method": 8,
+    "compressed": 2862,
+    "size": 8227,
+    "offset": 273906158
+  },
+  {
+    "name": "eyebrows/eyebrow008/eyebrow008.thumb",
+    "method": 8,
+    "compressed": 137378,
+    "size": 137457,
+    "offset": 273909112
+  },
+  {
+    "name": "eyebrows/eyebrow008/eyebrow008.mhmat",
+    "method": 8,
+    "compressed": 555,
+    "size": 1098,
+    "offset": 274046584
+  },
+  {
+    "name": "eyebrows/eyebrow003/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 274047233
+  },
+  {
+    "name": "eyebrows/eyebrow003/eyebrow003.mhmat",
+    "method": 8,
+    "compressed": 555,
+    "size": 1098,
+    "offset": 274047311
+  },
+  {
+    "name": "eyebrows/eyebrow003/eyebrow003.mhclo",
+    "method": 8,
+    "compressed": 2997,
+    "size": 9148,
+    "offset": 274047960
+  },
+  {
+    "name": "eyebrows/eyebrow003/eyebrow003.thumb",
+    "method": 8,
+    "compressed": 137629,
+    "size": 137706,
+    "offset": 274051051
+  },
+  {
+    "name": "eyebrows/eyebrow003/eyebrow003.png",
+    "method": 8,
+    "compressed": 90809,
+    "size": 92174,
+    "offset": 274188774
+  },
+  {
+    "name": "eyebrows/eyebrow003/eyebrow003.obj",
+    "method": 8,
+    "compressed": 2848,
+    "size": 8227,
+    "offset": 274279675
+  },
+  {
+    "name": "eyes/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 274282615
+  },
+  {
+    "name": "eyes/materials/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 274282678
+  },
+  {
+    "name": "eyes/materials/brown.thumb",
+    "method": 0,
+    "compressed": 29627,
+    "size": 29627,
+    "offset": 274282751
+  },
+  {
+    "name": "eyes/materials/brownlight.thumb",
+    "method": 8,
+    "compressed": 34957,
+    "size": 34947,
+    "offset": 274312462
+  },
+  {
+    "name": "eyes/materials/brownlight.mhmat",
+    "method": 8,
+    "compressed": 598,
+    "size": 1256,
+    "offset": 274347508
+  },
+  {
+    "name": "eyes/materials/bluegreen_eye.png",
+    "method": 8,
+    "compressed": 695142,
+    "size": 697879,
+    "offset": 274348195
+  },
+  {
+    "name": "eyes/materials/ice.mhmat",
+    "method": 8,
+    "compressed": 593,
+    "size": 1242,
+    "offset": 275043427
+  },
+  {
+    "name": "eyes/materials/brown.mhmat",
+    "method": 8,
+    "compressed": 595,
+    "size": 1247,
+    "offset": 275044102
+  },
+  {
+    "name": "eyes/materials/deepblue_eye.png",
+    "method": 8,
+    "compressed": 656033,
+    "size": 658984,
+    "offset": 275044781
+  },
+  {
+    "name": "eyes/materials/grey_eye.png",
+    "method": 8,
+    "compressed": 666778,
+    "size": 669883,
+    "offset": 275700903
+  },
+  {
+    "name": "eyes/materials/grey.thumb",
+    "method": 0,
+    "compressed": 32862,
+    "size": 32862,
+    "offset": 276367766
+  },
+  {
+    "name": "eyes/materials/bluegreen.thumb",
+    "method": 8,
+    "compressed": 36559,
+    "size": 36549,
+    "offset": 276400711
+  },
+  {
+    "name": "eyes/materials/green.thumb",
+    "method": 0,
+    "compressed": 32775,
+    "size": 32775,
+    "offset": 276437358
+  },
+  {
+    "name": "eyes/materials/green_eye.png",
+    "method": 8,
+    "compressed": 659403,
+    "size": 662241,
+    "offset": 276470217
+  },
+  {
+    "name": "eyes/materials/bluegreen.mhmat",
+    "method": 8,
+    "compressed": 595,
+    "size": 1250,
+    "offset": 277129706
+  },
+  {
+    "name": "eyes/materials/brown_eye.png",
+    "method": 8,
+    "compressed": 607878,
+    "size": 610817,
+    "offset": 277130389
+  },
+  {
+    "name": "eyes/materials/deepblue.thumb",
+    "method": 0,
+    "compressed": 32356,
+    "size": 32356,
+    "offset": 277738353
+  },
+  {
+    "name": "eyes/materials/green.mhmat",
+    "method": 8,
+    "compressed": 596,
+    "size": 1246,
+    "offset": 277770796
+  },
+  {
+    "name": "eyes/materials/lightblue.thumb",
+    "method": 8,
+    "compressed": 36929,
+    "size": 36919,
+    "offset": 277771476
+  },
+  {
+    "name": "eyes/materials/lightblue_eye.png",
+    "method": 8,
+    "compressed": 698750,
+    "size": 701486,
+    "offset": 277808493
+  },
+  {
+    "name": "eyes/materials/lightblue.mhmat",
+    "method": 8,
+    "compressed": 597,
+    "size": 1254,
+    "offset": 278507333
+  },
+  {
+    "name": "eyes/materials/ice.thumb",
+    "method": 8,
+    "compressed": 34120,
+    "size": 34110,
+    "offset": 278508018
+  },
+  {
+    "name": "eyes/materials/blue.thumb",
+    "method": 8,
+    "compressed": 33310,
+    "size": 33300,
+    "offset": 278542220
+  },
+  {
+    "name": "eyes/materials/blue.mhmat",
+    "method": 8,
+    "compressed": 593,
+    "size": 1243,
+    "offset": 278575613
+  },
+  {
+    "name": "eyes/materials/deepblue.mhmat",
+    "method": 8,
+    "compressed": 596,
+    "size": 1252,
+    "offset": 278576289
+  },
+  {
+    "name": "eyes/materials/brownlight_eye.png",
+    "method": 8,
+    "compressed": 677796,
+    "size": 680577,
+    "offset": 278576972
+  },
+  {
+    "name": "eyes/materials/blue_eye.png",
+    "method": 8,
+    "compressed": 663267,
+    "size": 666029,
+    "offset": 279254859
+  },
+  {
+    "name": "eyes/materials/ice_eye.png",
+    "method": 8,
+    "compressed": 673628,
+    "size": 676501,
+    "offset": 279918211
+  },
+  {
+    "name": "eyes/materials/grey.mhmat",
+    "method": 8,
+    "compressed": 593,
+    "size": 1244,
+    "offset": 280591923
+  },
+  {
+    "name": "eyes/high-poly/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 280592599
+  },
+  {
+    "name": "eyes/high-poly/high-poly.obj",
+    "method": 8,
+    "compressed": 29513,
+    "size": 100882,
+    "offset": 280592672
+  },
+  {
+    "name": "eyes/high-poly/high-poly.thumb",
+    "method": 8,
+    "compressed": 20161,
+    "size": 21076,
+    "offset": 280622271
+  },
+  {
+    "name": "eyes/high-poly/high-poly.mhclo",
+    "method": 8,
+    "compressed": 21322,
+    "size": 72490,
+    "offset": 280642520
+  },
+  {
+    "name": "eyes/low-poly/",
+    "method": 0,
+    "compressed": 0,
+    "size": 0,
+    "offset": 280663930
+  },
+  {
+    "name": "eyes/low-poly/low-poly.thumb",
+    "method": 8,
+    "compressed": 15539,
+    "size": 15938,
+    "offset": 280664002
+  },
+  {
+    "name": "eyes/low-poly/low-poly.mhclo",
+    "method": 8,
+    "compressed": 673,
+    "size": 1344,
+    "offset": 280679627
+  },
+  {
+    "name": "eyes/low-poly/low-poly.obj",
+    "method": 8,
+    "compressed": 2161,
+    "size": 6604,
+    "offset": 280680386
+  }
+]

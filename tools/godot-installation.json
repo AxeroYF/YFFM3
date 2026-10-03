@@ -1,0 +1,22 @@
+{
+  "version": "4.7.2.stable.official.ed1daf0bf",
+  "edition": "standard-gdscript",
+  "architecture": "x86_64",
+  "source": "https://github.com/godotengine/godot-builds/releases/tag/4.7.2-stable",
+  "installedAt": "2026-09-30T15:49:07.1557986+08:00",
+  "portableEditor": "tools/godot",
+  "launch": "Start-Godot.cmd",
+  "cli": "godot.cmd",
+  "templates": "tools/godot/editor_data/export_templates/4.7.2.stable",
+  "checks": {
+    "editorArchiveSHA256": "731980f9608d61333e5baf54a2ef17210acc7a538446c0cb9969f002aca1e953",
+    "templatesArchiveSHA256": "f298490b8d44d934be425a5a65a51bf15f422428b229a06a6e11d9ffea248011",
+    "authenticode": "Valid - Prehensile Tales B.V.",
+    "projectImport": "passed",
+    "gdscriptRun": "passed",
+    "projectManager": "passed",
+    "graphics": "passed - Vulkan 1.4.351 / Forward+ / NVIDIA GeForce RTX 5070 Ti",
+    "windowsReleaseExport": "passed",
+    "exportedExecutableRun": "passed"
+  }
+}

@@ -1,0 +1,9 @@
+本代球员库：386 名有卡画球员，来源为黄狗风云 / Rougelite。
+catalog.json：Godot 可用的完整球员定义；图片路径指向当前项目。
+portraits/：386 张原始图片，以 SHA-256 命名；未缩放、未重绘。
+source-snapshot.json：原始字段、原始图片路径和卡画定位，供追溯。
+manifest.json：来源文件、图片散列、体积和字段清单。
+import-report.json：迁移统计与数据缺失情况。
+excluded-no-art.json：456 名无卡画球员，仅作筛选审计，不属于正式库。
+重新迁移脚本：项目根目录 scripts/import-player-library.mjs。
+不要把存档中的训练、伤病或体能直接写回球员定义。玩家进度应按球员 ID 单独存储。
