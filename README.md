@@ -25,6 +25,8 @@
 
 主游戏文件夹名称沿用早期开发路径，当前功能开发以该目录为准。
 
+新对话接续开发请从 [handoff/README.md](handoff/README.md) 开始；可直接复制 [新对话提示](handoff/NEW_CHAT_PROMPT.md)。
+
 ## 开发环境与启动
 
 当前已验证版本为 **Godot 4.7.2 stable，Windows x86_64 标准版 / GDScript**。游戏本身不需要 .NET 或 Node.js；资源处理脚本使用 Node.js。

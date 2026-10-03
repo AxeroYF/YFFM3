@@ -12,7 +12,8 @@
 export_credentials.cfg
 
 # Generated screenshots, test logs, backups, and executable builds.
-**/artifacts/
+**/artifacts/*
+!**/artifacts/.gdignore
 *.log
 *.pid
 *.tmp
