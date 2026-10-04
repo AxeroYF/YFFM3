@@ -1,32 +1,46 @@
 # YFFM3 对话交接
 
-更新：2026-10-04，Asia/Shanghai。
+更新日期：**2026-10-04**。本目录描述当前开发版本。六人制、传奇模型、体型手感与协议 5 已整理纳入 Git；版本管理检查与提交信息见 CURRENT_STATE 和 VERIFICATION。Git 版本不等于公网版本，当前仍未部署服务。
 
-本目录交接的是第三代项目 **YFFM3 · 群星绿茵**。主游戏采用 Godot，比赛为每方五人的即时操控足球。前作目录仅作为历史素材来源。
+## 项目速览
+
+| 项目 | 当前状态 |
+| --- | --- |
+| 名称 | YFFM3 · 群星绿茵 / STARBORNE，第三代足球项目 |
+| 核心玩法 | 星际场景中的六人制足球；每位玩家操控整支球队并切换球员 |
+| 引擎与画面 | Godot 4.7.2 标准版，GDScript；2560×1440 设计画布 |
+| 可玩内容 | 本地快速比赛、冰球反弹模式、三站战役、基础联机 |
+| 球员 | 386 名带卡画球员，完整 26 项能力；67 名传奇已有逐人外观配置 |
+| 输入 | 键盘、Xbox 风格手柄；安卓仅预留接口 |
+| 网络 | 协议 5，权威服务器 60 Hz，默认 30 Hz 快照；本地预测与远端插值 |
+| 发布 | 开发阶段，未部署公网；暂不打包 Windows / Android |
+| 仓库 | 独立私有仓库 `AxeroYF/YFFM3`，分支 `codex/yffm3` |
+| 本地目录 | `D:\Project\game_test\.worktrees\YFFM3`；主游戏在 `space-football-demo/` |
 
 ## 阅读顺序
 
-1. [CURRENT_STATE.md](CURRENT_STATE.md)：目标、用户已确定的要求、完成内容、当前边界与后续建议。
-2. [MANIFEST.md](MANIFEST.md)：项目地图、启动方式和修改不同系统时的入口。
-3. [VERIFICATION.md](VERIFICATION.md)：已经执行的验证、证据位置、复现命令与未验证项。
-4. [NEW_CHAT_PROMPT.md](NEW_CHAT_PROMPT.md)：可复制到新对话的接续提示。
+1. [CURRENT_STATE.md](CURRENT_STATE.md)：当前结论、开发约束、已知缺口和下一步。
+2. [GAMEPLAY_REFERENCE.md](GAMEPLAY_REFERENCE.md)：比赛流程、动作、物理、AI、规则、战役及呈现。
+3. [CONTROLS.md](CONTROLS.md)：键盘 / Xbox 操作、组合键、辅助及菜单行为。
+4. [PLAYER_DATA.md](PLAYER_DATA.md)：球员库、26 项能力用途、传奇模型与体型手感。
+5. [PROJECT_INFO.md](PROJECT_INFO.md)：启动、目录、存档、架构、联机、部署和维护。
+6. [MANIFEST.md](MANIFEST.md)：定位实现文件；[VERIFICATION.md](VERIFICATION.md)：历史测试范围。
 
-## 仓库身份
+直接开启新对话，可复制 [NEW_CHAT_PROMPT.md](NEW_CHAT_PROMPT.md)。
 
-- GitHub：[AxeroYF/YFFM3](https://github.com/AxeroYF/YFFM3)，私有仓库。
-- 开发分支：`codex/yffm3`，跟踪 `origin/codex/yffm3`。
-- 当前电脑路径：`D:\Project\game_test\.worktrees\YFFM3`。
-- 游戏代码基线提交：`884c4e6d718fa6e9e4309fa11c21515130d078ff`。
-- 交接文档在基线之后单独提交；最新提交以 `git log -1` 为准。
+## 专项资料
 
-虽然当前目录位于 `.worktrees/` 下，它现在拥有自己的 `.git/`，是独立仓库。运行 `git rev-parse --show-toplevel` 应得到 YFFM3 目录；不要把父目录的 `football_rouge_online` 当成本项目远程仓库。
+| 文档 | 用途 |
+| --- | --- |
+| [SIX_A_SIDE_AND_ROADMAP.md](SIX_A_SIDE_AND_ROADMAP.md) | 六人制升级、小场规则来源及当轮机制评估 |
+| [LEGEND_MODELS.md](LEGEND_MODELS.md) | 67 名传奇外观、素材来源、展厅和模型验证 |
+| [PHYSIQUE_GAMEPLAY.md](PHYSIQUE_GAMEPLAY.md) | 体型对启动、惯性、转向和对抗的有界影响 |
+| [NETWORK_GRAY_TEST.md](NETWORK_GRAY_TEST.md) | 当前协议 5、弱网模型、历史验证证据及灰度边界 |
+| [部署说明](../deploy/README.md) | 与 Rougelite 同机部署的目录、端口、服务模板及观测步骤 |
 
-## 本轮交付
+## 资料时效
 
-独立 Git 仓库与私有远程已建立，源码、386 名球员完整数据和卡画、人体素材、脚本及现有说明进入版本管理。引擎、导出模板、缓存、存档、构建、测试截图和运行日志保留在本机并被忽略。
-
-交接整理没有新增游戏机制或改变键位。进入新对话后按用户下一项需求继续开发即可。
-
-## 更新约定
-
-游戏行为改变时同步 `CURRENT_STATE.md`；文件入口改变时更新 `MANIFEST.md`；只有实际执行过的检查才能写入 `VERIFICATION.md`。保留通过测试的范围和未验证的范围，避免把历史设计建议写成已实现功能。
+- 本轮综合文档以当前源码为依据；具体数值以后续代码为准。专项文档中的“本轮”指各自开发阶段。
+- 历史协议 3 / 4、五人制及旧 Git 基线结果不能替代当前协议 5 / 六人制验证。
+- 日志、截图、引擎和用户存档通常不在 Git 中。代码存在、测试通过、人工体验满意、已上线，是四种不同状态。
+- 整理前的三份入口文档已存入 [历史入口存档说明](archive/README.md)，仅供追溯，不作为当前开发指令。

@@ -1,8 +1,84 @@
 # 验证记录
 
-记录时间：2026-10-04。对应游戏代码基线：`884c4e6d718fa6e9e4309fa11c21515130d078ff`。
+更新时间：2026-10-04。本文件保留多轮开发结果；“本轮”指各小节对应的阶段，不代表本次全部重跑。最新提交前验证如下；旧协议、五人制与旧 Git 基线记录单独保留。
 
-## 最近实际执行结果
+## Git 归档阶段的提交前验证（2026-10-04）
+
+功能基线为 `6f6c19e`，交接文档单独提交。本阶段没有修改游戏机制、打包或部署。
+
+- Godot 4.7.2 无窗口编辑器导入完成，无脚本错误。
+- 七组检查全部通过：`tests.gd` 531、`six_a_side_tests.gd` 43、`legend_models_tests.gd` 608、`physique_tests.gd` 1,995、`network_latency_tests.gd` 98、`mechanics_tests.gd` 77、`receiving_defending_tests.gd` 57，共 **3,409 项断言**。
+- 基础回归含 12 场 AI 对局（共 30 球）及三次自动操控对局。
+- 日志检查仅发现既知 `ERROR: Failed to read the root certificate store.`，没有其他 `ERROR:`、`SCRIPT ERROR` 或 `FAILED`。未重跑实际图形、多进程 ENet、公网或 Linux 验证。
+- 提交范围检查：未加入本地引擎、存档、导出包、测试产物；没有 100 MiB 及以上文件，未发现高置信度私钥 / 令牌签名。素材来源和 `.uid` / `.import` 保留。
+- `git diff --cached --check` 通过。第三方 MakeHuman `.mhclo` 原始文件自带末尾空行，使用 `.gitattributes` 中限定该路径类型的规则保留上游原文。
+- 本机日志在 `space-football-demo/artifacts/git-prepush-*.log`，仍由 Git 忽略。
+
+## 此前交接整理的验证范围
+
+本次只核对当前源码 / 配置、球员数据与卡画清单、传奇配置和 Markdown 本地链接，并整理文档。没有启动比赛回归、图形验证或网络集成，没有打包、部署或推送。资料检查结果见 `space-football-demo/artifacts/handoff-audit-20261004.json`（本地产物，Git 忽略）。
+
+- 386 个唯一球员 ID，26 项能力共 10,036 个值，均在 1–99；全员有身高。
+- 386 个唯一卡画文件全部存在，逐文件 SHA-256 和字节数匹配清单，总计 40,666,520 字节。
+- 67 份传奇配置全部能对应球员，并覆盖当前传奇范围；逆足、花式字段各 151 条缺失，与导入报告一致。
+- 检查 15 份现行 / 导航 Markdown 文档的 107 个本地链接，无断链。三份历史入口原文中的旧相对链接按归档说明保留，不作为现行链接检查。
+- `git diff --check` 通过；仅有既有工作区的行尾转换提示。本次没有修改游戏源码。
+
+不能把下列历史测试重新计入本次执行数量，也不能将本机 ENet 验证解释为香港公网或 Linux 部署验证。
+
+## 最近一次网络集成验证：网络协议 5（历史）
+
+协议 5 的 **98 项专项**、**531 / 1995 / 77 / 57 项回归**、双向弱网与连续丢包射门验证、实际 2K 联机图形检查见 [NETWORK_GRAY_TEST.md](NETWORK_GRAY_TEST.md)。这些是此前联机优化阶段的执行结果。本地弱网模型不注入入场 / 加载 / 终场生命周期消息，没有公网或系统级 UDP 故障注入证据。
+
+## 体型手感接入验证（历史，协议 4）
+
+- `physique_tests.gd`：1,995 项通过；`legend_models_tests.gd`：608 项重新通过；下方八组机制回归再次全部通过（1,151 项），合计 **3,754 项**。`tests.gd` 12 个 AI 对局共 30 球，三次自动操作对局完成。
+- `--verify-physique`：11 项通过，实际 2560×1440 资料页与两名传奇身体倾斜检查；`--verify-locomotion` 通过，行走/跑动/冲刺/停止和摆臂截图已检查。
+- 协议 4：`verify-network.ps1 -Mechanics -PlayerHost -AlternateRoster -Rounds 2 -AllowSystemCertificateWarning`，以及 `-Mechanics -Ice -Rounds 2 -AllowSystemCertificateWarning` 两种拓扑均通过；一端上行 100ms、1/5 丢包，终场比分与帧号一致。
+- 最终日志仅余已知系统 CA 库错误；网络脚本新增显式可选参数，仅精确允许该诊断，原日志和提示保留，其他错误仍失败。没有公网或真实手柄手感验证。
+- 证据为 `artifacts/physique-*.log`、`physique-report.json`、`physique-*.png` 和最新步态截图。测试时限调整的诊断、完整修正边界和复现方式见 [PHYSIQUE_GAMEPLAY.md](PHYSIQUE_GAMEPLAY.md)。
+
+## 传奇模型升级验证
+
+- `legend_models_tests.gd`：608 项通过，覆盖 67 名传奇、各槽位外观一致、原始身高/能力不变、连续变形、骨骼和动作有效。
+- `--verify-legends`：162 项通过，17 页实际 2560×1440 渲染、真实蒙皮绑定、缓存上限、十二人比赛实例、网络状态编解码恢复外观、换人重建。已查看全员联系表、近看、跑动与比赛动作截图。
+- `tests.gd`：531 项重新通过；12 个 AI 对局合计 30 球，三个自动操作对局完成。
+- 日志：`artifacts/legend-tests.log`、`legend-visual.log`、`legend-regression.log`。最终无脚本/着色器/材质错误；保留已有沙箱证书库读取错误。
+- 命令、证据和未验证范围详见 [LEGEND_MODELS.md](LEGEND_MODELS.md)。本轮没有新增真手柄、安卓或公网验证，也没有重跑多进程 ENet。
+
+## 六人制升级阶段的执行结果（历史）
+
+| 检查入口 | 六人制结果 | 本机证据 |
+| --- | --- | --- |
+| `tests.gd` | 531 项通过；12 个 AI 对局共 30 粒进球；三次自动操控对局完成 | `artifacts/six-tests.log` |
+| `action_net_tests.gd` | 185 项通过 | `artifacts/six-action_net_tests.log` |
+| `mechanics_tests.gd` | 77 项通过 | `artifacts/six-mechanics_tests.log` |
+| `receiving_defending_tests.gd` | 57 项通过 | `artifacts/six-receiving_defending_tests.log` |
+| `keeper_goal_tests.gd` | 31 项通过 | `artifacts/six-keeper_goal_tests.log` |
+| `pitch_modes_tests.gd` | 49 项通过 | `artifacts/six-pitch_modes_tests.log` |
+| `restart_impact_tests.gd` | 178 项通过 | `artifacts/six-restart_impact_tests.log` |
+| `six_a_side_tests.gd` | 43 项通过；六人操作、退距、球门区、旧存档、室内选项、触球事件时效 | `artifacts/six-six_a_side_tests.log` |
+| `--verify-six` | 8 项通过；实际 2560×1440，所测大力射门即时位移 8.206 像素，匹配标定值 | `artifacts/six-visual.log`、`six-visual.json` |
+| `--verify-input` | 79 项通过，合成键盘／控制器菜单与操作 | `artifacts/six-input.log` |
+| `--verify-loading` | 12 项通过；十二人分数进度、加载期间冻结、重赛与取消 | `artifacts/six-loading.log` |
+| `verify-network.ps1 -Rules -Ice -Rounds 2` | 独立服务器 + 两客户端，两轮通过 | `artifacts/six-network-ice.log` |
+| `verify-network.ps1 -Rules -PlayerHost -AlternateRoster -Rounds 2` | 玩家主机 + 客户端，自定义六人阵容，两轮通过 | `artifacts/six-network-host.log` |
+
+八组无窗口检查共 **1,151 项断言**。本轮联机仍是本机真实 ENet 进程，一端上行 100ms、每五包丢一包，各端比分与终场帧号一致；不代表公网下行抖动测试。
+
+新增复现入口：
+
+```powershell
+.\godot.cmd --headless --path space-football-demo --script six_a_side_tests.gd
+.\godot.cmd --path space-football-demo --fullscreen --resolution 2560x1440 -- --verify-six
+.\godot.cmd --path space-football-demo --fullscreen --resolution 2560x1440 -- --verify-loading
+```
+
+已查看 `six-squad.png`、`six-campaign.png`、`six-lineups.png`、`six-free-kick.png` 等实际画面。截图与日志仍被 Git 忽略。新图形验证没有保存或覆盖玩家的球队／战役存档。
+
+## 上一轮五人制验证（历史）
+
+以下对应旧基线 `884c4e6d718fa6e9e4309fa11c21515130d078ff`，不能当作当前六人制的纯净克隆或旧动作专项图形验证。
 
 | 检查入口 | 结果 | 本机证据 |
 | --- | --- | --- |
