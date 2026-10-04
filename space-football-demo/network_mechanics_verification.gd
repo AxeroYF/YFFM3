@@ -1,16 +1,17 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 var seen:Dictionary={}
 var sent:Dictionary={}
 func stage(s,owner:int)->void:
- s.mechanics.reset(s);s.phase="play";s.freeze=0;s.owner=owner;s.teams[owner/5].selected=owner
- for i in 10:
-  s.players[i].pos=Vector2(-25+(i%5)*10,13 if i<5 else -13);s.players[i].vel=Vector2.ZERO;s.players[i].cooldown=0
+ s.mechanics.reset(s);s.phase="play";s.freeze=0;s.owner=owner;s.teams[owner/Team.SIZE].selected=owner
+ for i in Team.COUNT:
+  s.players[i].pos=Vector2(-25+(i%Team.SIZE)*10,13 if i<Team.SIZE else -13);s.players[i].vel=Vector2.ZERO;s.players[i].cooldown=0
   s.players[i].tackle_cd=0;s.players[i].tackle_resolved=false;s.players[i].action="idle";s.players[i].action_time=0
  s.players[owner].pos=Vector2.ZERO;s.ball=Vector2(0.8,0);s.velocity=Vector2.ZERO;s.pickup_lock=0
  s.ball_height=s.BallPhysics.FLOOR;s.vertical_speed=0;s.ball_is_shot=false;s.pass_receiver=-1
 func duel(s,moving:bool=false)->void:
  stage(s,6);s.teams[0].selected=1
- s.players[6].pos=Vector2(1.8,0);s.players[6].dir=Vector2.LEFT
+ s.players[7].pos=Vector2(1.8,0);s.players[7].dir=Vector2.LEFT
  s.players[1].pos=Vector2(-1,0) if moving else Vector2.ZERO;s.players[1].dir=Vector2.RIGHT
  s.players[1].vel=Vector2(8,0) if moving else Vector2.ZERO;s.ball=Vector2(0.9,0)
 func step(network)->void:
@@ -23,9 +24,9 @@ func step(network)->void:
   170: s.Rules.restart(s,0,"kick_in",Vector2(0,18));s.freeze=0
   230: s.mechanics.strict_rules=true
   260:
-   stage(s,1);s.mechanics.discipline(s,6,true);s.mechanics.discipline(s,6,true)
+   stage(s,1);s.mechanics.discipline(s,7,true);s.mechanics.discipline(s,7,true)
   290:
-   s.players[6].sinbin=0;s.Rules.restart(s,0,"kick_in",Vector2(0,18))
+   s.players[7].sinbin=0;s.Rules.restart(s,0,"kick_in",Vector2(0,18))
   340: duel(s)
   390: duel(s,true)
   440: duel(s)
@@ -60,8 +61,8 @@ func observe(s)->void:
  if s.players[1].jump_z>0.1: seen.jump=true
  if s.players[1].sub_revision>0: seen.substitution=true
  if s.mechanics.strict_rules: seen.keeper_rules=true
- if not s.players[6].active: seen.red=true
- if s.players[6].sub_revision>0: seen.replacement=true
+ if not s.players[7].active: seen.red=true
+ if s.players[7].sub_revision>0: seen.replacement=true
  if s.players[1].action=="tackle" and s.frame>=340: seen.standing_tackle=true
  if s.players[1].action=="slide" and s.players[1].slide_speed>1.2 and s.frame>=390: seen.moving_slide=true
  if s.players[1].action=="slide_still" and s.frame>=440: seen.stationary_slide=true

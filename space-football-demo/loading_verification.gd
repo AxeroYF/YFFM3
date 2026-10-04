@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 var checks:=0
 var failures:=0
 func check(value:bool,message:String)->void:
@@ -23,15 +24,17 @@ func run(game)->void:
  var captured:=false;var frozen:=true;var tracked:=true;var frames:=0
  while game.loader.active and frames<1800:
   await game.get_tree().process_frame
+  # Loading may have completed during the await; active play is allowed to tick.
+  if not game.loader.active: break
   frames+=1
   if game.sim!=null: frozen=frozen and game.sim.elapsed==0 and game.sim.frame==0
   var percent:float=game.loader.progress.value
   if percent>=10 and percent<=80:
-   tracked=tracked and is_equal_approx(percent,10+game.actors.size()*7)
+   tracked=tracked and is_equal_approx(percent,10+game.actors.size()*70.0/Team.COUNT)
   if not captured and percent>=38 and percent<=80:
    captured=true
    await game.capture("loading-match")
- check(not game.loader.active and game.screen=="match" and game.actors.size()==10,"match opens with ten fully built players")
+ check(not game.loader.active and game.screen=="match" and game.actors.size()==Team.COUNT,"match opens with twelve fully built players")
  check(game.desktop_input.stick==Vector2.ZERO and not game.desktop_input.neutral_required,"loading clears stale held menu navigation")
  check(frozen,"offline match clock and simulation wait until loading finishes")
  check(tracked and captured and game.loader.presented_frames>=14,"model progress follows completed player count across displayed frames")

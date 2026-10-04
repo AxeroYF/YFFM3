@@ -110,3 +110,22 @@ fs.writeFileSync(`${out}/human_mesh.json`,JSON.stringify({license:'CC0-1.0',sour
 for(const [src,dst] of [['system/skins/young_caucasian_male/young_lightskinned_male_diffuse.png','skin.png'],['system/hair/short02/short02_diffuse.png','hair.png'],['brown_eye.png','eyes.png'],['LICENSE.ASSETS.md','LICENSE.CC0.txt'],['LICENSE.md','LICENSE-SETUP.txt']])fs.copyFileSync(`${source}/${src}`,`${out}/${dst}`);
 const report={source:'https://github.com/makehumancommunity/makehuman',revision:JSON.parse(text('provenance.json').replace(/^\uFEFF/,'')).revision,systemPack:'https://files.makehumancommunity.org/asset_packs/makehuman_system_assets/makehuman_system_assets_cc0.zip',assetLicense:'CC0-1.0',modifications:['male/adult and muscular morphs','normalized body dimensions','clothing lower legs cut to shorts','top four bone weights normalized','per-player proportions applied at runtime'],bones:bones.length,vertices:allVertices.length,triangles:surfaces.reduce((n,s)=>n+s.indices.length/3,0),surfaces:surfaces.map(s=>({material:s.material,triangles:s.indices.length/3})),sha256:crypto.createHash('sha256').update(fs.readFileSync(`${out}/human_mesh.json`)).digest('hex')};
 fs.writeFileSync(`${out}/provenance.json`,JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
+
+// Independent fitted hair meshes share the body's normalization and official weights.
+// Keep the canonical body unchanged so non-legendary players retain their old asset.
+const hairDirectory=`${out}/hair`;
+fs.mkdirSync(hairDirectory,{recursive:true});
+const hairReport=[];
+for(const style of ['short01','short02','short03','short04','bob01','bob02','afro01','ponytail01']){
+ const first=allVertices.length, surfaceStart=surfaces.length;
+ const prefix=`system/hair/${style}/${style}`;
+ garment(prefix,'hair');
+ const data={license:'CC0-1.0',vertices:allVertices.slice(first),weights:allWeights.slice(first),surfaces:surfaces.slice(surfaceStart).map(s=>({...s,indices:s.indices.map(i=>i-first)}))};
+ const json=JSON.stringify(data);
+ fs.writeFileSync(`${hairDirectory}/${style}.json`,json);
+ fs.copyFileSync(`${source}/system/hair/${style}/${style==='afro01'?'afro':style}_diffuse.png`,`${hairDirectory}/${style}.png`);
+ hairReport.push({style,vertices:data.vertices.length,triangles:data.surfaces.reduce((n,s)=>n+s.indices.length/3,0),sha256:crypto.createHash('sha256').update(json).digest('hex')});
+ allVertices.length=first;allWeights.length=first;surfaces.length=surfaceStart;
+}
+fs.writeFileSync(`${hairDirectory}/provenance.json`,JSON.stringify({license:'CC0-1.0',source:report.systemPack,modifications:['fitted to the same CC0 base body','normalized to body height','four normalized bone weights retained','style proportions and colours authored at runtime'],meshes:hairReport},null,2));
+console.log('Exported',hairReport.length,'CC0 hair meshes');

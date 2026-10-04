@@ -1,4 +1,5 @@
 extends Node3D
+const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 
 const Campaign = preload("res://campaign.gd")
@@ -167,13 +168,16 @@ func _ready() -> void:
  network.match_ended.connect(on_network_end)
  network.session_lost.connect(on_network_lost)
  if server_only or bot_mode:
+  # No need to spin an unbounded render loop on a shared compute server.
+  Engine.max_fps=60
   booting=false
   online=true
   if network_test: network.test_duration=5.0
   var port_value:=int(argument("--port=","28765"))
   if server_only:
    var listen_test:bool="--listen-host-test" in OS.get_cmdline_user_args()
-   network.host(port_value,not listen_test)
+   var host_error:Error=network.host(port_value,not listen_test)
+   if host_error!=OK: get_tree().quit(2);return
    if listen_test: network.set_ready()
   else:
    network.delay_ms=int(argument("--delay=","0"))
@@ -209,6 +213,8 @@ func _ready() -> void:
  await loader.present(100,"准备完成")
  loader.finish();booting=false
  if model_verify or "--models" in OS.get_cmdline_user_args(): show_player_bodies()
+ if "--verify-legends" in OS.get_cmdline_user_args(): call_deferred("verify_legends")
+ if "--verify-physique" in OS.get_cmdline_user_args(): call_deferred("verify_physique")
  if library_verify: library_screen.show_library()
  if "--verify-release-ui" in OS.get_cmdline_user_args(): call_deferred("verify_release_ui")
  if input_verify: call_deferred("verify_input_ui")
@@ -218,6 +224,7 @@ func _ready() -> void:
  if "--verify-restart-impact" in OS.get_cmdline_user_args(): call_deferred("verify_restart_impact")
  if "--verify-pitch-modes" in OS.get_cmdline_user_args(): call_deferred("verify_pitch_modes")
  if "--verify-action-net" in OS.get_cmdline_user_args(): call_deferred("verify_action_net")
+ if "--verify-six" in OS.get_cmdline_user_args(): call_deferred("verify_six")
  if "--verify-ai" in OS.get_cmdline_user_args(): call_deferred("verify_ai")
  if "--verify-mechanics" in OS.get_cmdline_user_args(): call_deferred("verify_mechanics")
  if "--verify-rules" in OS.get_cmdline_user_args(): call_deferred("verify_rules_visuals")
@@ -230,12 +237,21 @@ func _ready() -> void:
   var fixture_seed:=int(argument("--quick-seed=","0"))
   if fixture_seed>0: quick_fixture=QuickMatch.generate(fixture_seed)
   show_quick_options(fixture_seed<=0)
- print("STARBORNE_READY 2560x1440 / 5v5 / CORE_V2 / network+controller")
+ print("STARBORNE_READY 2560x1440 / 6v6 / CORE_V2 / network+controller")
  if graphical_test:
   show_lobby()
   network.delay_ms=int(argument("--delay=","0"))
   network.loss_every=int(argument("--loss-every=","0"))
   network.join(argument("--connect=","127.0.0.1"),int(argument("--port=","28765")))
+
+func verify_legends()->void:
+ await preload("res://legend_models_verification.gd").new().run(self)
+
+func verify_physique()->void:
+ await preload("res://physique_verification.gd").new().run(self)
+
+func verify_six()->void:
+ await preload("res://six_a_side_verification.gd").new().run(self)
 
 func verify_rules_visuals()->void:
  await preload("res://rules_verification.gd").new().run(self)
@@ -486,8 +502,10 @@ func build_world() -> void:
  for side in [-1,1]:
   var goal_mat: Material=glow if side==-1 else orange
   box(arena,Vector3((Pitch.HALF_LENGTH+Pitch.GOAL_DEPTH*0.5)*side,-0.12,0),Vector3(Pitch.GOAL_DEPTH,0.2,Pitch.GOAL_HALF_WIDTH*2),material(Color("1c3547"),0.05))
-  for z in [-9,9]: beam(arena,Vector3((Pitch.HALF_LENGTH-10)*side,0.04,z),Vector3(Pitch.HALF_LENGTH*side,0.04,z),0.07,white)
-  beam(arena,Vector3((Pitch.HALF_LENGTH-10)*side,0.04,-9),Vector3((Pitch.HALF_LENGTH-10)*side,0.04,9),0.07,white)
+  for z in [-Pitch.PENALTY_HALF_WIDTH,Pitch.PENALTY_HALF_WIDTH]: beam(arena,Vector3((Pitch.HALF_LENGTH-Pitch.PENALTY_DEPTH)*side,0.04,z),Vector3(Pitch.HALF_LENGTH*side,0.04,z),0.07,white)
+  beam(arena,Vector3((Pitch.HALF_LENGTH-Pitch.PENALTY_DEPTH)*side,0.04,-Pitch.PENALTY_HALF_WIDTH),Vector3((Pitch.HALF_LENGTH-Pitch.PENALTY_DEPTH)*side,0.04,Pitch.PENALTY_HALF_WIDTH),0.07,white)
+  for z in [-Pitch.GOAL_AREA_HALF_WIDTH,Pitch.GOAL_AREA_HALF_WIDTH]: beam(arena,Vector3((Pitch.HALF_LENGTH-Pitch.GOAL_AREA_DEPTH)*side,0.04,z),Vector3(Pitch.HALF_LENGTH*side,0.04,z),0.055,white)
+  beam(arena,Vector3((Pitch.HALF_LENGTH-Pitch.GOAL_AREA_DEPTH)*side,0.04,-Pitch.GOAL_AREA_HALF_WIDTH),Vector3((Pitch.HALF_LENGTH-Pitch.GOAL_AREA_DEPTH)*side,0.04,Pitch.GOAL_AREA_HALF_WIDTH),0.055,white)
   for z in [-5,5]:
    beam(arena,Vector3(Pitch.HALF_LENGTH*side,0,z),Vector3(Pitch.HALF_LENGTH*side,3.6,z),0.12,goal_mat)
    beam(arena,Vector3(Pitch.HALF_LENGTH*side,3.6,z),Vector3((Pitch.HALF_LENGTH+3)*side,3.0,z),0.10,goal_mat)
@@ -555,11 +573,11 @@ func create_actor(index: int) -> void:
  arena.add_child(actor)
  actors.append(actor)
  var color:=CYAN if index<Match.TEAM_SIZE else Color("ff866c")
- if index%5==0: color=GOLD if index<5 else Color("b79bff")
+ if index%Team.SIZE==0: color=GOLD if index<Team.SIZE else Color("b79bff")
  var rig:=FootballActor.new()
  actor.add_child(rig)
- var profile:Dictionary=sim.players[index].body if sim!=null else Body.profile(index%5)
- rig.build(color,Match.JERSEY_NUMBERS[index],index%5==0,profile)
+ var profile:Dictionary=sim.players[index].body if sim!=null else Body.profile(index%Team.SIZE)
+ rig.build(color,Match.JERSEY_NUMBERS[index],index%Team.SIZE==0,profile)
  rig.set_meta("player_id",sim.players[index].player_id if sim!=null else "")
  rigs.append(rig)
  var label:=Label3D.new()
@@ -727,6 +745,7 @@ func chrome(section: String) -> void:
 
 func camera_hub() -> void:
  camera.environment=null
+ camera.cull_mask=1
  planet.position=Vector3(28,6,-93)
  orbit.position=planet.position
  planet_material.set_shader_parameter("base_color",Color("094b8a"))
@@ -760,7 +779,7 @@ func show_menu() -> void:
  button(ui,"我的球队",Rect2(1140,69,208,62),library_screen.show_squad)
  button(ui,"球员库",Rect2(1370,69,208,62),library_screen.open_catalog)
  text(ui,"群星联队",Vector2(2180,76),28,INK,true)
- text(ui,"5-A-SIDE FOOTBALL",Vector2(110,284),24,CYAN)
+ text(ui,"6-A-SIDE FOOTBALL",Vector2(110,284),24,CYAN)
  text(ui,"群星绿茵",Vector2(101,333),112,INK,true)
  text(ui,"你的球队。你的主场。",Vector2(111,499),33,MUTED)
  button(ui,"联机对战",Rect2(110,657,680,105),show_lobby,true)
@@ -781,7 +800,7 @@ func show_menu() -> void:
  text(ui,featured.name,Vector2(1840,841),37,INK,true,540)
  text(ui,"%s  /  %d cm" % [featured.role,featured.heightCm],Vector2(1845,900),22,CYAN)
  var titles:=["星际杯","我的球队","球员库"]
- var descriptions:=["继续航程" if has_save else "开启新航程","管理你的五人阵容","%d 名球员" % PlayerLibrary.all().size()]
+ var descriptions:=["继续航程" if has_save else "开启新航程","管理你的六人阵容","%d 名球员" % PlayerLibrary.all().size()]
  var actions:Array[Callable]=[show_hub if has_save else request_new_game,library_screen.show_squad,library_screen.open_catalog]
  for i in 3:
   var x:=110+i*792
@@ -842,7 +861,7 @@ func close_assistance_settings()->void:
  elif origin=="online_menu": screen="match";show_online_menu()
  else: screen=origin;show_settings()
 
-func show_player_bodies()->void:
+func show_player_bodies(page:int=-1,focus:int=-1)->void:
  clear_modal()
  clear_ui()
  screen="bodies"
@@ -851,34 +870,50 @@ func show_player_bodies()->void:
   body_showroom=BodyShowroom.new()
   add_child(body_showroom)
   body_showroom.build()
+ if page>=0 and body_showroom.page!=page: body_showroom.set_page(page)
+ body_showroom.focus(focus)
  body_showroom.visible=true
+ camera.cull_mask=2
  camera.projection=Camera3D.PROJECTION_ORTHOGONAL
  camera.size=7.0
  camera.environment=get_world_3d().environment.duplicate()
- camera.environment.ambient_light_energy=0.5
+ camera.environment.ambient_light_energy=0.3
  camera.environment.glow_enabled=false
  camera.position=Vector3(0,77,15)
  camera.look_at(Vector3(0,76.65,0))
- chrome("球员模型  /  体型与触球高度")
- text(ui,"每一种身材，都有自己的比赛空间",Vector2(75,166),48,INK,true)
- text(ui,"统一比例展示 · 身高来自球员资料 · 肩宽、肢体比例与外观为游戏美术设定",Vector2(78,240),25,MUTED)
+ if focus>=0:
+  var focused_height:float=body_showroom.models[focus].body.height
+  var aim_height:float=75+focused_height-0.38
+  camera.size=2.6
+  camera.position=Vector3(0,aim_height,15)
+  camera.look_at(Vector3(0,aim_height,0))
+ chrome("传奇球员  /  模型展厅")
+ text(ui,"传奇，各有身姿",Vector2(75,166),48,INK,true)
+ text(ui,"%d 名传奇 · 按卡画塑造外观 · 身高取自球员库" % body_showroom.records.size(),Vector2(78,240),25,MUTED)
  button(ui,"正面",Rect2(78,310,180,62),func(): body_showroom.angle=0; body_showroom.turning=false)
  button(ui,"侧面",Rect2(274,310,180,62),func(): body_showroom.angle=PI/2; body_showroom.turning=false)
  button(ui,"背面",Rect2(470,310,180,62),func(): body_showroom.angle=PI; body_showroom.turning=false)
  button(ui,"自动旋转",Rect2(666,310,220,62),func(): body_showroom.turning=not body_showroom.turning)
  button(ui,"跑动 / 站立",Rect2(902,310,250,62),func(): body_showroom.running=not body_showroom.running)
+ button(ui,"上一页",Rect2(1260,310,180,62),func(): show_player_bodies(posmod(body_showroom.page-1,body_showroom.page_count())))
+ text(ui,"%02d / %02d" % [body_showroom.page+1,body_showroom.page_count()],Vector2(1473,324),27,CYAN)
+ button(ui,"下一页",Rect2(1635,310,180,62),func(): show_player_bodies(posmod(body_showroom.page+1,body_showroom.page_count())))
+ if focus>=0: button(ui,"全身对比",Rect2(1840,310,250,62),func():show_player_bodies())
  button(ui,"返回主菜单",Rect2(2170,310,315,62),show_menu)
- for i in 4:
-  var x:=100+i*610
-  var slot:int=[2,1,3,4][i]
-  var body:=Body.profile(slot)
-  panel(ui,Rect2(x,1100,530,190))
-  var model_record:=PlayerLibrary.find(["legend-messi","legend-haaland","s4-fc26-252371","s4-fc26-203376"][i])
-  text(ui,"%s   %d cm" % [model_record.name,body.height_cm],Vector2(x+24,1118),31,INK,true)
-  text(ui,body.build_name,Vector2(x+24,1166),23,CYAN)
-  text(ui,"弹跳 %d   /   头球 %d" % [body.jumping,body.heading],Vector2(x+24,1208),22,MUTED)
-  text(ui,"理论头部触球上限 %.2f m" % ((body.head_height+body.jump_height)/Body.WORLD_UNITS_PER_METRE),Vector2(x+24,1244),20,GOLD)
- text(ui,"已接入身材碰撞与触球高度；起跳时机、主动头球和空中对抗将在高空球阶段实现。",Vector2(100,1313),23,MUTED)
+ for i in body_showroom.page_records.size():
+  var x:int=100+i*610
+  var model_record:Dictionary=body_showroom.page_records[i]
+  var body:=Body.from_record(model_record)
+  panel(ui,Rect2(x,1100,530,212))
+  var portrait:=TextureRect.new();portrait.texture=load(model_record.portrait)
+  portrait.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;portrait.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+  portrait.position=Vector2(x+14,1114);portrait.size=Vector2(108,175)
+  portrait.mouse_filter=Control.MOUSE_FILTER_IGNORE;ui.add_child(portrait)
+  text(ui,"%s  ·  %d cm" % [model_record.name,body.height_cm],Vector2(x+134,1118),27,INK,true)
+  text(ui,body.build_name,Vector2(x+134,1160),23,CYAN)
+  text(ui,FootballActor.Groom.LABELS.get(body.hair_style,body.hair_style),Vector2(x+134,1196),21,MUTED)
+  button(ui,"近看外观",Rect2(x+134,1245,360,48),func():show_player_bodies(-1,i))
+ text(ui,"体型影响启动、刹车、变向与身体对抗 · 球员资料可查看修正 · 肤色与发型仅影响外观",Vector2(100,1334),23,MUTED)
 
 func request_new_game() -> void:
  if not has_save: new_game(); return
@@ -905,7 +940,7 @@ func persist() -> void:
 func show_hub() -> void:
  records.clear()
  portraits.clear()
- for slot in [2,1,3,4]:
+ for slot in [2,1,3,4,5]:
   var record:=PlayerLibrary.find(Squad.ids[slot])
   records.append(record)
   portraits.append(load(record.portrait))
@@ -942,7 +977,7 @@ func show_hub() -> void:
  text(ui,"首发阵容",Vector2(72,756),33,INK,true)
  text(ui,"位置训练  /  每个位置最多 5 次",Vector2(255,766),21,MUTED)
  button(ui,"调整阵容",Rect2(1500,747,270,64),library_screen.show_squad)
- for i in 4: roster_card(i,Vector2(72+i*441,824))
+ for i in Team.FIELD_PLAYERS: roster_card(i,Vector2(72+i*352,824))
  panel(ui,Rect2(1850,824,638,475))
  text(ui,"星舰补给站",Vector2(1885,850),30,INK,true)
  text(ui,PlayerLibrary.find(Squad.ids[0]).name+"  /  首发门将",Vector2(1885,915),27,GOLD,true)
@@ -955,11 +990,11 @@ func show_hub() -> void:
  if campaign.save_error!="": toast(campaign.save_error)
 
 func roster_card(index: int, pos: Vector2) -> void:
- var colors: Array[Color]=[GOLD,CYAN,Color("c4b6ff"),Color("ffa68a")]
- var p:=panel(ui,Rect2(pos,Vector2(424,475)),Color(0.026,0.045,0.078,0.96),colors[index]*Color(1,1,1,0.6))
+ var colors: Array[Color]=[GOLD,CYAN,Color("c4b6ff"),Color("ffa68a"),Color("8ecbff")]
+ var p:=panel(ui,Rect2(pos,Vector2(337,475)),Color(0.026,0.045,0.078,0.96),colors[index]*Color(1,1,1,0.6))
  var portrait_clip:=Control.new()
  portrait_clip.position=Vector2(8,6)
- portrait_clip.size=Vector2(190,363)
+ portrait_clip.size=Vector2(135,363)
  portrait_clip.clip_contents=true
  portrait_clip.mouse_filter=Control.MOUSE_FILTER_IGNORE
  p.add_child(portrait_clip)
@@ -967,17 +1002,17 @@ func roster_card(index: int, pos: Vector2) -> void:
  sprite.texture=portraits[index]
  sprite.expand_mode=TextureRect.EXPAND_IGNORE_SIZE
  sprite.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
- sprite.size=Vector2(190,310)
+ sprite.size=Vector2(135,310)
  sprite.position=Vector2(0,48)
  portrait_clip.add_child(sprite)
- text(p,["右翼","前锋","左翼","后卫"][index],Vector2(22,20),18,colors[index])
- text(p,records[index].name,Vector2(213,70),30,INK,true)
- text(p,"%s  ·  %d OVR" % [records[index].role,records[index].overall],Vector2(215,124),20,colors[index])
- text(p,"身高 %d cm" % records[index].heightCm,Vector2(215,155),18,MUTED)
+ text(p,["右翼","前锋","左翼","后卫","中场"][index],Vector2(22,20),18,colors[index])
+ text(p,records[index].name,Vector2(148,70),25,INK,true,178)
+ text(p,"%s  ·  %d OVR" % [records[index].role,records[index].overall],Vector2(148,124),20,colors[index])
+ text(p,"身高 %d cm" % records[index].heightCm,Vector2(148,155),18,MUTED)
  var attr: Dictionary=records[index].attributes
- text(p,("抢断  %d\n盯人  %d\n力量  %d" % [attr.tackling,attr.marking,attr.strength]) if index==3 else ("射门  %d\n传球  %d\n盘带  %d" % [attr.finishing,attr.passing,attr.dribbling]),Vector2(215,181),23,MUTED)
- text(p,"训练 %d / 5" % campaign.training[index],Vector2(215,311),23,colors[index],true)
- var train_button:=button(p,"训练完成" if campaign.training[index]>=5 else "训练  /  %d 星币" % campaign.cost(index),Rect2(22,387,380,64),func(): train_player(index))
+ text(p,("抢断  %d\n盯人  %d\n力量  %d" % [attr.tackling,attr.marking,attr.strength]) if index==3 else ("射门  %d\n传球  %d\n盘带  %d" % [attr.finishing,attr.passing,attr.dribbling]),Vector2(148,181),23,MUTED)
+ text(p,"训练 %d / 5" % campaign.training[index],Vector2(148,311),23,colors[index],true)
+ var train_button:=button(p,"训练完成" if campaign.training[index]>=5 else "训练  /  %d 星币" % campaign.cost(index),Rect2(22,387,293,64),func(): train_player(index))
  train_button.disabled=campaign.training[index]>=5 or campaign.credits<campaign.cost(index)
 
 func train_player(index: int) -> void:
@@ -1009,7 +1044,7 @@ func show_briefing() -> void:
  text(ui,m.info,Vector2(115,465),28,MUTED,false,1000)
  text(ui,"本场环境",Vector2(115,606),24,INK,true)
  text(ui,m.rule if arcade_rules else "出界重开 · 角球 / 界外球 / 球门球 · 无越位",Vector2(115,655),25,CYAN,false,1000)
- text(ui,"5 人制 · 每队 1 门将 + 4 场上球员\n100 秒比赛  /  同分进入 30 秒金球加时",Vector2(115,737),25,MUTED)
+ text(ui,"6 人制 · 每队 1 门将 + 5 场上球员\n100 秒比赛  /  同分进入 30 秒金球加时",Vector2(115,737),25,MUTED)
  text(ui,"选择出场战术",Vector2(115,853),28,INK,true)
  for i in 3:
   button(ui,["稳固防守","均衡推进","全线压上"][i]+("  ✓" if tactic==i else ""),Rect2(115+i*335,914,313,76),func(): tactic=i; show_briefing(),tactic==i)
@@ -1031,6 +1066,7 @@ func begin_travel() -> void:
 
 func start_match() -> void:
  if is_instance_valid(loader) and loader.active: return
+ camera.cull_mask=1
  load_epoch+=1
  var epoch:=load_epoch
  controls.reset()
@@ -1068,11 +1104,11 @@ func start_match() -> void:
  actors.clear()
  rigs.clear()
  selected_labels.clear()
- await loader.present(10,"双方阵容已就绪 · 准备球员 0 / 10")
+ await loader.present(10,"双方阵容已就绪 · 准备球员 0 / 12")
  if epoch!=load_epoch: return
  for i in Match.PLAYER_COUNT:
   create_actor(i)
-  await loader.present(10+(i+1)*7,"球员已就绪 %d / 10" % (i+1))
+  await loader.present(10+(i+1)*70.0/Team.COUNT,"球员已就绪 %d / 12" % (i+1))
   if epoch!=load_epoch: return
  last_event=-1
  event_age=0
@@ -1115,8 +1151,8 @@ func start_match() -> void:
 func build_match_ui() -> void:
  var mission: Dictionary=Campaign.MISSIONS[mini(campaign.stage,2)]
  panel(ui,Rect2(72,38,630,129))
- text(ui,"ONLINE  /  1v1  /  5v5" if online else ("QUICK MATCH  /  开发测试" if practice else mission.tag),Vector2(101,57),18,CYAN)
- text(ui,"冰球模式 · 反弹边界" if sim.ice_mode else "经典五人制 · 轨道球场" if not sim.arcade else mission.name+" / 星际规则",Vector2(99,97),29,INK,true)
+ text(ui,"ONLINE  /  1v1  /  6v6" if online else ("QUICK MATCH  /  开发测试" if practice else mission.tag),Vector2(101,57),18,CYAN)
+ text(ui,"冰球模式 · 反弹边界" if sim.ice_mode else "经典六人制 · 轨道球场" if not sim.arcade else mission.name+" / 星际规则",Vector2(99,97),29,INK,true)
  panel(ui,Rect2(790,35,980,155),Color(0.016,0.03,0.055,0.96))
  text(ui,"主队"+(" · 你" if sim.view_team==0 else ""),Vector2(833,74),31,CYAN,true)
  text(ui,("客队" if online else "AI 测试队" if practice else mission.club)+(" · 你" if sim.view_team==1 else ""),Vector2(1440,80),27,Color("ffa78c"),true)
@@ -1168,36 +1204,37 @@ func update_pass_arrow()->void:
  if screen!="match" or not desktop_input.pass_indicator or sim==null or sim.finished: return
  if sim.phase in ["goal","foul"]: return
  if sim.phase=="restart" and not sim.Rules.Flow.ready(sim): return
- var index:int=sim.selected
+ var view=network.input_state() if online else sim
+ var index:int=view.selected
  var direction:=Vector2.ZERO
- if sim.owner==index and not sim.charging:
-  direction=sim.pass_plan(index,controls.movement(),false,desktop_input.assistance).direction
- elif sim.owner<0 and not sim.ball_is_shot and sim.last_touch/5==sim.view_team and sim.kick_age<0.3:
-  index=sim.last_touch
-  direction=sim.velocity.normalized()
+ if view.owner==index and not view.charging:
+  direction=view.pass_plan(index,controls.movement(),false,desktop_input.assistance).direction
+ elif view.owner<0 and not view.ball_is_shot and view.last_touch/Team.SIZE==view.view_team and view.kick_age<0.3:
+  index=view.last_touch
+  direction=view.velocity.normalized()
  if direction.length()<0.1: return
  pass_arrow.position=actors[index].position*Vector3(1,0,1)+Vector3(0,0.14,0)
  pass_arrow.rotation.y=-atan2(direction.y,direction.x)
  pass_arrow.visible=true
 
 func render_match(dt: float) -> void:
- indicator.visible=sim.players[sim.selected].active and sim.phase!="goal"
+ var predicted:bool=online and not multiplayer.is_server() and network.prediction_ready
+ var view=network.input_state() if online else sim
+ var selected:int=view.selected
+ indicator.visible=sim.players[selected].active and sim.phase!="goal"
  for i in Match.PLAYER_COUNT:
-  var p: Dictionary=sim.players[i]
+  var p: Dictionary=network.render_player(i) if predicted else sim.players[i]
   selected_labels[i].visible=sim.phase!="goal"
   if match_tools.showing_replay(self): continue
   actors[i].visible=p.get("active",true)
   if not actors[i].visible: continue
   match_tools.rig_sync(self,i)
   var target:Vector2=p.pos
-  if online and not multiplayer.is_server() and network.prediction_ready:
-   if i==network.prediction_index: target=network.prediction_pos
-   elif network.remote_positions.size()==10: target=network.remote_positions[i]+network.remote_velocities[i]*minf(network.snapshot_age,0.10)
   var target3:=Vector3(target.x,p.get("jump_z",0),target.y)
   var previous_position:Vector3=actors[i].position
   var teleported:bool=previous_position.distance_to(target3)>=7
-  actors[i].position=previous_position.lerp(target3,1.0-exp(-dt*22)) if dt>0 and not teleported else target3
-  var facing:Vector2=network.prediction_dir if online and not multiplayer.is_server() and network.prediction_ready and i==network.prediction_index else p.dir
+  actors[i].position=previous_position.lerp(target3,1.0-exp(-dt*22)) if dt>0 and not teleported and not predicted else target3
+  var facing:Vector2=p.dir
   if p.action_time>0 and p.action in Match.Motion.KICKS:
    var weight:float=smoothstep(0,0.20,float(p.action_time)/Match.Motion.action_duration(p))
    facing=facing.slerp(p.action_dir,weight)
@@ -1210,33 +1247,29 @@ func render_match(dt: float) -> void:
    var rendered_ball:Vector3=football.position.lerp(Vector3(sim.ball.x,sim.ball_height,sim.ball.y),minf(1,dt*25))
    animation_state.hand_ball=actors[i].transform.affine_inverse()*rendered_ball
   rigs[i].animate_player(animation_state,dt if sim.freeze<=0 else 0,sim.owner==i,actors[i].basis.inverse()*visible_velocity)
-  var next:int=sim.mechanics.candidate(sim,sim.view_team) if i/5==sim.view_team and sim.owner!=sim.selected else -1
-  selected_labels[i].text=(p.name if i==sim.selected else ("▽ " if i==next else "")+Match.JERSEY_NUMBERS[i])+(" [黄]" if p.get("yellow",0)>0 else "")
+  var next:int=sim.mechanics.candidate(sim,sim.view_team) if i/Team.SIZE==sim.view_team and sim.owner!=selected else -1
+  selected_labels[i].text=(p.name if i==selected else ("▽ " if i==next else "")+Match.JERSEY_NUMBERS[i])+(" [黄]" if p.get("yellow",0)>0 else "")
   if i==sim.teams[sim.view_team].contain_player: selected_labels[i].text+=" 协防"
   if i==sim.teams[sim.view_team].request_player: selected_labels[i].text+=" 跑位"
-  selected_labels[i].position.y=p.body.height+(2.4 if i==sim.selected else 0.35)
+  selected_labels[i].position.y=p.body.height+(2.4 if i==selected else 0.35)
  var bp: Vector2=sim.ball
  var ball_target:=Vector3(bp.x,sim.ball_height,bp.y)
- if online and not multiplayer.is_server() and sim.phase=="play":
-  var flight:=Match.BallPhysics.advance(Vector2(network.remote_ball.x,network.remote_ball.z),Vector2(network.remote_ball_velocity.x,network.remote_ball_velocity.z),network.remote_ball.y,network.remote_ball_velocity.y,sim.ball_spin,sim.ball_is_shot,minf(network.snapshot_age,0.07))
-  ball_target=Vector3(flight.pos.x,flight.height,flight.pos.y) if sim.owner<0 else network.remote_ball+network.remote_ball_velocity*minf(network.snapshot_age,0.07)
-  if sim.owner<0:
-   var frame_hit:=Match.GoalFrame.collide(network.remote_ball,ball_target,Vector3(flight.velocity.x,flight.vertical,flight.velocity.y))
-   if not frame_hit.is_empty(): ball_target=frame_hit.position
+ if predicted: ball_target=network.render_ball()
  if not match_tools.showing_replay(self):
-  football.position=football.position.lerp(ball_target,minf(1,dt*25)) if sim.phase!="goal" and dt>0 and football.position.distance_to(ball_target)<6 else ball_target
+  # Short visual blend also softens the bounded ball-preview handover.
+  football.position=football.position.lerp(ball_target,minf(1,dt*(35 if predicted else 25))) if sim.phase!="goal" and dt>0 and football.position.distance_to(ball_target)<6 else ball_target
   football.rotate_z(dt*(sim.velocity.length() if sim.owner<0 else 7))
  for net in goal_nets: net.show_state(sim.goal_net)
- ball_shadow.position=Vector3(bp.x,0.09,bp.y)
+ ball_shadow.position=Vector3(football.position.x,0.09,football.position.z)
  ball_shadow.visible=sim.owner<0 and sim.ball_height>1.0 and sim.phase=="play"
- indicator.position=actors[sim.selected].position+Vector3(0,sim.players[sim.selected].body.height+1.15,0)
+ indicator.position=actors[selected].position+Vector3(0,sim.players[selected].body.height+1.15,0)
  update_pass_arrow()
  indicator.scale=Vector3.ONE*clampf(camera.global_position.distance_to(indicator.global_position)/65.0,0.8,1.25)
- aim_marker.visible=sim.charging and sim.owner==sim.selected
+ aim_marker.visible=view.charging and sim.owner==selected
  if aim_marker.visible:
   aim_marker.position.x=Pitch.HALF_LENGTH*sim.side(sim.view_team)
   aim_marker.position.z=controls.last_aim*4.35
-  aim_marker.scale=Vector3.ONE*(0.7+sim.charge*0.4)
+  aim_marker.scale=Vector3.ONE*(0.7+view.charge*0.4)
  trail_points.push_front(football.position)
  if trail_points.size()>30: trail_points.pop_back()
  for i in trail.size():
@@ -1245,23 +1278,23 @@ func render_match(dt: float) -> void:
  score_label.text="%d  :  %d" % [sim.score[0],sim.score[1]]
  var remaining: int=maxi(0,int(ceil(sim.duration-sim.elapsed)))
  time_label.text=("金球 " if sim.overtime else "")+"%02d : %02d" % [remaining/60,remaining%60]
- player_label.text=sim.players[sim.selected].name+(" / 持球" if sim.owner==sim.selected else " / 接应" if sim.owner>=0 and sim.owner/5==sim.view_team else " / 回防")
- if sim.phase=="restart": player_label.text=sim.players[sim.selected].name+(" / 主罚" if sim.Rules.Flow.ready(sim) else " / 取球") if sim.selected==sim.restart_taker else sim.players[sim.selected].name+" / 就位"
- energy_label.text="%d%% / 疲劳 %d%%" % [int(sim.energy),int(sim.players[sim.selected].get("fatigue",0)*100)]
+ player_label.text=sim.players[selected].name+(" / 持球" if sim.owner==selected else " / 接应" if sim.owner>=0 and sim.owner/Team.SIZE==sim.view_team else " / 回防")
+ if sim.phase=="restart": player_label.text=sim.players[selected].name+(" / 主罚" if sim.Rules.Flow.ready(sim) else " / 取球") if selected==sim.restart_taker else sim.players[selected].name+" / 就位"
+ energy_label.text="%d%% / 疲劳 %d%%" % [int(sim.energy),int(sim.players[selected].get("fatigue",0)*100)]
  energy_bar.size.x=538*sim.energy/100
  var pass_charge:float=clampf(0.28+float(Time.get_ticks_msec()-controls.pass_started)/800,0,1) if controls.pass_held else 0
- charge_bar.size.x=420*(pass_charge if controls.pass_held else sim.charge)
- charge_bar.color=Color("ff967e") if sim.charge>0.85 else GOLD
+ charge_bar.size.x=420*(pass_charge if controls.pass_held else view.charge)
+ charge_bar.color=Color("ff967e") if view.charge>0.85 else GOLD
  rule_label.text="太阳风活跃 ↓" if sim.wind_active() else ("你的进攻方向  →  右侧球门" if sim.view_team==0 else "你的进攻方向  ←  左侧球门")+"  /  "+["稳固防守","均衡推进","全线压上"][sim.tactic]
- network_label.text=("房主" if multiplayer.is_server() else "延迟 %d ms" % network.ping_ms) if online else ("测试编号 %d · 玩家 vs AI" % quick_fixture.seed if practice else "")
- var defender:Dictionary=sim.players[sim.selected]
+ network_label.text=network.diagnostics() if online else ("测试编号 %d · 玩家 vs AI" % quick_fixture.seed if practice else "")
+ var defender:Dictionary=sim.players[selected]
  action_hint.text="抢断恢复 %.1f 秒" % defender.tackle_cd if defender.tackle_cd>0 else desktop_input.symbol("tackle")+" 抢断 / "+desktop_input.symbol("cross")+" 铲球"
  if defender.action_time>0 and defender.action in Match.Motion.DEFENSIVE_ACTIONS:
   action_hint.text={"tackle":"伸脚抢断 · 收腿后恢复移动","slide_still":"原地铲球 · 收腿起身","slide":"跑动滑铲 · 减速后起身"}[defender.action]
- if sim.owner==sim.selected:
-  action_hint.text="蓄力 %d%% · " % int(sim.charge*100)+("高射 · 注意横梁" if sim.charge>0.85 else "有力射门" if sim.charge>0.4 else "低平射门") if sim.charging else desktop_input.symbol("jockey")+" 护球 / "+desktop_input.symbol("shoot")+" 蓄力射门"
-  if sim.selected%5==0 and not sim.charging:
-   action_hint.text=("手持球" if sim.players[sim.selected].keeper_holding else "脚下控球")+" · 方向 + "+desktop_input.symbol("pass")+" 传球 / "+desktop_input.symbol("cross")+" 长传"
+ if sim.owner==selected:
+  action_hint.text="蓄力 %d%% · " % int(view.charge*100)+("高射 · 注意横梁" if view.charge>0.85 else "有力射门" if view.charge>0.4 else "低平射门") if view.charging else desktop_input.symbol("jockey")+" 护球 / "+desktop_input.symbol("shoot")+" 蓄力射门"
+  if selected%Team.SIZE==0 and not view.charging:
+   action_hint.text=("手持球" if sim.players[selected].keeper_holding else "脚下控球")+" · 方向 + "+desktop_input.symbol("pass")+" 传球 / "+desktop_input.symbol("cross")+" 长传"
  elif sim.teams[sim.view_team].keeper_rush: action_hint.text="门将出击 · 松开 "+desktop_input.symbol("through")+" 回位"
  if controls.pass_held: action_hint.text="传球蓄力 %d%% · 松开出球" % int(pass_charge*100)
  if sim.teams[sim.view_team].contain_player>=0: action_hint.text="队友协防 · 松开 "+desktop_input.symbol("finesse")+" 结束"
@@ -1368,7 +1401,7 @@ func show_help(from: String) -> void:
  dim_modal()
  panel(modal,Rect2(470,188,1620,1080))
  text(modal,"第一次登场，也能掌控全场。",Vector2(538,237),47,INK,true)
- text(modal,"每队 5 人（含门将）；头顶金色倒三角标记操控球员，青色为主队，橙色为客队。",Vector2(540,327),27,MUTED)
+ text(modal,"每队 6 人（含门将）；头顶金色倒三角标记操控球员，青色为主队，橙色为客队。",Vector2(540,327),27,MUTED)
  var entries:Array=["移动与瞄准；留意屏幕上的进攻方向","持球蓄力射门；上下方向选择球门角度","方向选队友，按住蓄力、松开出球；轻点快速传球","无球按下抢断；横移面向球，抢断落空有恢复时间","消耗体力冲刺 / 防守切人；不冲刺时恢复体力",""]
  for i in entries.size():
   var y:=418+i*92
@@ -1439,15 +1472,16 @@ func update_audio() -> void:
 
 func sync_control_context()->void:
  if sim==null: return
+ var context=network.input_state() if online else sim
  var team:int=network.local_team if online else 0
- if team<0 or team>=sim.teams.size(): return
- controls.receiving=sim.mechanics.can_buffer(sim,int(sim.teams[team].selected))
- controls.team_attacking=sim.owner>=0 and sim.owner/5==team or (sim.owner<0 and sim.last_touch/5==team and not sim.ball_is_shot)
- controls.restart=sim.phase=="restart"
- controls.restart_preparing=sim.phase=="restart" and not sim.Rules.Flow.ready(sim)
- controls.sync_context(int(sim.teams[team].selected),sim.owner,int(sim.teams[team].tactic))
- var p:Dictionary=sim.players[int(sim.teams[team].selected)]
- controls.aerial_available=sim.phase=="play" and sim.owner<0 and sim.ball_height>=0.8 and sim.ball_height<=p.body.head_height+1.5 and p.pos.distance_to(sim.ball)<=4.5
+ if team<0 or team>=context.teams.size(): return
+ controls.receiving=context.mechanics.can_buffer(context,int(context.teams[team].selected))
+ controls.team_attacking=context.owner>=0 and context.owner/Team.SIZE==team or (context.owner<0 and context.last_touch/Team.SIZE==team and not context.ball_is_shot)
+ controls.restart=context.phase=="restart"
+ controls.restart_preparing=context.phase=="restart" and not context.Rules.Flow.ready(context)
+ controls.sync_context(int(context.teams[team].selected),context.owner,int(context.teams[team].tactic))
+ var p:Dictionary=context.players[int(context.teams[team].selected)]
+ controls.aerial_available=context.phase=="play" and context.owner<0 and context.ball_height>=0.8 and context.ball_height<=p.body.head_height+1.5 and p.pos.distance_to(context.ball)<=4.5
 
 func _physics_process(dt:float)->void:
  if booting: return
@@ -1616,7 +1650,7 @@ func verification_tick() -> void:
   capture_busy=false
  elif verify_step==3 and screen=="match" and sim.elapsed>3.0:
   capture_busy=true
-  assert(actors.size()==10 and sim.players.size()==10)
+  assert(actors.size()==Team.COUNT and sim.players.size()==Team.COUNT)
   assert(selected_labels[4].text=="04" or selected_labels[4].text=="范戴克")
   await capture("match")
   var before: float=sim.elapsed
@@ -1716,20 +1750,20 @@ func show_quick_options(randomize_teams:bool=true)->void:
   panel(modal,Rect2(x,395,780,450),Color("102131"))
   text(modal,"你的球队" if side_index==0 else "AI 测试队",Vector2(x+24,412),30,CYAN if side_index==0 else Color("ffa78c"),true)
   var ids:Array=quick_fixture.home if side_index==0 else quick_fixture.away
-  for slot in 5:
+  for slot in Team.SIZE:
    var record:=PlayerLibrary.find(ids[slot])
-   var y:=482+slot*66
+   var y:=482+slot*55
    text(modal,QuickMatch.LABELS[slot]+" · "+record.role,Vector2(x+26,y),23,MUTED)
    var label:=text(modal,record.name,Vector2(x+235,y-2),28,INK,true,360)
    label.max_lines_visible=1
    label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
    text(modal,str(int(record.overall)),Vector2(x+677,y-2),28,GOLD,true)
- button(modal,"规则："+("冰球反弹" if quick_ice_mode else "经典五人制"),Rect2(460,880,780,70),func(): quick_ice_mode=not quick_ice_mode;quick_arcade=false; show_quick_options(false))
+ button(modal,"规则："+("冰球反弹" if quick_ice_mode else "经典六人制"),Rect2(460,880,780,70),func(): quick_ice_mode=not quick_ice_mode;quick_arcade=false; show_quick_options(false))
  button(modal,"镜头："+("跟随足球" if camera_motion else "固定"),Rect2(1300,880,780,70),func(): camera_motion=not camera_motion; show_quick_options(false))
  button(modal,"开始比赛",Rect2(460,1020,880,92),begin_quick_match,true)
  button(modal,"重新随机",Rect2(1370,1020,340,92),show_quick_options)
  button(modal,"返回",Rect2(1740,1020,340,92),clear_modal)
- text(modal,"1 门将 + 4 名场上球员 · 不修改球队与星际杯存档",Vector2(464,1162),23,MUTED)
+ text(modal,"1 门将 + 5 名场上球员 · 不修改球队与星际杯存档",Vector2(464,1162),23,MUTED)
 
 func new_quick_fixture()->void:
  var previous:=quick_fixture.duplicate(true)
@@ -1749,15 +1783,16 @@ func reroll_quick_match()->void:
 
 func show_lobby()->void:
  network.local_roster=Squad.ids.duplicate()
+ if "--test-alternate-roster" in OS.get_cmdline_user_args(): network.local_roster[1]="legend-mbappe"
  clear_modal()
  clear_ui()
  screen="lobby"
  online=true
  camera_hub()
- chrome("ONLINE PLAY / 1 对 1 五人制")
+ chrome("ONLINE PLAY / 1 对 1 六人制")
  panel(ui,Rect2(72,190,1140,1115))
  text(ui,"与另一位玩家对战",Vector2(122,234),51,INK,true)
- text(ui,"每人控制一支五人球队，随时切换场上球员。",Vector2(125,334),26,MUTED)
+ text(ui,"每人控制一支六人球队，随时切换场上球员。",Vector2(125,334),26,MUTED)
  text(ui,"服务器地址",Vector2(125,427),24,CYAN)
  address_field=LineEdit.new()
  address_field.text="127.0.0.1"
@@ -1772,7 +1807,7 @@ func show_lobby()->void:
  port_field.size=Vector2(225,76)
  port_field.add_theme_font_size_override("font_size",29)
  ui.add_child(port_field)
- var mode_button:=button(ui,"房间模式："+("冰球反弹" if network.ice_mode else "经典五人制"),Rect2(125,370,1025,50),func():
+ var mode_button:=button(ui,"房间模式："+("冰球反弹" if network.ice_mode else "经典六人制"),Rect2(125,370,1025,50),func():
   if not network.active: network.ice_mode=not network.ice_mode;show_lobby())
  mode_button.disabled=network.active
  button(ui,"创建房间",Rect2(125,595,495,83),func(): network.strict_rules=bool(desktop_input.options.strict_rules);network.host(clampi(int(port_field.text),1024,65535)))
@@ -1791,7 +1826,7 @@ func on_network_status(value:String)->void:
  if screen=="lobby":
   for item in ui.get_children():
    if item is Button and item.text.begins_with("房间模式："):
-    item.text="房间模式："+("冰球反弹" if network.ice_mode else "经典五人制")
+    item.text="房间模式："+("冰球反弹" if network.ice_mode else "经典六人制")
     item.disabled=network.active
  if (bot_mode or graphical_test) and network.local_team>=0 and not network.running and not bot_ready_sent:
   bot_ready_sent=true
@@ -1908,12 +1943,14 @@ func show_practice_result()->void:
 func bot_command()->Dictionary:
  var s=network.sim
  var team:int=network.local_team
+ if "--latency-test" in OS.get_cmdline_user_args(): return network.latency_test.bot(s,team)
  if "--rules-test" in OS.get_cmdline_user_args() and s.frame>=1040 and s.frame<1160:
   return {"move":Vector2.ZERO,"sprint":false,"jockey":false,"action":0,"aim":0.0,"tactic":1,"assist":1,"assist_active":true,"skip_restart":true}
  if "--mechanics-test" in OS.get_cmdline_user_args(): return network.mechanics_test.bot(s,team)
  if "--rules-test" in OS.get_cmdline_user_args() and s.frame>=325 and s.frame<375:
   # Do not let a generic bot's periodic switch race the staged one-two receiver.
   return {"move":Vector2.RIGHT if team==0 else Vector2.ZERO,"sprint":false,"jockey":false,"action":4 if s.frame>=335 and team==0 and s.owner==s.selected else 0,"aim":0.0,"tactic":1,"assist":1,"assist_active":true,"chip":true}
+ if "--rules-test" not in OS.get_cmdline_user_args(): s=network.input_state()
  var p:Dictionary=s.players[s.selected]
  var move:=Vector2.ZERO
  var action:=0

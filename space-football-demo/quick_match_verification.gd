@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 var game:Node
 var checks:=0
 var failures:=0
@@ -48,10 +49,10 @@ func run(target:Node)->void:
  check(game.screen=="match" and game.practice and not game.online,"start opens offline developer match")
  check(game.sim.teams[0].human and not game.sim.teams[1].human,"opponent is AI")
  var correct:=true
- for i in 10:
-  var ids:Array=chosen.home if i<5 else chosen.away
-  correct=correct and game.sim.players[i].player_id==ids[i%5] and game.rigs[i].body.height_cm==game.PlayerLibrary.find(ids[i%5]).heightCm
- check(correct,"all ten previewed players and physiques appear in match")
+ for i in Team.COUNT:
+  var ids:Array=chosen.home if i<Team.SIZE else chosen.away
+  correct=correct and game.sim.players[i].player_id==ids[i%Team.SIZE] and game.rigs[i].body.height_cm==game.PlayerLibrary.find(ids[i%Team.SIZE]).heightCm
+ check(correct,"all twelve previewed players and physiques appear in match")
  game.show_help("match")
  game.close_help()
  check(game.campaign.data()==campaign_before,"quick-match help does not write campaign tutorial progress")

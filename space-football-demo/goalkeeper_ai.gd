@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 ## Goal-area awareness shares the same ball flight and acceleration as the match.
 const Physics=preload("res://ball_physics.gd")
@@ -8,17 +9,17 @@ static func in_area(point:Vector2,side:float)->bool:
  return point.x*side<=-Pitch.HALF_LENGTH+9 and point.x*side>=-Pitch.HALF_LENGTH-0.3 and absf(point.y)<=8.0
 
 static func threat(s,index:int)->bool:
- var q:float=s.side(index/5)
+ var q:float=s.side(index/Team.SIZE)
  if s.owner>=0 or s.velocity.x*q>=-0.5: return false
  var arrival:float=(-Pitch.HALF_LENGTH*q-s.ball.x)/s.velocity.x
  return arrival>=0 and arrival<1.8 and absf(s.ball.y+s.velocity.y*arrival)<5.4
 
 static func hands_allowed(s,index:int)->bool:
- if index%5!=0 or s.last_touch/5==index/5: return false
+ if index%Team.SIZE!=0 or s.last_touch/Team.SIZE==index/Team.SIZE: return false
  var p:Dictionary=s.players[index]
- var q:float=s.side(index/5)
+ var q:float=s.side(index/Team.SIZE)
  # A sweep may end just beyond the line; only pre-line contacts are accepted.
- return in_area(p.pos,q) and s.ball.x*q<=-Pitch.HALF_LENGTH+9 and absf(s.ball.y)<=8 and (s.ball_is_shot or s.ball_height>p.body.foot_height or s.teams[index/5].keeper_rush or threat(s,index))
+ return in_area(p.pos,q) and s.ball.x*q<=-Pitch.HALF_LENGTH+9 and absf(s.ball.y)<=8 and (s.ball_is_shot or s.ball_height>p.body.foot_height or s.teams[index/Team.SIZE].keeper_rush or threat(s,index))
 
 static func radius(p:Dictionary,hands:bool)->float:
  if not hands: return p.body.foot_reach*1.20
@@ -32,7 +33,7 @@ static func contact_center(p:Dictionary)->Vector2:
 
 static func target(s,index:int)->Vector2:
  var p:Dictionary=s.players[index]
- var team:int=index/5
+ var team:int=index/Team.SIZE
  var q:float=s.side(team)
  var depth:float=clampf((s.ball.x*q+Pitch.HALF_LENGTH)*0.14,1.8,3.6)
  var home:=Vector2((-Pitch.HALF_LENGTH+depth)*q,clampf(s.ball.y*depth/maxf(2,s.ball.x*q+Pitch.HALF_LENGTH),-4.5,4.5))
@@ -40,13 +41,13 @@ static func target(s,index:int)->Vector2:
   return p.pos if p.action_time<0.28 else p.pos+Vector2(p.dir.y,-p.dir.x)*p.keeper_side*1.5
  var rushing:bool=s.teams[team].keeper_rush
  if s.owner>=0:
-  if rushing and s.owner/5!=team:
+  if rushing and s.owner/Team.SIZE!=team:
    if p.action_time<=0 or p.action=="rush": p.action="rush";p.action_time=0.15
    return Vector2(clampf(s.ball.x*q,-Pitch.HALF_LENGTH+0.9,-Pitch.HALF_LENGTH+8.5)*q,clampf(s.ball.y,-7,7))
   return home
  if s.ball.x*q-(s.velocity.length()+6)*1.6> -Pitch.HALF_LENGTH+9: return home
  var dangerous:bool=threat(s,index)
- var hands:bool=s.last_touch/5!=team and (s.ball_is_shot or s.ball_height>p.body.foot_height or dangerous or rushing)
+ var hands:bool=s.last_touch/Team.SIZE!=team and (s.ball_is_shot or s.ball_height>p.body.foot_height or dangerous or rushing)
  var reach:float=radius(p,hands)
  var maximum_height:float=p.body.hand_reach if hands else p.body.foot_height
  var pos:Vector2=s.ball;var velocity:Vector2=s.velocity
@@ -74,7 +75,7 @@ static func target(s,index:int)->Vector2:
   var safe:bool=dangerous or rushing or s.pass_receiver==index
   if not safe:
    safe=true
-   for rival in range((1-team)*5,(1-team)*5+5):
+   for rival in range((1-team)*Team.SIZE,(1-team)*Team.SIZE+Team.SIZE):
     var opponent:Dictionary=s.players[rival]
     if opponent.active and opponent.pos.distance_to(pos)/maxf(1,opponent.speed)<t-0.12:
      safe=false;break

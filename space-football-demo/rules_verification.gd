@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 
 func run(game)->void:
  game.practice=true
@@ -14,11 +15,11 @@ func run(game)->void:
   for i in 30: game.render_match(1.0/60)
   await game.capture("rules-"+kind)
  s.phase="play"
- s.players[1].pos=Vector2(10,0);s.players[6].pos=Vector2(8.5,0)
- s.players[1].dir=Vector2.RIGHT;s.players[6].dir=Vector2.RIGHT
+ s.players[1].pos=Vector2(10,0);s.players[7].pos=Vector2(8.5,0)
+ s.players[1].dir=Vector2.RIGHT;s.players[7].dir=Vector2.RIGHT
  s.owner=1;s.ball=Vector2(11,0)
- s.tackle(6,true)
- s.phase_time=0.65;s.players[1].action_time=0.65;s.players[6].action_time=0.4
+ s.tackle(7,true)
+ s.phase_time=0.65;s.players[1].action_time=0.65;s.players[7].action_time=0.4
  for i in 30: game.render_match(1.0/60)
  await game.capture("rules-foul")
  s.phase="play";s.last_touch=1
@@ -33,7 +34,7 @@ func run(game)->void:
  var p:Dictionary=s.players[1]
  p.dir=Vector2(0,1);p.pos=Vector2.ZERO
  s.phase="play";s.owner=-1
- for i in range(2,10): s.players[i].pos=Vector2(-28,-15)
+ for i in range(2,Team.COUNT): s.players[i].pos=Vector2(-28,-15)
  game.camera.position=Vector3(5,3.5,9)
  game.camera.look_at(Vector3(0,1.2,0))
  for action in ["slide","fall","header","volley","cross","wall","celebrate"]:

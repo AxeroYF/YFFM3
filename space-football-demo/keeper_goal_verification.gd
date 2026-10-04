@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 var checks:=0
 var failures:=0
 func check(value:bool,message:String)->void:
@@ -12,13 +13,13 @@ func run(game)->void:
  game.screen="rules_verification";game.camera_motion=true
  var s=game.sim;s.freeze=0;s.phase="play";s.owner=1;s.selected=1
  for team in 2: s.teams[team].human=true;s.teams[team].assist_active=false
- for i in 10:
-  s.players[i].pos=Vector2(-22+(i%5)*7,12 if i<5 else -12)
+ for i in Team.COUNT:
+  s.players[i].pos=Vector2(-22+(i%Team.SIZE)*7,12 if i<Team.SIZE else -12)
   s.players[i].vel=Vector2.ZERO;s.players[i].cooldown=0
  s.players[1].pos=Vector2(10,-3);s.players[1].dir=Vector2.RIGHT;s.teams[0].move=Vector2.RIGHT
- s.players[5].pos=Vector2(29,4.5)
+ s.players[6].pos=Vector2(29,4.5)
  for tick in 120: frame(game)
- s.players[5].pos=Vector2(29,4.5);s.players[5].vel=Vector2.ZERO
+ s.players[6].pos=Vector2(29,4.5);s.players[6].vel=Vector2.ZERO
  s.ball=s.players[1].pos+Vector2(1,0);s.ball_height=0.7;s.velocity=Vector2(30,0);s.vertical_speed=3
  s.ball_is_shot=true;s.last_touch=1;s.owner=-1;s.kick_age=0.3;s.pickup_lock=0;s.teams[0].move=Vector2.ZERO
  for tick in 90:
@@ -71,9 +72,9 @@ func run(game)->void:
  game.desktop_input.options.replay=true
  # Close-up verifies wider awareness actually produces a keeper action.
  s.finished=false;s.overtime=false;s.phase="play";s.freeze=0;s.owner=-1;s.pickup_lock=0
- for i in 10: s.players[i].active=i==0;s.players[i].cooldown=0
+ for i in Team.COUNT: s.players[i].active=i==0;s.players[i].cooldown=0
  var p:Dictionary=s.players[0];p.pos=Vector2(-29,0);p.dir=Vector2.RIGHT;p.vel=Vector2.ZERO;p.action="idle";p.action_time=0;p.keeper_cd=0
- s.teams[0].selected=1;s.ball=Vector2(-20,2);s.velocity=Vector2(-30,0);s.ball_height=0.6;s.vertical_speed=1.0;s.ball_is_shot=true;s.last_touch=6;s.kick_age=0.4
+ s.teams[0].selected=1;s.ball=Vector2(-20,2);s.velocity=Vector2(-30,0);s.ball_height=0.6;s.vertical_speed=1.0;s.ball_is_shot=true;s.last_touch=7;s.kick_age=0.4
  game.camera_motion=false;game.camera.projection=Camera3D.PROJECTION_ORTHOGONAL;game.camera.size=13
  game.camera.position=Vector3(-19,9,10);game.camera.look_at(Vector3(-28,1,1))
  for tick in 10: frame(game)

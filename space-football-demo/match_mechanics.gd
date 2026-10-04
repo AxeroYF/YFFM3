@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 ## Authority-owned interaction layer. Devices only submit intentions.
 const SWITCH=4096
@@ -56,9 +57,9 @@ func restore(data:Dictionary)->void:
 func candidate(s,team:int,direction:Vector2=Vector2.ZERO)->int:
  var selected:int=s.teams[team].selected
  var best:=-1;var score:float=INF
- for i in range(team*5,team*5+5):
+ for i in range(team*Team.SIZE,team*Team.SIZE+Team.SIZE):
   if i==selected or not s.players[i].active: continue
-  if i%5==0 and direction.length()<0.2: continue
+  if i%Team.SIZE==0 and direction.length()<0.2: continue
   var offset:Vector2=s.players[i].pos-s.players[selected].pos
   var value:float=s.players[i].pos.distance_to(s.ball+s.velocity*0.20)
   if direction.length()>0.2:
@@ -71,7 +72,7 @@ func candidate(s,team:int,direction:Vector2=Vector2.ZERO)->int:
 
 func can_buffer(s,index:int)->bool:
  if s.phase!="play" or s.owner>=0 or s.ball_is_shot: return false
- if s.last_touch/5!=index/5 or s.pass_receiver!=index: return false
+ if s.last_touch/Team.SIZE!=index/Team.SIZE or s.pass_receiver!=index: return false
  var distance:float=s.players[index].pos.distance_to(s.ball)
  return distance<maxf(3.0,s.velocity.length()*0.45)
 
@@ -87,7 +88,7 @@ func command(s,team:int,c:Dictionary)->bool:
   if action&CANCEL: t.charging=false;t.charge=0;t.receive_cancelled=true;return true
  if action&SUBSTITUTE:
   var reserve:int=clampi(int(c.get("reserve",0)),0,maxi(0,benches[team].size()-1))
-  var outgoing:int=team*5+clampi(int(c.get("out",index%5)),0,4)
+  var outgoing:int=team*Team.SIZE+clampi(int(c.get("out",index%Team.SIZE)),0,Team.SIZE-1)
   t.sub_pending=outgoing;requests[team]={"out":outgoing,"reserve":reserve}
   s.notify("pass","换人已申请 · 下一次死球执行")
  if action&SET_PIECE and s.phase=="restart" and s.restart_team==team:
@@ -134,15 +135,15 @@ func release(s,team:int,c:Dictionary)->void:
   var index:int=s.selected
   var low_cross:bool=action&256!=0 and c.get("driven",false)
   s.pass_ball(action&8!=0,c.get("move",Vector2.ZERO),(action&256!=0 and not low_cross) or (action&8!=0 and c.get("chip",false)),action&4!=0 and c.get("chip",false),clampf(float(c.get("power",0.35)),0,1),bool(c.get("driven",false)))
-  if s.owner<0 and index%5==0: last_keeper_pass[team]=true
+  if s.owner<0 and index%Team.SIZE==0: last_keeper_pass[team]=true
  s.view_team=old
 
-func tick(s,dt:float)->void:
+func tick(s,dt:float,presentation_only:bool=false)->void:
  clock+=dt
  for team in 2:
   if not buffered[team].is_empty():
    var b:Dictionary=buffered[team]
-   if clock>b.until or s.teams[team].selected!=b.index or (s.owner>=0 and s.owner/5!=team) or s.phase!="play": buffered[team]={}
+   if clock>b.until or s.teams[team].selected!=b.index or (s.owner>=0 and s.owner/Team.SIZE!=team) or s.phase!="play": buffered[team]={}
    elif s.owner==b.index:
     var c:Dictionary=b.command.duplicate(true);c.action=2 if b.shot else c.action
     if b.shot: s.teams[team].charge=clampf(float(c.get("power",0.3)),0.1,0.65)
@@ -155,14 +156,14 @@ func tick(s,dt:float)->void:
   if s.phase=="restart" and not requests[team].is_empty(): substitute(s,team)
   for reserve in benches[team]: reserve.fatigue=maxf(0,reserve.fatigue-dt*0.004)
   s.teams[team].request_time=maxf(0,s.teams[team].request_time-dt)
-  if s.teams[team].request_time<=0 or (s.owner>=0 and s.owner/5!=team): s.teams[team].request_player=-1
+  if s.teams[team].request_time<=0 or (s.owner>=0 and s.owner/Team.SIZE!=team): s.teams[team].request_player=-1
   var t:Dictionary=s.teams[team]
   if t.human and int(t.auto_switch)==2 and s.phase=="play" and s.owner<0 and s.pass_receiver<0 and not t.receive_cancelled and t.move.length()<0.15 and clock>float(t.get("auto_switch_at",0)):
    var next:=candidate(s,team)
    if next>=0 and s.players[next].pos.distance_to(s.ball)<3.5 and s.players[next].pos.distance_to(s.ball)+1<s.players[t.selected].pos.distance_to(s.ball):
     t.selected=next;t.auto_switch_at=clock+0.7;buffered[team]={}
   if s.phase=="play" and not s.teams[team].human:
-   for i in range(team*5+1,team*5+5):
+   for i in range(team*Team.SIZE+1,team*Team.SIZE+Team.SIZE):
     if s.players[i].fatigue>0.45 and requests[team].is_empty():
      for j in benches[team].size():
       if s.Library.find(benches[team][j].id).role!="GK" and benches[team][j].fatigue<s.players[i].fatigue-0.2:
@@ -171,10 +172,10 @@ func tick(s,dt:float)->void:
   var p:Dictionary=s.players[i]
   if not p.active:
    if s.phase=="play": p.sinbin=maxf(0,p.sinbin-dt)
-   p.pos=Vector2(-(Pitch.HALF_LENGTH+6)*s.side(i/5),Pitch.HALF_WIDTH+6+i%5)
-   if p.sinbin<=0 and s.phase=="restart" and not benches[i/5].is_empty():
-    for b in benches[i/5].size():
-     if (s.Library.find(benches[i/5][b].id).role=="GK")==(i%5==0): requests[i/5]={"out":i,"reserve":b};substitute(s,i/5);break
+   p.pos=Vector2(-(Pitch.HALF_LENGTH+6)*s.side(i/Team.SIZE),Pitch.HALF_WIDTH+6+i%Team.SIZE)
+   if p.sinbin<=0 and s.phase=="restart" and not benches[i/Team.SIZE].is_empty():
+    for b in benches[i/Team.SIZE].size():
+     if (s.Library.find(benches[i/Team.SIZE][b].id).role=="GK")==(i%Team.SIZE==0): requests[i/Team.SIZE]={"out":i,"reserve":b};substitute(s,i/Team.SIZE);break
    continue
   p.release_wait=maxf(0,p.release_wait-dt);p.landing=maxf(0,p.landing-dt);p.balance=maxf(0,p.balance-dt)
   if s.phase!="play": continue
@@ -183,13 +184,13 @@ func tick(s,dt:float)->void:
   if p.jump_z>0 or p.jump_v>0:
    p.jump_v-=dt*13;p.jump_z=maxf(0,p.jump_z+p.jump_v*dt)
    if p.jump_z<=0: p.jump_v=0;p.jump_kind="";p.landing=0.12;p.action="land";p.action_time=0.20
-   elif not p.jump_kind.is_empty() and s.owner<0 and s.pickup_lock<=0 and p.pos.distance_to(s.ball)<1.9 and absf(s.ball_height-(p.body.head_height+p.jump_z))<0.55:
+   elif not presentation_only and not p.jump_kind.is_empty() and s.owner<0 and s.pickup_lock<=0 and p.pos.distance_to(s.ball)<1.9 and absf(s.ball_height-(p.body.head_height+p.jump_z))<0.55:
     aerial_contact(s,i,p.jump_kind,p.jump_aim,p.jump_direction);p.jump_kind=""
- rules_tick(s,dt)
+ if not presentation_only: rules_tick(s,dt)
 
 func after_receive(s,index:int,incoming:float,incoming_direction:Vector2)->void:
- var p:Dictionary=s.players[index];var team:int=index/5
- if p.keeper_holding or index%5==0: return
+ var p:Dictionary=s.players[index];var team:int=index/Team.SIZE
+ if p.keeper_holding or index%Team.SIZE==0: return
  var move:Vector2=s.teams[team].move if s.is_controlled(index) else p.dir
  var pressure:float=clampf(1-s.closest_opponent(index)/3.0,0,1)
  var awkward:float=clampf(1-p.dir.dot(-incoming_direction),0,2)*0.5
@@ -204,11 +205,11 @@ func after_receive(s,index:int,incoming:float,incoming_direction:Vector2)->void:
   s.pass_receiver=index;s.pass_destination=s.ball+s.velocity*0.4;s.notify("pass","停球稍大 · 争取下一脚")
 
 func request_run(s,team:int,support:bool)->void:
- if s.owner<0 or s.owner/5!=team: return
+ if s.owner<0 or s.owner/Team.SIZE!=team: return
  var best:=-1;var value:float=INF
  var facing:Vector2=s.teams[team].move.normalized()
  if facing.length()<0.1: facing=s.players[s.owner].dir
- for i in range(team*5+1,team*5+5):
+ for i in range(team*Team.SIZE+1,team*Team.SIZE+Team.SIZE):
   if i==s.owner or not s.players[i].active: continue
   var offset:Vector2=s.players[i].pos-s.players[s.owner].pos
   var cost:float=absf(facing.angle_to(offset))*12+offset.length()*0.2
@@ -227,9 +228,9 @@ func plan(s)->void:
   if req>=0 and t.request_time>0 and s.players[req].active and req!=t.selected:
    s.brain.targets[req]=s.brain.bounded(t.request_target);s.brain.jobs[req]="support" if t.get("request_support",false) else "run"
   t.contain_player=-1
-  if not t.contain or s.owner<0 or s.owner/5==team: continue
+  if not t.contain or s.owner<0 or s.owner/Team.SIZE==team: continue
   var best:=-1;var distance:float=INF
-  for i in range(team*5+1,team*5+5):
+  for i in range(team*Team.SIZE+1,team*Team.SIZE+Team.SIZE):
    if i==t.selected or not s.players[i].active or s.players[i].stamina<15: continue
    var d:float=s.players[i].pos.distance_to(s.ball)
    if d<distance: distance=d;best=i
@@ -256,10 +257,10 @@ func aerial_contact(s,index:int,kind:String,aim:float,direction:Vector2)->void:
  var p:Dictionary=s.players[index]
  if p.pos.distance_to(s.ball)>1.9: return
  var height:float=s.ball_height
- var target:=Vector2((Pitch.HALF_LENGTH+1)*s.side(index/5),aim*4)
+ var target:=Vector2((Pitch.HALF_LENGTH+1)*s.side(index/Team.SIZE),aim*4)
  var power:float=16+p.attributes.heading*0.12
- if kind=="pass": target=s.pass_plan(index,direction,false,int(s.teams[index/5].assist)).destination
- elif kind=="clear": target=p.pos+(direction.normalized() if direction.length()>0.15 else Vector2(s.side(index/5),0))*24
+ if kind=="pass": target=s.pass_plan(index,direction,false,int(s.teams[index/Team.SIZE].assist)).destination
+ elif kind=="clear": target=p.pos+(direction.normalized() if direction.length()>0.15 else Vector2(s.side(index/Team.SIZE),0))*24
  if not s.kick(index,target,power,kind=="shot"): return
  s.ball_height=height;s.vertical_speed=-1.3 if kind!="clear" else 4.5
  if kind=="clear": s.velocity=(target-p.pos).normalized()*24
@@ -280,16 +281,19 @@ func skill(s,index:int,direction:Vector2,sprinting:bool)->void:
  p.action="feint";p.action_time=0.35;p.cooldown=0.30;p.stamina=maxf(0,p.stamina-3)
 
 func contact(s,i:int,j:int)->void:
- if i/5==j/5 or s.owner not in [i,j]: return
+ if i/Team.SIZE==j/Team.SIZE or s.owner not in [i,j]: return
  var defender:int=j if s.owner==i else i
  var carrier:int=s.owner
  var d:Dictionary=s.players[defender];var p:Dictionary=s.players[carrier]
- if not s.teams[defender/5].jockey or d.balance>0 or p.balance>0: return
+ var jockeying:bool=s.teams[defender/Team.SIZE].jockey if s.is_controlled(defender) else s.brain.jockey(s,defender)
+ if not jockeying or d.balance>0 or p.balance>0: return
  var side_contact:float=absf(p.dir.dot((d.pos-p.pos).normalized()))
  if side_contact>0.65: return
  var strength:float=d.ratings.shield-p.ratings.shield+(0.1 if d.vel.length()>p.vel.length()+1 else 0)
+ var stability:float=p.body.physique.stability
+ if s.shielding(carrier): strength-=0.035*stability
  if strength>0.12:
-  p.balance=0.20;p.vel*=0.65;d.balance=0.4;p.action="stumble";p.action_time=0.25
+  p.balance=0.20/stability;p.vel*=clampf(0.65+(stability-1)*0.45,0.60,0.71);d.balance=0.4;p.action="stumble";p.action_time=0.25
   if not s.shielding(carrier) and s.ball.distance_to(d.pos)<d.body.foot_reach:
    s.owner=-1;s.velocity=p.dir*3;s.pickup_lock=0.10;s.pass_receiver=-1;s.notify("tackle","身体卡位 · 足球脱离控制")
 
@@ -300,13 +304,13 @@ func substitute(s,team:int)->void:
  if slot<0 or slot>=benches[team].size(): return
  var reserve:Dictionary=benches[team][slot];var record:Dictionary=s.Library.find(reserve.id)
  var p:Dictionary=s.players[index]
- if (record.role=="GK")!=(index%5==0) or reserve.id in sent_off: return
+ if (record.role=="GK")!=(index%Team.SIZE==0) or reserve.id in sent_off: return
  if not p.active and p.sinbin>0: s.notify("foul","红牌减员期间暂不能补员");return
  var was_active:bool=p.active;var previous:Dictionary={"id":p.player_id,"fatigue":p.fatigue,"yellow":p.yellow}
  var revision:int=p.sub_revision+1
  initialize_player(p)
  p.player_id=record.id;p.name=record.name;p.attributes=record.attributes.duplicate(true);p.role=record.role;p.preferred_foot=record.get("preferredFoot","right")
- p.ratings=s.Ratings.derive(record.attributes,float(record.heightCm));p.speed=p.ratings.speed;p.style=s.Style.derive(record);p.body=s.Body.from_record(record,index%5)
+ p.body=s.Body.from_record(record,index%Team.SIZE);p.ratings=s.Ratings.for_player(record,p.body);p.speed=p.ratings.speed;p.style=s.Style.derive(record)
  p.stamina=100;p.fatigue=reserve.fatigue;p.yellow=reserve.yellow;p.sub_revision=revision
  p.action="idle";p.action_time=0;p.cooldown=0.2;p.keeper_holding=false;p.vel=Vector2.ZERO
  p.tackle_cd=0;p.keeper_cd=0;p.keeper_side=0;p.keeper_height=0;p.touch=0
@@ -314,7 +318,7 @@ func substitute(s,team:int)->void:
   # A dismissed slot was hidden off-pitch; its replacement enters at the touchline.
   p.pos=Vector2(-20*s.side(team),Pitch.HALF_WIDTH+1.8);benches[team].remove_at(slot)
   if not s.restart_flow.is_empty():
-   var target:=Vector2(-28*s.side(team),0) if index%5==0 else Vector2(-20*s.side(team),-8+(index%5)*4)
+   var target:=Vector2(-28*s.side(team),0) if index%Team.SIZE==0 else Vector2(-20*s.side(team),-8+(index%Team.SIZE)*4)
    if team!=s.restart_team: target=s.Rules.outside_radius(target,s.restart_spot)
    s.restart_flow.targets[index]=target
    if s.Rules.Flow.ready(s): s.owner=-1;s.phase_time=0;s.Rules.Flow.change_stage(s,"organize")
@@ -324,8 +328,8 @@ func substitute(s,team:int)->void:
 func set_piece(s,team:int,direction:Vector2)->void:
  if direction.x< -0.2:
   var current:int=s.restart_taker
-  for n in range(1,5):
-   var next:int=team*5+1+(current%5-1+n)%4
+  for n in range(1,Team.SIZE):
+   var next:int=team*Team.SIZE+1+(current%Team.SIZE-1+n)%Team.FIELD_PLAYERS
    if not s.players[next].active: continue
    s.Rules.Flow.change_taker(s,next);break
  else:
@@ -337,7 +341,7 @@ func restart_movement(s,dt:float)->void:
  var team:int=s.restart_team;var plan:int=s.teams[team].corner_plan
  if s.restart_kind in ["penalty","accumulated"]: return
  var n:=0
- for i in range(team*5+1,team*5+5):
+ for i in range(team*Team.SIZE+1,team*Team.SIZE+Team.SIZE):
   if i==s.restart_taker or not s.players[i].active: continue
   var target:Vector2=s.restart_spot+Vector2(-5*s.side(team),(-1 if s.restart_spot.y>0 else 1)*(4+n*3))
   if plan>0: target=Vector2((25-n*3)*s.side(team),(1 if s.restart_spot.y>0 else -1)*(3 if plan==1 else -4)+n*2)
@@ -346,12 +350,12 @@ func restart_movement(s,dt:float)->void:
 
 func rules_tick(s,dt:float)->void:
  if not advantage.is_empty() and s.phase=="play":
-  if s.owner>=0 and s.owner/5!=advantage.team:
+  if s.owner>=0 and s.owner/Team.SIZE!=advantage.team:
    var f:Dictionary=advantage.duplicate();advantage={};s.Rules.foul(s,f.offender,f.victim,f.sliding,true,f.spot)
   elif clock>advantage.until: advantage={}
  if not strict_rules or s.arcade or s.phase!="play": return
- if s.owner>=0 and s.owner%5==0 and s.players[s.owner].pos.x*s.side(s.owner/5)<0:
-  var team:int=s.owner/5
+ if s.owner>=0 and s.owner%Team.SIZE==0 and s.players[s.owner].pos.x*s.side(s.owner/Team.SIZE)<0:
+  var team:int=s.owner/Team.SIZE
   keeper_clock[team]+=dt
   if keeper_clock[team]>4:
    keeper_clock[team]=0;s.Rules.restart(s,1-team,"indirect",s.ball);s.notify("foul","门将控球超过 4 秒")
@@ -362,26 +366,26 @@ func discipline(s,offender:int,sliding:bool,straight_red:bool=false)->void:
  if not sliding: return
  p.yellow+=1
  if p.yellow<2 and not straight_red: return
- p.active=false;p.sinbin=120;sent_off[p.player_id]=true;p.pos=Vector2(-(Pitch.HALF_LENGTH+6)*s.side(offender/5),Pitch.HALF_WIDTH+6);p.vel=Vector2.ZERO
- if offender%5==0:
+ p.active=false;p.sinbin=120;sent_off[p.player_id]=true;p.pos=Vector2(-(Pitch.HALF_LENGTH+6)*s.side(offender/Team.SIZE),Pitch.HALF_WIDTH+6);p.vel=Vector2.ZERO
+ if offender%Team.SIZE==0:
   # Reserve keeper enters for an outfielder; the removed outfield slot carries the reduction.
-  for i in range(offender+1,offender+5):
+  for i in range(offender+1,offender+Team.SIZE):
    if not s.players[i].active: continue
-   for b in benches[offender/5].size():
-    if s.Library.find(benches[offender/5][b].id).role!="GK": continue
-    benches[offender/5].append({"id":s.players[i].player_id,"fatigue":s.players[i].fatigue,"yellow":s.players[i].yellow})
+   for b in benches[offender/Team.SIZE].size():
+    if s.Library.find(benches[offender/Team.SIZE][b].id).role!="GK": continue
+    benches[offender/Team.SIZE].append({"id":s.players[i].player_id,"fatigue":s.players[i].fatigue,"yellow":s.players[i].yellow})
     s.players[i].active=false;s.players[i].sinbin=120;s.players[i].vel=Vector2.ZERO
-    s.players[i].pos=Vector2(-(Pitch.HALF_LENGTH+6)*s.side(offender/5),Pitch.HALF_WIDTH+6+i%5)
-    p.sinbin=0;requests[offender/5]={"out":offender,"reserve":b};substitute(s,offender/5)
+    s.players[i].pos=Vector2(-(Pitch.HALF_LENGTH+6)*s.side(offender/Team.SIZE),Pitch.HALF_WIDTH+6+i%Team.SIZE)
+    p.sinbin=0;requests[offender/Team.SIZE]={"out":offender,"reserve":b};substitute(s,offender/Team.SIZE)
     break
    break
- if not s.players[s.teams[offender/5].selected].active:
-  var next:=candidate(s,offender/5)
-  if next>=0: s.teams[offender/5].selected=next
+ if not s.players[s.teams[offender/Team.SIZE].selected].active:
+  var next:=candidate(s,offender/Team.SIZE)
+  if next>=0: s.teams[offender/Team.SIZE].selected=next
  var remaining:=0
- for i in range(offender/5*5,offender/5*5+5):
+ for i in range(offender/Team.SIZE*Team.SIZE,offender/Team.SIZE*Team.SIZE+Team.SIZE):
   if s.players[i].active: remaining+=1
- if remaining<3: s.finished=true;s.notify("end","人数不足 · 比赛终止")
+ if remaining<Team.MIN_PLAYERS: s.finished=true;s.notify("end","人数不足 · 比赛终止")
 
 func wire(s)->PackedByteArray:
  var rows:Array=[]
@@ -389,20 +393,22 @@ func wire(s)->PackedByteArray:
   rows.append([s.Library.indices[p.player_id],p.active,p.fatigue,p.yellow,p.sinbin,p.jump_z,p.jump_v,p.landing,p.balance,p.release_wait,p.sub_revision,p.slide_speed])
  var trows:Array=[]
  for t in s.teams: trows.append([t.contain,t.contain_player,t.receive_assist,t.shot_assist,t.auto_switch,t.request_player,t.request_time,t.sub_pending,t.corner_plan])
- return var_to_bytes([rows,trows,benches,strict_rules]).compress(FileAccess.COMPRESSION_DEFLATE)
+ # Prediction needs the same scheduled foot-contact time after reconciliation.
+ return var_to_bytes([rows,trows,benches,strict_rules,{"clock":clock,"releases":releases,"buffered":buffered}])
 
 func read_wire(s,bytes:PackedByteArray,state_value:Dictionary)->void:
  s.Library.load_catalog()
- var data=bytes_to_var(bytes.decompress_dynamic(65536,FileAccess.COMPRESSION_DEFLATE))
- if not data is Array or data.size()!=4: return
- for i in 10:
+ var data=bytes_to_var(bytes)
+ if not data is Array or data.size()!=5: return
+ for i in Team.COUNT:
   var row:Array=data[0][i];var p:Dictionary=state_value.players[i]
   var record:Dictionary=s.Library.records[int(row[0])]
   if p.player_id!=record.id:
-   p.player_id=record.id;p.name=record.name;p.attributes=record.attributes.duplicate(true);p.ratings=s.Ratings.derive(record.attributes,float(record.heightCm));p.speed=p.ratings.speed;p.body=s.Body.from_record(record,i%5);p.style=s.Style.derive(record);p.role=record.role;p.preferred_foot=record.get("preferredFoot","right")
+   p.player_id=record.id;p.name=record.name;p.attributes=record.attributes.duplicate(true);p.body=s.Body.from_record(record,i%Team.SIZE);p.ratings=s.Ratings.for_player(record,p.body);p.speed=p.ratings.speed;p.style=s.Style.derive(record);p.role=record.role;p.preferred_foot=record.get("preferredFoot","right")
   var keys=["active","fatigue","yellow","sinbin","jump_z","jump_v","landing","balance","release_wait","sub_revision","slide_speed"]
   for j in keys.size(): p[keys[j]]=row[j+1]
  for i in 2:
   var keys=["contain","contain_player","receive_assist","shot_assist","auto_switch","request_player","request_time","sub_pending","corner_plan"]
   for j in keys.size(): state_value.teams[i][keys[j]]=data[1][i][j]
  state_value.mechanics.benches=data[2];state_value.mechanics.strict_rules=data[3]
+ state_value.mechanics.merge(data[4],true)

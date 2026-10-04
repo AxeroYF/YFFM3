@@ -1,4 +1,5 @@
 extends SceneTree
+const Team=preload("res://team_config.gd")
 const Match=preload("res://match_sim.gd")
 const InputSource=preload("res://football_input.gd")
 var checks:=0
@@ -9,8 +10,8 @@ func check(value:bool,label:String)->void:
 func fixture():
  var s=Match.new();s.setup(preload("res://campaign.gd").new(),984,Match.Squad.DEFAULT,Match.Squad.DEFAULT,true)
  s.freeze=0;s.phase="play";s.teams[0].human=true;s.teams[1].human=true
- for i in 10:
-  s.players[i].cooldown=0;s.players[i].pos=Vector2(-25+(i%5)*10,14 if i<5 else -14)
+ for i in Team.COUNT:
+  s.players[i].cooldown=0;s.players[i].pos=Vector2(-25+(i%Team.SIZE)*10,14 if i<Team.SIZE else -14)
  s.selected=1;s.owner=1;s.players[1].pos=Vector2.ZERO;s.players[1].dir=Vector2.RIGHT;s.ball=Vector2(1,0)
  s.players[2].pos=Vector2(10,3)
  return s
@@ -27,7 +28,7 @@ func _initialize()->void:
  settle(s);check(s.passes[0]==1,"queued release cannot repeat")
  s=fixture();s.apply_command(0,command(4));s.apply_command(0,command(128));settle(s)
  check(s.owner==1 and s.passes[0]==0,"cancellation removes scheduled release")
- s=fixture();s.apply_command(0,command(4));s.owner=6;settle(s)
+ s=fixture();s.apply_command(0,command(4));s.owner=7;settle(s)
  check(s.passes[0]==0,"losing possession cancels release")
  s=fixture();s.charge=0.55;s.charging=true;s.apply_command(0,command(2));settle(s)
  check(not s.charging and is_equal_approx(s.players[1].action_strength,0.55),"shot strength latches on release rather than growing during windup")
@@ -42,7 +43,7 @@ func _initialize()->void:
  s=fixture();s.owner=-1;s.pass_receiver=1;s.last_touch=2;s.ball=Vector2(-2,0);s.velocity=Vector2(12,0)
  s.apply_command(0,command(4));settle(s,0.5);s.owner=1;settle(s)
  check(s.passes[0]==0,"expired buffer cannot fire later")
- s=fixture();s.owner=-1;s.pass_receiver=6;s.last_touch=7;s.ball=Vector2(-2,0)
+ s=fixture();s.owner=-1;s.pass_receiver=7;s.last_touch=8;s.ball=Vector2(-2,0)
  s.apply_command(0,command(s.Mechanics.SHOT_BUFFER));check(s.mechanics.buffered[0].is_empty(),"no attacking preinput on opponent ball")
  s=fixture();s.players[2].pos=Vector2(0,-8);s.players[3].pos=Vector2(0,8)
  s.apply_command(0,command(s.Mechanics.SWITCH,{"direction":Vector2.DOWN}));check(s.selected==3,"direction switch obeys direction over distance to ball")
@@ -53,7 +54,7 @@ func _initialize()->void:
  check(runner>=0 and s.brain.jobs[runner]=="run","run request overrides team plan for one teammate")
  s.apply_command(0,command(s.Mechanics.SUPPORT));s.mechanics.plan(s)
  check(s.brain.jobs[s.teams[0].request_player]=="support","support request seeks short outlet")
- s=fixture();s.owner=6;s.ball=s.players[6].pos;s.apply_command(0,command(0,{"contain":true}));s.brain.prepare(s);s.mechanics.plan(s)
+ s=fixture();s.owner=7;s.ball=s.players[7].pos;s.apply_command(0,command(0,{"contain":true}));s.brain.prepare(s);s.mechanics.plan(s)
  var helper:int=s.teams[0].contain_player
  check(helper>0 and helper!=s.selected and s.brain.pressers[0]==helper,"one helper presses without taking manual player")
  s.apply_command(0,command(0,{"contain":false}));s.mechanics.plan(s);check(s.teams[0].contain_player==-1,"releasing contain ends helper request")
@@ -95,18 +96,18 @@ func _initialize()->void:
  s.apply_command(0,command(s.Mechanics.SET_PIECE,{"direction":Vector2.RIGHT}))
  var previous:Vector2=s.players[4].pos;s.Rules.update(s,0.1)
  check(s.teams[0].corner_plan==1 and s.players[4].pos!=previous,"corner plan moves off-ball teammates")
- s=fixture();s.players[1].vel=Vector2(3,0);s.Rules.foul(s,6,1,false)
+ s=fixture();s.players[1].vel=Vector2(3,0);s.Rules.foul(s,7,1,false)
  check(s.phase=="play" and not s.mechanics.advantage.is_empty(),"advantage keeps promising attack alive")
- s.owner=6;settle(s);check(s.phase=="foul" and s.fouls[1]==1,"lost advantage recalled without double counting")
- s=fixture();s.Rules.foul(s,6,1,true);check(s.players[6].yellow==1,"dangerous slide foul cautioned")
- s.phase="play";s.owner=1;s.Rules.foul(s,6,1,true)
- check(not s.players[6].active and s.players[6].sinbin==120,"second caution dismisses player with reduction timer")
+ s.owner=7;settle(s);check(s.phase=="foul" and s.fouls[1]==1,"lost advantage recalled without double counting")
+ s=fixture();s.Rules.foul(s,7,1,true);check(s.players[7].yellow==1,"dangerous slide foul cautioned")
+ s.phase="play";s.owner=1;s.Rules.foul(s,7,1,true)
+ check(not s.players[7].active and s.players[7].sinbin==120,"second caution dismisses player with reduction timer")
  s.phase="play";s.brain.reset();s.brain.prepare(s);s.mechanics.plan(s)
  check(s.brain.pressers[1]!=6 and s.brain.anchors[1]!=6,"reduced team reassigns active players")
  s.mechanics.requests[1]={"out":6,"reserve":1};s.mechanics.substitute(s,1)
- check(not s.players[6].active,"manual substitution cannot bypass red-card reduction")
- s.players[6].sinbin=0;s.phase="restart";settle(s)
- check(s.players[6].active and s.players[6].player_id not in s.mechanics.sent_off,"eligible replacement restores reduced slot")
+ check(not s.players[7].active,"manual substitution cannot bypass red-card reduction")
+ s.players[7].sinbin=0;s.phase="restart";settle(s)
+ check(s.players[7].active and s.players[7].player_id not in s.mechanics.sent_off,"eligible replacement restores reduced slot")
  s=fixture();s.mechanics.discipline(s,0,true);s.mechanics.discipline(s,0,true)
  var count:=0
  for i in 5:
@@ -123,7 +124,7 @@ func _initialize()->void:
  settle(s);check(s.selected==2,"high autoswitch can select nearby free-ball challenger")
  s=fixture();s.teams[0].auto_switch=0;s.owner=-1;s.pass_receiver=-1;s.ball=s.players[2].pos
  settle(s);check(s.selected==1,"manual autoswitch mode preserves selection")
- s=fixture();s.fouls[1]=5;s.Rules.foul(s,6,1,false)
+ s=fixture();s.mechanics.strict_rules=true;s.fouls[1]=5;s.Rules.foul(s,7,1,false)
  check(s.restart_kind=="accumulated","sixth foul creates no-wall accumulated kick")
  s=fixture();s.mechanics.strict_rules=true;s.owner=0;s.players[0].pos=Vector2(-28,0);s.ball=s.players[0].pos
  settle(s,4.1);check(s.phase=="restart" and s.restart_kind=="indirect" and s.restart_team==1,"keeper own-half four-second rule")

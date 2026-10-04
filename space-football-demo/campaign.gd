@@ -7,7 +7,7 @@ const MISSIONS = [
 ]
 var stage := 0
 var credits := 360
-var training := [0, 0, 0, 0]
+var training := [0, 0, 0, 0, 0]
 var keeper := 0
 var played := 0
 var wins := 0
@@ -44,7 +44,7 @@ func finish(score: Array) -> Dictionary:
 	return {"won":won, "reward":reward, "champion":stage==3}
 
 func data() -> Dictionary:
-	return {"version":2,"stage":stage,"credits":credits,"training":training,"keeper":keeper,"played":played,"wins":wins,"goals":goals,"difficulty":difficulty,"tutorial_seen":tutorial_seen}
+	return {"version":3,"stage":stage,"credits":credits,"training":training,"keeper":keeper,"played":played,"wins":wins,"goals":goals,"difficulty":difficulty,"tutorial_seen":tutorial_seen}
 
 func save_game() -> bool:
 	save_error = ""
@@ -63,16 +63,18 @@ func load_game() -> bool:
 	if not FileAccess.file_exists(save_path): return false
 	var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(save_path))
 	if not d is Dictionary: return false
-	if d.get("version",0)!=1 and d.get("version",0)!=2: return false
+	if not (d.get("version") is float or d.get("version") is int): return false
+	if int(d.version) not in [1,2,3]: return false
 	var levels: Variant = d.get("training",[])
-	if not levels is Array or levels.size()!=(3 if d.version==1 else 4): return false
+	if not levels is Array or levels.size()!=int(d.version)+2: return false
 	for value in levels:
 		if not (value is float or value is int): return false
 	for key in ["stage","credits","keeper","played","wins","goals","difficulty"]:
 		if not (d.get(key) is float or d.get(key) is int): return false
 	stage=clampi(int(d.stage),0,3)
 	credits=clampi(int(d.credits),0,100000)
-	training=[clampi(int(levels[0]),0,5),clampi(int(levels[1]),0,5),clampi(int(levels[2]),0,5),clampi(int(levels[3]),0,5) if d.version==2 else 0]
+	training=[0,0,0,0,0]
+	for i in levels.size(): training[i]=clampi(int(levels[i]),0,5)
 	keeper=clampi(int(d.keeper),0,1)
 	played=maxi(0,int(d.played))
 	wins=clampi(int(d.wins),0,played)

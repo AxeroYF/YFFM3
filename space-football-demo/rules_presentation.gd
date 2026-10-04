@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 ## Presentation consumes authority phases; it never advances match rules.
 var banner:Panel
@@ -48,7 +49,8 @@ func update(game,dt:float)->void:
  if phase=="restart":
   var ready:bool=s.Rules.Flow.ready(s)
   game.rule_label.text=("我方" if s.restart_team==s.view_team else "对方")+" · "+s.Rules.TITLES[s.restart_kind]+"  /  "+s.Rules.Flow.TITLES.get(s.restart_flow.get("stage","fetch"),"")
-  if ready and s.restart_kind not in ["penalty","kickoff","accumulated"]: game.rule_label.text+="  %d 秒" % maxi(0,ceili(4-s.phase_time))
+  if ready and s.Rules.ready_limit(s)>0: game.rule_label.text+="  %d 秒" % maxi(0,ceili(s.Rules.ready_limit(s)-s.phase_time))
+  elif ready and s.Rules.is_free(s.restart_kind): game.rule_label.text+=" · %d 秒后自动开球" % maxi(0,ceili(s.Rules.AUTO_FREE_SECONDS-s.phase_time))+(" · 需另一人触球" if s.restart_kind=="indirect" else "")
   if not ready: game.action_hint.text=""
   elif s.restart_team!=s.view_team: game.action_hint.text="等待对手开球"
   else:
@@ -64,7 +66,7 @@ func update(game,dt:float)->void:
    goal_overlay.scale=Vector2.ONE*lerpf(0.90,1.0,enter)
    goal_overlay.modulate.a=enter*clampf((s.Rules.GOAL_INTRO-age)/0.12,0,1)
    goal_line.size.x=1020*enter
-   goal_detail.text="%s   ·   %s   ·   %d : %d" % ["主队" if s.goal_team==0 else "客队",s.players[s.goal_scorer].name+("（乌龙）" if s.goal_scorer/5!=s.goal_team else ""),s.score[0],s.score[1]]
+   goal_detail.text="%s   ·   %s   ·   %d : %d" % ["主队" if s.goal_team==0 else "客队",s.players[s.goal_scorer].name+("（乌龙）" if s.goal_scorer/Team.SIZE!=s.goal_team else ""),s.score[0],s.score[1]]
   else:
    banner.position=Vector2(855,245);banner.size=Vector2(850,125)
    title.size.x=802;subtitle.size.x=802;subtitle.position.y=75

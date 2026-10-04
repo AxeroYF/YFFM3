@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 func run(test)->void:
  var s=test.fixture()
@@ -6,22 +7,22 @@ func run(test)->void:
  s.mechanics.tick(s,0.09)
  test.check(s.owner==-1 and s.teams[0].run_player==1 and s.teams[0].run_time==2 and s.selected!=1,"one-two pass selects receiver and orders original passer forward")
  test.check(s.ai_direction(1).x>0,"one-two passer AI actually runs toward attacking goal")
- s.owner=6;s.step(1.0/60)
+ s.owner=7;s.step(1.0/60)
  test.check(s.teams[0].run_player==-1,"one-two forward run cancels immediately after losing possession")
  for team in 2:
   s=test.fixture()
-  s.owner=(1-team)*5+1;s.ball=Vector2(-20*s.side(team),4)
+  s.owner=(1-team)*Team.SIZE+1;s.ball=Vector2(-20*s.side(team),4)
   s.apply_command(team,{"keeper_rush":true})
-  var target:Vector2=s.keeper_target(team*5)
+  var target:Vector2=s.keeper_target(team*Team.SIZE)
   test.check(target.x*s.side(team)>-Pitch.HALF_LENGTH+7 and target.x*s.side(team)<=-Pitch.HALF_LENGTH+8.501 and absf(target.y)<=7,"keeper rush advances inside own area on either end")
   s.apply_command(team,{"keeper_rush":false})
-  test.check(s.keeper_target(team*5).x*s.side(team)<-Pitch.HALF_LENGTH+4,"releasing keeper rush returns to goal position")
+  test.check(s.keeper_target(team*Team.SIZE).x*s.side(team)<-Pitch.HALF_LENGTH+4,"releasing keeper rush returns to goal position")
  for shield in [false,true]:
   s=test.fixture();s.players[1].pos=Vector2.ZERO;s.players[1].dir=Vector2.RIGHT
-  s.players[6].pos=Vector2(-1.6,0);s.players[6].dir=Vector2.RIGHT
-  s.players[6].ratings.tackle_reach=2.5
+  s.players[7].pos=Vector2(-1.6,0);s.players[7].dir=Vector2.RIGHT
+  s.players[7].ratings.tackle_reach=2.5
   s.ball=Vector2(0.6,0);s.owner=1;s.teams[0].jockey=shield
-  s.resolve_tackle(6,false)
+  s.resolve_tackle(7,false)
   test.check(s.owner==(1 if shield else -1),"holding shield makes rear ball access harder without making tackles impossible")
  s=test.fixture();s.players[1].action_time=0;s.teams[0].jockey=true
  s.move_player(1,1.0/60,Vector2.ZERO,false,true)

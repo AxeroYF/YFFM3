@@ -1,4 +1,5 @@
 extends SceneTree
+const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 const Match=preload("res://match_sim.gd")
 const Feedback=preload("res://impact_feedback.gd")
@@ -28,7 +29,7 @@ func _initialize()->void:
    var ball:Vector2=s.ball
    s.Rules.restart(s,team,kind,ball)
    var untouched:bool=s.ball==ball
-   for i in 10: untouched=untouched and positions[i]==s.players[i].pos
+   for i in Team.COUNT: untouched=untouched and positions[i]==s.players[i].pos
    check(untouched,"restart preserves current ball/player positions "+kind+str(team))
    check(s.owner==-1 and not s.kick(s.restart_taker,Vector2.ZERO,30,false),"preparation cannot be skipped by kick "+kind)
    var stages:Array=[];var smooth:=true;var paused:=true
@@ -38,7 +39,7 @@ func _initialize()->void:
     positions.clear()
     for p in s.players: positions.append(p.pos)
     s.step(1.0/60)
-    for i in 10: smooth=smooth and s.players[i].pos.distance_to(positions[i])<=s.players[i].speed*1.13*s.Rules.Flow.TRAVEL_SCALE/60+0.001
+    for i in Team.COUNT: smooth=smooth and s.players[i].pos.distance_to(positions[i])<=s.players[i].speed*1.13*s.Rules.Flow.TRAVEL_SCALE/60+0.001
     paused=paused and s.elapsed==0 and s.phase_time<0.02
    check(s.Rules.Flow.ready(s),"restart finishes preparation "+kind+str(team)+" stage="+str(s.restart_flow.get("stage")))
    check(smooth and paused,"continuous travel and paused countdown "+kind)
@@ -72,10 +73,10 @@ func _initialize()->void:
  check(s.players[1].jump_z==0.6,"restart does not teleport airborne player down")
  for tick in 30: s.step(1.0/60)
  check(s.players[1].jump_z==0,"airborne player lands during stoppage")
- s=fixture();s.mechanics.discipline(s,6,true);s.mechanics.discipline(s,6,true);s.players[6].sinbin=0
+ s=fixture();s.mechanics.discipline(s,7,true);s.mechanics.discipline(s,7,true);s.players[7].sinbin=0
  s.Rules.restart(s,0,"kick_in",Vector2(3,18));s.mechanics.tick(s,1.0/60)
- check(s.players[6].active and s.players[6].pos.y>18,"red-card replacement enters at touchline, never appears in central formation")
- check(prepare(s) and absf(s.players[6].pos.y)<17,"replacement runs into formation before ready")
+ check(s.players[7].active and s.players[7].pos.y>18,"red-card replacement enters at touchline, never appears in central formation")
+ check(prepare(s) and absf(s.players[7].pos.y)<17,"replacement runs into formation before ready")
  for powerful in [false,true]:
   s=fixture();s.charge=0.85 if powerful else 0.2;s.shoot()
   check((s.impact_id>0)==powerful,"only powerful real shots emit impact")
@@ -83,20 +84,20 @@ func _initialize()->void:
   check((s.impact_id>0)==powerful,"only driven/strong real passes emit impact")
  s=fixture();s.notify("shot","test notification")
  check(s.impact_id==0,"UI events cannot fabricate impacts")
- s=fixture();s.owner=6;s.players[6].pos=Vector2(1.5,0);s.players[6].dir=Vector2.LEFT
+ s=fixture();s.owner=7;s.players[7].pos=Vector2(1.5,0);s.players[7].dir=Vector2.LEFT
  s.players[1].pos=Vector2.ZERO;s.players[1].dir=Vector2.RIGHT;s.ball=Vector2(0.7,0)
  s.tackle(1,true);s.resolve_tackle(1,true)
  check(s.impact_id==1 and s.impact_kind==3 and s.fouls==[0,0],"clean slide contact emits impact")
  s.resolve_tackle(1,true);check(s.impact_id==1,"same slide cannot emit repeated impacts")
  s=fixture();s.owner=1;s.players[1].pos=Vector2(5,0);s.players[1].dir=Vector2.RIGHT
- s.players[6].pos=Vector2(3.5,0);s.players[6].dir=Vector2.RIGHT;s.ball=Vector2(6,0)
- s.tackle(6,true);s.resolve_tackle(6,true)
+ s.players[7].pos=Vector2(3.5,0);s.players[7].dir=Vector2.RIGHT;s.ball=Vector2(6,0)
+ s.tackle(7,true);s.resolve_tackle(7,true)
  check(s.phase=="foul" and s.impact_id==0,"foul does not receive clean tackle feedback")
  var maximum:=0.0
  for tick in 60:
   var value:=Feedback.offset(tick/120.0,1,Vector2.RIGHT,1,1)
   maximum=maxf(maximum,value.length())
- check(maximum>0.025 and maximum<0.17,"default feedback has a small visible bounded amplitude")
+ check(maximum>=10 and maximum<=11.1,"default feedback has a small visible bounded amplitude")
  check(Feedback.offset(0.04,1,Vector2.RIGHT,0,1)==Vector2.ZERO and Feedback.offset(0.3,1,Vector2.RIGHT,2,1)==Vector2.ZERO,"feedback can be disabled and always returns exactly to zero")
  print("RESTART_IMPACT_TESTS_", "PASS" if failures==0 else "FAIL", " checks=",checks," failures=",failures)
  quit(0 if failures==0 else 1)

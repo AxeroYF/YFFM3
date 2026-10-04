@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 
 func run(game)->void:
  game.practice=true;await game.start_match()
@@ -6,7 +7,7 @@ func run(game)->void:
  var s=game.sim
  s.freeze=0;s.phase="play";s.owner=-1;s.pickup_lock=0
  s.teams[1].human=true
- for index in 10:
+ for index in Team.COUNT:
   s.players[index].pos=Vector2(2+index*2,12)
   s.players[index].cooldown=100;s.players[index].speed=0;s.players[index].vel=Vector2.ZERO
  var p:Dictionary=s.players[0]

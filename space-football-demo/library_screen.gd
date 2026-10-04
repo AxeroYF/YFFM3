@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 const Library=preload("res://player_library.gd")
 const Squad=preload("res://squad.gd")
 const Ratings=preload("res://player_ratings.gd")
@@ -23,23 +24,23 @@ func show_squad()->void:
  game.screen="squad"
  game.chrome("我的球队")
  game.text(game.ui,"首发阵容",Vector2(76,175),52,game.INK,true)
- game.text(game.ui,"1 门将 · 4 名场上球员",Vector2(78,255),25,game.MUTED)
+ game.text(game.ui,"1 门将 · 5 名场上球员",Vector2(78,255),25,game.MUTED)
  game.button(game.ui,"返回主菜单",Rect2(2110,185,375,65),game.show_menu)
- for i in 5:
+ for i in Team.SIZE:
   var p:=Library.find(Squad.ids[i])
-  var x:=76+i*486
-  var card=game.panel(game.ui,Rect2(x,378,464,765))
+  var x:=76+i*405
+  var card=game.panel(game.ui,Rect2(x,378,384,765))
   game.text(card,Squad.SLOTS[i],Vector2(26,25),25,game.CYAN)
   var picture:=TextureRect.new()
   picture.position=Vector2(26,84)
-  picture.size=Vector2(410,395)
+  picture.size=Vector2(332,395)
   picture.expand_mode=TextureRect.EXPAND_IGNORE_SIZE
   picture.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
   picture.texture=load(p.portrait)
   card.add_child(picture)
-  game.text(card,p.name,Vector2(26,501),32,game.INK,true,414)
+  game.text(card,p.name,Vector2(26,501),32,game.INK,true,332)
   game.text(card,"%s  /  %d cm" % [p.role,p.heightCm],Vector2(26,564),25,game.MUTED)
-  game.button(card,"更换球员",Rect2(26,652,410,72),func(): picking=i;page=0;query="";role_filter="全部";show_library(),true)
+  game.button(card,"更换球员",Rect2(26,652,332,72),func(): picking=i;page=0;query="";role_filter="全部";show_library(),true)
  game.text(game.ui,"阵容自动保存 · 用于星际杯与联机对战",Vector2(78,1230),25,game.MUTED)
 
 func show_library()->void:
@@ -120,13 +121,15 @@ func details(p:Dictionary)->void:
  game.text(game.modal,"逆足：%s     花式：%s" % [str(p.weakFoot) if p.weakFoot!=null else "来源未填写",str(p.skillMoves) if p.skillMoves!=null else "来源未填写"],Vector2(440,1120),24,game.MUTED)
  var style:=preload("res://player_style.gd").derive(p)
  game.text(game.modal,style.name+" · "+preload("res://player_style.gd").description(style),Vector2(1030,1090),21,game.GOLD,false,1070)
- var turning:=Ratings.derive(p.attributes,float(p.heightCm))
- game.text(game.modal,"180° 转身 %.3f 秒  ·  90° %.3f 秒  /  弹跳已接入起跳争顶" % [turning.turn_time,turning.turn_time/2],Vector2(1030,1130),22,game.CYAN)
- for slot in 5:
-  var b=game.button(game.modal,("✓ " if Squad.ids[slot]==p.id else "")+Squad.SLOTS[slot],Rect2(430+slot*252,1180,230,60),func():
+ var turning:=Ratings.for_player(p)
+ game.text(game.modal,"原地转身：180° %.3f 秒 · 90° %.3f 秒 · 高速变向需先减速" % [turning.turn_time,turning.turn_time/2],Vector2(1030,1130),22,game.CYAN)
+ var physique:Dictionary=Ratings.Body.from_record(p).physique
+ game.text(game.modal,"体型修正：启动 %+.0f%% · 刹车 %+.0f%% · 伸脚 %+.0f%%" % [(physique.acceleration_scale-1)*100,(physique.braking_scale-1)*100,(physique.tackle_reach_scale-1)*100],Vector2(420,332),21,game.MUTED)
+ for slot in Team.SIZE:
+  var b=game.button(game.modal,("✓ " if Squad.ids[slot]==p.id else "")+Squad.SLOTS[slot],Rect2(330+slot*270,1180,250,60),func():
    if Squad.assign_player(p.id,slot):
     show_squad()
     game.toast(p.name+"已加入首发")
    else: game.toast("阵容保存失败，请重试"))
   b.disabled=(p.role=="GK")!=(slot==0) or (picking>=0 and picking!=slot)
- game.button(game.modal,"返回",Rect2(1730,1180,380,60),game.clear_modal)
+ game.button(game.modal,"返回",Rect2(1980,1180,300,60),game.clear_modal)

@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 ## Continuous authority-side retrieval and staging. No player placement jumps.
 const STAGES=["fetch","lift","carry","place","organize","ready"]
@@ -25,32 +26,44 @@ static func begin(s)->void:
  var wall:Array=[]
  for i in s.players.size():
   var p:Dictionary=s.players[i]
-  var target:Vector2=p.pos if p.active else Vector2(-20*s.side(i/5),-8+(i%5)*4)
-  if s.restart_kind=="kickoff": target=formation[i%5]*Vector2(s.side(i/5),1)
-  elif s.restart_kind in ["penalty","accumulated"] and i%5!=0:
-   target=Vector2(spot.x-q*(5.5+i%3),-8+i*1.5)
-  elif p.pos.distance_to(spot)<5.2: target=s.Rules.outside_radius(p.pos,spot)
-  if i%5==0: target=Vector2((-Pitch.HALF_LENGTH+1.5)*s.side(i/5),0)
+  var target:Vector2=p.pos if p.active else Vector2(-20*s.side(i/Team.SIZE),-8+(i%Team.SIZE)*4)
+  if s.restart_kind=="kickoff": target=formation[i%Team.SIZE]*Vector2(s.side(i/Team.SIZE),1)
+  elif s.restart_kind in ["penalty","accumulated"] and i%Team.SIZE!=0:
+   target=Vector2(spot.x-q*(s.Rules.clearance(s)+0.5+i%3),-8+(i%Team.SIZE)*3)
+  elif not s.Rules.is_free(s.restart_kind) and p.pos.distance_to(spot)<5.2: target=s.Rules.outside_radius(p.pos,spot)
+  if i%Team.SIZE==0: target=Vector2((-Pitch.HALF_LENGTH+1.5)*s.side(i/Team.SIZE),0)
+  if i%Team.SIZE==0 and p.team!=s.restart_team and s.restart_kind in ["free_kick","indirect","penalty","accumulated"]: target=Vector2(Pitch.HALF_LENGTH*q,0)
   if i==s.restart_taker: target=spot-direction*0.85
-  if p.team!=s.restart_team and i%5!=0: target=s.Rules.outside_radius(target,spot)
+  elif p.team!=s.restart_team: target=s.Rules.legal_defender(s,target)
   targets.append(target)
- if s.restart_kind in ["free_kick","indirect"]:
-  for n in 2:
-   var defender:int=(1-s.restart_team)*5+2+n
+ if s.Rules.is_free(s.restart_kind):
+  var goal_distance:float=spot.distance_to(Vector2(Pitch.HALF_LENGTH*q,0))
+  var count:=0 if goal_distance>25 or spot.x*q<0 else 1 if absf(spot.y)>11 else 2
+  for n in count:
+   var defender:int=(1-s.restart_team)*Team.SIZE+2+n
    if not s.players[defender].active: continue
-   targets[defender]=(spot+direction*5.4+direction.orthogonal()*(n*1.45-0.725)).clamp(-Pitch.RESTART_LIMIT,Pitch.RESTART_LIMIT)
-   targets[defender]=s.Rules.outside_radius(targets[defender],spot);wall.append(defender)
+   targets[defender]=(spot+direction*(s.Rules.FREE_DISTANCE+0.2)+direction.orthogonal()*((n-(count-1)*0.5)*1.45)).clamp(-Pitch.RESTART_LIMIT,Pitch.RESTART_LIMIT)
+   targets[defender]=s.Rules.legal_defender(s,targets[defender]);wall.append(defender)
+  var outlet:int=s.restart_team*Team.SIZE+Team.MIDFIELD_SLOT
+  if outlet==s.restart_taker or not s.players[outlet].active:
+   outlet=-1;var nearest:=INF
+   for i in range(s.restart_team*Team.SIZE+1,(s.restart_team+1)*Team.SIZE):
+    if i==s.restart_taker or not s.players[i].active: continue
+    var distance:float=s.players[i].pos.distance_squared_to(spot)
+    if distance<nearest: nearest=distance;outlet=i
+  if outlet>=0:
+   targets[outlet]=(spot+Vector2(-3*q,-2.5 if spot.y>0 else 2.5)).clamp(-Pitch.RESTART_LIMIT,Pitch.RESTART_LIMIT)
  # Resolve target overlap before movement; current positions are untouched.
  for iteration in 8:
   for i in s.players.size():
-   if not s.players[i].active or i==s.restart_taker or i in wall: continue
+   if not s.players[i].active or i==s.restart_taker or i in wall or i%Team.SIZE==0: continue
    for j in s.players.size():
     if i==j or not s.players[j].active: continue
     var away:Vector2=targets[i]-targets[j]
     if away.length()>=1.6: continue
     if away.length()<0.01: away=Vector2.from_angle(i*2.4)
     targets[i]=(targets[i]+away.normalized()*0.3).clamp(-Pitch.RESTART_LIMIT,Pitch.RESTART_LIMIT)
-   if i/5!=s.restart_team and i%5!=0: targets[i]=s.Rules.outside_radius(targets[i],spot)
+   if i/Team.SIZE!=s.restart_team: targets[i]=s.Rules.legal_defender(s,targets[i])
  s.restart_flow={"stage":"fetch","time":0.0,"targets":targets,"wall":wall,"ball_from":Vector3(s.ball.x,s.ball_height,s.ball.y),"hold":[0.0,0.0],"skip_time":-1.0,"skipped":false}
  s.owner=-1;s.freeze=0;s.phase_time=0
  s.velocity*=0.18;s.vertical_speed=minf(s.vertical_speed,0)
@@ -128,7 +141,10 @@ static func tick(s,dt:float)->void:
   if f.stage=="organize":
    var settled:=true
    for i in s.players.size():
-    if s.players[i].active and s.players[i].pos.distance_to(f.targets[i])>0.4: settled=false;break
+    if not s.players[i].active: continue
+    # A short free kick does not wait for every teammate to finish a long run.
+    if s.Rules.is_free(s.restart_kind) and i/Team.SIZE==s.restart_team: continue
+    if s.players[i].pos.distance_to(f.targets[i])>0.08: settled=false;break
    if settled and p.dir.dot(direction)>0.98:
     change_stage(s,"ready");s.owner=taker;s.phase_time=0
 
@@ -180,9 +196,10 @@ static func pack(flow:Dictionary)->PackedFloat32Array:
  return data
 
 static func unpack(data:PackedFloat32Array)->Dictionary:
- if data.size()<26: return {}
+ var wall_offset:=5+2*Team.COUNT
+ if data.size()<wall_offset+5: return {}
  var targets:Array=[];var wall:Array=[]
- for i in 10:
+ for i in Team.COUNT:
   targets.append(Vector2(data[5+i*2],data[6+i*2]))
-  if int(data[25])&(1<<i): wall.append(i)
- return {"stage":STAGES[clampi(int(data[0]),0,5)],"time":data[1],"ball_from":Vector3(data[2],data[3],data[4]),"targets":targets,"wall":wall,"hold":[data[26],data[27]] if data.size()>=30 else [0.0,0.0],"skip_time":data[28] if data.size()>=30 else -1.0,"skipped":bool(data[29]) if data.size()>=30 else false}
+  if int(data[wall_offset])&(1<<i): wall.append(i)
+ return {"stage":STAGES[clampi(int(data[0]),0,5)],"time":data[1],"ball_from":Vector3(data[2],data[3],data[4]),"targets":targets,"wall":wall,"hold":[data[wall_offset+1],data[wall_offset+2]],"skip_time":data[wall_offset+3],"skipped":bool(data[wall_offset+4])}

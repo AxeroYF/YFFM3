@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 const Motion=preload("res://football_motion.gd")
 const Ratings=preload("res://player_ratings.gd")
@@ -34,7 +35,7 @@ func run(test)->void:
  var records:Array=preload("res://player_library.gd").all()
  var bounded:=true
  for record in records:
-  var profile:=Ratings.derive(record.attributes,float(record.heightCm))
+  var profile:=Ratings.for_player(record)
   bounded=bounded and profile.turn_time>=Ratings.TURN_MIN and profile.turn_time<=Ratings.TURN_MAX
  test.check(bounded and records.size()==386,"all 386 catalog players have bounded short turn times")
  var weak:=Ratings.derive({"agility":30,"acceleration":40,"dribbling":30,"strength":95},198)
@@ -57,9 +58,10 @@ func run(test)->void:
   Input.flush_buffered_events()
   s=test.fixture();var p:Dictionary=s.players[1];p.pos=Vector2.ZERO;p.dir=Vector2.RIGHT
   var angle:float=absf(p.dir.angle_to(direction))
-  var frames:=maxi(1,ceili(angle/p.ratings.turn_rate*60))
-  for frame in frames: s.move_player(1,1.0/60,direction,false,false)
-  test.check(p.dir.dot(direction)>0.999 and frames<=22,"angle-proportional turn reaches eight-way target within bounded frames: "+str(i))
+  var frames:=0
+  while p.dir.dot(direction)<0.999 and frames<24:
+   s.move_player(1,1.0/60,direction,false,false);frames+=1
+  test.check(p.dir.dot(direction)>0.999 and frames<=ceili(angle/(p.ratings.turn_rate*p.ratings.running_turn_scale)*60),"angle-proportional turn with bounded running inertia: "+str(i))
  s=test.fixture();s.players[1].dir=Vector2.from_angle(deg_to_rad(179))
  s.move_player(1,1.0/60,Vector2.from_angle(deg_to_rad(-179)),false,false)
  test.check(s.players[1].dir.dot(Vector2.from_angle(deg_to_rad(-179)))>0.999,"turn across angle boundary takes shortest path")
@@ -72,7 +74,7 @@ func run(test)->void:
   test.check(Motion.keeper_action(item[0],item[1],item[2],body,30)==item[3],"keeper selects height/speed/lateral-specific action: "+item[3])
  for direction in [-1.0,1.0]:
   s=test.fixture();s.owner=-1;s.ball=Vector2(-20,2*direction);s.velocity=Vector2(-30,0);s.ball_is_shot=true;s.kick_age=0.4;s.ball_height=0.4
-  s.last_touch=6
+  s.last_touch=7
   s.players[0].cooldown=0
   s.keeper_target(0)
   test.check(s.players[0].action=="dive_low" and s.players[0].keeper_side==-direction,"low dive mirrors on both sides")

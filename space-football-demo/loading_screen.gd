@@ -22,6 +22,7 @@ func build(game)->void:
  percent=game.text(root,"0%",Vector2(2220,804),36,game.CYAN,true,130)
  percent.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT
  progress=ProgressBar.new()
+ progress.step=0.0 # Twelve player builds produce fractional completion percentages.
  progress.position=Vector2(210,889);progress.size=Vector2(2140,16)
  progress.show_percentage=false
  progress.add_theme_stylebox_override("background",game.style(Color("203449"),Color.TRANSPARENT,8))

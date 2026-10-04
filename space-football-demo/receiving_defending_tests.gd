@@ -1,4 +1,5 @@
 extends SceneTree
+const Team=preload("res://team_config.gd")
 const Match=preload("res://match_sim.gd")
 const Controls=preload("res://football_input.gd")
 var checks:=0
@@ -10,7 +11,7 @@ func fixture():
  var s=Match.new();s.setup(preload("res://campaign.gd").new(),719,Match.Squad.DEFAULT,Match.Squad.DEFAULT,true)
  s.freeze=0;s.phase="play";s.owner=-1;s.arcade=false;s.duration=1000
  for team in 2: s.teams[team].human=true
- for i in 10:
+ for i in Team.COUNT:
   s.players[i].active=false;s.players[i].cooldown=0;s.players[i].vel=Vector2.ZERO
   s.players[i].pos=Vector2(-29+6*i,16);s.players[i].dir=Vector2.RIGHT
  s.players[1].active=true;s.players[1].pos=Vector2(0,3)
@@ -21,9 +22,9 @@ func fixture():
 func advance(s,seconds:float)->void:
  for i in ceili(seconds*60): s.step(1.0/60)
 func duel():
- var s=fixture();s.owner=6;s.pass_receiver=-1;s.velocity=Vector2.ZERO
- s.players[1].pos=Vector2.ZERO;s.players[6].active=true;s.players[6].pos=Vector2(1.8,0);s.players[6].dir=Vector2.LEFT
- s.teams[1].selected=6;s.ball=Vector2(0.9,0)
+ var s=fixture();s.owner=7;s.pass_receiver=-1;s.velocity=Vector2.ZERO
+ s.players[1].pos=Vector2.ZERO;s.players[7].active=true;s.players[7].pos=Vector2(1.8,0);s.players[7].dir=Vector2.LEFT
+ s.teams[1].selected=7;s.ball=Vector2(0.9,0)
  return s
 func _initialize()->void:
  await process_frame
@@ -43,9 +44,9 @@ func _initialize()->void:
  var receipt:Array=[]
  for team in 2:
   for level in 3:
-   s=fixture();var index:int=team*5+1
+   s=fixture();var index:int=team*Team.SIZE+1
    s.players[1].active=false;s.players[index].active=true;s.players[index].pos=Vector2(0,3)
-   s.teams[team].selected=index;s.pass_receiver=index;s.last_touch=team*5+2
+   s.teams[team].selected=index;s.pass_receiver=index;s.last_touch=team*Team.SIZE+2
    s.teams[team].receive_assist=level;s.teams[team].move=Vector2.RIGHT
    var caught:=false;var top_speed:=0.0
    for frame in 120:
@@ -71,14 +72,14 @@ func _initialize()->void:
  net.free()
  var bounded:=true;var slowed:=true
  for record in s.Library.all():
-  var rating:Dictionary=s.Ratings.derive(record.attributes,record.heightCm)
+  var rating:Dictionary=s.Ratings.for_player(record)
   bounded=bounded and rating.turn_time>=0.224 and rating.turn_time<=0.3520001
   slowed=slowed and rating.turn_rate<PI/0.22
  check(bounded and slowed,"all 386 players use slower bounded turns while preserving attribute differences")
  for sliding in [false,true]:
   s=duel();var original_pos:Vector2=s.ball
   s.tackle(1,sliding)
-  check(s.owner==6 and s.ball==original_pos,"defensive button starts an animation before contact")
+  check(s.owner==7 and s.ball==original_pos,"defensive button starts an animation before contact")
   advance(s,0.16)
   check(s.tackles[0]==1 and s.owner==-1,"timed contact pokes opposing carrier ball: "+str(sliding))
   check(s.players[1].action==("slide_still" if sliding else "tackle"),"standing tackle and stationary ground tackle have distinct actions")
@@ -89,10 +90,10 @@ func _initialize()->void:
   var cooldown:float=s.players[1].tackle_cd;s.tackle(1,sliding)
   check(s.players[1].tackle_cd==cooldown,"mashing tackle cannot reset recovery")
  s=duel();s.players[1].dir=Vector2.UP;s.tackle();advance(s,0.25)
- check(s.tackles[0]==0 and s.owner==6,"tackle facing away misses instead of magnetically stealing ball")
+ check(s.tackles[0]==0 and s.owner==7,"tackle facing away misses instead of magnetically stealing ball")
  s=duel();s.ball_height=2.0;s.tackle(-1,true);s.resolve_tackle(1,true)
  check(s.tackles[0]==0,"slide cannot collect an elevated ball")
- s=duel();s.players[1].pos=Vector2.ZERO;s.players[6].pos=Vector2(1.5,0);s.players[6].dir=Vector2.RIGHT;s.ball=Vector2(2.5,0)
+ s=duel();s.players[1].pos=Vector2.ZERO;s.players[7].pos=Vector2(1.5,0);s.players[7].dir=Vector2.RIGHT;s.ball=Vector2(2.5,0)
  s.tackle(-1,true);advance(s,0.15)
  check(s.fouls[0]==1 and s.players[1].yellow==1,"body-first rear slide produces foul and caution")
  s=duel();s.owner=-1;s.ball=Vector2(1.3,0);s.tackle();advance(s,0.13)

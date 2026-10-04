@@ -2,13 +2,15 @@ extends RefCounted
 ## Height/jumping/heading come from the existing player catalog. Proportions and
 ## appearance are authored game art, not measured anatomy or scanned likenesses.
 const WORLD_UNITS_PER_METRE:=1.45
-const SLOT_RECORD:=[-1,1,0,2,3]
+const SLOT_RECORD:=[-1,1,0,2,3,4]
 const Library=preload("res://player_library.gd")
+const Appearance=preload("res://player_appearance.gd")
+const Physique=preload("res://player_physique.gd")
 static var catalog:Array=[]
 
 static func profile(slot:int)->Dictionary:
  if catalog.is_empty():
-  for id in ["legend-messi","legend-haaland","s4-fc26-252371","s4-fc26-203376"]: catalog.append(Library.find(id))
+  for id in ["legend-messi","legend-haaland","s4-fc26-252371","s4-fc26-203376","legend-modric"]: catalog.append(Library.find(id))
  var record:Dictionary=catalog[SLOT_RECORD[slot]] if slot>0 else {}
  return from_record(record,slot)
 
@@ -24,7 +26,7 @@ static func from_record(record:Dictionary,slot:int=1)->Dictionary:
  var skin_color:String=["bf8e70","e2b18e","d4a07b","996b51","a77a59"][appearance_slot] if appearance_slot>=0 else "bf8e70"
  var hair_color:String=["241e1b","b79953","32271e","201e1c","261d18"][appearance_slot] if appearance_slot>=0 else "241e1b"
  if record.get("id","")=="legend-mbappe": skin_color="a77a59"
- return {
+ var result:Dictionary={
   "height_cm":cm,"height":h,"shoulder":shoulder,"hip_width":shoulder*0.69,
   "leg_length":h*leg_ratio,"muscle":muscle,"head_size":h*0.128,
   "body_radius":shoulder*0.69,"foot_reach":h*0.36,
@@ -33,9 +35,23 @@ static func from_record(record:Dictionary,slot:int=1)->Dictionary:
   "jumping":jumping,"heading":float(attributes.get("heading",60)),
   "skin":skin_color,
   "hair":hair_color,
-  "hair_style":["short","tied","crop","curly","tied"][slot],
-  "beard":slot==2,"build_name":["门将 / 长臂","高大型 / 强壮","紧凑型 / 灵活","修长型 / 均衡","高大型 / 宽肩"][slot]
+  "hair_style":["short","tied","crop","curly","tied","short"][slot],
+  "beard":slot==2,"build_name":["门将 / 长臂","高大型 / 强壮","紧凑型 / 灵活","修长型 / 均衡","高大型 / 宽肩","中场 / 均衡"][slot]
  }
+ var appearance:=Appearance.find(str(record.get("id","")))
+ if not appearance.is_empty():
+  result.merge(appearance,true)
+  result.appearance_id=record.id
+  result.appearance_version=Appearance.VERSION
+  result.beard=appearance.beard_style!="none"
+  # Only body proportions feed the bounded physical profile below. Head/face,
+  # skin and hair stay cosmetic and cannot confer heading or keeper reach.
+  result.leg_length=h*clampf(leg_ratio+float(appearance.leg_bias),0.475,0.552)
+ result.physique=Physique.derive(result)
+ result.body_radius*=result.physique.collision_scale
+ result.foot_reach*=result.physique.foot_reach_scale
+ result.collision_shoulder=shoulder*result.physique.collision_scale
+ return result
 
 static func contact_zone(body:Dictionary,ball_center:float,jump_offset:float=0.0,keeper:bool=false)->String:
  # Only actual jump displacement belongs here, never the maximum jump potential.

@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 ## Local presentation/tools. Replay never restores or advances authoritative state.
 var history:Array=[]
@@ -32,7 +33,7 @@ func advanced_settings(game)->void:
  game.panel(game.modal,Rect2(560,235,1440,990))
  game.text(game.modal,"操作与比赛选项",Vector2(625,282),44,game.INK,true)
  var router=game.desktop_input
- var labels={"receive_assist":"接球跑位辅助","shot_assist":"射门辅助","auto_switch":"自动切人","vibration":"手柄震动","replay":"进球回放","strict_rules":"门将 4 秒 / 重复回传限制","camera_impact":"镜头冲击","alternate_directions":"方向操作键盘布局"}
+ var labels={"receive_assist":"接球跑位辅助","shot_assist":"射门辅助","auto_switch":"自动切人","vibration":"手柄震动","replay":"进球回放","strict_rules":"室内附加规则","camera_impact":"镜头冲击","alternate_directions":"方向操作键盘布局"}
  var values={"receive_assist":["低","标准","高"],"shot_assist":["低","标准","高"],"auto_switch":["手动","接球队员","接球与自由球"],"vibration":["关","开"],"replay":["关","开"],"strict_rules":["关","开（下场生效）"],"camera_impact":["关","轻微（默认）","标准"],"alternate_directions":["小键盘 8/2/4/6","I / K / J / L"]}
  var n:=0
  for key in labels:
@@ -42,7 +43,7 @@ func advanced_settings(game)->void:
    router.options[setting]=(int(router.options[setting])+1)%values[setting].size()
    router.update_prompts();router.save_preferences();advanced_settings(game))
   n+=1
- game.text(game.modal,"黄红牌与累计犯规已启用。辅助与反馈设置自动保存。",Vector2(625,1055),23,game.MUTED)
+ game.text(game.modal,"附加规则：任意球 / 门将 4 秒、重复回传与累计犯规罚球。",Vector2(625,1055),23,game.MUTED)
  game.button(game.modal,"返回辅助设置",Rect2(625,1110,1310,68),game.show_assistance_settings)
 
 func substitutions(game)->void:
@@ -53,18 +54,18 @@ func substitutions(game)->void:
  game.text(game.modal,"替补席",Vector2(510,295),46,game.INK,true)
  var s=game.sim;var team:int=s.view_team
  game.text(game.modal,"选择场上球员，再选择替补；重新开球准备时执行。",Vector2(510,365),26,game.MUTED)
- for i in range(team*5,team*5+5):
+ for i in range(team*Team.SIZE,team*Team.SIZE+Team.SIZE):
   var index:int=i
   var status:String=" · 疲劳 %d%%" % int(s.players[index].fatigue*100) if s.players[index].active else " · 减员 %d 秒" % ceili(s.players[index].sinbin)
-  game.button(game.modal,("✓ " if index%5==outgoing_slot else "")+s.players[index].name+status,Rect2(510,440+i%5*100,665,75),func():
-   outgoing_slot=index%5
+  game.button(game.modal,("✓ " if index%Team.SIZE==outgoing_slot else "")+s.players[index].name+status,Rect2(510,425+i%Team.SIZE*90,665,75),func():
+   outgoing_slot=index%Team.SIZE
    substitutions(game))
  for j in s.mechanics.benches[team].size():
   var slot:int=j;var record:Dictionary=s.Library.find(s.mechanics.benches[team][j].id)
   var b=game.button(game.modal,record.name+" · "+record.role,Rect2(1210,440+j*100,830,75),func():
    send(game,{"action":s.Mechanics.SUBSTITUTE,"reserve":slot,"out":outgoing_slot})
    close(game))
-  b.disabled=(record.role=="GK")!=(outgoing_slot==0) or (not s.players[team*5+outgoing_slot].active and s.players[team*5+outgoing_slot].sinbin>0)
+  b.disabled=(record.role=="GK")!=(outgoing_slot==0) or (not s.players[team*Team.SIZE+outgoing_slot].active and s.players[team*Team.SIZE+outgoing_slot].sinbin>0)
  game.button(game.modal,"返回比赛",Rect2(510,1010,1530,75),func(): close(game))
 
 func send(game,c:Dictionary)->void:
@@ -113,7 +114,7 @@ func retry_scenario(game)->void:
 
 func update(game,dt:float)->void:
  var s=game.sim
- if s==null or game.actors.size()!=10: return
+ if s==null or game.actors.size()!=Team.COUNT: return
  if s.phase=="play":
   sample_clock+=dt
   if sample_clock>=0.05:
@@ -143,7 +144,7 @@ func update(game,dt:float)->void:
   var frame:int=mini(replay.size()-1,int(position))
   var next:int=mini(frame+1,replay.size()-1)
   var blend:float=position-frame
-  for i in 10:
+  for i in Team.COUNT:
    var pose:Transform3D=replay[frame].actors[i].interpolate_with(replay[next].actors[i],blend)
    var state:Dictionary=replay[frame].states[i].duplicate()
    if state.action==replay[next].states[i].action: state.action_time=lerpf(state.action_time,replay[next].states[i].action_time,blend)
@@ -173,7 +174,7 @@ func rig_sync(game,index:int)->void:
   game.rigs[index].set_meta("player_id",p.player_id);return
  var old=game.rigs[index];game.actors[index].remove_child(old);old.queue_free()
  var rig=game.FootballActor.new();game.actors[index].add_child(rig)
- var color:Color=game.CYAN if index<5 else Color("ff866c")
- if index%5==0: color=game.GOLD if index<5 else Color("b79bff")
- rig.build(color,game.Match.JERSEY_NUMBERS[index],index%5==0,p.body)
+ var color:Color=game.CYAN if index<Team.SIZE else Color("ff866c")
+ if index%Team.SIZE==0: color=game.GOLD if index<Team.SIZE else Color("b79bff")
+ rig.build(color,game.Match.JERSEY_NUMBERS[index],index%Team.SIZE==0,p.body)
  rig.set_meta("player_id",p.player_id);game.rigs[index]=rig

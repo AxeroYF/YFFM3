@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 func run(game)->void:
  game.practice=true;game.quick_fixture=preload("res://quick_match.gd").generate(719)
  await game.start_match()
@@ -9,7 +10,7 @@ func run(game)->void:
  var caption=game.text(root,"",Vector2(70,65),40,game.INK,true)
  var s=game.sim;s.freeze=0;s.phase="play"
  for team in 2: s.teams[team].human=true
- for i in 10: s.players[i].active=false;s.players[i].cooldown=0
+ for i in Team.COUNT: s.players[i].active=false;s.players[i].cooldown=0
  var p:Dictionary=s.players[1];p.active=true;p.pos=Vector2(0,3);p.dir=Vector2.RIGHT;p.vel=Vector2.ZERO
  s.owner=-1;s.selected=1;s.ball=Vector2(-8,0);s.velocity=Vector2(14,0);s.ball_height=s.BallPhysics.FLOOR
  s.pass_receiver=1;s.last_touch=2;s.kick_age=0.1;s.pickup_lock=0

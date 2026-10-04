@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 ## Explicit --rules-test only: stage repeatable stoppages over real ENet peers.
 var seen:Dictionary={}
@@ -8,7 +9,7 @@ func near_restart(s,team:int,kind:String,spot:Vector2)->void:
  s.ball=spot;s.ball_height=s.BallPhysics.FLOOR;s.velocity=Vector2.ZERO
  s.Rules.restart(s,team,kind,spot)
  s.ball=s.restart_spot
- for i in 10: s.players[i].pos=s.restart_flow.targets[i];s.players[i].vel=Vector2.ZERO
+ for i in Team.COUNT: s.players[i].pos=s.restart_flow.targets[i];s.players[i].vel=Vector2.ZERO
  s.players[s.restart_taker].pos=s.ball-s.Rules.Flow.facing(s)*0.60
  s.players[s.restart_taker].dir=s.Rules.Flow.facing(s)
 func step(network)->void:
@@ -25,7 +26,7 @@ func step(network)->void:
    var old:int=s.view_team;s.view_team=0;s.charge=0.9;s.shoot();s.view_team=old
   390:
    s.phase="play";s.players[1].pos=Vector2(12,1)
-   s.Rules.foul(s,6,1,true)
+   s.Rules.foul(s,7,1,true)
   490: near_restart(s,1,"penalty",Vector2(-24,0))
   660:
    s.phase="play";s.last_touch=1;s.owner=-1;s.ball=Vector2(Pitch.HALF_LENGTH-0.5,1)

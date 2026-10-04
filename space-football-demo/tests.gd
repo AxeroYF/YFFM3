@@ -1,4 +1,5 @@
 extends SceneTree
+const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 
 const Campaign=preload("res://campaign.gd")
@@ -22,7 +23,7 @@ func check_classic_controls()->void:
     event.device=93
     event.button_index=JOY_BUTTON_B
    var sim=fixture()
-   var selected:int=team*5+1
+   var selected:int=team*Team.SIZE+1
    sim.teams[team].selected=selected
    sim.owner=selected
    controls.sync_context(selected,selected,1)
@@ -35,7 +36,7 @@ func check_classic_controls()->void:
    sim.apply_command(team,controls.command())
    sim.mechanics.tick(sim,0.09)
    check(sim.shots[team]==1 and sim.owner==-1,"classic primary release shoots for selected team")
-   sim.owner=(1-team)*5+1
+   sim.owner=(1-team)*Team.SIZE+1
    controls.sync_context(selected,sim.owner,1)
    event.pressed=true
    controls.handle(event)
@@ -137,31 +138,31 @@ func check_quick_matches()->void:
   var fixture_value:Dictionary=Quick.generate(seed_value)
   all_valid=all_valid and Quick.valid_fixture(fixture_value)
   varied[JSON.stringify(fixture_value.home+fixture_value.away)]=true
- check(all_valid,"100 random fixtures have two valid position-aware lineups and ten unique players")
+ check(all_valid,"100 random fixtures have two valid position-aware lineups and twelve unique players")
  check(varied.size()>95,"new fixture seeds produce varied teams")
  check(Quick.generate(44321)==Quick.generate(44321),"same quick-match seed reproduces lineups")
  check(Squad.ids==squad_before,"random fixtures never change the saved squad")
  var fixture_value:Dictionary=Quick.generate(44321)
  var sim=Match.new()
  var campaign_value=Campaign.new()
- campaign_value.training=[5,5,5,5]
+ campaign_value.training=[5,5,5,5,5]
  campaign_value.keeper=1
  var before:Dictionary=campaign_value.data().duplicate(true)
  sim.setup(campaign_value,fixture_value.seed,fixture_value.home,fixture_value.away,true)
  check(sim.teams[0].human and not sim.teams[1].human,"quick match defaults to player versus AI")
  var correct_data:=true
- for i in 10:
-  var ids:Array=fixture_value.home if i<5 else fixture_value.away
-  correct_data=correct_data and sim.players[i].player_id==ids[i%5] and is_equal_approx(sim.players[i].speed,Ratings.derive(sim.players[i].attributes).speed)
+ for i in Team.COUNT:
+  var ids:Array=fixture_value.home if i<Team.SIZE else fixture_value.away
+  correct_data=correct_data and sim.players[i].player_id==ids[i%Team.SIZE] and is_equal_approx(sim.players[i].speed,Ratings.derive(sim.players[i].attributes).speed)
  check(correct_data,"both randomized squads use catalog abilities without campaign or AI speed modifiers")
  var initial=sim.snapshot()
  var replay=Match.new()
  replay.setup(campaign_value,fixture_value.seed,fixture_value.home,fixture_value.away,true)
  check(initial==replay.snapshot(),"same-lineup restart restores the exact starting state")
  sim.freeze=0
- var away_start:Vector2=sim.players[6].pos
+ var away_start:Vector2=sim.players[7].pos
  for i in 60: sim.step(1.0/60)
- check(sim.players[6].pos.distance_to(away_start)>0.1,"AI opponent moves without player input")
+ check(sim.players[7].pos.distance_to(away_start)>0.1,"AI opponent moves without player input")
  check(campaign_value.data()==before,"quick simulation does not alter campaign state")
 
 func check_assistance()->void:
@@ -217,8 +218,8 @@ func check_assistance()->void:
  var received:=[false,false,false]
  for level in 3:
   s=fixture()
-  for i in 10:
-   s.players[i].pos=Vector2(-28 if i<5 else 28,-16+i*3)
+  for i in Team.COUNT:
+   s.players[i].pos=Vector2(-28 if i<Team.SIZE else 28,-16+i*3)
    s.players[i].cooldown=0
   s.owner=-1;s.last_touch=2;s.pass_receiver=1;s.kick_age=0.1
   s.ball=Vector2(-6,0);s.velocity=Vector2(10,0);s.ball_height=0.48
@@ -269,10 +270,10 @@ func check_ball_and_keeper()->void:
  transport.free()
  for team in 2:
   s=fixture()
-  var index:int=team*5
+  var index:int=team*Team.SIZE
   var sign_value:float=s.side(team)
   s.owner=-1;s.ball=Vector2(-19*sign_value,2);s.velocity=Vector2(-30*sign_value,0)
-  s.last_touch=(1-team)*5+1
+  s.last_touch=(1-team)*Team.SIZE+1
   s.players[index].cooldown=0
   s.ball_height=1;s.ball_is_shot=true;s.kick_age=0.3
   var target:Vector2=s.keeper_target(index)
@@ -294,7 +295,7 @@ func check_rosters_and_ratings()->void:
  var Library=preload("res://player_library.gd")
  var Ratings=preload("res://player_ratings.gd")
  var roster:Array=Squad.DEFAULT.duplicate()
- check(Squad.valid(roster),"default five-player lineup is valid")
+ check(Squad.valid(roster),"default six-player lineup is valid")
  check(not Squad.valid(["bad-id"]),"malformed roster rejected")
  roster[0]=roster[1]
  check(not Squad.valid(roster),"duplicate and missing keeper rejected")
@@ -354,9 +355,9 @@ func check_rosters_and_ratings()->void:
  for pair in [["control",true],["stride",true],["tackle_reach",false],["keeper_radius",false],["keeper_anticipation",false],["keeper_hold",false]]:
   check(strong[pair[0]]<weak[pair[0]] if pair[1] else strong[pair[0]]>weak[pair[0]],"rating curve: "+pair[0])
  var c=Campaign.new()
- c.training=[5,5,5,5];c.keeper=1
+ c.training=[5,5,5,5,5];c.keeper=1
  a=Match.new();a.setup(c,42,Squad.DEFAULT,Squad.DEFAULT,true)
- check(a.players[1].speed==a.players[6].speed and a.players[0].speed==a.players[5].speed,"online excludes all campaign bonuses")
+ check(a.players[1].speed==a.players[7].speed and a.players[0].speed==a.players[6].speed,"online excludes all campaign bonuses")
  var Network=preload("res://match_network.gd")
  var net=Network.new()
  net.sim=a
@@ -407,10 +408,10 @@ func check_body_profiles()->void:
   s.ball=Vector2.ZERO
   s.ball_height=tall.head_height+0.18
   s.velocity=Vector2(3,0)
-  s.last_touch=6
+  s.last_touch=7
   s.step(1.0/60.0)
   check(s.owner==-1,"high contact never teleports ball into dribbling possession")
-  check(s.last_touch==slot if slot==1 else s.last_touch==6,"authority uses height to distinguish head contact from clearance")
+  check(s.last_touch==slot if slot==1 else s.last_touch==7,"authority uses height to distinguish head contact from clearance")
  var network_script=preload("res://match_network.gd")
  var net=network_script.new()
  var source=fixture()
@@ -437,7 +438,7 @@ func _initialize() -> void:
  preload("res://rules_tests.gd").new().run(self)
  check_ball_and_keeper()
  check_assistance()
- check_five_a_side()
+ check_six_a_side()
  check_core_v2()
  check_body_profiles()
  check_rosters_and_ratings()
@@ -509,7 +510,7 @@ func _initialize() -> void:
  s.ball=Vector2(Pitch.HALF_LENGTH-0.2,12)
  s.velocity=Vector2(35,0)
  s.tick(0.05,Vector2.ZERO)
- check(s.score==[0,0] and s.restart_kind=="goal_kick" and s.restart_taker==5 and s.owner==-1,"wide shot awards opponent goal kick")
+ check(s.score==[0,0] and s.restart_kind=="goal_kick" and s.restart_taker==6 and s.owner==-1,"wide shot awards opponent goal kick")
  s=fixture()
  s.elapsed=100
  s.tick(0.02,Vector2.ZERO)
@@ -559,14 +560,17 @@ func _initialize() -> void:
   s=fixture(stage)
   # Difficulty no longer changes hidden run speed; exercise distinct shot seeds.
   s.rng.seed=451+stage*137
-  for tick in 15000:
+  # Stop-clock play can include ten goals and complete retrieval/restart scenes.
+  # Bound total simulated time to 400 s; the former 250 s budget expired at 91 s
+  # of the 100 s match, despite every restart progressing normally.
+  for tick in 24000:
    var move:=Vector2.ZERO
    var p: Dictionary=s.players[s.selected]
    if s.owner==s.selected:
     move=Vector2(1,0)
     if p.pos.x>Pitch.HALF_LENGTH-15:
      if not s.charging: s.start_charge()
-     if s.charge>0.60: s.shoot(-0.85 if s.players[5].pos.y>0 else 0.85)
+     if s.charge>0.60: s.shoot(-0.85 if s.players[6].pos.y>0 else 0.85)
     elif s.dash_cd<=0: s.do_dash()
    else:
     if tick%30==0: s.switch_player()
@@ -581,13 +585,13 @@ func _initialize() -> void:
  else: print("MODEL_TESTS_FAILED failures=",failures)
  quit(0 if failures==0 else 1)
 
-func check_five_a_side() -> void:
+func check_six_a_side() -> void:
  var s=fixture()
- check(s.players.size()==10,"ten players in match")
- check(s.players.filter(func(p):return p.team==0).size()==5 and s.players.filter(func(p):return p.team==1).size()==5,"five per team")
+ check(s.players.size()==Team.COUNT,"twelve players in match")
+ check(s.players.filter(func(p):return p.team==0).size()==Team.SIZE and s.players.filter(func(p):return p.team==1).size()==Team.SIZE,"six per team")
  check(s.players.filter(func(p):return p.slot==0).size()==2,"exactly two keepers")
- check(s.players[4].name=="范戴克" and s.players[4].team==0 and s.players[5].team==1,"defender and away keeper are on correct teams")
- check(s.players[4].pos.x<s.players[2].pos.x and s.players[9].pos.x>s.players[7].pos.x,"mirrored covering defenders")
+ check(s.players[4].name=="范戴克" and s.players[4].team==0 and s.players[6].team==1,"defender and away keeper are on correct teams")
+ check(s.players[4].pos.x<s.players[2].pos.x and s.players[10].pos.x>s.players[8].pos.x,"mirrored covering defenders")
  s.ball=s.players[4].pos
  s.switch_player()
  check(s.selected==4,"new defender can be selected")
@@ -606,8 +610,8 @@ func check_five_a_side() -> void:
  s.shoot(1)
  check(s.owner==-1 and s.shots==[1,0],"defender shot counts for home team")
  s=fixture()
- s.owner=9
- s.kick(9,Vector2(-33,3),30,true)
+ s.owner=10
+ s.kick(10,Vector2(-33,3),30,true)
  check(s.shots==[0,1],"away defender shot counts for away team")
  s=fixture()
  s.owner=2
@@ -615,7 +619,7 @@ func check_five_a_side() -> void:
  s.players[4].pos=Vector2(6,10)
  check(s.ai_direction(4).x<0,"defender holds behind attack")
  var c=Campaign.new()
- check(c.train(3) and c.training==[0,0,0,1],"new defender can train independently")
+ check(c.train(3) and c.training==[0,0,0,1,0],"new defender can train independently")
  c.save_path="user://five-a-side-migration-test.json"
  var old:=c.data()
  old.version=1
@@ -626,12 +630,12 @@ func check_five_a_side() -> void:
  var file:=FileAccess.open(c.save_path,FileAccess.WRITE)
  file.store_string(JSON.stringify(old))
  file.close()
- check(c.load_game() and c.training==[2,1,3,0],"four-a-side save gains an untrained defender")
+ check(c.load_game() and c.training==[2,1,3,0,0],"four-a-side save gains untrained defender and midfielder")
  check(c.stage==2 and c.credits==720 and c.keeper==1,"migration preserves progress and purchases")
  check(c.save_game(),"migrated save writes successfully")
  var loaded=Campaign.new()
  loaded.save_path=c.save_path
- check(loaded.load_game() and loaded.data()==c.data(),"five-a-side save reloads migrated progress")
+ check(loaded.load_game() and loaded.data()==c.data(),"six-a-side save reloads migrated progress")
 
 
 func check_core_v2()->void:
@@ -648,12 +652,12 @@ func check_core_v2()->void:
  s=fixture()
  s.teams[1].human=true
  s.apply_command(1,{"move":Vector2.LEFT,"sprint":true,"action":0})
- var away:Vector2=s.players[6].pos
+ var away:Vector2=s.players[7].pos
  s.step(0.1)
- check(s.players[6].pos.x<away.x and s.players[6].stamina<100,"away team moves independently and consumes stamina")
- check(s.teams[0].selected==1 and s.teams[1].selected==6,"independent selected players")
+ check(s.players[7].pos.x<away.x and s.players[7].stamina<100,"away team moves independently and consumes stamina")
+ check(s.teams[0].selected==1 and s.teams[1].selected==7,"independent selected players")
  s.view_team=1
- s.owner=6
+ s.owner=7
  s.start_charge()
  s.charge=0.5
  s.shoot(1)
@@ -667,7 +671,7 @@ func check_core_v2()->void:
  check(s.restart_kind=="kick_in" and s.restart_team==1 and s.owner==-1,"touchline exit awards opponent kick-in")
  s=fixture()
  s.owner=-1
- s.last_touch=9
+ s.last_touch=10
  s.ball=Vector2(Pitch.HALF_LENGTH-0.05,10)
  s.velocity=Vector2(15,0)
  s.tick(0.05,Vector2.ZERO)
@@ -680,13 +684,13 @@ func check_core_v2()->void:
  s.tick(0.05,Vector2.ZERO)
  check(s.velocity.x<0,"arcade rule retains energy-wall bounce")
  s=fixture()
- s.owner=6
+ s.owner=7
  s.players[1].pos=Vector2(0,0)
  s.players[1].dir=Vector2.RIGHT
- s.players[6].pos=Vector2(1.5,0)
+ s.players[7].pos=Vector2(1.5,0)
  s.ball=Vector2(1.5,0)
  s.tackle(1)
- check(s.owner==6 and s.players[1].action=="tackle","standing tackle has a contact preparation phase")
+ check(s.owner==7 and s.players[1].action=="tackle","standing tackle has a contact preparation phase")
  s.players[1].action_time=s.Motion.TACKLE_DURATION-0.10;s.resolve_tackle(1,false)
  check(s.owner==-1 and s.tackles==[1,0] and s.players[1].tackle_cd>0,"manual facing tackle releases ball and enters recovery")
  var cooldown:float=s.players[1].tackle_cd

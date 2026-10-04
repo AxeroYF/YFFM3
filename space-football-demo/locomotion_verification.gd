@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 func run(game)->void:
  game.practice=true;await game.start_match()
  game.screen="locomotion_verification";game.camera_motion=false
@@ -8,7 +9,7 @@ func run(game)->void:
  var overlay:=CanvasLayer.new();game.add_child(overlay)
  var root:=Control.new();overlay.add_child(root)
  var caption=game.text(root,"",Vector2(70,70),36,game.INK,true)
- for index in 10: game.sim.players[index].pos=Vector2(-28,-16)
+ for index in Team.COUNT: game.sim.players[index].pos=Vector2(-28,-16)
  var p:Dictionary=game.sim.players[1]
  p.dir=Vector2.DOWN;p.action="idle";p.action_time=0
  var results:Array=[]

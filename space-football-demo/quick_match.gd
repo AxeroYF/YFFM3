@@ -1,8 +1,9 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 ## Seeded development fixtures; never changes the saved squad or campaign.
 const Library=preload("res://player_library.gd")
-const ROLES=[["GK"],["ST"],["RW","RM","AM"],["LW","LM","AM"],["CB","DM","RB","LB"]]
-const LABELS=["门将","前锋","右翼","左翼","后卫"]
+const ROLES=[["GK"],["ST"],["RW","RM","AM"],["LW","LM","AM"],["CB","DM","RB","LB"],["AM","DM","CM"]]
+const LABELS=["门将","前锋","右翼","左翼","后卫","中场"]
 
 static func generate(seed_value:int=0)->Dictionary:
  var rng:=RandomNumberGenerator.new()
@@ -14,11 +15,11 @@ static func generate(seed_value:int=0)->Dictionary:
  var taken:Dictionary={}
  var lineups:Array=[[],[]]
  for team in 2:
-  for slot in 5:
+  for slot in Team.SIZE:
    var choices:Array=[]
    for record in records:
     if taken.has(record.id) or record.role not in ROLES[slot]: continue
-    # Prefer native positions while allowing sensible five-a-side alternatives.
+    # Prefer native positions while allowing sensible six-a-side alternatives.
     var weight:=4 if record.role==ROLES[slot][0] else (1 if record.role=="AM" else 2)
     for i in weight: choices.append(record.id)
    assert(not choices.is_empty(),"Quick match requires enough illustrated players for each position")
@@ -32,8 +33,8 @@ static func valid_fixture(fixture:Dictionary)->bool:
  var seen:Dictionary={}
  for side in ["home","away"]:
   var lineup=fixture[side]
-  if not lineup is Array or lineup.size()!=5: return false
-  for slot in 5:
+  if not lineup is Array or lineup.size()!=Team.SIZE: return false
+  for slot in Team.SIZE:
    var record:=Library.find(str(lineup[slot]))
    if record.is_empty() or seen.has(record.id) or record.role not in ROLES[slot]: return false
    seen[record.id]=true

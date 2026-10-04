@@ -1,4 +1,5 @@
 extends SceneTree
+const Team=preload("res://team_config.gd")
 const Match=preload("res://match_sim.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 var checks:=0
@@ -26,13 +27,13 @@ func edge_tests()->void:
   check(received,"AI actually reaches stationary wall/corner ball "+str(point))
  for team in 2:
   for wall in [-1.0,1.0]:
-   var s=fixture();s.ice_mode=true;var carrier:int=team*5+2
+   var s=fixture();s.ice_mode=true;var carrier:int=team*Team.SIZE+2
    s.owner=carrier;s.teams[team].human=true;s.teams[team].selected=carrier
    s.players[carrier].pos=Vector2(0,wall*(Pitch.HALF_WIDTH-0.9));s.ball=s.players[carrier].pos
    var nearest:=INF
    for tick in 450:
     s.step(1.0/60)
-    for i in range((1-team)*5+1,(1-team)*5+5): nearest=minf(nearest,s.players[i].pos.distance_to(s.players[carrier].pos))
+    for i in range((1-team)*Team.SIZE+1,(1-team)*Team.SIZE+Team.SIZE): nearest=minf(nearest,s.players[i].pos.distance_to(s.players[carrier].pos))
     if s.owner!=carrier: break
    check(nearest<2.3 or s.owner!=carrier,"AI presses possession on both touchlines team "+str(team))
    s=fixture();s.ice_mode=true;s.owner=carrier;s.teams[team].human=true;s.teams[team].selected=carrier
@@ -41,7 +42,7 @@ func edge_tests()->void:
    nearest=INF
    for tick in 400:
     s.step(1.0/60)
-    for i in range((1-team)*5+1,(1-team)*5+5): nearest=minf(nearest,s.players[i].pos.distance_to(s.players[carrier].pos))
+    for i in range((1-team)*Team.SIZE+1,(1-team)*Team.SIZE+Team.SIZE): nearest=minf(nearest,s.players[i].pos.distance_to(s.players[carrier].pos))
     if s.owner!=carrier: break
    check(nearest<2.3,"AI closes down moving touchline dribbler team "+str(team))
 func net_tests()->void:

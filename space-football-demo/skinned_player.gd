@@ -3,6 +3,8 @@ extends Node3D
 const Body=preload("res://player_body.gd")
 const Locomotion=preload("res://locomotion.gd")
 const Motion=preload("res://football_motion.gd")
+const Morph=preload("res://player_morph.gd")
+const Groom=preload("res://player_groom.gd")
 static var asset:Dictionary={}
 static var geometry_cache:Dictionary={}
 const MAX_CACHED_BODIES:=32
@@ -22,14 +24,15 @@ var finger_curl_axes:Dictionary={}
 var stride_length:=0.0
 var cadence:=0.0
 var locomotion_speed:=0.0
+var previous_travel:=Vector3.ZERO
+var momentum_lean:=Vector2.ZERO
 const ACTION_BONES:=["spine02","head","upperleg01.L","upperleg01.R","lowerleg01.L","lowerleg01.R","foot.L","foot.R","upperarm01.L","upperarm01.R","lowerarm01.L","lowerarm01.R","wrist.L","wrist.R"]
 
 func dimensions(v:Array)->Vector3:
- var h:float=body.height
- var split:float=body.leg_length/h
- var y:float=float(v[1])/0.53*split if v[1]<0.53 else split+(float(v[1])-0.53)/0.47*(1.0-split)
- var width:float=(body.shoulder/h)/0.255
- return Vector3(v[0]*h*width,y*h,v[2]*h*(0.94+body.muscle*0.08))
+ return Morph.point(body,v)
+
+func active_surfaces()->Array:
+ return asset.surfaces.filter(func(s):return not body.has("appearance_id") or s.material!="hair")
 
 func build(color:Color,number:String,keeper:bool=false,profile:Dictionary={})->void:
  is_keeper=keeper
@@ -66,7 +69,7 @@ func build_skeleton(profile:Dictionary)->void:
 func build_surfaces(color:Color,number:String)->void:
  var skin:=Skin.new()
  for i in asset.bones.size(): skin.add_bind(i,Transform3D(Basis.IDENTITY,-dimensions(asset.bones[i].head)))
- var key:="%s/%s/%s" % [body.height,body.shoulder,body.leg_length]
+ var key:=Morph.signature(body)
  if not geometry_cache.has(key):
   if geometry_cache.size()>=MAX_CACHED_BODIES: geometry_cache.erase(geometry_cache.keys()[0])
   geometry_cache[key]=build_geometry()
@@ -77,8 +80,12 @@ func build_surfaces(color:Color,number:String)->void:
  body_mesh.skeleton=NodePath("../Skeleton3D")
  body_mesh.extra_cull_margin=body.height
  add_child(body_mesh)
- for i in asset.surfaces.size():
-  var category:String=asset.surfaces[i].material
+ var surfaces:=active_surfaces()
+ for i in surfaces.size():
+  var category:String=surfaces[i].material
+  if category=="skin" and body.has("appearance_id"):
+   body_mesh.set_surface_override_material(i,Groom.skin_material(body))
+   continue
   var m:=StandardMaterial3D.new()
   m.roughness=0.88
   if category=="skin":
@@ -104,12 +111,13 @@ func build_surfaces(color:Color,number:String)->void:
   label.text=number
   label.font_size=96
   label.pixel_size=body.height*(0.0011 if front else 0.0017)
-  label.position=Vector3(0,body.height*0.71,body.height*(0.107 if front else -0.072))-chest_origin
+  label.position=dimensions([0,0.71,0.109 if front else -0.074])-chest_origin
   if not front: label.rotation.y=PI
   label.outline_size=2
   chest_attachment.add_child(label)
   shirt_labels.append(label)
  add_boot_details()
+ if body.has("appearance_id"): Groom.build(self,skin)
  animate_player({"vel":Vector2.ZERO,"action":"idle","action_time":0},0,false)
 
 func add_boot_details()->void:
@@ -148,14 +156,14 @@ func build_geometry()->ArrayMesh:
  # Shared normals before UV/material splits preserve the smooth neck/shoulder surface.
  var normals:=PackedVector3Array()
  normals.resize(positions.size())
- for surface in asset.surfaces:
+ for surface in active_surfaces():
   var ids:Array=surface.indices
   for i in range(0,ids.size(),3):
    var a:int=ids[i]; var b:int=ids[i+1]; var c:int=ids[i+2]
    var n:Vector3=(positions[b]-positions[a]).cross(positions[c]-positions[a])
    normals[a]+=n; normals[b]+=n; normals[c]+=n
  for i in normals.size(): normals[i]=normals[i].normalized()
- for surface in asset.surfaces:
+ for surface in active_surfaces():
   var st:=SurfaceTool.new()
   st.begin(Mesh.PRIMITIVE_TRIANGLES)
   for t in range(0,surface.indices.size(),3):
@@ -170,6 +178,7 @@ func build_geometry()->ArrayMesh:
     st.set_weights(weights)
     st.set_normal(normals[index])
     st.set_uv(Vector2(surface.uv[i][0],1.0-surface.uv[i][1]))
+    if surface.material=="skin" and body.has("appearance_id"): st.set_color(Groom.beard_mask(asset.vertices[index]))
     st.add_vertex(positions[index])
   st.index()
   st.commit(mesh)
@@ -190,6 +199,14 @@ func animate_player(p:Dictionary,dt:float,holding:bool,local_velocity:Vector3=Ve
   local_velocity=Vector3(p.vel.dot(Vector2(facing.y,-facing.x)),0,p.vel.dot(facing))
  var speed:=Vector2(local_velocity.x,local_velocity.z).length()
  locomotion_speed=speed
+ if dt>0:
+  # Displayed displacement drives the lean, just as it drives the planted feet.
+  # Bound snapshot corrections and keep the legs grounded through spine-only tilt.
+  var acceleration:Vector3=(local_velocity-previous_travel)/dt if dt<0.1 else Vector3.ZERO
+  var center:float=body.physique.center
+  var target_lean:=Vector2(clampf(acceleration.z*0.004,-0.10,0.12),clampf(-acceleration.x*0.004,-0.10,0.10))*(1+center*0.12)
+  momentum_lean=momentum_lean.lerp(target_lean,1-exp(-dt*14))
+  previous_travel=local_velocity
  var hand_holding:bool=holding and p.get("keeper_holding",false)
  var field_posture:bool=is_keeper and ((holding and not hand_holding) or (p.action_time>0 and p.action in Motion.KICKS+["receive","windup","tackle","slide","slide_still","header","shield","block","block_chest","block_head","retrieve_ball","carry_ball","place_ball"]))
  var compact:bool=(is_keeper and not field_posture and p.action!="rush") or (p.action=="shield" and p.action_time>0)
@@ -210,7 +227,7 @@ func animate_player(p:Dictionary,dt:float,holding:bool,local_velocity:Vector3=Ve
    position.y=lerpf(position.y,body.height*(-travel.crouch+absf(sin(phase))*0.014*travel.run)*gait,1.0-exp(-dt*22))
  var opposition:=Locomotion.arm_opposition(phase/TAU,travel)
  var shoulder_twist:float=opposition*(0.025+0.045*travel.run+0.025*travel.sprint)*gait
- pose("spine02",travel.lean*gait,shoulder_twist,opposition*0.018*gait)
+ pose("spine02",travel.lean*gait+momentum_lean.x,shoulder_twist,opposition*0.018*gait+momentum_lean.y)
  pose("head",0,-shoulder_twist*0.65)
  for i in 2:
   var suffix:String=[".L",".R"][i]
@@ -353,7 +370,7 @@ func animate_match_action(p:Dictionary,dt:float)->void:
   reach_hand(".L",hand_ball+Vector3(0.34,0.08,-0.02))
   reach_hand(".R",hand_ball+Vector3(-0.34,0.08,-0.02))
  elif p.action=="shield":
-  pose("spine02",0.10,0.28)
+  pose("spine02",0.10-float(body.physique.center)*0.025,0.28)
   pose("upperarm01.L",0.15,0,0.80)
   pose("upperarm01.R",-0.15,0,-0.65)
   pose("lowerarm01.L",-0.45);pose("lowerarm01.R",-0.50)

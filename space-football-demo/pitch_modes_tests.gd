@@ -1,4 +1,5 @@
 extends SceneTree
+const Team=preload("res://team_config.gd")
 const Match=preload("res://match_sim.gd")
 const Campaign=preload("res://campaign.gd")
 const Pitch=preload("res://pitch_geometry.gd")
@@ -102,13 +103,13 @@ func pace_tests()->void:
  check(bounded and p.vel.x<0,"reversal obeys acceleration cap through whole turn")
  var home=fixture();var c=Campaign.new();c.stage=2;c.difficulty=1
  var hard=Match.new();hard.setup(c,722)
- check(is_equal_approx(home.players[6].speed,hard.players[6].speed),"campaign difficulty cannot multiply opponent running speed")
+ check(is_equal_approx(home.players[7].speed,hard.players[7].speed),"campaign difficulty cannot multiply opponent running speed")
  s=fixture();s.owner=1;s.players[1].pos=Vector2.ZERO;s.ball=Vector2(1,0);s.brain.prepare(s)
  var jobs:Array=s.brain.jobs.duplicate();var targets:Array=s.brain.targets.duplicate()
  s.owner=-1;s.last_touch=1;s.pass_receiver=2;s.velocity=Vector2(20,-5);s.brain.prepare(s)
  check(s.brain.reaction_until[6]>s.elapsed and s.brain.targets[6]==targets[6] and s.brain.jobs[6]==jobs[6],"defenders perceive release before replanning interception")
  s=fixture();s.last_touch=1;s.velocity=Vector2(20,0);s.brain.prepare(s)
- check(s.brain.reaction_until[6]>s.elapsed and s.brain.targets[6]==s.players[6].pos,"first pass after a restart also requires perception without a run to world origin")
+ check(s.brain.reaction_until[7]>s.elapsed and s.brain.targets[7]==s.players[7].pos,"first pass after a restart also requires perception without a run to world origin")
  s=fixture();s.owner=1;s.players[1].pos=Vector2.ZERO;s.ball=Vector2(1,0);s.brain.prepare(s)
  var support:int=s.brain.supports[0]
  check(absf(s.brain.targets[support].y)>6,"default support opens a wide passing angle")

@@ -1,4 +1,5 @@
 extends Node
+const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 ## One authoritative match, either player-hosted or a GPU-free dedicated server.
 signal status_changed(value:String)
@@ -8,6 +9,31 @@ signal session_lost(value:String)
 const Match=preload("res://match_sim.gd")
 const Campaign=preload("res://campaign.gd")
 const Squad=preload("res://squad.gd")
+const PROTOCOL:=5 # Actor-bound input timeline and scheduled action prediction.
+const Command=preload("res://network_command.gd")
+const Timeline=preload("res://network_timeline.gd")
+const Prediction=preload("res://network_prediction.gd")
+const Snapshots=preload("res://network_snapshots.gd")
+const Link=preload("res://network_link.gd")
+const Fragments=preload("res://network_fragments.gd")
+var fragments=Fragments.new()
+var timelines:Array=[Timeline.new(),Timeline.new()]
+var preview=Prediction.new()
+var snapshots=Snapshots.new()
+var link=Link.new()
+var history:Array=[]
+var correction:=Vector2.ZERO
+var correction_max:=0.0
+var corrections:=0
+var peer_rtt:=[-1,-1]
+var probes:Dictionary={}
+var next_probe:=0
+var probe_serial:=0
+var snapshot_every:=2
+var metrics_at:=0
+var tick_total_us:=0
+var tick_peak_us:=0
+var tick_count:=0
 var local_roster:Array=Squad.DEFAULT.duplicate()
 var rosters:Array=[Squad.DEFAULT.duplicate(),Squad.DEFAULT.duplicate()]
 var sim
@@ -20,23 +46,17 @@ var dedicated:=false
 var local_team:=0
 var peers:Dictionary={}
 var ready_flags:=[false,false]
-var commands:=[{},{}]
 var input_ack:=[-1,-1]
 var action_ack:=[-1,-1]
 var input_seq:=0
 var action_seq:=0
 var pending_inputs:Array[Dictionary]=[]
-var action_queue:Array[Dictionary]=[]
 var prediction_pos:=Vector2.ZERO
 var prediction_vel:=Vector2.ZERO
 var prediction_dir:=Vector2.RIGHT
 var prediction_index:=-1
 var prediction_ready:=false
 var last_snapshot:=-1
-var remote_positions:Array[Vector2]=[]
-var remote_velocities:Array[Vector2]=[]
-var remote_ball:=Vector3.ZERO
-var remote_ball_velocity:=Vector3.ZERO
 var snapshot_age:=0.0
 var ping_ms:=0
 var last_receive:=0
@@ -49,15 +69,16 @@ var ice_mode:=false
 var port:=28765
 var delay_ms:=0
 var loss_every:=0
-var delayed:Array[Dictionary]=[]
-var sent_count:=0
 var round_id:=0
 var waiting_connection:=false
 var disconnect_handled:=false
 var rules_test=preload("res://network_rules_verification.gd").new()
 var mechanics_test=preload("res://network_mechanics_verification.gd").new()
+var latency_test=preload("res://network_latency_verification.gd").new()
 
 func _ready()->void:
+ snapshot_every=3 if "--snapshots=20" in OS.get_cmdline_user_args() else 2
+ snapshots.period=snapshot_every
  multiplayer.peer_connected.connect(_peer_connected)
  multiplayer.peer_disconnected.connect(_peer_disconnected)
  multiplayer.connected_to_server.connect(_connected)
@@ -66,10 +87,12 @@ func _ready()->void:
 
 func host(listen_port:int=28765,server_only:bool=false)->Error:
  close()
+ if listen_port<1024 or listen_port>65535:
+  status_changed.emit("比赛端口须为 1024–65535");return ERR_INVALID_PARAMETER
  port=listen_port
  dedicated=server_only
  var peer:=ENetMultiplayerPeer.new()
- var err:=peer.create_server(port,2 if dedicated else 1,3)
+ var err:=peer.create_server(port,2 if dedicated else 1,4)
  if err!=OK: status_changed.emit("创建房间失败："+error_string(err)); return err
  multiplayer.multiplayer_peer=peer
  active=true
@@ -83,7 +106,7 @@ func host(listen_port:int=28765,server_only:bool=false)->Error:
 func join(address:String,server_port:int=28765)->Error:
  close()
  var peer:=ENetMultiplayerPeer.new()
- var err:=peer.create_client(address,server_port,3)
+ var err:=peer.create_client(address,server_port,4)
  if err!=OK: status_changed.emit("连接失败："+error_string(err)); return err
  multiplayer.multiplayer_peer=peer
  active=true
@@ -102,12 +125,10 @@ func close()->void:
  sim=null
  peers.clear()
  pending_inputs.clear()
- action_queue.clear()
- delayed.clear()
- remote_positions.clear()
  prediction_ready=false
  disconnect_handled=false
  waiting_connection=false
+ reset_transport()
  if multiplayer.multiplayer_peer!=null: multiplayer.multiplayer_peer.close()
  multiplayer.multiplayer_peer=OfflineMultiplayerPeer.new()
 
@@ -128,7 +149,7 @@ func _peer_connected(id:int)->void:
  var team:=0 if dedicated and 0 not in peers.values() else 1
  if team in peers.values(): multiplayer.multiplayer_peer.disconnect_peer(id); return
  peers[id]=team
- assign_side.rpc_id(id,team,ice_mode or "--ice-mode" in OS.get_cmdline_user_args())
+ assign_side.rpc_id(id,team,ice_mode or "--ice-mode" in OS.get_cmdline_user_args(),PROTOCOL)
  status_changed.emit("对手已连接 · 双方准备后开球")
 
 func _peer_disconnected(id:int)->void:
@@ -150,12 +171,13 @@ func _connected()->void:
  status_changed.emit("已连接 · 等待队伍分配")
 
 @rpc("authority","call_remote","reliable",0)
-func assign_side(team:int,rebound_mode:bool=false)->void:
+func assign_side(team:int,rebound_mode:bool=false,protocol:int=0)->void:
+ if protocol!=PROTOCOL: fail("比赛版本不一致，请双方更新至同一版本");return
  if team<0 or team>1: return
  ice_mode=rebound_mode
  local_team=team
  last_receive=Time.get_ticks_msec()
- status_changed.emit("已加入 · "+("冰球反弹 · " if ice_mode else "经典五人制 · ")+("主队（向右进攻）" if team==0 else "客队（向左进攻）"))
+ status_changed.emit("已加入 · "+("冰球反弹 · " if ice_mode else "经典六人制 · ")+("主队（向右进攻）" if team==0 else "客队（向左进攻）"))
 
 func set_ready()->void:
  if not active or local_team<0 or running or preparing: return
@@ -163,18 +185,23 @@ func set_ready()->void:
   rosters[local_team]=local_roster.duplicate() if Squad.valid(local_roster) else Squad.DEFAULT.duplicate()
   ready_flags[local_team]=true
   _try_start()
- else: ready_request.rpc_id(1,local_roster)
+ else: ready_request.rpc_id(1,local_roster,PROTOCOL)
  status_changed.emit("已准备 · 等待对手准备")
 
 @rpc("any_peer","call_remote","reliable",0)
-func ready_request(roster:Array)->void:
+func ready_request(roster:Array,protocol:int=0)->void:
  if not multiplayer.is_server() or running or preparing: return
  var sender:=multiplayer.get_remote_sender_id()
  if not peers.has(sender): return
- if not Squad.valid(roster): return
+ if protocol!=PROTOCOL or not Squad.valid(roster):
+  incompatible.rpc_id(sender);return
  rosters[int(peers[sender])]=roster.duplicate()
  ready_flags[int(peers[sender])]=true
  _try_start()
+
+@rpc("authority","call_remote","reliable",0)
+func incompatible()->void:
+ fail("比赛版本或阵容不一致，需要六人制完整阵容")
 
 func _try_start()->void:
  if running or preparing or not ready_flags[0] or not ready_flags[1] or peers.size()!=2: return
@@ -195,9 +222,12 @@ func _try_start()->void:
  sim.Rules.restart(sim,0,"kickoff",Vector2.ZERO)
  if "--rules-test" in OS.get_cmdline_user_args(): sim.duration=30;rules_test.seen.clear()
  if "--mechanics-test" in OS.get_cmdline_user_args(): sim.duration=30;mechanics_test.seen.clear();mechanics_test.sent.clear()
- commands=[{},{}]; input_ack=[-1,-1]; action_ack=[-1,-1]
- action_queue.clear(); pending_inputs.clear()
+ if "--latency-test" in OS.get_cmdline_user_args(): latency_test.setup(sim)
+ input_ack=[-1,-1]; action_ack=[-1,-1]
+ pending_inputs.clear()
  input_seq=0; action_seq=0; last_snapshot=-1
+ reset_transport()
+ if not dedicated: peer_rtt[0]=0
  running=false;preparing=true;scene_flags=[false,false]
  prepare_started=Time.get_ticks_msec()
  ready_flags=[false,false]
@@ -209,13 +239,14 @@ func _try_start()->void:
 
 @rpc("authority","call_remote","reliable",0)
 func begin_game(state:Dictionary,game_id:int)->void:
+ latency_test.sent.clear()
  rules_test.seen.clear();mechanics_test.seen.clear();mechanics_test.sent.clear()
  round_id=game_id
  sim=Match.new()
  sim.restore(state)
  sim.view_team=local_team
  var resolved:Array=[]
- for i in range(local_team*5,local_team*5+5): resolved.append(sim.players[i].player_id)
+ for i in range(local_team*Team.SIZE,local_team*Team.SIZE+Team.SIZE): resolved.append(sim.players[i].player_id)
  if resolved==local_roster: print("NETWORK_ROSTER_VERIFIED ",resolved)
  else: push_error("Server roster differs from submitted roster")
  running=false;preparing=true
@@ -224,6 +255,7 @@ func begin_game(state:Dictionary,game_id:int)->void:
  pending_inputs.clear()
  last_snapshot=-1
  prediction_ready=false
+ reset_transport()
  ready_flags=[false,false]
  _receive_snapshot(state,-1)
  match_started.emit()
@@ -260,53 +292,91 @@ func release_match(game_id:int)->void:
 func loading_timeout(game_id:int)->void:
  if game_id==round_id: fail("对局加载超时，请返回主菜单重新连接")
 
+func reset_transport()->void:
+ timelines=[Timeline.new(),Timeline.new()];history.clear();link.reset();snapshots.reset()
+ fragments.pending.clear()
+ preview=Prediction.new();correction=Vector2.ZERO;correction_max=0;corrections=0
+ peer_rtt=[-1,-1];probes.clear();next_probe=0;probe_serial=0
+ metrics_at=Time.get_ticks_msec()+10000
+ tick_total_us=0;tick_peak_us=0;tick_count=0
+ var args:=OS.get_cmdline_user_args()
+ var settings:={"--delay=":delay_ms,"--jitter=":0,"--loss-every=":loss_every,"--reorder-every=":0,"--burst-every=":0}
+ for arg in args:
+  for key in settings:
+   if arg.begins_with(key): settings[key]=clampi(int(arg.trim_prefix(key)),0,2000)
+ link.configure(settings["--delay="],settings["--jitter="],settings["--loss-every="],settings["--reorder-every="],settings["--burst-every="])
+
+func input_state():
+ return preview.sim if not multiplayer.is_server() and prediction_ready and snapshot_age<0.3 and sim.phase=="play" else sim
+
 func submit_local(command:Dictionary,dt:float)->void:
  if not running or local_team<0 or sim==null: return
+ input_seq+=1
+ if int(command.get("action",0))!=0: action_seq+=1
+ var bound:Dictionary=Command.bind(input_state(),local_team,command,input_seq,action_seq if int(command.get("action",0))!=0 else 0)
  if multiplayer.is_server():
-  commands[local_team]=command.duplicate()
-  if int(command.action)!=0: action_queue.append({"team":local_team,"command":command.duplicate()})
- else:
-  input_seq+=1
-  pending_inputs.append({"seq":input_seq,"command":command.duplicate(),"dt":dt})
-  if pending_inputs.size()>180: pending_inputs.pop_front()
-  queue_input(input_seq,command)
-  if int(command.action)!=0:
-   action_seq+=1
-   action_request.rpc_id(1,round_id,action_seq,int(command.action),float(command.aim),command.move,int(command.tactic),int(command.get("assist",1)),bool(command.get("finesse",false)),bool(command.get("chip",false)),extra_command(command))
-  if prediction_ready and sim.freeze<=0 and not sim.finished: _predict(command,dt)
+  timelines[local_team].receive(bound,sim.frame)
+  return
+ pending_inputs.append({"seq":input_seq,"command":bound,"dt":dt})
+ if pending_inputs.size()>180: pending_inputs.pop_front()
+ history.append(Command.encode(bound))
+ while history.size()>Command.REDUNDANCY: history.pop_front()
+ var batch:=PackedFloat32Array()
+ for sample in history: batch.append_array(sample)
+ send_packet("input",1,[round_id,batch],false)
+ if int(bound.action)!=0: send_packet("action",1,[round_id,Command.encode(bound)],true)
+ if prediction_ready and snapshot_age<0.3:
+  preview.step(bound,dt);sync_prediction()
 
-func queue_input(seq:int,command:Dictionary)->void:
- sent_count+=1
- if loss_every>0 and sent_count%loss_every==0: return
- if delay_ms>0:
-  delayed.append({"due":Time.get_ticks_msec()+delay_ms,"seq":seq,"command":command.duplicate()})
- else: input_request.rpc_id(1,round_id,seq,command.move,command.sprint,command.jockey,int(command.get("assist",1)),bool(command.get("assist_active",true)),bool(command.get("keeper_rush",false)),extra_command(command))
+func send_packet(kind:String,peer:int,payload:Array,reliable:bool)->void:
+ link.send(kind,peer,payload,reliable,Time.get_ticks_msec())
+
+func pump_link()->void:
+ for item in link.take(Time.get_ticks_msec()):
+  if multiplayer.is_server() and not peers.has(item.peer): continue
+  var p:Array=item.payload
+  match item.kind:
+   "input": input_batch.rpc_id(item.peer,p[0],p[1])
+   "action": action_backup.rpc_id(item.peer,p[0],p[1])
+   "state": state_fragment.rpc_id(item.peer,p[0],p[1],p[2],p[3],p[4],p[5],p[6],p[7])
+   "probe": probe_request.rpc_id(item.peer,p[0],p[1])
+   "echo": probe_echo.rpc_id(item.peer,p[0],p[1])
 
 @rpc("any_peer","call_remote","unreliable_ordered",1)
-func input_request(game_id:int,seq:int,move:Vector2,sprint:bool,jockey:bool,assist:int,assist_active:bool,keeper_rush:bool,extra:Dictionary={})->void:
+func input_batch(game_id:int,batch:PackedFloat32Array)->void:
  if not multiplayer.is_server() or not running or game_id!=round_id: return
  var sender:=multiplayer.get_remote_sender_id()
- if not peers.has(sender) or not move.is_finite(): return
+ if not peers.has(sender) or batch.is_empty() or batch.size()>Command.WIDTH*Command.REDUNDANCY or batch.size()%Command.WIDTH!=0: return
  var team:int=peers[sender]
- if seq<=input_ack[team] or seq>input_ack[team]+600: return
- input_ack[team]=seq
- commands[team]={"move":move.limit_length(),"sprint":sprint,"jockey":jockey,"action":0,"aim":0.0,"tactic":sim.teams[team].tactic,"assist":clampi(assist,0,2),"assist_active":assist_active,"received":Time.get_ticks_msec()}
- commands[team].keeper_rush=keeper_rush
- commands[team].merge(extra_command(extra),true)
+ for offset in range(0,batch.size(),Command.WIDTH):
+  timelines[team].receive(Command.decode(batch.slice(offset,offset+Command.WIDTH)),sim.frame)
 
-@rpc("any_peer","call_remote","reliable",0)
-func action_request(game_id:int,seq:int,action:int,aim:float,move:Vector2,tactic:int,assist:int,finesse:bool,chip:bool,extra:Dictionary={})->void:
+@rpc("any_peer","call_remote","reliable",3)
+func action_backup(game_id:int,sample:PackedFloat32Array)->void:
  if not multiplayer.is_server() or not running or game_id!=round_id: return
  var sender:=multiplayer.get_remote_sender_id()
- if not peers.has(sender) or not is_finite(aim) or not move.is_finite(): return
- var team:int=peers[sender]
- if seq<=action_ack[team] or seq>action_ack[team]+64 or action<0 or action>sim.Mechanics.MAX_ACTION or action_queue.size()>24: return
- action_ack[team]=seq
- action_queue.append({"team":team,"command":{"move":move.limit_length(),"action":action,"aim":clampf(aim,-1,1),"tactic":clampi(tactic,0,2),"assist":clampi(assist,0,2),"finesse":finesse,"chip":chip}})
- action_queue[-1].command.merge(extra_command(extra),true)
+ if not peers.has(sender): return
+ var c:=Command.decode(sample)
+ if not c.is_empty() and int(c.action)>0: timelines[int(peers[sender])].receive(c,sim.frame)
+
+@rpc("authority","call_remote","unreliable",0)
+func probe_request(game_id:int,nonce:int)->void:
+ if game_id==round_id and running: send_packet("echo",1,[game_id,nonce],false)
+
+@rpc("any_peer","call_remote","unreliable",0)
+func probe_echo(game_id:int,nonce:int)->void:
+ var sender:=multiplayer.get_remote_sender_id()
+ if not multiplayer.is_server() or game_id!=round_id or not peers.has(sender) or not probes.has(sender): return
+ var probe:Dictionary=probes[sender]
+ if nonce!=int(probe.nonce): return
+ peer_rtt[int(peers[sender])]=clampi(Time.get_ticks_msec()-int(probe.at),0,10000)
+ probes.erase(sender)
 
 func advance(dt:float)->void:
  if not active: return
+ pump_link()
+ if running and Time.get_ticks_msec()>=metrics_at:
+  print_metrics();metrics_at=Time.get_ticks_msec()+10000
  if preparing:
   if Time.get_ticks_msec()-prepare_started>45000:
    if multiplayer.is_server():
@@ -316,84 +386,121 @@ func advance(dt:float)->void:
   return
  if not multiplayer.is_server():
   if not running and not waiting_connection: return
-  while not delayed.is_empty() and delayed[0].due<=Time.get_ticks_msec():
-   var item:Dictionary=delayed.pop_front()
-   var c:Dictionary=item.command
-   input_request.rpc_id(1,round_id,item.seq,c.move,c.sprint,c.jockey,int(c.get("assist",1)),bool(c.get("assist_active",true)),bool(c.get("keeper_rush",false)),extra_command(c))
-  snapshot_age+=dt
+  snapshot_age+=dt;snapshots.advance(dt);correction*=exp(-dt*18)
+  if snapshot_age>=0.3: preview.ball_visible=false
   if (running or waiting_connection) and Time.get_ticks_msec()-last_receive>10000: fail("连接超时，请返回房间重新连接")
   return
  if not running: return
+ var tick_started:=Time.get_ticks_usec()
+ var now:=Time.get_ticks_msec()
+ if now>=next_probe:
+  next_probe=now+500;probe_serial+=1
+  for id in peers:
+   if id!=1:
+    probes[id]={"nonce":probe_serial,"at":now}
+    send_packet("probe",id,[round_id,probe_serial],false)
  for team in 2:
-  var cmd:Dictionary=commands[team].duplicate()
-  if cmd.has("received") and Time.get_ticks_msec()-int(cmd.received)>300:
-   cmd.move=Vector2.ZERO; cmd.sprint=false; cmd.jockey=false
-   cmd.assist_active=false
-   cmd.keeper_rush=false;cmd.contain=false;cmd.skip_restart=false
-  cmd.action=0
+  var timeline=timelines[team]
+  var cmd:Dictionary=timeline.tick(sim.frame)
+  if cmd.has("player") and not Command.matches(sim,team,cmd): cmd=Command.neutral()
   sim.apply_command(team,cmd)
- for item in action_queue:
-  var c:Dictionary=item.command.duplicate()
-  c.sprint=sim.teams[item.team].sprint
-  if int(c.action)&sim.Mechanics.SKILL: c.sprint=bool(c.get("skill_sprint",c.sprint))
-  c.jockey=sim.teams[item.team].jockey
-  c.assist_active=sim.teams[item.team].assist_active
-  c.keeper_rush=sim.teams[item.team].keeper_rush
-  sim.apply_command(item.team,c)
- action_queue.clear()
+  for action in timeline.ready_actions(): timeline.apply_action(sim,team,action)
+  input_ack[team]=timeline.cursor;action_ack[team]=timeline.action_ack
  if "--rules-test" in OS.get_cmdline_user_args(): rules_test.step(self)
  if "--mechanics-test" in OS.get_cmdline_user_args(): mechanics_test.step(self)
  sim.step(dt)
+ if "--latency-test" in OS.get_cmdline_user_args() and sim.frame>=240: sim.finished=true
  if "--rules-test" in OS.get_cmdline_user_args(): rules_test.observe(sim)
  if "--mechanics-test" in OS.get_cmdline_user_args(): mechanics_test.observe(sim)
- if sim.frame%3==0 or sim.finished:
-  var state:Dictionary=sim.snapshot()
+ if sim.frame%snapshot_every==0 and not sim.finished:
+  var wire:=pack_state(sim.snapshot())
+  var parts:=Fragments.split(wire.compressed)
   for id in peers:
-   if id!=1: state_update.rpc_id(id,pack_state(state),int(input_ack[int(peers[id])]),round_id)
+   if id!=1:
+    var team:int=peers[id]
+    for part in parts.size():
+     send_packet("state",id,[parts[part],sim.frame,part,parts.size(),int(input_ack[team]),round_id,int(action_ack[team]),peer_rtt.duplicate()],false)
+ var tick_us:=Time.get_ticks_usec()-tick_started
+ tick_total_us+=tick_us;tick_peak_us=maxi(tick_peak_us,tick_us);tick_count+=1
  if sim.finished:
+  if "--latency-test" in OS.get_cmdline_user_args(): latency_test.verify(sim)
   if "--rules-test" in OS.get_cmdline_user_args(): rules_test.verify()
   if "--mechanics-test" in OS.get_cmdline_user_args(): mechanics_test.verify()
   running=false
+  # Reliable lifecycle messages are outside the application fault model.
   for id in peers:
    if id!=1: final_state.rpc_id(id,sim.snapshot(),round_id)
+  print_metrics()
   match_ended.emit()
   print("NETWORK_FINAL score=",sim.score," frame=",sim.frame)
 
-@rpc("authority","call_remote","unreliable_ordered",2)
-func state_update(wire:Dictionary,ack:int,game_id:int)->void:
- if sim==null or game_id!=round_id: return
- var state:=unpack_state(wire)
+@rpc("authority","call_remote","unreliable",2)
+func state_fragment(bytes:PackedByteArray,frame:int,index:int,count:int,ack:int,game_id:int,ack_action:int,rtts:Array)->void:
+ if sim==null or game_id!=round_id or not running: return
+ if frame<=last_snapshot: return
+ var complete:PackedByteArray=fragments.accept(frame,index,count,bytes,Time.get_ticks_msec())
+ if complete.is_empty(): return
+ var state:=unpack_state({"compressed":complete})
  if int(state.frame)<=last_snapshot: return
- _receive_snapshot(state,ack)
+ if rtts.size()==2:
+  peer_rtt=[int(rtts[0]),int(rtts[1])];ping_ms=peer_rtt[maxi(0,local_team)]
+ _receive_snapshot(state,ack,ack_action)
 
-func _receive_snapshot(state:Dictionary,ack:int)->void:
- last_snapshot=int(state.frame)
- last_receive=Time.get_ticks_msec()
- snapshot_age=0
- received_count+=1
- sim.restore(state)
- sim.view_team=local_team
+func _receive_snapshot(state:Dictionary,ack:int,ack_action:int=0)->void:
+ var previous_index:=prediction_index
+ var previous_pos:=prediction_pos+correction
+ var old_phase:String=sim.phase
+ last_snapshot=int(state.frame);last_receive=Time.get_ticks_msec();snapshot_age=0;received_count+=1
+ sim.restore(state);sim.view_team=local_team
  if "--rules-test" in OS.get_cmdline_user_args(): rules_test.observe(sim)
  if "--mechanics-test" in OS.get_cmdline_user_args(): mechanics_test.observe(sim)
- remote_positions.clear(); remote_velocities.clear()
- for p in sim.players:
-  remote_positions.append(p.pos)
-  remote_velocities.append(p.vel)
- remote_ball=Vector3(sim.ball.x,sim.ball_height,sim.ball.y)
- remote_ball_velocity=Vector3(sim.velocity.x,sim.vertical_speed,sim.velocity.y)
- prediction_index=sim.selected
- prediction_pos=sim.players[prediction_index].pos
- prediction_vel=sim.players[prediction_index].vel
- prediction_dir=sim.players[prediction_index].dir
- prediction_ready=true
+ snapshots.push(state,last_receive)
  while not pending_inputs.is_empty() and pending_inputs[0].seq<=ack: pending_inputs.pop_front()
- if sim.freeze<=0 and not sim.finished:
-  for item in pending_inputs: _predict(item.command,item.dt)
- if multiplayer.multiplayer_peer is ENetMultiplayerPeer:
-  var peer=multiplayer.multiplayer_peer.get_peer(1)
-  if peer: ping_ms=int(peer.get_statistic(ENetPacketPeer.PEER_ROUND_TRIP_TIME))
+ preview.reset(state,local_team)
+ for item in pending_inputs:
+  var c:Dictionary=item.command.duplicate(true)
+  if int(c.action_id)<=ack_action: c.action=0
+  preview.step(c,item.dt)
+ sync_prediction()
+ var error:=previous_pos-prediction_pos
+ correction=error if prediction_ready and previous_index==prediction_index and old_phase==sim.phase and error.length()<2.5 else Vector2.ZERO
+ if prediction_ready and previous_index==prediction_index and old_phase==sim.phase and error.length()>0.1:
+  corrections+=1;correction_max=maxf(correction_max,error.length())
+ prediction_ready=true
 
+func sync_prediction()->void:
+ prediction_index=preview.index()
+ var p:Dictionary=preview.sim.players[prediction_index]
+ prediction_pos=p.pos;prediction_vel=p.vel;prediction_dir=p.dir
+
+func render_player(index:int)->Dictionary:
+ if prediction_ready and snapshot_age<0.3 and sim.phase=="play" and index==prediction_index:
+  var p:Dictionary=preview.sim.players[index].duplicate()
+  p.pos+=correction
+  return p
+ return snapshots.player(index,sim.players[index])
+
+func render_ball()->Vector3:
+ if prediction_ready and snapshot_age<0.3 and sim.phase=="play" and preview.ball_visible: return preview.ball()
+ return snapshots.ball(Vector3(sim.ball.x,sim.ball_height,sim.ball.y))
+
+func diagnostics()->String:
+ var home:=str(peer_rtt[0]) if peer_rtt[0]>=0 else "--"
+ var away:=str(peer_rtt[1]) if peer_rtt[1]>=0 else "--"
+ return "主队 %s / 客队 %s ms · 抖动 %d ms%s" % [home,away,int(snapshots.jitter_ms)," · 等待同步" if snapshot_age>=0.3 else ""]
+
+func print_metrics()->void:
+ var result:={"protocol":PROTOCOL,"round":round_id,"team":local_team,"rtt_ms":peer_rtt,"jitter_ms":snappedf(snapshots.jitter_ms,0.1),"snapshot_gaps":snapshots.gaps,"corrections":corrections,"max_correction":snappedf(correction_max,0.01),"pending":pending_inputs.size(),"sent":link.sent,"dropped":link.dropped,"retried":link.retried}
+ result["fault_profile"]=[link.delay_ms,link.jitter_ms,link.loss_every,link.reorder_every,link.burst_every]
+ result["packet_kinds"]=link.kinds;result["payload_bytes"]=link.payload_bytes
+ result["simulation_hz"]=Engine.physics_ticks_per_second
+ if tick_count>0:
+  result["tick_mean_ms"]=snappedf(tick_total_us/float(tick_count)/1000,0.01)
+  result["tick_peak_ms"]=snappedf(tick_peak_us/1000.0,0.01)
+ if multiplayer.is_server(): result["rejected_actions"]=[timelines[0].rejected,timelines[1].rejected]
+ print("NETWORK_METRICS ",JSON.stringify(result))
 func _predict(command:Dictionary,dt:float)->void:
+ # Retained movement probe for existing locomotion tests; runtime uses Prediction.
  if sim.phase!="play": return
  if prediction_index<0: return
  var p:Dictionary=sim.players[prediction_index]
@@ -411,33 +518,38 @@ func _predict(command:Dictionary,dt:float)->void:
  if sim.owner==prediction_index: speed*=p.ratings.dribble_speed
  if p.action_time>0 and p.action=="tackle": speed*=0.32
  if p.action_time>0 and p.action=="receive": speed*=0.7
+ if p.action in sim.Motion.DIVES and p.action_time>0: speed*=1.25 if p.action_time>0.28 else 0.25
  var move:Vector2=command.move
- var receiving_assist:int=int(command.get("receive_assist",sim.teams[prediction_index/5].receive_assist))
- if receiving_assist<0: receiving_assist=int(command.get("assist",sim.teams[prediction_index/5].assist))
+ var receiving_assist:int=int(command.get("receive_assist",sim.teams[prediction_index/Team.SIZE].receive_assist))
+ if receiving_assist<0: receiving_assist=int(command.get("assist",sim.teams[prediction_index/Team.SIZE].assist))
  if p.action_time>0 and p.action=="slide":
   move=p.dir if p.action_time>0.3 else Vector2.ZERO
   speed=p.speed*1.15
  if bool(command.get("assist_active",true)):
   move=sim.assisted_movement(prediction_index,move,prediction_pos,receiving_assist,prediction_vel,int(command.sprint))
- if (prediction_index%5!=0 or sim.owner==prediction_index) and not command.jockey and p.action!="slide":
+ if (prediction_index%Team.SIZE!=0 or sim.owner==prediction_index) and not command.jockey and p.action!="slide":
   speed*=sim.Motion.turn_scale(prediction_dir,move,p.ratings)
- var acceleration:float=p.ratings.acceleration*(p.ratings.carry_acceleration if sim.owner==prediction_index else 1.0)
- prediction_vel=prediction_vel.move_toward(move.limit_length()*speed,dt*(acceleration if move.length()>0.05 else p.ratings.braking))
+ prediction_vel=sim.Movement.velocity(prediction_vel,move,speed,p.ratings,sim.owner==prediction_index,dt)
  prediction_pos=(prediction_pos+prediction_vel*dt).clamp(-sim.player_limit(prediction_index),sim.player_limit(prediction_index))
- var facing:Vector2=(sim.ball-prediction_pos).normalized() if (command.jockey or prediction_index%5==0) and sim.owner!=prediction_index else move.normalized()
+ var facing:Vector2=(sim.ball-prediction_pos).normalized() if (command.jockey or prediction_index%Team.SIZE==0) and sim.owner!=prediction_index else move.normalized()
  if bool(command.get("assist_active",true)):
   var reception:Vector2=sim.receiving_facing(prediction_index,command.move,prediction_pos,receiving_assist)
   if reception.length()>0.1: facing=reception
- if facing.length()>0.1: prediction_dir=prediction_dir.rotated(clampf(prediction_dir.angle_to(facing),-dt*p.ratings.turn_rate,dt*p.ratings.turn_rate)).normalized()
+ if command.jockey and sim.owner==prediction_index and move.length()<0.15: facing=sim.shield_facing(prediction_index,prediction_pos)
+ if p.action in sim.Motion.DIVES and p.action_time>0: facing=prediction_dir
+ if facing.length()>0.1:
+  var turn:float=sim.Movement.turn_rate(p.ratings,prediction_vel,command.jockey or prediction_index%Team.SIZE==0)
+  prediction_dir=prediction_dir.rotated(clampf(prediction_dir.angle_to(facing),-dt*turn,dt*turn)).normalized()
 
 @rpc("authority","call_remote","reliable",0)
 func final_state(state:Dictionary,game_id:int)->void:
  if sim==null or game_id!=round_id: return
  _receive_snapshot(state,input_seq)
+ if "--latency-test" in OS.get_cmdline_user_args(): latency_test.verify(sim)
  if "--rules-test" in OS.get_cmdline_user_args(): rules_test.verify()
  if "--mechanics-test" in OS.get_cmdline_user_args(): mechanics_test.verify()
- delayed.clear()
  running=false
+ print_metrics()
  match_ended.emit()
  print("NETWORK_FINAL score=",sim.score," frame=",sim.frame)
 
@@ -449,7 +561,7 @@ func remote_abandon()->void:
 
 
 
-const META_FIELDS=["ice_mode","arcade","elapsed","duration","regulation","freeze","owner","height","vertical","finished","overtime","event","frame","pass_receiver","last_touch","kick_age","ball_is_shot","spin","impact_id","impact_kind","impact_strength","impact_x","impact_y"]
+const META_FIELDS=["ice_mode","arcade","elapsed","duration","regulation","freeze","owner","height","vertical","finished","overtime","event","frame","pass_receiver","last_touch","kick_age","ball_is_shot","spin","impact_id","impact_frame","impact_kind","impact_strength","impact_x","impact_y"]
 const TEAM_FIELDS=["selected","tactic","charge","charging","dash","dash_cd","sprint","jockey","human","assist","assist_active","receive_cancelled","keeper_rush","run_player","run_time"]
 const ACTIONS=["idle","shoot","pass","tackle","save","receive","block","dive","catch","throw","slide","cross","chip","header","volley","feint","fall","appeal","wall","set_piece","set_kick","celebrate","disappointed","windup","power_shot","finesse","dive_low","dive_high","scoop","foot_save","parry","tip","catch_high","shield","smother","rush","jump","land","stumble","slide_still","retrieve_ball","carry_ball","place_ball","driven_pass","block_chest","block_head"]
 const EVENTS=["kickoff","pass","shot","tackle","goal","overtime","end","save","block","restart","foul","post"]
@@ -483,7 +595,7 @@ func unpack_state(wire:Dictionary)->Dictionary:
  for key in META_FIELDS:
   state[key]=data[cursor]
   cursor+=1
- for key in ["owner","frame","event","pass_receiver","last_touch","impact_id","impact_kind"]: state[key]=int(state[key])
+ for key in ["owner","frame","event","pass_receiver","last_touch","impact_id","impact_frame","impact_kind"]: state[key]=int(state[key])
  for key in ["finished","overtime","ball_is_shot"]: state[key]=bool(state[key])
  for key in ["ball","velocity","pass_destination"]:
   state[key]=Vector2(data[cursor],data[cursor+1]); cursor+=2
@@ -519,4 +631,4 @@ func extra_command(c:Dictionary)->Dictionary:
  if not direction.is_finite(): direction=Vector2.ZERO
  var power:float=float(c.get("power",0.35))
  if not is_finite(power): power=0.35
- return {"direction":direction.limit_length(),"power":clampf(power,0,1),"skip_restart":bool(c.get("skip_restart",false)),"skill_sprint":bool(c.get("skill_sprint",c.get("sprint",false))),"driven":bool(c.get("driven",false)),"contain":bool(c.get("contain",false)),"receive_assist":clampi(int(c.get("receive_assist",-1)),-1,2),"shot_assist":clampi(int(c.get("shot_assist",-1)),-1,2),"auto_switch":clampi(int(c.get("auto_switch",1)),0,2),"reserve":clampi(int(c.get("reserve",0)),0,3),"out":clampi(int(c.get("out",1)),0,4)}
+ return {"direction":direction.limit_length(),"power":clampf(power,0,1),"skip_restart":bool(c.get("skip_restart",false)),"skill_sprint":bool(c.get("skill_sprint",c.get("sprint",false))),"driven":bool(c.get("driven",false)),"contain":bool(c.get("contain",false)),"receive_assist":clampi(int(c.get("receive_assist",-1)),-1,2),"shot_assist":clampi(int(c.get("shot_assist",-1)),-1,2),"auto_switch":clampi(int(c.get("auto_switch",1)),0,2),"reserve":clampi(int(c.get("reserve",0)),0,3),"out":clampi(int(c.get("out",1)),0,Team.SIZE-1)}

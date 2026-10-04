@@ -1,0 +1,60 @@
+{
+  "license": "CC0-1.0",
+  "source": "https://files.makehumancommunity.org/asset_packs/makehuman_system_assets/makehuman_system_assets_cc0.zip",
+  "modifications": [
+    "fitted to the same CC0 base body",
+    "normalized to body height",
+    "four normalized bone weights retained",
+    "style proportions and colours authored at runtime"
+  ],
+  "meshes": [
+    {
+      "style": "short01",
+      "vertices": 2984,
+      "triangles": 3678,
+      "sha256": "34ecb9d457770227bcf2580c89df0b461e71c1e9ecd9fcf6e4cafc491e9d85a8"
+    },
+    {
+      "style": "short02",
+      "vertices": 1755,
+      "triangles": 3344,
+      "sha256": "8ee2e870c299f4180e979ecfc6f455e33e70c8d4e9ab76b091e9c82189bf886a"
+    },
+    {
+      "style": "short03",
+      "vertices": 1011,
+      "triangles": 1922,
+      "sha256": "40a44f0332daeaa39131a823a81f3cc3f8c7f035a7c25773b5cb51af983a8be9"
+    },
+    {
+      "style": "short04",
+      "vertices": 865,
+      "triangles": 1050,
+      "sha256": "12ab54695a50abcf290afd8bb8a2e9ae2cd64ba655e4b723827f44d4552a757b"
+    },
+    {
+      "style": "bob01",
+      "vertices": 5203,
+      "triangles": 8474,
+      "sha256": "96dae81941034b1223739005a95d3b509d2091e776c3cb1f26ff8b2939e1c2dc"
+    },
+    {
+      "style": "bob02",
+      "vertices": 1653,
+      "triangles": 2248,
+      "sha256": "8458aa5a0532ff756c02b17f1afed2c7cb6b3cb2a9d2c5b44b3a27e9ccce5da4"
+    },
+    {
+      "style": "afro01",
+      "vertices": 2196,
+      "triangles": 2192,
+      "sha256": "cb57741590c83f66847e8168543eefc34e433fb01097ebb5cd27359b240996af"
+    },
+    {
+      "style": "ponytail01",
+      "vertices": 3718,
+      "triangles": 5352,
+      "sha256": "0a6ca6688fa86a3be1b657238ffa8f3e211d1ab7666a990c43dbd843920c9ca1"
+    }
+  ]
+}

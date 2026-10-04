@@ -17,3 +17,6 @@
 *.ogg binary
 *.mp3 binary
 *.glb binary
+
+# Preserve upstream MakeHuman source files, including their trailing blank lines.
+tools/makehuman-assets/**/*.mhclo whitespace=-blank-at-eof

@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 var test
 
@@ -27,17 +28,17 @@ func run(runner)->void:
    s.apply_command(team,{"action":4})
    s.mechanics.tick(s,0.09)
    test.check(s.phase=="play" and s.owner==-1 and s.restart_touch==s.restart_taker and s.velocity.length()>0,"legal restart releases play: "+kind)
-   if kind=="goal_kick": test.check(s.players[team*5].action=="set_kick" and s.ball_height==s.BallPhysics.FLOOR,"goal clearance defaults to directional foot distribution")
+   if kind=="goal_kick": test.check(s.players[team*Team.SIZE].action=="set_kick" and s.ball_height==s.BallPhysics.FLOOR,"goal clearance defaults to directional foot distribution")
  s=fixture()
  s.Rules.restart(s,0,"free_kick",Vector2(15,2))
  preload("res://restart_impact_tests.gd").prepare(s)
- test.check(s.players[7].action=="wall" and s.players[8].action=="wall" and s.players[7].pos.distance_to(s.ball)>=5,"free kick arranges a defensive wall")
+ test.check(s.players[8].action=="wall" and s.players[9].action=="wall" and s.players[8].pos.distance_to(s.ball)>=5,"free kick arranges a defensive wall")
  var corner_case=fixture()
  for p in corner_case.players: p.pos=Vector2(29,16)
  corner_case.Rules.restart(corner_case,0,"kick_in",Vector2(30,18))
  preload("res://restart_impact_tests.gd").prepare(corner_case)
  var clearance:=true
- for i in range(6,10): clearance=clearance and corner_case.players[i].pos.distance_to(corner_case.ball)>=5.2
+ for i in range(Team.SIZE+1,Team.COUNT): clearance=clearance and corner_case.players[i].pos.distance_to(corner_case.ball)>=5.2
  test.check(clearance,"boundary-clamped opponents still respect restart clearance")
  test.check(preload("res://restart_impact_tests.gd").prepare(s),"restart preparation completes");s.charge=0.5;s.apply_command(0,{"action":2,"finesse":true,"aim":0.5})
  s.mechanics.tick(s,0.09)
@@ -58,26 +59,26 @@ func run(runner)->void:
  s.ball=Vector2(Pitch.HALF_LENGTH+1,0);s.ball_height=0.31;s.resolve_boundary()
  test.check(s.score[0]==1,"another player touching the ball clears restart restrictions")
  for kind in ["kick_in","corner","free_kick"]:
-  s=fixture();s.Rules.restart(s,0,kind,Vector2(8,18));test.check(preload("res://restart_impact_tests.gd").prepare(s),"restart preparation completes");s.step(4.01)
+  s=fixture();s.mechanics.strict_rules=true;s.Rules.restart(s,0,kind,Vector2(8,18));test.check(preload("res://restart_impact_tests.gd").prepare(s),"restart preparation completes");s.step(4.01)
   test.check(s.phase=="restart" and s.restart_team==1 and s.message.contains("超时"),"four-second restart violation transfers possession: "+kind)
  for spot in [Vector2(9,1),Vector2(Pitch.HALF_LENGTH-7,1)]:
   s=fixture();s.owner=1;s.players[1].pos=spot;s.players[1].dir=Vector2.RIGHT
-  s.players[6].pos=spot-Vector2(1.5,0);s.players[6].dir=Vector2.RIGHT
-  s.ball=spot+Vector2(1,0);s.tackle(6,true)
-  s.players[6].action_time=s.Motion.SLIDE_DURATION-0.10;s.resolve_tackle(6,true)
+  s.players[7].pos=spot-Vector2(1.5,0);s.players[7].dir=Vector2.RIGHT
+  s.ball=spot+Vector2(1,0);s.tackle(7,true)
+  s.players[7].action_time=s.Motion.SLIDE_DURATION-0.10;s.resolve_tackle(7,true)
   test.check(s.phase=="foul" and s.fouls[1]==1 and s.players[1].action=="fall","late slide from behind triggers foul and fall")
   test.check(s.restart_kind==("penalty" if spot.x>Pitch.HALF_LENGTH-9 else "free_kick"),"foul location selects penalty or free kick")
   s.apply_command(0,{"action":3});s.step(1.3)
   test.check(s.phase=="restart" and s.restart_team==0 and s.owner==-1 and s.restart_flow.stage=="fetch" and s.elapsed==0,"foul animation transitions to playable restart without advancing clock")
- s=fixture();s.owner=6;s.players[6].pos=Vector2(1.5,0);s.players[6].dir=Vector2.LEFT
+ s=fixture();s.owner=7;s.players[7].pos=Vector2(1.5,0);s.players[7].dir=Vector2.LEFT
  s.players[1].pos=Vector2.ZERO;s.players[1].dir=Vector2.RIGHT;s.ball=Vector2(0.7,0)
  s.tackle(1,true)
  s.players[1].action_time=s.Motion.SLIDE_DURATION-0.10;s.resolve_tackle(1,true)
  test.check(s.phase=="play" and s.owner==-1 and s.tackles[0]==1 and s.fouls==[0,0],"front-on ball-first slide is legal")
  s=fixture();s.owner=1;s.players[1].pos=Vector2(5,0);s.players[1].dir=Vector2.RIGHT
- s.players[6].pos=Vector2(1,0);s.players[6].dir=Vector2.RIGHT;s.ball=Vector2(6,0)
- s.tackle(6,true)
- s.players[6].pos=Vector2(3.5,0);s.resolve_tackle(6,true)
+ s.players[7].pos=Vector2(1,0);s.players[7].dir=Vector2.RIGHT;s.ball=Vector2(6,0)
+ s.tackle(7,true)
+ s.players[7].pos=Vector2(3.5,0);s.resolve_tackle(7,true)
  test.check(s.phase=="foul","moving slide checks later contact, not only button-press frame")
  s=fixture();s.apply_command(0,{"action":256,"move":Vector2.ZERO})
  s.mechanics.tick(s,0.09)
@@ -102,7 +103,7 @@ func run(runner)->void:
  s=fixture();s.last_touch=1;s.Rules.goal(s,0)
  var elapsed:float=s.elapsed
  s.apply_command(1,{"action":4095});s.step(1.5)
- test.check(s.phase=="goal" and s.score==[1,0] and s.elapsed==elapsed and s.players[1].action=="idle" and s.players[6].action=="idle","goal presentation locks gameplay without player celebration and pauses time")
+ test.check(s.phase=="goal" and s.score==[1,0] and s.elapsed==elapsed and s.players[1].action=="idle" and s.players[7].action=="idle","goal presentation locks gameplay without player celebration and pauses time")
  s.step(s.Rules.GOAL_DURATION-1.5+0.1)
  test.check(s.phase=="restart" and s.restart_kind=="kickoff" and s.restart_team==1,"goal returns to conceding side kickoff")
  var transport=load("res://match_network.gd").new()

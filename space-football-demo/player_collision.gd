@@ -23,7 +23,7 @@ static func sweep(p:Dictionary,start:Vector3,finish:Vector3)->Dictionary:
  var parts:Array=[]
  for sign_value in [-1,1]:
   parts.append([origin+lateral*sign_value+Vector3(0,h*0.09,0),origin+lateral*sign_value+Vector3(0,h*0.46,0),h*0.07,"foot"])
- parts.append([origin+Vector3(0,h*0.49,0),origin+Vector3(0,h*0.78,0),body.shoulder*0.38,"chest"])
+ parts.append([origin+Vector3(0,h*0.49,0),origin+Vector3(0,h*0.78,0),float(body.get("collision_shoulder",body.shoulder))*0.38,"chest"])
  var head:=origin+Vector3(0,body.head_height,0)
  parts.append([head,head+Vector3(0,0.001,0),body.head_size*0.48,"head"])
  var best:Dictionary={}

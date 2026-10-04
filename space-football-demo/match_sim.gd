@@ -1,7 +1,9 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
+const Movement=preload("res://player_movement.gd")
 ## Fixed 60 Hz authority. Rendering, input devices and networking do not own match rules.
-const TEAM_SIZE:=5
+const TEAM_SIZE:=Team.SIZE
 const Body=preload("res://player_body.gd")
 const Motion=preload("res://football_motion.gd")
 const GoalFrame=preload("res://goal_frame.gd")
@@ -31,11 +33,11 @@ var restart_origin:=""
 var goal_team:=0
 var goal_scorer:=1
 var fouls:=[0,0]
-const PLAYER_COUNT:=10
+const PLAYER_COUNT:=Team.COUNT
 const HALF_LENGTH:=Pitch.HALF_LENGTH
 const HALF_WIDTH:=Pitch.HALF_WIDTH
 const GOAL_WIDTH:=Pitch.GOAL_HALF_WIDTH
-const JERSEY_NUMBERS:=["01","09","10","05","04","01","09","07","08","04"]
+const JERSEY_NUMBERS:=["01","09","10","05","04","08","01","09","07","08","04","06"]
 var players:Array[Dictionary]=[]
 var teams:Array[Dictionary]=[]
 var view_team:=0
@@ -69,6 +71,7 @@ var difficulty:=0
 var message:="准备开球"
 var event_serial:=0
 var impact_id:=0
+var impact_frame:=-1
 var impact_kind:=0
 var impact_strength:=0.0
 var impact_x:=1.0
@@ -77,7 +80,7 @@ var event_kind:="kickoff"
 var restart_kind:="kickoff"
 var rng:=RandomNumberGenerator.new()
 var strength:=0.82
-var training:Array=[0,0,0,0]
+var training:Array=[0,0,0,0,0]
 var keeper_upgrade:=0
 var arcade:=false
 var ice_mode:=false
@@ -117,19 +120,20 @@ func setup(campaign,seed_value:int=0,home:Array=Squad.DEFAULT,away:Array=Squad.D
  if seed_value: rng.seed=seed_value
  else: rng.randomize()
  for team in 2:
-  teams.append({"selected":team*5+1,"human":team==0,"tactic":1,"charge":0.0,"charging":false,"dash":0.0,"dash_cd":0.0,"move":Vector2.ZERO,"sprint":false,"jockey":false,"assist":1,"assist_active":true,"receive_cancelled":false})
+  teams.append({"selected":team*Team.SIZE+1,"human":team==0,"tactic":1,"charge":0.0,"charging":false,"dash":0.0,"dash_cd":0.0,"move":Vector2.ZERO,"sprint":false,"jockey":false,"assist":1,"assist_active":true,"receive_cancelled":false})
   teams[-1].merge({"keeper_rush":false,"run_player":-1,"run_time":0.0})
  if not Squad.valid(home): home=Squad.DEFAULT
  if not Squad.valid(away): away=Squad.DEFAULT
  for i in PLAYER_COUNT:
-  var record:=Library.find((home if i<5 else away)[i%5])
-  var ratings:=Ratings.derive(record.attributes,float(record.get("heightCm",180)))
+  var record:=Library.find((home if i<Team.SIZE else away)[i%Team.SIZE])
+  var body:=Body.from_record(record,i%Team.SIZE)
+  var ratings:=Ratings.for_player(record,body)
   var speed:float=ratings.speed
   if not competitive:
-   if i>0 and i<5: speed+=float(training[[0,1,0,2,3][i]])*0.12*Ratings.MOVEMENT_SCALE
+   if i>0 and i<Team.SIZE: speed+=float(training[[0,1,0,2,3,4][i]])*0.12*Ratings.MOVEMENT_SCALE
    if i==0: speed+=keeper_upgrade*0.5*Ratings.MOVEMENT_SCALE
-  players.append({"pos":Vector2.ZERO,"vel":Vector2.ZERO,"dir":Vector2.RIGHT if i<5 else Vector2.LEFT,"team":i/5,"slot":i%5,"name":record.name,"cooldown":0.0,"speed":speed,"stamina":100.0,"action":"idle","action_time":0.0,"tackle_cd":0.0,"touch":0.0,"keeper_cd":0.0,"keeper_side":0.0,"keeper_height":0.0,"player_id":record.id,"attributes":record.attributes.duplicate(true),"ratings":ratings})
-  players[-1]["body"]=Body.from_record(record,i%5)
+  players.append({"pos":Vector2.ZERO,"vel":Vector2.ZERO,"dir":Vector2.RIGHT if i<Team.SIZE else Vector2.LEFT,"team":i/Team.SIZE,"slot":i%Team.SIZE,"name":record.name,"cooldown":0.0,"speed":speed,"stamina":100.0,"action":"idle","action_time":0.0,"tackle_cd":0.0,"touch":0.0,"keeper_cd":0.0,"keeper_side":0.0,"keeper_height":0.0,"player_id":record.id,"attributes":record.attributes.duplicate(true),"ratings":ratings})
+  players[-1]["body"]=body
   players[-1]["action_strength"]=0.0
   players[-1]["keeper_holding"]=false
   players[-1]["role"]=record.role
@@ -142,7 +146,7 @@ func side(team:int)->float:
  return 1.0 if team==0 else -1.0
 
 func is_controlled(index:int)->bool:
- return teams[index/5].human and teams[index/5].selected==index
+ return teams[index/Team.SIZE].human and teams[index/Team.SIZE].selected==index
 
 func reset_positions(kick_team:int)->void:
  goal_net=GoalNet.empty()
@@ -152,18 +156,18 @@ func reset_positions(kick_team:int)->void:
  var formation:=Pitch.FORMATION
  for i in PLAYER_COUNT:
   if not players[i].active: continue
-  players[i].pos=formation[i%5]*Vector2(side(i/5),1)
+  players[i].pos=formation[i%Team.SIZE]*Vector2(side(i/Team.SIZE),1)
   players[i].vel=Vector2.ZERO
-  players[i].dir=Vector2(side(i/5),0)
+  players[i].dir=Vector2(side(i/Team.SIZE),0)
   players[i].cooldown=0.6
   players[i].action_time=0
   players[i].keeper_cd=0
   players[i].keeper_side=0
   players[i].keeper_holding=false
  for team in 2:
-  teams[team].selected=team*5+1
+  teams[team].selected=team*Team.SIZE+1
   if not players[teams[team].selected].active:
-   for i in range(team*5+1,team*5+5):
+   for i in range(team*Team.SIZE+1,team*Team.SIZE+Team.SIZE):
     if players[i].active: teams[team].selected=i;break
   teams[team].charging=false
   teams[team].charge=0
@@ -187,7 +191,9 @@ func notify(kind:String,value:String)->void:
  event_serial+=1
 
 func impact(kind:int,strength:float,direction:Vector2)->void:
+ if frame==impact_frame and strength<impact_strength: return
  impact_id+=1;impact_kind=kind;impact_strength=clampf(strength,0,1)
+ impact_frame=frame
  impact_x=direction.x;impact_y=direction.y
 
 func wind_active()->bool:
@@ -238,7 +244,7 @@ func pass_ball(through:bool=false,aim:Vector2=Vector2.ZERO,lobbed:bool=false,one
  var plan:=pass_plan(selected,aim,through,int(teams[view_team].assist))
  var target:int=plan.receiver
  var passer:=selected
- var allow_run:bool=one_two and phase=="play" and passer%5!=0 and target>=0
+ var allow_run:bool=one_two and phase=="play" and passer%Team.SIZE!=0 and target>=0
  if not kick(selected,plan.destination,23,false): return
  if not lobbed:
   velocity*=lerpf(0.72,1.30,power_amount)*(1.30 if driven else 1.0)
@@ -270,26 +276,26 @@ func pass_plan(index:int,aim:Vector2,through:bool,assist_level:int)->Dictionary:
  var level:=Assistance.level(assist_level)
  var origin:Vector2=players[index].pos
  var direction:Vector2=aim.normalized() if aim.length()>0.2 else players[index].dir
- if direction.length()<0.1: direction=Vector2(side(index/5),0)
+ if direction.length()<0.1: direction=Vector2(side(index/Team.SIZE),0)
  var receiver:=-1
  var best:=-INF
  var cone:float=deg_to_rad([15.0,38.0,65.0][level])
- for i in range(index/5*5,index/5*5+5):
+ for i in range(index/Team.SIZE*Team.SIZE,index/Team.SIZE*Team.SIZE+Team.SIZE):
   if i==index or not players[i].active: continue
   var offset:Vector2=players[i].pos-origin
   var angle:float=absf(direction.angle_to(offset))
   if angle>cone and not (level>0 and aim.length()<=0.2): continue
-  var score_value:float=(-angle*24 if aim.length()>0.2 else players[i].pos.x*side(index/5)*1.1)-offset.length()*0.18
+  var score_value:float=(-angle*24 if aim.length()>0.2 else players[i].pos.x*side(index/Team.SIZE)*1.1)-offset.length()*0.18
   if level>0:
    score_value+=minf(closest_opponent(i),8)*float(level)*0.45
-   for rival in range((1-index/5)*5,(1-index/5)*5+5):
+   for rival in range((1-index/Team.SIZE)*Team.SIZE,(1-index/Team.SIZE)*Team.SIZE+Team.SIZE):
     var point:=Geometry2D.get_closest_point_to_segment(players[rival].pos,origin,players[i].pos)
     if point.distance_to(players[rival].pos)<1.4: score_value-=4*level
   if score_value>best: best=score_value;receiver=i
  var destination:Vector2=origin+direction*(23.0 if through else 15.0)
  if receiver>=0:
   var target:Vector2=players[receiver].pos
-  if through: target+=Vector2(side(index/5)*5,0)+players[receiver].vel*0.28
+  if through: target+=Vector2(side(index/Team.SIZE)*5,0)+players[receiver].vel*0.28
   var offset:Vector2=target-origin
   if level>0 and aim.length()<=0.2: direction=offset.normalized()
   var correction:float=[0.25,0.75,1.0][level]
@@ -298,22 +304,22 @@ func pass_plan(index:int,aim:Vector2,through:bool,assist_level:int)->Dictionary:
  return {"receiver":receiver,"destination":destination,"direction":(destination-origin).normalized()}
 
 func receiving_level(index:int,level_override:int=-1)->int:
- var team:int=index/5
+ var team:int=index/Team.SIZE
  var level:int=Assistance.level(int(teams[team].receive_assist) if int(teams[team].receive_assist)>=0 else int(teams[team].assist))
  if level_override>=0: level=Assistance.level(level_override)
  return level
 
 func receiving_pass(index:int,level:int)->bool:
- var t:Dictionary=teams[index/5]
- return level>0 and phase=="play" and owner<0 and players[index].active and t.assist_active and not t.receive_cancelled and pass_receiver==index and last_touch/5==index/5 and not ball_is_shot and kick_age<(1.4 if level==1 else 2.8)
+ var t:Dictionary=teams[index/Team.SIZE]
+ return level>0 and phase=="play" and owner<0 and players[index].active and t.assist_active and not t.receive_cancelled and pass_receiver==index and last_touch/Team.SIZE==index/Team.SIZE and not ball_is_shot and kick_age<(1.4 if level==1 else 2.8)
 
 func assisted_movement(index:int,raw:Vector2,position:Vector2,level_override:int=-1,current_velocity:Vector2=Vector2.INF,sprint_override:int=-1)->Vector2:
- var team:int=index/5
+ var team:int=index/Team.SIZE
  var level:=receiving_level(index,level_override)
  if level==0 or phase!="play" or not teams[team].assist_active or teams[team].receive_cancelled or owner>=0: return raw
  var receiving:=receiving_pass(index,level)
  # Unrelated loose-ball help still yields completely to manual movement.
- var nearby:bool=level==2 and index%5!=0 and ball_height<1.3 and position.distance_to(ball)<4.0 and raw.length()<=0.15
+ var nearby:bool=level==2 and index%Team.SIZE!=0 and ball_height<1.3 and position.distance_to(ball)<4.0 and raw.length()<=0.15
  if not receiving and not nearby: return raw
  var p:Dictionary=players[index]
  if not p.active or p.jump_z>0.12 or p.landing>0 or (p.action in Motion.DEFENSIVE_ACTIONS and p.action_time>0): return raw
@@ -332,9 +338,8 @@ func assisted_movement(index:int,raw:Vector2,position:Vector2,level_override:int
   var t:float=step_index*0.08
   var flight:=BallPhysics.advance(destination,predicted_velocity,predicted_height,predicted_vertical,predicted_spin,ball_is_shot,0.08,3.7 if wind_active() else 0.0)
   destination=flight.pos;predicted_velocity=flight.velocity;predicted_height=flight.height;predicted_vertical=flight.vertical;predicted_spin=flight.spin
-  var along:float=clampf(travel_velocity.dot((destination-position).normalized()),-speed,speed)
-  var accelerating:float=minf(t,(speed-along)/p.ratings.acceleration)
-  var distance:float=maxf(0,along*accelerating+0.5*p.ratings.acceleration*accelerating*accelerating+speed*(t-accelerating))
+  var along:float=travel_velocity.dot((destination-position).normalized())
+  var distance:=Movement.reachable_distance(along,speed,p.ratings,t)
   if predicted_height<=p.body.foot_height and position.distance_to(destination)<=distance+p.body.foot_reach:
    reachable=true;break
  if not reachable: return raw
@@ -368,7 +373,7 @@ func tackle(index:int=-1,sliding:bool=false)->void:
  if index<0: index=selected
  var p:Dictionary=players[index]
  if phase!="play" or freeze>0 or finished or not p.active or p.jump_z>0 or p.landing>0 or p.tackle_cd>0 or owner==index: return
- if owner>=0 and owner/5==index/5: return
+ if owner>=0 and owner/Team.SIZE==index/Team.SIZE: return
  p.slide_speed=clampf(p.vel.dot(p.dir),0,p.speed*1.42) if sliding else 0.0
  var stationary:bool=sliding and p.slide_speed<1.2
  p.tackle_cd=p.ratings.tackle_recovery+(0.50 if stationary else 0.85 if sliding else 0)
@@ -381,7 +386,7 @@ func tackle(index:int=-1,sliding:bool=false)->void:
 func resolve_tackle(index:int,sliding:bool)->void:
  var p:Dictionary=players[index]
  if not p.active or p.get("tackle_resolved",false): return
- if owner==index or (owner>=0 and owner/5==index/5): return
+ if owner==index or (owner>=0 and owner/Team.SIZE==index/Team.SIZE): return
  if owner>=0 and players[owner].keeper_holding: return
  var offset:Vector2=ball-p.pos
  var shield:float=0
@@ -392,7 +397,7 @@ func resolve_tackle(index:int,sliding:bool)->void:
  var reach:float=p.ratings.tackle_reach-shield+(minf(0.65,p.slide_speed*0.075) if sliding else 0.0)
  var ball_access:bool=offset.length()<reach and ball_height<(0.80 if sliding else 1.10) and (offset.length()<0.65 or p.dir.dot(offset.normalized())>(0.65 if sliding else 0.45))
  var victim:int=owner if owner>=0 else int(p.get("tackle_target",-1))
- if not arcade and victim>=0 and victim/5!=index/5 and players[victim].active:
+ if not arcade and victim>=0 and victim/Team.SIZE!=index/Team.SIZE and players[victim].active:
   var body_offset:Vector2=players[victim].pos-p.pos
   var path_end:Vector2=p.pos+p.dir*minf(reach,offset.length())
   var path_point:=Geometry2D.get_closest_point_to_segment(players[victim].pos,p.pos,path_end)
@@ -413,16 +418,16 @@ func resolve_tackle(index:int,sliding:bool)->void:
  last_touch=index;restart_touch=-1;restart_origin="";pickup_lock=0.10
  if previous_owner>=0:
   players[previous_owner].cooldown=0.45 if sliding else 0.28
-  teams[previous_owner/5].charging=false;teams[previous_owner/5].charge=0
- tackles[index/5]+=1
+  teams[previous_owner/Team.SIZE].charging=false;teams[previous_owner/Team.SIZE].charge=0
+ tackles[index/Team.SIZE]+=1
  if sliding: impact(3,clampf(0.30+p.slide_speed/12,0.30,0.9),poke_direction)
  notify("tackle","原地铲球 · 收腿后继续争抢" if p.action=="slide_still" else "滑铲解围 · 起身后继续争抢" if sliding else "伸脚抢断 · 争取球权")
 
 func shielding(index:int)->bool:
- return teams[index/5].jockey if is_controlled(index) else players[index].action=="shield" and players[index].action_time>0
+ return teams[index/Team.SIZE].jockey if is_controlled(index) else players[index].action=="shield" and players[index].action_time>0
 
 func aerial(index:int,aim:float)->void:
- mechanics.jump(self,index,"shot",aim,teams[index/5].move)
+ mechanics.jump(self,index,"shot",aim,teams[index/Team.SIZE].move)
 
 func legacy_aerial(index:int,aim:float)->void:
  if phase!="play" or owner>=0 or freeze>0 or finished or pickup_lock>0: return
@@ -430,7 +435,7 @@ func legacy_aerial(index:int,aim:float)->void:
  if p.cooldown>0 or p.pos.distance_to(ball)>1.8 or ball_height<0.8 or ball_height>p.body.head_height+0.45: return
  var header:bool=ball_height>p.body.chest_height
  var height:=ball_height
- if not kick(index,Vector2((HALF_LENGTH+1)*side(index/5),clampf(aim,-1,1)*4),16+float(p.attributes.heading if header else p.attributes.finishing)*0.12,true): return
+ if not kick(index,Vector2((HALF_LENGTH+1)*side(index/Team.SIZE),clampf(aim,-1,1)*4),16+float(p.attributes.heading if header else p.attributes.finishing)*0.12,true): return
  ball_height=height;vertical_speed=-1.5 if header else 2.5
  p.action="header" if header else "volley";p.action_time=0.55
  notify("shot","头球攻门" if header else "凌空抽射")
@@ -439,7 +444,7 @@ func kick(index:int,target:Vector2,power:float,is_shot:bool)->bool:
  if phase in ["goal","foul"] or not players[index].active: return false
  if phase=="restart" and (index!=restart_taker or not Rules.Flow.ready(self)): return false
  if phase=="play" and restart_touch==index:
-  Rules.restart(self,1-index/5,"indirect",ball)
+  Rules.restart(self,1-index/Team.SIZE,"indirect",ball)
   notify("foul","开球后连续触球 · 间接任意球")
   return false
  if phase=="play": restart_touch=-1;restart_origin=""
@@ -456,13 +461,13 @@ func kick(index:int,target:Vector2,power:float,is_shot:bool)->bool:
  if is_shot and release_kind in ["free_kick","penalty","corner","accumulated"]: error=rating.set_piece_error
  # Seeded authority owns shot/pass spread; aim and charge still come from the human.
  direction=direction.rotated(rng.randf_range(-error,error))
- if index%5==0: mechanics.last_keeper_pass[index/5]=true
+ if index%Team.SIZE==0: mechanics.last_keeper_pass[index/Team.SIZE]=true
  ball_is_shot=is_shot
  ball_spin=0.0
  pass_receiver=-1
  if not is_shot:
   var best:=INF
-  for i in range(index/5*5,index/5*5+5):
+  for i in range(index/Team.SIZE*Team.SIZE,index/Team.SIZE*Team.SIZE+Team.SIZE):
    if i==index or not players[i].active: continue
    var d:float=players[i].pos.distance_to(target)
    if d<best: best=d; pass_receiver=i
@@ -488,9 +493,9 @@ func kick(index:int,target:Vector2,power:float,is_shot:bool)->bool:
  if not release_kind.is_empty():
   players[index].action="set_kick";players[index].action_time=0.65
  if is_shot:
-  shots[index/5]+=1
+  shots[index/Team.SIZE]+=1
   notify("shot","射门！")
- else: passes[index/5]+=1
+ else: passes[index/Team.SIZE]+=1
  return true
 
 func apply_command(team:int,command:Dictionary)->void:
@@ -553,34 +558,40 @@ func move_player(index:int,dt:float,movement:Vector2,sprinting:bool,jockeying:bo
   p.stamina=maxf(0,p.stamina-dt*p.ratings.drain)
  else: p.stamina=minf(100,p.stamina+dt*p.ratings.recovery)
  if jockeying: speed*=0.58
- if jockeying and owner==index and index%5!=0:
+ if jockeying and owner==index and index%Team.SIZE!=0:
   p.stamina=maxf(0,p.stamina-dt*8)
   if p.action_time<=0 or p.action=="shield": p.action="shield";p.action_time=0.15
  if p.action_time>0 and p.action=="tackle": speed*=0.32
  if p.action_time>0 and p.action=="receive": speed*=0.7
  if p.action_time>0 and p.action in Motion.DIVES: speed*=1.25 if p.action_time>0.28 else 0.25
  if owner==index: speed*=p.ratings.dribble_speed
- if (index%5!=0 or owner==index) and not jockeying and p.action!="slide":
+ if (index%Team.SIZE!=0 or owner==index) and not jockeying and p.action!="slide":
   speed*=Motion.turn_scale(p.dir,movement,p.ratings)
- var acceleration:float=p.ratings.acceleration*(p.ratings.carry_acceleration if owner==index else 1.0)
- p.vel=p.vel.move_toward(movement.limit_length()*speed,dt*(acceleration if movement.length()>0.05 else p.ratings.braking))
+ p.vel=Movement.velocity(p.vel,movement,speed,p.ratings,owner==index,dt)
  p.pos+=p.vel*dt
  p.pos=p.pos.clamp(-limit,limit)
- var facing:Vector2=(ball-p.pos).normalized() if (jockeying or index%5==0) and owner!=index else movement.normalized()
+ var facing:Vector2=(ball-p.pos).normalized() if (jockeying or index%Team.SIZE==0) and owner!=index else movement.normalized()
  if is_controlled(index):
-  var reception:Vector2=receiving_facing(index,teams[index/5].move,p.pos)
+  var reception:Vector2=receiving_facing(index,teams[index/Team.SIZE].move,p.pos)
   if reception.length()>0.1: facing=reception
- if jockeying and owner==index and movement.length()<0.15:
-  var nearest:=INF
-  for rival in range((1-index/5)*5,(1-index/5)*5+5):
-   var away:Vector2=p.pos-players[rival].pos
-   if away.length()<nearest: nearest=away.length();facing=away.normalized()
+ if jockeying and owner==index and movement.length()<0.15: facing=shield_facing(index,p.pos)
  if p.action in Motion.DIVES and p.action_time>0: facing=p.dir
  if facing.length()>0.1:
-  p.dir=p.dir.rotated(clampf(p.dir.angle_to(facing),-dt*p.ratings.turn_rate,dt*p.ratings.turn_rate)).normalized()
+  var turn:float=Movement.turn_rate(p.ratings,p.vel,jockeying or index%Team.SIZE==0)
+  p.dir=p.dir.rotated(clampf(p.dir.angle_to(facing),-dt*turn,dt*turn)).normalized()
+
+func shield_facing(index:int,position:Vector2)->Vector2:
+ var nearest:=INF;var facing:Vector2=players[index].dir
+ for rival in range((1-index/Team.SIZE)*Team.SIZE,(1-index/Team.SIZE)*Team.SIZE+Team.SIZE):
+  if not players[rival].active: continue
+  var away:Vector2=position-players[rival].pos
+  if away.length()<nearest and away.length()>0.01: nearest=away.length();facing=away.normalized()
+ return facing
 
 func player_limit(index:int)->Vector2:
- return Pitch.movement_limit(players[index].body,ice_mode or arcade)
+ var limit:=Pitch.movement_limit(players[index].body,ice_mode or arcade)
+ if index%Team.SIZE==0 and absf(players[index].pos.y)<GOAL_WIDTH: limit.x=HALF_LENGTH
+ return limit
 
 func step(dt:float)->void:
  if finished: return
@@ -600,14 +611,14 @@ func step(dt:float)->void:
   teams[team].dash=maxf(0,teams[team].dash-dt)
   teams[team].dash_cd=maxf(0,teams[team].dash_cd-dt)
   teams[team].run_time=maxf(0,teams[team].run_time-dt)
-  if (owner>=0 and owner/5!=team) or (teams[team].selected==teams[team].run_player and teams[team].move.length()>0.15): teams[team].run_time=0
+  if (owner>=0 and owner/Team.SIZE!=team) or (teams[team].selected==teams[team].run_player and teams[team].move.length()>0.15): teams[team].run_time=0
   if teams[team].run_time<=0: teams[team].run_player=-1
   if teams[team].charging:
    teams[team].charge=minf(1,teams[team].charge+dt*0.9)
    players[teams[team].selected].action="windup"
    players[teams[team].selected].action_strength=teams[team].charge
    players[teams[team].selected].action_time=0.15
- if owner>=0: possession[owner/5]+=dt
+ if owner>=0: possession[owner/Team.SIZE]+=dt
  if elapsed>=duration and not overtime:
   if score[0]!=score[1]: finished=true; notify("end","终场哨响"); return
   overtime=true
@@ -627,12 +638,12 @@ func step(dt:float)->void:
   if owner!=i: p.keeper_holding=false
   p.touch+=dt*p.vel.length()
   var controlled:=is_controlled(i)
-  if not controlled and i%5!=0 and ball_height>0.8 and owner<0 and p.pos.distance_to(ball)<3.5 and brain.wants_aerial(self,i):
+  if not controlled and i%Team.SIZE!=0 and ball_height>0.8 and owner<0 and p.pos.distance_to(ball)<3.5 and brain.wants_aerial(self,i):
    aerial(i,clampf(ball.y*0.1,-1,1))
-  var movement:Vector2=teams[i/5].move if controlled else ai_direction(i)
+  var movement:Vector2=teams[i/Team.SIZE].move if controlled else ai_direction(i)
   if controlled: movement=assisted_movement(i,movement,p.pos)
-  var sprinting:bool=(teams[i/5].sprint or teams[i/5].dash>0) if controlled else brain.sprint(self,i)
-  var jockeying:bool=teams[i/5].jockey if controlled else brain.jockey(self,i)
+  var sprinting:bool=(teams[i/Team.SIZE].sprint or teams[i/Team.SIZE].dash>0) if controlled else brain.sprint(self,i)
+  var jockeying:bool=teams[i/Team.SIZE].jockey if controlled else brain.jockey(self,i)
   move_player(i,dt,movement,sprinting,jockeying)
   if Motion.tackle_contact(p.action,p.action_time):
    resolve_tackle(i,p.action!="tackle")
@@ -649,24 +660,16 @@ func step(dt:float)->void:
    var length:=diff.length()
    var spacing:float=players[i].body.body_radius+players[j].body.body_radius
    if length>0.01 and length<spacing:
-    var push:=diff/length*minf((spacing-length)*0.35,minf(separation_budget[i],separation_budget[j]))
-    players[i].pos+=push
-    players[j].pos-=push
-    separation_budget[i]-=push.length();separation_budget[j]-=push.length()
+    var mass_i:float=players[i].body.physique.contact_mass;var mass_j:float=players[j].body.physique.contact_mass
+    var correction:float=(spacing-length)*0.35
+    var push_i:float=minf(correction*2*mass_j/(mass_i+mass_j),separation_budget[i])
+    var push_j:float=minf(correction*2*mass_i/(mass_i+mass_j),separation_budget[j])
+    players[i].pos+=diff/length*push_i
+    players[j].pos-=diff/length*push_j
+    separation_budget[i]-=push_i;separation_budget[j]-=push_j
     mechanics.contact(self,i,j)
  if owner>=0:
-  var p:Dictionary=players[owner]
-  var stride:float=p.ratings.stride+absf(sin(p.touch*1.7))*p.ratings.touch_wave
-  if p.keeper_holding: stride=0.65
-  elif shielding(owner): stride=0.76
-  if teams[owner/5].sprint and is_controlled(owner): stride+=p.ratings.sprint_touch
-  var desired:Vector2=p.pos+p.dir*stride
-  ball=ball.lerp(desired,minf(1,dt*p.ratings.touch_follow))
-  velocity=p.vel
-  ball_height=lerpf(p.keeper_height,p.body.height*0.65,1-clampf(p.cooldown/1.1,0,1)) if p.keeper_holding else BallPhysics.FLOOR+absf(sin(p.touch*1.7))*0.04
-  ball_spin=0
-  vertical_speed=0
-  last_touch=owner
+  advance_owned_ball(dt)
   if resolve_boundary(): return
  else:
   var previous_ball:=Vector3(ball.x,ball_height,ball.y)
@@ -674,6 +677,7 @@ func step(dt:float)->void:
   ball=flight.pos;velocity=flight.velocity;ball_height=flight.height;vertical_speed=flight.vertical;ball_spin=flight.spin
   var frame_hit:=GoalFrame.collide(previous_ball,Vector3(ball.x,ball_height,ball.y),Vector3(velocity.x,vertical_speed,velocity.y))
   if not frame_hit.is_empty():
+   impact(4,clampf(velocity.length()/40.0,0.3,0.95),velocity.normalized())
    ball=Vector2(frame_hit.position.x,frame_hit.position.z);ball_height=maxf(BallPhysics.FLOOR,frame_hit.position.y)
    velocity=Vector2(frame_hit.velocity.x,frame_hit.velocity.z);vertical_speed=frame_hit.velocity.y
    ball_spin*=0.6;pickup_lock=maxf(pickup_lock,0.05)
@@ -682,6 +686,19 @@ func step(dt:float)->void:
   resolve_player_contacts(Vector2(previous_ball.x,previous_ball.z),previous_ball.y)
   if phase!="play": return
   if resolve_boundary(previous_ball): return
+
+func advance_owned_ball(dt:float)->void:
+ if owner<0: return
+ var p:Dictionary=players[owner]
+ var stride:float=p.ratings.stride+absf(sin(p.touch*1.7))*p.ratings.touch_wave
+ if p.keeper_holding: stride=0.65
+ elif shielding(owner): stride=0.76
+ if teams[owner/Team.SIZE].sprint and is_controlled(owner): stride+=p.ratings.sprint_touch
+ var desired:Vector2=p.pos+p.dir*stride
+ ball=ball.lerp(desired,minf(1,dt*p.ratings.touch_follow))
+ velocity=p.vel
+ ball_height=lerpf(p.keeper_height,p.body.height*0.65,1-clampf(p.cooldown/1.1,0,1)) if p.keeper_holding else BallPhysics.FLOOR+absf(sin(p.touch*1.7))*0.04
+ ball_spin=0;vertical_speed=0;last_touch=owner
 
 func keeper_can_save(index:int)->bool:
  return KeeperAI.hands_allowed(self,index)
@@ -712,7 +729,7 @@ func resolve_player_contacts(previous_ball:Vector2,previous_height:float=-1.0)->
    var control_hit:=BallPhysics.player_contact(previous_ball,ball,p.pos,p.body.foot_reach)
    if not control_hit.is_empty() and lerpf(previous_height,ball_height,control_hit.time)<=p.body.foot_height:
     if hit.is_empty() or control_hit.time<hit.time: hit=control_hit;hit.zone="foot"
-  if i%5==0 and KeeperAI.in_area(p.pos,side(i/5)):
+  if i%Team.SIZE==0 and KeeperAI.in_area(p.pos,side(i/Team.SIZE)):
    var keeper_hit:=BallPhysics.player_contact(previous_ball,ball,KeeperAI.contact_center(p) if saving else p.pos,KeeperAI.radius(p,saving))
    if not keeper_hit.is_empty():
     var zone:=Body.contact_zone(p.body,lerpf(previous_height,ball_height,keeper_hit.time),p.jump_z,saving)
@@ -737,13 +754,15 @@ func resolve_player_contacts(previous_ball:Vector2,previous_height:float=-1.0)->
    if contacts.size()==1: ball=hit.position
    continue
   if restart_touch==i:
-   Rules.restart(self,1-i/5,"indirect",ball)
+   Rules.restart(self,1-i/Team.SIZE,"indirect",ball)
    notify("foul","开球后连续触球 · 间接任意球")
    return
   restart_touch=-1;restart_origin=""
   var prior_touch:int=last_touch
   last_touch=i
   p.keeper_holding=false
+  if incoming>20 and (saving or (rebound and ball_is_shot)):
+   impact(5 if saving else 6,clampf((incoming-12)/40,0.22,0.8),incoming_direction)
   if rebound:
    var energy_speed:=Vector3(velocity.x,vertical_speed,velocity.y).length()
    var restitution:float=1.0-p.ratings.header_control if zone=="head" else 0.5 if saving else 0.35
@@ -755,7 +774,7 @@ func resolve_player_contacts(previous_ball:Vector2,previous_height:float=-1.0)->
     velocity=BallPhysics.deflect(velocity,hit.normal,restitution)
     vertical_speed*=0.6 if saving else 0.35
    if saving:
-    var wide:=Vector2(side(i/5)*0.7,(-1.0 if ball.y<0 else 1.0))
+    var wide:=Vector2(side(i/Team.SIZE)*0.7,(-1.0 if ball.y<0 else 1.0))
     velocity=velocity.normalized().lerp(wide.normalized(),0.35+p.attributes.goalkeeping/99.0*0.25).normalized()*velocity.length()
    ball=hit.position
    pickup_lock=0.14;ball_spin*=0.25;p.cooldown=0.18
@@ -765,34 +784,34 @@ func resolve_player_contacts(previous_ball:Vector2,previous_height:float=-1.0)->
     if p.action in ["tip","dive_high"]:
      var deflected:=Vector3(velocity.x,minf(4.5,energy_speed*0.45),velocity.y).limit_length(energy_speed*0.85)
      velocity=Vector2(deflected.x,deflected.z);vertical_speed=deflected.y
-    saves[i/5]+=1
+    saves[i/Team.SIZE]+=1
    else: p.action="block_head" if zone=="head" else "block_chest" if zone=="chest" else "block"
    p.action_dir=-incoming_direction;p.contact_height=ball_height-p.jump_z
    p.action_time=0.8 if saving and p.action in Motion.DIVES else 0.6 if saving else 0.3
    ball_is_shot=false;pass_receiver=-1
    notify("block","封堵 · 足球折射")
    return
-  if mechanics.strict_rules and i%5==0 and mechanics.last_keeper_pass[i/5] and prior_touch/5==i/5 and p.pos.x*side(i/5)<0:
-   Rules.restart(self,1-i/5,"indirect",ball);notify("foul","门将重复回传触球");return
+  if mechanics.strict_rules and i%Team.SIZE==0 and mechanics.last_keeper_pass[i/Team.SIZE] and prior_touch/Team.SIZE==i/Team.SIZE and p.pos.x*side(i/Team.SIZE)<0:
+   Rules.restart(self,1-i/Team.SIZE,"indirect",ball);notify("foul","门将重复回传触球");return
   for team in 2:
-   if i/5!=team: mechanics.last_keeper_pass[team]=false
+   if i/Team.SIZE!=team: mechanics.last_keeper_pass[team]=false
   owner=i;pass_receiver=-1;velocity=Vector2.ZERO;vertical_speed=0;ball_spin=0
   p.keeper_holding=saving
   p.keeper_height=ball_height if saving else BallPhysics.FLOOR
   ball_height=p.keeper_height if saving else BallPhysics.FLOOR
   p.cooldown=1.1 if saving else 0.3
   p.action=Motion.keeper_action(p.keeper_height,incoming,0,p.body,p.ratings.keeper_hold) if saving else "receive"
-  if saving and teams[i/5].keeper_rush and p.keeper_height<p.body.height*0.4: p.action="smother"
+  if saving and teams[i/Team.SIZE].keeper_rush and p.keeper_height<p.body.height*0.4: p.action="smother"
   p.action_time=0.7 if saving else p.ratings.control
   p.action_dir=-incoming_direction;p.contact_height=ball_height-p.jump_z
-  teams[i/5].charging=false;teams[i/5].charge=0
-  if teams[i/5].auto_switch>0 or not teams[i/5].human: teams[i/5].selected=i
+  teams[i/Team.SIZE].charging=false;teams[i/Team.SIZE].charge=0
+  if teams[i/Team.SIZE].auto_switch>0 or not teams[i/Team.SIZE].human: teams[i/Team.SIZE].selected=i
   mechanics.after_receive(self,i,incoming,incoming_direction)
   ball_is_shot=false
   if saving:
-   saves[i/5]+=1
+   saves[i/Team.SIZE]+=1
    notify("save","门将扑救 · 选择方向出球")
-  elif i%5==0: notify("pass","门将脚下控球 · 选择方向传球")
+  elif i%Team.SIZE==0: notify("pass","门将脚下控球 · 选择方向传球")
   return
 
 func resolve_boundary(previous:Vector3=Vector3.INF)->bool:
@@ -806,8 +825,8 @@ func resolve_boundary(previous:Vector3=Vector3.INF)->bool:
   if in_mouth:
    if absf(ball.x)<=HALF_LENGTH+BallPhysics.RADIUS: return false
    var team:=0 if ball.x>0 else 1
-   if restart_touch>=0 and restart_origin in ["kick_in","goal_kick","indirect"]:
-    var own_goal:bool=restart_touch/5!=team
+   if restart_touch>=0 and (restart_touch/Team.SIZE!=team or restart_origin in ["kick_in","goal_kick","indirect"]):
+    var own_goal:bool=restart_touch/Team.SIZE!=team
     Rules.restart(self,team if own_goal else 1-team,"corner" if own_goal else "goal_kick",ball)
     notify("restart","此类开球不能直接得分 · "+("角球" if own_goal else "球门球"))
    else: Rules.goal(self,team)
@@ -819,7 +838,7 @@ func resolve_boundary(previous:Vector3=Vector3.INF)->bool:
    if owner>=0: owner=-1;pickup_lock=0.12;pass_receiver=-1
   else:
    var attacking:=0 if ball.x>0 else 1
-   var corner:bool=last_touch/5!=attacking
+   var corner:bool=last_touch/Team.SIZE!=attacking
    restart_play(attacking if corner else 1-attacking,"corner" if corner else "goal_kick")
    return true
  if absf(ball.y)>HALF_WIDTH:
@@ -829,7 +848,7 @@ func resolve_boundary(previous:Vector3=Vector3.INF)->bool:
    if velocity.y*wall_side>0: velocity.y*=-0.82
    if owner>=0: owner=-1;pickup_lock=0.12;pass_receiver=-1
   else:
-   restart_play(1-last_touch/5,"kick_in")
+   restart_play(1-last_touch/Team.SIZE,"kick_in")
    return true
  return false
 
@@ -842,28 +861,28 @@ func keeper_target(index:int)->Vector2:
 func ai_direction(index:int)->Vector2:
  brain.ensure(self)
  if owner==index: return brain.on_ball(self,index)
- if index%5==0:
+ if index%Team.SIZE==0:
   var offset:Vector2=keeper_target(index)-players[index].pos
   return offset.normalized()*clampf(offset.length()/0.8,0,1)
  return brain.movement(self,index)
 
 func best_outfield_receiver(index:int,aim:Vector2=Vector2.ZERO)->int:
  var option:Dictionary=brain.pass_option(self,index)
- return option.receiver if option.receiver>=0 else index/5*5+1
+ return option.receiver if option.receiver>=0 else index/Team.SIZE*Team.SIZE+1
 func closest_opponent(index:int)->float:
  var best:=INF
  for i in PLAYER_COUNT:
-  if i/5==index/5 or not players[i].active: continue
+  if i/Team.SIZE==index/Team.SIZE or not players[i].active: continue
   best=minf(best,players[index].pos.distance_to(players[i].pos))
  return best
 
 func snapshot()->Dictionary:
- return {"goal_net":goal_net.duplicate(true),"ice_mode":ice_mode,"arcade":arcade,"players":players.duplicate(true),"teams":teams.duplicate(true),"ball":ball,"velocity":velocity,"height":ball_height,"vertical":vertical_speed,"owner":owner,"score":score.duplicate(),"shots":shots.duplicate(),"passes":passes.duplicate(),"tackles":tackles.duplicate(),"saves":saves.duplicate(),"possession":possession.duplicate(),"elapsed":elapsed,"duration":duration,"regulation":regulation,"freeze":freeze,"finished":finished,"overtime":overtime,"impact_id":impact_id,"impact_kind":impact_kind,"impact_strength":impact_strength,"impact_x":impact_x,"impact_y":impact_y,"event":event_serial,"kind":event_kind,"message":message,"frame":frame,"restart":restart_kind,"pass_receiver":pass_receiver,"pass_destination":pass_destination,"last_touch":last_touch,"kick_age":kick_age,"ball_is_shot":ball_is_shot,"spin":ball_spin,"rules":Rules.state(self),"ai":brain.state(),"mechanics":mechanics.state()}
+ return {"goal_net":goal_net.duplicate(true),"ice_mode":ice_mode,"arcade":arcade,"players":players.duplicate(true),"teams":teams.duplicate(true),"ball":ball,"velocity":velocity,"height":ball_height,"vertical":vertical_speed,"owner":owner,"score":score.duplicate(),"shots":shots.duplicate(),"passes":passes.duplicate(),"tackles":tackles.duplicate(),"saves":saves.duplicate(),"possession":possession.duplicate(),"elapsed":elapsed,"duration":duration,"regulation":regulation,"freeze":freeze,"finished":finished,"overtime":overtime,"impact_id":impact_id,"impact_frame":impact_frame,"impact_kind":impact_kind,"impact_strength":impact_strength,"impact_x":impact_x,"impact_y":impact_y,"event":event_serial,"kind":event_kind,"message":message,"frame":frame,"restart":restart_kind,"pass_receiver":pass_receiver,"pass_destination":pass_destination,"last_touch":last_touch,"kick_age":kick_age,"ball_is_shot":ball_is_shot,"spin":ball_spin,"rules":Rules.state(self),"ai":brain.state(),"mechanics":mechanics.state()}
 
 func restore(state:Dictionary)->void:
  goal_net=state.get("goal_net",GoalNet.empty()).duplicate(true)
  ice_mode=bool(state.get("ice_mode",false));arcade=bool(state.get("arcade",false))
- for key in ["impact_id","impact_kind","impact_strength","impact_x","impact_y"]: set(key,state.get(key,0))
+ for key in ["impact_id","impact_frame","impact_kind","impact_strength","impact_x","impact_y"]: set(key,state.get(key,0))
  players.assign(state.players.duplicate(true))
  teams.assign(state.teams.duplicate(true))
  ball=state.ball; velocity=state.velocity; ball_height=state.height; vertical_speed=state.vertical

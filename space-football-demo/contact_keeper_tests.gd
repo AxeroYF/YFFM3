@@ -1,4 +1,5 @@
 extends RefCounted
+const Team=preload("res://team_config.gd")
 const Physics=preload("res://ball_physics.gd")
 var test
 
@@ -6,7 +7,7 @@ func fixture():
  var s=test.fixture()
  s.teams[1].human=true
  s.owner=-1;s.pickup_lock=0;s.velocity=Vector2.ZERO
- for i in 10:
+ for i in Team.COUNT:
   s.players[i].pos=Vector2(-12+i*2,14)
   s.players[i].vel=Vector2.ZERO;s.players[i].speed=0;s.players[i].cooldown=100
  return s
@@ -34,14 +35,14 @@ func check_contacts()->void:
  var s=fixture()
  s.ball=Vector2(3,0);s.velocity=Vector2(45,0);s.ball_is_shot=true
  s.players[1].pos=Vector2(1.8,0);s.players[1].cooldown=0
- s.players[6].pos=Vector2(-0.8,0);s.players[6].cooldown=0
+ s.players[7].pos=Vector2(-0.8,0);s.players[7].cooldown=0
  s.resolve_player_contacts(Vector2(-3,0))
- test.check(s.last_touch==6 and s.velocity.x<0 and s.velocity.length()<45,"first physical contact wins regardless of player-array order")
+ test.check(s.last_touch==7 and s.velocity.x<0 and s.velocity.length()<45,"first physical contact wins regardless of player-array order")
  var last_speed:=4.0
  var contacts:={}
  var decays:=true
  s=fixture();s.velocity=Vector2(4,0);s.ball_height=s.players[1].body.chest_height
- s.players[6].body=s.players[1].body.duplicate()
+ s.players[7].body=s.players[1].body.duplicate()
  for bounce in 30:
   var index:int=1 if bounce%2==0 else 6
   var other:int=6 if index==1 else 1
@@ -61,7 +62,7 @@ func check_contacts()->void:
  test.check(Vector3(s.velocity.x,s.vertical_speed,s.velocity.y).length()<=before+0.00001,"low-speed overlap cannot create horizontal or vertical energy")
  s=fixture();s.teams[0].human=false;s.teams[1].human=false
  s.ball=Vector2(20,0);s.ball_height=1.6
- for index in [1,2,6,7]: s.players[index].pos=s.ball;s.players[index].cooldown=0
+ for index in [1,2,7,8]: s.players[index].pos=s.ball;s.players[index].cooldown=0
  s.step(1.0/60)
  test.check(s.shots[0]+s.shots[1]==1,"crowded AI aerial duel allows only one kick in a simulation frame")
  var kicked_velocity:Vector2=s.velocity
@@ -72,19 +73,19 @@ func check_contacts()->void:
 
 func receive_keeper(team:int,shot:bool=false,outside:bool=false):
  var s=fixture()
- var index:=team*5
+ var index:=team*Team.SIZE
  var p:Dictionary=s.players[index]
  p.pos=Vector2((-15 if outside else -27)*s.side(team),0);p.cooldown=0
  s.ball=p.pos+Vector2(s.side(team)*0.7,0)
  s.ball_height=p.body.chest_height if shot else Physics.FLOOR
- s.last_touch=(1-team)*5+1 if shot else team*5+4
+ s.last_touch=(1-team)*Team.SIZE+1 if shot else team*Team.SIZE+4
  s.velocity=Vector2(-4*s.side(team),0);s.ball_is_shot=shot
  s.resolve_player_contacts(s.ball)
  return s
 
 func check_keeper()->void:
  for team in 2:
-  var index:=team*5
+  var index:=team*Team.SIZE
   var s=receive_keeper(team)
   var p:Dictionary=s.players[index]
   test.check(s.owner==index and s.teams[team].selected==index and not p.keeper_holding and p.action=="receive" and s.saves[team]==0,"ordinary keeper backpass selects foot possession on team "+str(team))
@@ -98,7 +99,7 @@ func check_keeper()->void:
   for assist in 3:
    for lane in [-1,1]:
     s=receive_keeper(team);s.view_team=team;s.teams[team].assist=assist
-    var target:=team*5+(2 if lane<0 else 3)
+    var target:=team*Team.SIZE+(2 if lane<0 else 3)
     s.players[target].pos=s.players[index].pos+Vector2(8*s.side(team),8*lane)
     var input=preload("res://football_input.gd").new()
     input.gamepad=93;input.assistance=assist;input.sync_context(index,index,1)
@@ -126,7 +127,7 @@ func check_keeper()->void:
   s.ai_direction(index)
   test.check(s.owner==-1 and s.players[index].action=="pass" and s.ball_height==Physics.FLOOR,"AI keeper also distributes ordinary possession with feet")
   s=receive_keeper(team)
-  s.owner=team*5+4;s.players[s.owner].pos=s.players[index].pos+Vector2(8*s.side(team),0)
+  s.owner=team*Team.SIZE+4;s.players[s.owner].pos=s.players[index].pos+Vector2(8*s.side(team),0)
   var plan:Dictionary=s.pass_plan(s.owner,Vector2(-s.side(team),0),false,1)
   test.check(plan.receiver==index,"directional passing can intentionally target own goalkeeper")
   var net=preload("res://match_network.gd").new()
