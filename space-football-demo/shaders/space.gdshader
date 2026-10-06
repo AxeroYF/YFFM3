@@ -1,5 +1,6 @@
 shader_type sky;
 render_mode use_debanding;
+uniform float galaxy=0.0;
 
 float hash(vec3 p) { p=fract(p*0.3183099+vec3(0.1,0.2,0.3)); p*=17.0; return fract(p.x*p.y*p.z*(p.x+p.y+p.z)); }
 float noise3(vec3 p) {
@@ -16,6 +17,11 @@ void sky() {
  c+=mix(vec3(0.025,0.055,0.11),vec3(0.12,0.047,0.13),fbm(d*3.0+50.0))*clouds*1.8;
  c+=vec3(0.018,0.047,0.064)*pow(fbm(d*12.0),4.0)*band;
  c*=0.32;
+ float river=exp(-pow((d.y+0.60+d.x*0.28)*7.0,2.0));
+ float cloud=fbm(d*8.0+vec3(24,7,13));
+ float dust=fbm(d*23.0+vec3(1,40,8));
+ c+=galaxy*river*mix(vec3(0.045,0.10,0.26),vec3(0.42,0.16,0.40),cloud)*pow(cloud,1.5)*0.65;
+ c+=galaxy*pow(river,4.0)*pow(dust,3.0)*vec3(0.10,0.16,0.20);
  for(int layer=0;layer<3;layer++) {
   float scale=160.0+float(layer)*120.0;
   vec3 p=d*scale; vec3 cell=floor(p); vec3 f=fract(p)-0.5;

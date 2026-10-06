@@ -1,7 +1,12 @@
 extends RefCounted
+const Actions=preload("res://match_actions.gd")
+const State=preload("res://match_state.gd")
+const PlayerState=preload("res://match_player_state.gd")
 const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 const Movement=preload("res://player_movement.gd")
+const Conditions=preload("res://match_environment.gd")
+var environment:Dictionary=Conditions.normalize({})
 ## Fixed 60 Hz authority. Rendering, input devices and networking do not own match rules.
 const TEAM_SIZE:=Team.SIZE
 const Body=preload("res://player_body.gd")
@@ -126,19 +131,7 @@ func setup(campaign,seed_value:int=0,home:Array=Squad.DEFAULT,away:Array=Squad.D
  if not Squad.valid(away): away=Squad.DEFAULT
  for i in PLAYER_COUNT:
   var record:=Library.find((home if i<Team.SIZE else away)[i%Team.SIZE])
-  var body:=Body.from_record(record,i%Team.SIZE)
-  var ratings:=Ratings.for_player(record,body)
-  var speed:float=ratings.speed
-  if not competitive:
-   if i>0 and i<Team.SIZE: speed+=float(training[[0,1,0,2,3,4][i]])*0.12*Ratings.MOVEMENT_SCALE
-   if i==0: speed+=keeper_upgrade*0.5*Ratings.MOVEMENT_SCALE
-  players.append({"pos":Vector2.ZERO,"vel":Vector2.ZERO,"dir":Vector2.RIGHT if i<Team.SIZE else Vector2.LEFT,"team":i/Team.SIZE,"slot":i%Team.SIZE,"name":record.name,"cooldown":0.0,"speed":speed,"stamina":100.0,"action":"idle","action_time":0.0,"tackle_cd":0.0,"touch":0.0,"keeper_cd":0.0,"keeper_side":0.0,"keeper_height":0.0,"player_id":record.id,"attributes":record.attributes.duplicate(true),"ratings":ratings})
-  players[-1]["body"]=body
-  players[-1]["action_strength"]=0.0
-  players[-1]["keeper_holding"]=false
-  players[-1]["role"]=record.role
-  players[-1]["preferred_foot"]=record.get("preferredFoot","right")
-  players[-1]["style"]=Style.derive(record)
+  players.append(PlayerState.create(record,i,training,keeper_upgrade,competitive))
  mechanics.setup(self)
  reset_positions(0)
 
@@ -198,6 +191,21 @@ func impact(kind:int,strength:float,direction:Vector2)->void:
 
 func wind_active()->bool:
  return arcade and stage==1 and fmod(elapsed,18.0)>12.0
+
+func gravity_scale()->float:
+ return Conditions.gravity_scale(environment)
+
+func surface_grip()->float:
+ return Conditions.weather(environment).surface_grip
+
+func advance_ball(point:Vector2,speed:Vector2,height:float,vertical:float,spin:float,shot:bool,dt:float,ahead:float=0.0)->Dictionary:
+ return BallPhysics.step(point,speed,height,vertical,spin,shot,dt,flight_conditions(ahead))
+
+func flight_conditions(ahead:float=0.0,allow_wind:bool=true)->Conditions.Flight:
+ var solar:float=3.7 if allow_wind and arcade and stage==1 and fmod(elapsed+ahead,18.0)>12.0 else 0.0
+ var settings:=Conditions.physics(environment,elapsed+ahead,solar)
+ if not allow_wind: settings.crosswind=0.0
+ return settings
 
 func switch_player()->void:
  if phase!="play": return
@@ -336,10 +344,10 @@ func assisted_movement(index:int,raw:Vector2,position:Vector2,level_override:int
  var reachable:=false
  for step_index in range(1,26):
   var t:float=step_index*0.08
-  var flight:=BallPhysics.advance(destination,predicted_velocity,predicted_height,predicted_vertical,predicted_spin,ball_is_shot,0.08,3.7 if wind_active() else 0.0)
+  var flight:=advance_ball(destination,predicted_velocity,predicted_height,predicted_vertical,predicted_spin,ball_is_shot,0.08,t-0.08)
   destination=flight.pos;predicted_velocity=flight.velocity;predicted_height=flight.height;predicted_vertical=flight.vertical;predicted_spin=flight.spin
   var along:float=travel_velocity.dot((destination-position).normalized())
-  var distance:=Movement.reachable_distance(along,speed,p.ratings,t)
+  var distance:=Movement.reachable_distance(along,speed,p.ratings,t,surface_grip())
   if predicted_height<=p.body.foot_height and position.distance_to(destination)<=distance+p.body.foot_reach:
    reachable=true;break
  if not reachable: return raw
@@ -521,18 +529,18 @@ func apply_command(team:int,command:Dictionary)->void:
  if mechanics.command(self,team,command):
   view_team=previous
   return
- if action&128: charging=false; charge=0
- if action&1: start_charge()
- if action&2: shoot(float(command.get("aim",0.0)),bool(command.get("finesse",false)),bool(command.get("chip",false)))
- if action&4: pass_ball(false,teams[team].move,false,bool(command.get("chip",false)))
- if action&8: pass_ball(true,teams[team].move,bool(command.get("chip",false)))
- if action&16: switch_player()
- if action&32: tackle()
- if action&64: tactic=clampi(int(command.get("tactic",1)),0,2)
- if action&256: pass_ball(false,teams[team].move,true)
- if action&512: tackle(-1,true)
- if action&1024: aerial(selected,float(command.get("aim",0.0)))
- if action&2048 and owner==selected and phase=="play":
+ if action&Actions.CANCEL_CHARGE: charging=false; charge=0
+ if action&Actions.CHARGE: start_charge()
+ if action&Actions.SHOOT: shoot(float(command.get("aim",0.0)),bool(command.get("finesse",false)),bool(command.get("chip",false)))
+ if action&Actions.PASS: pass_ball(false,teams[team].move,false,bool(command.get("chip",false)))
+ if action&Actions.THROUGH: pass_ball(true,teams[team].move,bool(command.get("chip",false)))
+ if action&Actions.AUTO_SWITCH: switch_player()
+ if action&Actions.TACKLE: tackle()
+ if action&Actions.TACTIC: tactic=clampi(int(command.get("tactic",1)),0,2)
+ if action&Actions.CROSS: pass_ball(false,teams[team].move,true)
+ if action&Actions.SLIDE: tackle(-1,true)
+ if action&Actions.AERIAL: aerial(selected,float(command.get("aim",0.0)))
+ if action&Actions.FEINT and owner==selected and phase=="play":
   charging=false;charge=0
   players[selected].action="feint";players[selected].action_time=0.4
  view_team=previous
@@ -567,7 +575,7 @@ func move_player(index:int,dt:float,movement:Vector2,sprinting:bool,jockeying:bo
  if owner==index: speed*=p.ratings.dribble_speed
  if (index%Team.SIZE!=0 or owner==index) and not jockeying and p.action!="slide":
   speed*=Motion.turn_scale(p.dir,movement,p.ratings)
- p.vel=Movement.velocity(p.vel,movement,speed,p.ratings,owner==index,dt)
+ p.vel=Movement.velocity(p.vel,movement,speed,p.ratings,owner==index,dt,surface_grip())
  p.pos+=p.vel*dt
  p.pos=p.pos.clamp(-limit,limit)
  var facing:Vector2=(ball-p.pos).normalized() if (jockeying or index%Team.SIZE==0) and owner!=index else movement.normalized()
@@ -673,7 +681,7 @@ func step(dt:float)->void:
   if resolve_boundary(): return
  else:
   var previous_ball:=Vector3(ball.x,ball_height,ball.y)
-  var flight:=BallPhysics.advance(ball,velocity,ball_height,vertical_speed,ball_spin,ball_is_shot,dt,3.7 if wind_active() else 0.0)
+  var flight:=advance_ball(ball,velocity,ball_height,vertical_speed,ball_spin,ball_is_shot,dt)
   ball=flight.pos;velocity=flight.velocity;ball_height=flight.height;vertical_speed=flight.vertical;ball_spin=flight.spin
   var frame_hit:=GoalFrame.collide(previous_ball,Vector3(ball.x,ball_height,ball.y),Vector3(velocity.x,vertical_speed,velocity.y))
   if not frame_hit.is_empty():
@@ -877,24 +885,7 @@ func closest_opponent(index:int)->float:
  return best
 
 func snapshot()->Dictionary:
- return {"goal_net":goal_net.duplicate(true),"ice_mode":ice_mode,"arcade":arcade,"players":players.duplicate(true),"teams":teams.duplicate(true),"ball":ball,"velocity":velocity,"height":ball_height,"vertical":vertical_speed,"owner":owner,"score":score.duplicate(),"shots":shots.duplicate(),"passes":passes.duplicate(),"tackles":tackles.duplicate(),"saves":saves.duplicate(),"possession":possession.duplicate(),"elapsed":elapsed,"duration":duration,"regulation":regulation,"freeze":freeze,"finished":finished,"overtime":overtime,"impact_id":impact_id,"impact_frame":impact_frame,"impact_kind":impact_kind,"impact_strength":impact_strength,"impact_x":impact_x,"impact_y":impact_y,"event":event_serial,"kind":event_kind,"message":message,"frame":frame,"restart":restart_kind,"pass_receiver":pass_receiver,"pass_destination":pass_destination,"last_touch":last_touch,"kick_age":kick_age,"ball_is_shot":ball_is_shot,"spin":ball_spin,"rules":Rules.state(self),"ai":brain.state(),"mechanics":mechanics.state()}
+ return State.capture(self)
 
 func restore(state:Dictionary)->void:
- goal_net=state.get("goal_net",GoalNet.empty()).duplicate(true)
- ice_mode=bool(state.get("ice_mode",false));arcade=bool(state.get("arcade",false))
- for key in ["impact_id","impact_frame","impact_kind","impact_strength","impact_x","impact_y"]: set(key,state.get(key,0))
- players.assign(state.players.duplicate(true))
- teams.assign(state.teams.duplicate(true))
- ball=state.ball; velocity=state.velocity; ball_height=state.height; vertical_speed=state.vertical
- owner=state.owner; score=state.score.duplicate(); shots=state.shots.duplicate(); passes=state.passes.duplicate()
- tackles=state.tackles.duplicate(); saves=state.saves.duplicate(); possession=state.possession.duplicate()
- elapsed=state.elapsed; duration=state.duration; regulation=state.regulation; freeze=state.freeze
- finished=state.finished; overtime=state.overtime; event_serial=state.event; event_kind=state.kind
- message=state.message; frame=state.frame; restart_kind=state.restart
- pass_receiver=state.pass_receiver;pass_destination=state.pass_destination;last_touch=state.last_touch
- kick_age=state.kick_age;ball_is_shot=state.ball_is_shot;ball_spin=state.spin
- Rules.restore(self,state.rules)
- brain.restore(state.get("ai",{}))
- mechanics.restore(state.get("mechanics",{}))
-
-
+ State.restore(self,state)

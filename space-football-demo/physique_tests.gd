@@ -140,7 +140,7 @@ func test_prediction()->void:
     var sprinting:bool=frame<65;var jockeying:bool=mode in ["jockey","shield"]
     s.teams[0].move=direction;s.teams[0].jockey=jockeying
     # Predict from the same pre-step stamina used by the authoritative tick.
-    net._predict({"move":direction,"sprint":sprinting,"jockey":jockeying,"assist_active":false},1.0/60)
+    preload("res://movement_test_probe.gd").advance(net,{"move":direction,"sprint":sprinting,"jockey":jockeying,"assist_active":false},1.0/60)
     s.move_player(index,1.0/60,direction,sprinting,jockeying)
     same=same and p.pos.distance_to(net.prediction_pos)<0.0001 and p.vel.distance_to(net.prediction_vel)<0.0001 and p.dir.distance_to(net.prediction_dir)<0.0001
    check(same,"authority/client shared physique motion "+id+" / "+mode)

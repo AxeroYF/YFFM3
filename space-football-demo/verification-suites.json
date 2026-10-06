@@ -1,0 +1,34 @@
+{
+  "Fast": [
+    {"name":"state", "script":"refactor_tests.gd", "pass":"REFACTOR_TESTS_PASS"},
+    {"name":"environment", "script":"environment_tests.gd", "pass":"ENVIRONMENT_TESTS_PASS"},
+    {"name":"network-unit", "script":"network_latency_tests.gd", "pass":"NETWORK_LATENCY_PASS"},
+    {"name":"six", "script":"six_a_side_tests.gd", "pass":"SIX_A_SIDE_TESTS_PASS"}
+  ],
+  "Full": [
+    {"name":"state", "script":"refactor_tests.gd", "pass":"REFACTOR_TESTS_PASS"},
+    {"name":"environment", "script":"environment_tests.gd", "pass":"ENVIRONMENT_TESTS_PASS"},
+    {"name":"core", "script":"tests.gd", "pass":"MODEL_TESTS_PASS"},
+    {"name":"physique", "script":"physique_tests.gd", "pass":"PHYSIQUE_PASS"},
+    {"name":"legends", "script":"legend_models_tests.gd", "pass":"LEGEND_MODELS_PASS"},
+    {"name":"network-unit", "script":"network_latency_tests.gd", "pass":"NETWORK_LATENCY_PASS"},
+    {"name":"mechanics", "script":"mechanics_tests.gd", "pass":"MECHANICS_TESTS_PASS"},
+    {"name":"receiving", "script":"receiving_defending_tests.gd", "pass":"RECEIVING_DEFENDING_TESTS_PASS"},
+    {"name":"pitch", "script":"pitch_modes_tests.gd", "pass":"PITCH_MODES_TESTS_PASS"},
+    {"name":"keeper", "script":"keeper_goal_tests.gd", "pass":"KEEPER_GOAL_TESTS_PASS"},
+    {"name":"action-net", "script":"action_net_tests.gd", "pass":"ACTION_NET_TESTS_PASS"},
+    {"name":"restart", "script":"restart_impact_tests.gd", "pass":"RESTART_IMPACT_TESTS_PASS"},
+    {"name":"six", "script":"six_a_side_tests.gd", "pass":"SIX_A_SIDE_TESTS_PASS"}
+  ],
+  "Visual": [
+    {"name":"roster-ui", "flag":"--verify-release-ui", "pass":"RELEASE_UI_PASS"},
+    {"name":"restart-ui", "flag":"--verify-restart-impact", "pass":"RESTART_IMPACT_VISUAL_PASS"},
+    {"name":"six-ui", "flag":"--verify-six", "pass":"SIX_VISUAL_PASS"},
+    {"name":"quick-ui", "flag":"--verify-quick", "pass":"QUICK_MATCH_UI_PASS"},
+    {"name":"input-ui", "flag":"--verify-input", "pass":"DESKTOP_INPUT_VERIFY_PASS"},
+    {"name":"loading-ui", "flag":"--verify-loading", "pass":"LOADING_UI_PASS"},
+    {"name":"mechanics-ui", "flag":"--verify-mechanics", "pass":"MECHANICS_VISUAL_PASS"},
+    {"name":"keeper-ui", "flag":"--verify-keeper-goal", "pass":"KEEPER_GOAL_VISUAL_PASS"},
+    {"name":"environment-ui", "flag":"--verify-environment", "pass":"ENVIRONMENT_VISUAL_PASS"}
+  ]
+}

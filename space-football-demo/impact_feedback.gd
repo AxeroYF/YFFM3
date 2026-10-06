@@ -20,15 +20,12 @@ static func offset(elapsed:float,power:float,axis:Vector2,level:int,type:int)->V
 static func fresh(event_frame:int,current_frame:int)->bool:
  return event_frame>=0 and current_frame>=event_frame and (current_frame-event_frame)/60.0<MAX_EVENT_AGE
 
-func update(game,dt:float)->void:
- if not is_instance_valid(game.camera): return
- var camera:Camera3D=game.camera
+func update(camera:Camera3D,s,playing:bool,level:int,dt:float)->void:
+ if not is_instance_valid(camera): return
  camera.h_offset=0;camera.v_offset=0
- if game.sim==null: last_sim=null;age=1;return
- var s=game.sim
+ if s==null: last_sim=null;age=1;return
  if s!=last_sim: last_sim=s;last_id=0;age=1
- var allowed:bool=game.screen=="match" and s.phase=="play" and not s.finished
- var level:int=int(game.desktop_input.options.get("camera_impact",1))
+ var allowed:bool=playing and s.phase=="play" and not s.finished
  age+=dt
  if s.impact_id!=last_id:
   last_id=s.impact_id

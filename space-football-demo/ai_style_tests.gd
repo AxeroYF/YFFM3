@@ -120,7 +120,7 @@ func check_styles()->void:
  net.prediction_index=2;net.prediction_pos=s.players[2].pos;net.prediction_vel=s.players[2].vel;net.prediction_dir=s.players[2].dir
  for frame in 24:
   s.move_player(2,1.0/60,Vector2.DOWN,false,false)
-  net._predict({"move":Vector2.DOWN,"sprint":false,"jockey":false,"assist_active":false},1.0/60)
+  preload("res://movement_test_probe.gd").advance(net,{"move":Vector2.DOWN,"sprint":false,"jockey":false,"assist_active":false},1.0/60)
  test.check(net.prediction_pos.distance_to(s.players[2].pos)<0.001,"new carrying acceleration is identical on authority and predicted client")
  net.free()
  var rig=preload("res://skinned_player.gd").new();test.root.add_child(rig);rig.build_skeleton(s.players[2].body)

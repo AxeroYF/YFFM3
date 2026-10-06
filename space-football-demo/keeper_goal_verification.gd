@@ -6,7 +6,7 @@ func check(value:bool,message:String)->void:
  checks+=1
  if not value: failures+=1;push_error("KEEPER_VISUAL_FAILED "+message)
 func frame(game,dt:float=1.0/60)->void:
- game.sim.step(dt);game.render_match(dt);game.match_tools.update(game,dt)
+ game.sim.step(dt);game.render_match(dt);game.update_match_tools(dt)
 func run(game)->void:
  game.practice=true;game.quick_fixture=preload("res://quick_match.gd").generate(716)
  await game.start_match()
@@ -34,11 +34,11 @@ func run(game)->void:
  check(game.camera.position.y>40,"goal keeps broadcast camera rather than zooming at scorer")
  await game.capture("goal-overlay")
  frame(game,s.Rules.GOAL_INTRO-0.22+0.05)
- check(game.match_tools.showing_replay(game) and not game.rules_view.goal_overlay.visible,"intro transitions to replay")
+ check(game.match_tools.showing_replay(game.sim) and not game.rules_view.goal_overlay.visible,"intro transitions to replay")
  check(game.football.position.x<s.ball.x-2,"replay shows run-up rather than only result")
  var before:PackedByteArray=var_to_bytes(s.snapshot())
  var replayed_ball:Vector3=game.football.position
- game.match_tools.update(game,0.05)
+ game.update_match_tools(0.05)
  check(before==var_to_bytes(s.snapshot()),"replay never mutates authority")
  check(game.football.position==replayed_ball,"paused authority clock also pauses replay")
  await game.capture("goal-replay-build-up")
@@ -58,9 +58,12 @@ func run(game)->void:
  check(game.rules_view.goal_overlay.visible and game.rules_view.goal_title.text=="GOAL","golden goal uses the same Goal animation")
  await game.capture("golden-goal-overlay")
  frame(game,s.Rules.GOAL_INTRO-0.22+0.05)
- check(game.match_tools.showing_replay(game),"golden goal also plays recorded buildup")
+ check(game.match_tools.showing_replay(game.sim),"golden goal also plays recorded buildup")
  game.screen="match"
  var button:=InputEventJoypadButton.new();button.device=maxi(0,game.controls.gamepad);button.button_index=JOY_BUTTON_A;button.pressed=true
+ # Register the synthetic device just as the input suite does; no physical pad is required.
+ game.desktop_input.devices[button.device]="Xbox Verification Controller"
+ game.desktop_input.window_active=true
  game._input(button)
  check(game.match_tools.replay.is_empty() and s.phase=="goal","Xbox A skips without resuming or passing")
  game.screen="rules_verification"

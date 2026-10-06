@@ -2,15 +2,16 @@ extends RefCounted
 const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 ## Authority-owned interaction layer. Devices only submit intentions.
-const SWITCH=4096
-const RUN=8192
-const SUPPORT=16384
-const SKILL=32768
-const SUBSTITUTE=65536
-const SET_PIECE=131072
-const CANCEL=262144
-const SHOT_BUFFER=524288
-const MAX_ACTION=1048575
+const Actions=preload("res://match_actions.gd")
+const SWITCH=Actions.SWITCH
+const RUN=Actions.RUN
+const SUPPORT=Actions.SUPPORT
+const SKILL=Actions.SKILL
+const SUBSTITUTE=Actions.SUBSTITUTE
+const SET_PIECE=Actions.SET_PIECE
+const CANCEL=Actions.CANCEL
+const SHOT_BUFFER=Actions.SHOT_BUFFER
+const MAX_ACTION=Actions.MAX_ACTION
 var buffered:Array=[{},{}]
 var releases:Array=[{},{}]
 var requests:Array=[{},{}]
@@ -182,7 +183,7 @@ func tick(s,dt:float,presentation_only:bool=false)->void:
   if p.vel.length()>p.speed*0.9: p.fatigue=minf(0.65,p.fatigue+dt*(0.0045-0.002*p.attributes.stamina/99.0))
   else: p.fatigue=maxf(0,p.fatigue-dt*0.0004)
   if p.jump_z>0 or p.jump_v>0:
-   p.jump_v-=dt*13;p.jump_z=maxf(0,p.jump_z+p.jump_v*dt)
+   p.jump_v-=dt*13*s.gravity_scale();p.jump_z=maxf(0,p.jump_z+p.jump_v*dt)
    if p.jump_z<=0: p.jump_v=0;p.jump_kind="";p.landing=0.12;p.action="land";p.action_time=0.20
    elif not presentation_only and not p.jump_kind.is_empty() and s.owner<0 and s.pickup_lock<=0 and p.pos.distance_to(s.ball)<1.9 and absf(s.ball_height-(p.body.head_height+p.jump_z))<0.55:
     aerial_contact(s,i,p.jump_kind,p.jump_aim,p.jump_direction);p.jump_kind=""
@@ -386,29 +387,3 @@ func discipline(s,offender:int,sliding:bool,straight_red:bool=false)->void:
  for i in range(offender/Team.SIZE*Team.SIZE,offender/Team.SIZE*Team.SIZE+Team.SIZE):
   if s.players[i].active: remaining+=1
  if remaining<Team.MIN_PLAYERS: s.finished=true;s.notify("end","人数不足 · 比赛终止")
-
-func wire(s)->PackedByteArray:
- var rows:Array=[]
- for p in s.players:
-  rows.append([s.Library.indices[p.player_id],p.active,p.fatigue,p.yellow,p.sinbin,p.jump_z,p.jump_v,p.landing,p.balance,p.release_wait,p.sub_revision,p.slide_speed])
- var trows:Array=[]
- for t in s.teams: trows.append([t.contain,t.contain_player,t.receive_assist,t.shot_assist,t.auto_switch,t.request_player,t.request_time,t.sub_pending,t.corner_plan])
- # Prediction needs the same scheduled foot-contact time after reconciliation.
- return var_to_bytes([rows,trows,benches,strict_rules,{"clock":clock,"releases":releases,"buffered":buffered}])
-
-func read_wire(s,bytes:PackedByteArray,state_value:Dictionary)->void:
- s.Library.load_catalog()
- var data=bytes_to_var(bytes)
- if not data is Array or data.size()!=5: return
- for i in Team.COUNT:
-  var row:Array=data[0][i];var p:Dictionary=state_value.players[i]
-  var record:Dictionary=s.Library.records[int(row[0])]
-  if p.player_id!=record.id:
-   p.player_id=record.id;p.name=record.name;p.attributes=record.attributes.duplicate(true);p.body=s.Body.from_record(record,i%Team.SIZE);p.ratings=s.Ratings.for_player(record,p.body);p.speed=p.ratings.speed;p.style=s.Style.derive(record);p.role=record.role;p.preferred_foot=record.get("preferredFoot","right")
-  var keys=["active","fatigue","yellow","sinbin","jump_z","jump_v","landing","balance","release_wait","sub_revision","slide_speed"]
-  for j in keys.size(): p[keys[j]]=row[j+1]
- for i in 2:
-  var keys=["contain","contain_player","receive_assist","shot_assist","auto_switch","request_player","request_time","sub_pending","corner_plan"]
-  for j in keys.size(): state_value.teams[i][keys[j]]=data[1][i][j]
- state_value.mechanics.benches=data[2];state_value.mechanics.strict_rules=data[3]
- state_value.mechanics.merge(data[4],true)

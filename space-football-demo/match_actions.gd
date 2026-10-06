@@ -1,0 +1,24 @@
+extends RefCounted
+## Stable command bit assignments shared by input, authority and prediction.
+const CHARGE=1
+const SHOOT=2
+const PASS=4
+const THROUGH=8
+const AUTO_SWITCH=16
+const TACKLE=32
+const TACTIC=64
+const CANCEL_CHARGE=128
+const CROSS=256
+const SLIDE=512
+const AERIAL=1024
+const FEINT=2048
+const SWITCH=4096
+const RUN=8192
+const SUPPORT=16384
+const SKILL=32768
+const SUBSTITUTE=65536
+const SET_PIECE=131072
+const CANCEL=262144
+const SHOT_BUFFER=524288
+const MAX_ACTION=(1<<20)-1
+const PREVIEW=CHARGE|SHOOT|PASS|THROUGH|AUTO_SWITCH|TACKLE|CANCEL_CHARGE|CROSS|SLIDE|AERIAL|FEINT|SWITCH|SKILL|CANCEL|SHOT_BUFFER

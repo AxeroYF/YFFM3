@@ -3,7 +3,7 @@ extends RefCounted
 ## events are never copied back to authority or used to submit match results.
 const Match=preload("res://match_sim.gd")
 const Command=preload("res://network_command.gd")
-const PREVIEW_ACTIONS:=1|2|4|8|16|32|128|256|512|1024|2048|4096|32768|262144|524288
+const PREVIEW_ACTIONS=preload("res://match_actions.gd").PREVIEW
 var sim
 var team:=0
 var ball_visible:=false
@@ -47,7 +47,7 @@ func step(c:Dictionary,dt:float)->void:
   sim.advance_owned_ball(dt)
   ball_visible=true
  elif sim.owner<0 and preview_kicker>=0 and preview_kicker/6==team and horizon<=0.25:
-  var flight:Dictionary=sim.BallPhysics.advance(sim.ball,sim.velocity,sim.ball_height,sim.vertical_speed,sim.ball_spin,sim.ball_is_shot,dt,3.7 if sim.wind_active() else 0)
+  var flight:Dictionary=sim.advance_ball(sim.ball,sim.velocity,sim.ball_height,sim.vertical_speed,sim.ball_spin,sim.ball_is_shot,dt)
   sim.ball=flight.pos;sim.velocity=flight.velocity;sim.ball_height=flight.height;sim.vertical_speed=flight.vertical;sim.ball_spin=flight.spin
   ball_visible=true
  # Handover before contested touches, walls, posts or the scoring plane.

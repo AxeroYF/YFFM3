@@ -260,7 +260,7 @@ func intercept(s,index:int)->Dictionary:
  var arrival:=2.4
  for step in range(1,25):
   var t:float=step*0.10
-  var flight:Dictionary=s.BallPhysics.advance(point,speed,height,vertical,spin,s.ball_is_shot,0.10,3.7 if s.wind_active() else 0)
+  var flight:Dictionary=s.advance_ball(point,speed,height,vertical,spin,s.ball_is_shot,0.10,t-0.10)
   point=flight.pos;speed=flight.velocity;height=flight.height;vertical=flight.vertical;spin=flight.spin
   if s.ice_mode or s.arcade:
    var bounce:Dictionary=s.BallPhysics.rebound(point,speed,height)
@@ -271,7 +271,7 @@ func intercept(s,index:int)->Dictionary:
   var available:float=maxf(0,t-reaction-turn)
   var cap:float=p.speed*(1-p.fatigue*0.14)*(1.42 if sprint_flags[index] else 1.0)
   var initial:float=p.vel.dot(delta.normalized())
-  var reachable:float=s.Movement.reachable_distance(initial,cap,p.ratings,available)
+  var reachable:float=s.Movement.reachable_distance(initial,cap,p.ratings,available,s.surface_grip())
   if delta.length()<=reachable+p.body.foot_reach*0.85 and height<=p.body.foot_height:
    arrival=t;break
  return {"point":engagement_point(s,index,point),"time":arrival+maxf(0,p.pos.distance_to(point)-p.speed*arrival)/maxf(0.1,p.speed)}

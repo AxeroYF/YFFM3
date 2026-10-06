@@ -1,4 +1,13 @@
 extends Node3D
+# Composition root. Compatibility accessors keep existing verification entry points stable.
+var verification_driver=preload("res://verification_driver.gd").new()
+var match_renderer=preload("res://match_renderer.gd").new()
+var stadium=preload("res://stadium_view.gd").new()
+var ui_kit=preload("res://ui_kit.gd").new()
+var match_hud=preload("res://match_hud.gd").new()
+var session=preload("res://match_session.gd").new()
+var tools_screen=preload("res://match_tools_screen.gd").new()
+var match_loading=preload("res://match_loading.gd").new()
 const Team=preload("res://team_config.gd")
 const Pitch=preload("res://pitch_geometry.gd")
 
@@ -14,57 +23,137 @@ const PlayerLibrary=preload("res://player_library.gd")
 const LibraryScreen=preload("res://library_screen.gd")
 const Squad=preload("res://squad.gd")
 const QuickMatch=preload("res://quick_match.gd")
+const Conditions=preload("res://match_environment.gd")
+var quick_environment:
+ get: return session.quick_environment
+ set(value): session.quick_environment=value
+var environment_visual:
+ get: return stadium.environment_visual
+ set(value): stadium.environment_visual=value
+var sky_material:
+ get: return stadium.sky_material
+ set(value): stadium.sky_material=value
+var pitch_material:
+ get: return stadium.pitch_material
+ set(value): stadium.pitch_material=value
 const Assistance=preload("res://play_assistance.gd")
 var assistance_return:="menu"
-var pass_arrow:MeshInstance3D
+var pass_arrow:
+ get: return stadium.pass_arrow
+ set(value): stadium.pass_arrow=value
 var rules_view=preload("res://rules_presentation.gd").new()
 var impact_feedback=preload("res://impact_feedback.gd").new()
-var quick_fixture:Dictionary={}
-var quick_arcade:=false
-var quick_ice_mode:=false
+var quick_fixture:
+ get: return session.quick_fixture
+ set(value): session.quick_fixture=value
+var quick_arcade:
+ get: return session.quick_arcade
+ set(value): session.quick_arcade=value
+var quick_ice_mode:
+ get: return session.quick_ice_mode
+ set(value): session.quick_ice_mode=value
 var quick_verify:=false
 const DesktopInput=preload("res://desktop_input.gd")
 const InputGlyph=preload("res://input_glyph.gd")
 var desktop_input:Node
-var binding_icons:Array[Control]=[]
-var binding_labels:Array[Label]=[]
+var binding_icons:
+ get: return ui_kit.binding_icons
+ set(value): ui_kit.binding_icons=value
+var binding_labels:
+ get: return ui_kit.binding_labels
+ set(value): ui_kit.binding_labels=value
 var input_verify:=false
 const INK = Color("edf6ff")
 const MUTED = Color("8da9bf")
 const CYAN = Color("6af4dc")
 const GOLD = Color("f3ca82")
 var campaign = Campaign.new()
-var sim
-var screen := "menu"
+var sim:
+ get: return session.sim
+ set(value): session.sim=value
+var screen:
+ get: return session.screen
+ set(value): session.screen=value
 var previous_screen := "hub"
 var ui: Control
 var modal: Control
-var font: SystemFont
-var bold: SystemFont
-var camera: Camera3D
-var arena: Node3D
-var planet: MeshInstance3D
-var planet_material: ShaderMaterial
-var orbit: Node3D
-var actors: Array[Node3D] = []
-var indicator: MeshInstance3D
-var football: Node3D
-var ball_shadow: MeshInstance3D
-var trail: Array[MeshInstance3D] = []
-var trail_points: Array[Vector3] = []
+var font:
+ get: return ui_kit.font
+ set(value): ui_kit.font=value
+var bold:
+ get: return ui_kit.bold
+ set(value): ui_kit.bold=value
+var camera:
+ get: return stadium.camera
+ set(value): stadium.camera=value
+var arena:
+ get: return stadium.arena
+ set(value): stadium.arena=value
+var planet:
+ get: return stadium.planet
+ set(value): stadium.planet=value
+var planet_material:
+ get: return stadium.planet_material
+ set(value): stadium.planet_material=value
+var orbit:
+ get: return stadium.orbit
+ set(value): stadium.orbit=value
+var actors:
+ get: return stadium.actors
+ set(value): stadium.actors=value
+var indicator:
+ get: return stadium.indicator
+ set(value): stadium.indicator=value
+var football:
+ get: return stadium.football
+ set(value): stadium.football=value
+var ball_shadow:
+ get: return stadium.ball_shadow
+ set(value): stadium.ball_shadow=value
+var trail:
+ get: return stadium.trail
+ set(value): stadium.trail=value
+var trail_points:
+ get: return stadium.trail_points
+ set(value): stadium.trail_points=value
 var portraits: Array[Texture2D] = []
 var records: Array = []
-var score_label: Label
-var time_label: Label
-var energy_label: Label
-var event_label: Label
-var player_label: Label
-var charge_bar: ColorRect
-var energy_bar: ColorRect
-var rule_label: Label
-var selected_labels: Array[Label3D] = []
-var event_age := 0.0
-var last_event := -1
+var score_label:
+ get: return match_hud.score_label
+ set(value): match_hud.score_label=value
+var time_label:
+ get: return match_hud.time_label
+ set(value): match_hud.time_label=value
+var energy_label:
+ get: return match_hud.energy_label
+ set(value): match_hud.energy_label=value
+var event_label:
+ get: return match_hud.event_label
+ set(value): match_hud.event_label=value
+var player_label:
+ get: return match_hud.player_label
+ set(value): match_hud.player_label=value
+var charge_bar:
+ get: return match_hud.charge_bar
+ set(value): match_hud.charge_bar=value
+var energy_bar:
+ get: return match_hud.energy_bar
+ set(value): match_hud.energy_bar=value
+var rule_label:
+ get: return match_hud.rule_label
+ set(value): match_hud.rule_label=value
+var environment_label:
+ get: return match_hud.environment_label
+ set(value): match_hud.environment_label=value
+var selected_labels:
+ get: return stadium.selected_labels
+ set(value): stadium.selected_labels=value
+var event_age:
+ get: return match_hud.event_age
+ set(value): match_hud.event_age=value
+var last_event:
+ get: return match_hud.last_event
+ set(value): match_hud.last_event=value
 var time := 0.0
 var ui_age := 0.0
 var pending_result := false
@@ -72,14 +161,7 @@ var result_data := {}
 var has_save := false
 var tactic := 1
 var sounds := true
-var sound_player: AudioStreamPlayer
-var sound_playback: AudioStreamGeneratorPlayback
-var sound_left := 0.0
-var sound_phase := 0.0
-var sound_freq := 400.0
-var sound_impact:=false
-var sound_age:=0.0
-var sound_power:=0.5
+var audio:AudioStreamPlayer
 var verify := false
 var verify_step := 0
 var verify_ticks := 0
@@ -87,39 +169,57 @@ var screen_ticks := 0
 var capture_busy := false
 var toast_label: Label
 var sound_button: Button
-var aim_marker: MeshInstance3D
+var aim_marker:
+ get: return stadium.aim_marker
+ set(value): stadium.aim_marker=value
 var travel_left := 0.0
 var travel_text: Label
 var controls=FootballInput.new()
 var network:Node
-var goal_nets:Array=[]
-var online:=false
+var goal_nets:
+ get: return stadium.goal_nets
+ set(value): stadium.goal_nets=value
+var online:
+ get: return session.online
+ set(value): session.online=value
 var server_only:=false
 var bot_mode:=false
 var network_test:=false
 var arcade_rules:=false
-var practice:=false
+var practice:
+ get: return session.practice
+ set(value): session.practice=value
 var lobby_status:Label
 var address_field:LineEdit
 var port_field:LineEdit
-var network_label:Label
+var network_label:
+ get: return match_hud.network_label
+ set(value): match_hud.network_label=value
 var settings_panel:Control
-var rigs:Array[Node3D]=[]
+var rigs:
+ get: return stadium.rigs
+ set(value): stadium.rigs=value
 var camera_motion:=true
 var last_online_event:=-1
 var net_result_shown:=false
-var action_hint:Label
+var action_hint:
+ get: return match_hud.action_hint
+ set(value): match_hud.action_hint=value
 var bot_ready_sent:=false
 var graphical_test:=false
 var network_capture_done:=false
-var arena_walls:Array[MeshInstance3D]=[]
+var arena_walls:
+ get: return stadium.arena_walls
+ set(value): stadium.arena_walls=value
 var body_showroom:Node3D
 var model_verify:=false
 var library_screen=LibraryScreen.new()
 var library_verify:=false
 var booting:=true
 var loader:CanvasLayer
-var load_epoch:=0
+var load_epoch:
+ get: return session.load_epoch
+ set(value): session.load_epoch=value
 signal match_loaded
 
 func _ready() -> void:
@@ -145,10 +245,9 @@ func _ready() -> void:
   font.font_names=PackedStringArray(["Microsoft YaHei UI","Microsoft YaHei","Segoe UI"])
   bold=SystemFont.new();bold.font_names=font.font_names;bold.font_weight=700
   loader=preload("res://loading_screen.gd").new()
-  add_child(loader);loader.build(self);loader.begin("正在启动")
+  add_child(loader);loader.build(ui_kit);loader.begin("正在启动")
   await loader.present(0,"读取球员资料")
   if "--verify-loading" in OS.get_cmdline_user_args(): await capture("loading-startup")
- library_screen.game=self
  if "--verify-release-ui" in OS.get_cmdline_user_args():
   Squad.save_path="user://release-ui-squad-test.json"
   Squad.ids=Squad.DEFAULT.duplicate()
@@ -159,6 +258,7 @@ func _ready() -> void:
  network_test="--network-test" in OS.get_cmdline_user_args()
  graphical_test="--client-test" in OS.get_cmdline_user_args()
  network=MatchNetwork.new()
+ session.network=network
  network.local_roster=Squad.ids.duplicate()
  if "--test-alternate-roster" in OS.get_cmdline_user_args(): network.local_roster[1]="legend-mbappe"
  network.name="Network"
@@ -203,11 +303,24 @@ func _ready() -> void:
  layer.add_child(modal)
  modal.mouse_filter=Control.MOUSE_FILTER_IGNORE
  desktop_input=DesktopInput.new()
+ ui_kit.desktop_input=desktop_input
+ ui_kit.sound_requested.connect(beep)
+ rules_view.sound_requested.connect(beep)
+ match_hud.sound_requested.connect(beep)
+ match_hud.kick_requested.connect(kick_sound)
  if input_verify: desktop_input.preferences_path="user://input-test-preferences.cfg"
- desktop_input.game=self
+ desktop_input.configure(controls,ui_kit,ui,modal,func():return session.screen)
+ desktop_input.back_requested.connect(navigate_back)
+ desktop_input.cancel_requested.connect(cancel_charge_input)
  desktop_input.changed.connect(refresh_binding_hints)
  desktop_input.active_pad_lost.connect(on_controller_disconnected)
  add_child(desktop_input)
+ library_screen.configure(ui_kit,ui,modal)
+ library_screen.page_requested.connect(begin_library_page)
+ library_screen.modal_requested.connect(func():clear_modal();dim_modal())
+ library_screen.close_requested.connect(clear_modal)
+ library_screen.menu_requested.connect(show_menu)
+ library_screen.toast_requested.connect(toast)
  setup_audio()
  show_menu()
  await loader.present(100,"准备完成")
@@ -225,6 +338,7 @@ func _ready() -> void:
  if "--verify-pitch-modes" in OS.get_cmdline_user_args(): call_deferred("verify_pitch_modes")
  if "--verify-action-net" in OS.get_cmdline_user_args(): call_deferred("verify_action_net")
  if "--verify-six" in OS.get_cmdline_user_args(): call_deferred("verify_six")
+ if "--verify-environment" in OS.get_cmdline_user_args(): call_deferred("verify_environment")
  if "--verify-ai" in OS.get_cmdline_user_args(): call_deferred("verify_ai")
  if "--verify-mechanics" in OS.get_cmdline_user_args(): call_deferred("verify_mechanics")
  if "--verify-rules" in OS.get_cmdline_user_args(): call_deferred("verify_rules_visuals")
@@ -268,6 +382,9 @@ func verify_action_net()->void:
 func verify_restart_impact()->void:
  await preload("res://restart_impact_verification.gd").new().run(self)
 
+func verify_environment()->void:
+ await preload("res://environment_verification.gd").new().run(self)
+
 func verify_ai()->void:
  await preload("res://ai_verification.gd").new().run(self)
 
@@ -281,63 +398,10 @@ func verify_loading_ui()->void:
  await preload("res://loading_verification.gd").new().run(self)
 
 func verify_keeper_visuals()->void:
- practice=true
- await start_match()
- screen="keeper_verification"
- camera_motion=false
- ui.visible=false
- desktop_input.overlay.visible=false
- sim.freeze=0
- var p:Dictionary=sim.players[0]
- p.dir=Vector2(0,1)
- camera.projection=Camera3D.PROJECTION_ORTHOGONAL
- camera.size=7
- camera.position=Vector3(p.pos.x,3.8,p.pos.y+9)
- camera.look_at(Vector3(p.pos.x,1.4,p.pos.y))
- for state_name in ["idle","dive","catch","throw"]:
-  p.action=state_name;p.action_time=0.5;p.keeper_side=1;p.keeper_height=1.4
-  sim.owner=0 if state_name=="catch" else -1
-  p.keeper_holding=sim.owner==0
-  sim.ball=p.pos+Vector2(0,0.8);sim.ball_height=p.body.height*0.65 if sim.owner==0 else Match.BallPhysics.FLOOR
-  for i in 20: render_match(1.0/60)
-  await capture("keeper-"+state_name)
- print("KEEPER_VISUAL_PASS")
- get_tree().quit()
+ await verification_driver.verify_keeper_visuals(self)
 
 func verify_release_ui()->void:
- Squad.ids=Squad.DEFAULT.duplicate()
- show_menu()
- await get_tree().create_timer(1.0).timeout
- await capture("main-menu")
- library_screen.show_squad()
- await get_tree().create_timer(0.4).timeout
- await capture("my-squad")
- library_screen.picking=1
- library_screen.query="姆巴佩"
- library_screen.show_library()
- await get_tree().create_timer(0.4).timeout
- await capture("squad-search")
- library_screen.details(PlayerLibrary.find("legend-mbappe"))
- await get_tree().create_timer(0.4).timeout
- await capture("player-abilities")
- var assigned:=false
- for child in modal.get_children():
-  if child is Button and child.text=="前锋":
-   child.pressed.emit()
-   assigned=true
-   break
- assert(assigned and Squad.ids[1]=="legend-mbappe")
- Squad.load_squad()
- assert(Squad.ids[1]=="legend-mbappe")
- await get_tree().create_timer(0.4).timeout
- await capture("my-squad-updated")
- practice=false
- await start_match()
- assert(sim.players[1].name=="姆巴佩" and rigs[1].body.height_cm==PlayerLibrary.find("legend-mbappe").heightCm)
- await get_tree().create_timer(2.0).timeout
- await capture("squad-match")
- print("RELEASE_UI_PASS roster_selection=button save=reload model=height abilities=server_catalog")
- get_tree().quit()
+ await verification_driver.verify_release_ui(self)
 
 func verify_input_ui()->void:
  var runner=preload("res://input_verification.gd").new()
@@ -348,328 +412,53 @@ func verify_quick_ui()->void:
  await runner.run(self)
 
 func material(color: Color, glow: float=0.0, metal: float=0.0) -> StandardMaterial3D:
- var m:=StandardMaterial3D.new()
- m.albedo_color=color
- m.metallic=metal
- m.roughness=0.4
- if glow>0:
-  m.emission_enabled=true
-  m.emission=color
-  m.emission_energy_multiplier=glow
- return m
+ return stadium.material(color,glow,metal)
 
 func box(parent: Node3D, pos: Vector3, size_value: Vector3, mat: Material) -> MeshInstance3D:
- var node:=MeshInstance3D.new()
- var mesh:=BoxMesh.new()
- mesh.size=size_value
- node.mesh=mesh
- node.material_override=mat
- node.position=pos
- parent.add_child(node)
- return node
+ return stadium.box(parent,pos,size_value,mat)
 
 func sphere(parent: Node3D, pos: Vector3, radius: float, mat: Material) -> MeshInstance3D:
- var node:=MeshInstance3D.new()
- var mesh:=SphereMesh.new()
- mesh.radius=radius
- mesh.height=radius*2
- mesh.radial_segments=48
- mesh.rings=24
- node.mesh=mesh
- node.material_override=mat
- node.position=pos
- parent.add_child(node)
- return node
+ return stadium.sphere(parent,pos,radius,mat)
 
 func beam(parent: Node3D, a: Vector3, b: Vector3, radius: float, mat: Material) -> MeshInstance3D:
- var node:=MeshInstance3D.new()
- var mesh:=CylinderMesh.new()
- mesh.top_radius=radius
- mesh.bottom_radius=radius
- mesh.height=a.distance_to(b)
- mesh.radial_segments=8
- node.mesh=mesh
- node.material_override=mat
- node.position=(a+b)*0.5
- node.quaternion=Quaternion(Vector3.UP,(b-a).normalized())
- parent.add_child(node)
- return node
+ return stadium.beam(parent,a,b,radius,mat)
 
 func ring(parent: Node3D, pos: Vector3, radius: float, width: float, mat: Material) -> MeshInstance3D:
- var node:=MeshInstance3D.new()
- var mesh:=TorusMesh.new()
- mesh.inner_radius=radius-width
- mesh.outer_radius=radius+width
- mesh.rings=80
- mesh.ring_segments=8
- node.mesh=mesh
- node.material_override=mat
- node.position=pos
- parent.add_child(node)
- return node
+ return stadium.ring(parent,pos,radius,width,mat)
 
-func build_world() -> void:
- var environment:=WorldEnvironment.new()
- var env:=Environment.new()
- env.background_mode=Environment.BG_SKY
- var sky:=Sky.new()
- var sky_material:=ShaderMaterial.new()
- sky_material.shader=load("res://shaders/space.gdshader")
- sky.sky_material=sky_material
- env.sky=sky
- env.ambient_light_source=Environment.AMBIENT_SOURCE_COLOR
- env.ambient_light_color=Color("96b9df")
- env.ambient_light_energy=0.8
- env.tonemap_mode=Environment.TONE_MAPPER_FILMIC
- env.glow_enabled=true
- env.glow_intensity=0.6
- environment.environment=env
- add_child(environment)
- var light:=DirectionalLight3D.new()
- light.light_cull_mask=1
- light.rotation_degrees=Vector3(-52,-30,0)
- light.light_energy=1.9
- light.shadow_enabled=true
- add_child(light)
- var fill:=DirectionalLight3D.new()
- fill.light_cull_mask=1
- fill.rotation_degrees=Vector3(-10,150,0)
- fill.light_color=Color("5bc5fa")
- fill.light_energy=0.8
- add_child(fill)
- camera=Camera3D.new()
- camera.far=1000
- camera.near=0.1
- add_child(camera)
- planet_material=ShaderMaterial.new()
- planet_material.shader=load("res://shaders/planet.gdshader")
- planet_material.set_shader_parameter("base_color",Color("094b8a"))
- planet_material.set_shader_parameter("secondary_color",Color("39b1a4"))
- planet_material.set_shader_parameter("kind",1)
- planet=sphere(self,Vector3(28,6,-93),36,planet_material)
- var atmosphere:=ShaderMaterial.new()
- atmosphere.shader=load("res://shaders/atmosphere.gdshader")
- atmosphere.set_shader_parameter("tint",Color("49bdec"))
- sphere(planet,Vector3.ZERO,36.6,atmosphere)
- orbit=Node3D.new()
- orbit.position=planet.position
- orbit.rotation_degrees=Vector3(15,0,-20)
- add_child(orbit)
- ring(orbit,Vector3.ZERO,49,0.07,material(Color("728cbd"),0.4))
- ring(orbit,Vector3.ZERO,52,0.22,material(Color("cbb48e"),0.3,0.7))
- var rng:=RandomNumberGenerator.new()
- rng.seed=44
- var stars:=MultiMeshInstance3D.new()
- var multimesh:=MultiMesh.new()
- multimesh.transform_format=MultiMesh.TRANSFORM_3D
- var star_mesh:=SphereMesh.new()
- star_mesh.radius=0.13
- star_mesh.height=0.26
- star_mesh.radial_segments=6
- star_mesh.rings=4
- star_mesh.material=material(Color("b0d4ff"),3)
- multimesh.mesh=star_mesh
- multimesh.instance_count=650
- for i in 650:
-  var pos:=Vector3(rng.randf_range(-220,220),rng.randf_range(-60,160),rng.randf_range(-240,-100))
-  multimesh.set_instance_transform(i,Transform3D(Basis.IDENTITY.scaled(Vector3.ONE*rng.randf_range(0.4,2)),pos))
- stars.multimesh=multimesh
- add_child(stars)
- arena=Node3D.new()
- add_child(arena)
- var steel:=material(Color("14263d"),0,0.8)
- var dark:=material(Color("0b1323"),0,0.8)
- var glow:=material(CYAN,1.9)
- var orange:=material(Color("ff8267"),1.4)
- box(arena,Vector3(0,-1.6,0),Vector3(Pitch.HALF_LENGTH*2+8,2.6,Pitch.HALF_WIDTH*2+7),steel)
- box(arena,Vector3(0,-3.1,0),Vector3(Pitch.HALF_LENGTH*2-2,1,Pitch.HALF_WIDTH*2-1),dark)
- box(arena,Vector3(0,-0.12,0),Vector3(Pitch.HALF_LENGTH*2,0.2,Pitch.HALF_WIDTH*2),load_pitch())
- for z in [-Pitch.HALF_WIDTH-3,Pitch.HALF_WIDTH+3]:
-  box(arena,Vector3(0,-0.6,z),Vector3(Pitch.HALF_LENGTH*2+7,0.17,0.15),glow)
-  for x in range(-32,33,8):
-   box(arena,Vector3(x,0.25,z),Vector3(5.2,0.6,1.4),steel)
-   box(arena,Vector3(x,0.62,z),Vector3(4.2,0.1,0.65),glow if x<0 else orange)
- for x in [-Pitch.HALF_LENGTH-3,Pitch.HALF_LENGTH+3]:
-  box(arena,Vector3(x,-0.4,0),Vector3(0.16,0.2,Pitch.HALF_WIDTH*2+4),glow if x<0 else orange)
-  for z in [-Pitch.HALF_WIDTH,Pitch.HALF_WIDTH]:
-   box(arena,Vector3(x,-3.7,z),Vector3(3.4,4,3.4),steel)
-   sphere(arena,Vector3(x,-5.9,z),1.1,material(Color("64d9ff"),3))
- var white:=material(Color("8cbac7"),0.45)
- for z in [-Pitch.HALF_WIDTH,Pitch.HALF_WIDTH]: beam(arena,Vector3(-Pitch.HALF_LENGTH,0.03,z),Vector3(Pitch.HALF_LENGTH,0.03,z),0.07,white)
- for x in [-Pitch.HALF_LENGTH,0,Pitch.HALF_LENGTH]: beam(arena,Vector3(x,0.03,-Pitch.HALF_WIDTH),Vector3(x,0.03,Pitch.HALF_WIDTH),0.07,white)
- ring(arena,Vector3(0,0.05,0),5,0.07,white)
- sphere(arena,Vector3(0,0.04,0),0.17,white)
- for side in [-1,1]:
-  var goal_mat: Material=glow if side==-1 else orange
-  box(arena,Vector3((Pitch.HALF_LENGTH+Pitch.GOAL_DEPTH*0.5)*side,-0.12,0),Vector3(Pitch.GOAL_DEPTH,0.2,Pitch.GOAL_HALF_WIDTH*2),material(Color("1c3547"),0.05))
-  for z in [-Pitch.PENALTY_HALF_WIDTH,Pitch.PENALTY_HALF_WIDTH]: beam(arena,Vector3((Pitch.HALF_LENGTH-Pitch.PENALTY_DEPTH)*side,0.04,z),Vector3(Pitch.HALF_LENGTH*side,0.04,z),0.07,white)
-  beam(arena,Vector3((Pitch.HALF_LENGTH-Pitch.PENALTY_DEPTH)*side,0.04,-Pitch.PENALTY_HALF_WIDTH),Vector3((Pitch.HALF_LENGTH-Pitch.PENALTY_DEPTH)*side,0.04,Pitch.PENALTY_HALF_WIDTH),0.07,white)
-  for z in [-Pitch.GOAL_AREA_HALF_WIDTH,Pitch.GOAL_AREA_HALF_WIDTH]: beam(arena,Vector3((Pitch.HALF_LENGTH-Pitch.GOAL_AREA_DEPTH)*side,0.04,z),Vector3(Pitch.HALF_LENGTH*side,0.04,z),0.055,white)
-  beam(arena,Vector3((Pitch.HALF_LENGTH-Pitch.GOAL_AREA_DEPTH)*side,0.04,-Pitch.GOAL_AREA_HALF_WIDTH),Vector3((Pitch.HALF_LENGTH-Pitch.GOAL_AREA_DEPTH)*side,0.04,Pitch.GOAL_AREA_HALF_WIDTH),0.055,white)
-  for z in [-5,5]:
-   beam(arena,Vector3(Pitch.HALF_LENGTH*side,0,z),Vector3(Pitch.HALF_LENGTH*side,3.6,z),0.12,goal_mat)
-   beam(arena,Vector3(Pitch.HALF_LENGTH*side,3.6,z),Vector3((Pitch.HALF_LENGTH+3)*side,3.0,z),0.10,goal_mat)
-  beam(arena,Vector3(Pitch.HALF_LENGTH*side,3.6,-5),Vector3(Pitch.HALF_LENGTH*side,3.6,5),0.12,goal_mat)
-  var net:=preload("res://goal_net_visual.gd").new();arena.add_child(net);net.build(side);goal_nets.append(net)
-  for z in [-Pitch.HALF_WIDTH,Pitch.HALF_WIDTH]:
-   beam(arena,Vector3(Pitch.HALF_LENGTH*side,0,z),Vector3(Pitch.HALF_LENGTH*side,5.2,z),0.15,steel)
-   sphere(arena,Vector3(Pitch.HALF_LENGTH*side,5.2,z),0.3,material(Color("e1edff"),4))
- var glass:=material(Color(0.15,0.55,0.7,0.09))
- glass.transparency=BaseMaterial3D.TRANSPARENCY_ALPHA
- glass.cull_mode=BaseMaterial3D.CULL_DISABLED
- for z in [-Pitch.HALF_WIDTH-0.3,Pitch.HALF_WIDTH+0.3]: arena_walls.append(box(arena,Vector3(0,0.85,z),Vector3(Pitch.HALF_LENGTH*2,1.5,0.06),glass))
- for x in [-Pitch.HALF_LENGTH-0.3,Pitch.HALF_LENGTH+0.3]:
-  for side in [-1,1]:
-   arena_walls.append(box(arena,Vector3(x,0.85,side*(Pitch.HALF_WIDTH+5)*0.5),Vector3(0.06,1.5,Pitch.HALF_WIDTH-5),glass))
- # Match footballers are built when entering a fixture, not hidden behind the main menu.
- indicator=MeshInstance3D.new()
- var selection_mesh:=ImmediateMesh.new()
- for layer_index in 2:
-  var selection_material:=material(Color("101c29") if layer_index==0 else GOLD)
-  selection_material.shading_mode=BaseMaterial3D.SHADING_MODE_UNSHADED
-  selection_material.billboard_mode=BaseMaterial3D.BILLBOARD_ENABLED
-  selection_material.no_depth_test=true
-  selection_material.cull_mode=BaseMaterial3D.CULL_DISABLED
-  selection_material.render_priority=10+layer_index
-  selection_mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES,selection_material)
-  var corners:Array=[Vector3(-0.65,0.45,0),Vector3(0.65,0.45,0),Vector3(0,-0.55,0)] if layer_index==0 else [Vector3(-0.50,0.36,0.01),Vector3(0.50,0.36,0.01),Vector3(0,-0.40,0.01)]
-  for corner in corners: selection_mesh.surface_add_vertex(corner)
-  selection_mesh.surface_end()
- indicator.mesh=selection_mesh
- indicator.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
- arena.add_child(indicator)
- football=Node3D.new()
- arena.add_child(football)
- sphere(football,Vector3.ZERO,Match.BallPhysics.RADIUS,material(Color("f5faff"),0.1,0.15))
- var football_ring:=ring(football,Vector3.ZERO,Match.BallPhysics.RADIUS,0.018,material(Color("132138")))
- football_ring.rotation_degrees.x=90
- var football_ring2:=ring(football,Vector3.ZERO,Match.BallPhysics.RADIUS,0.018,material(Color("132138")))
- football_ring2.rotation_degrees.z=90
- ball_shadow=ring(arena,Vector3(0,0.06,0),0.34,0.025,material(Color("fbde91"),0.2))
- aim_marker=ring(arena,Vector3(Pitch.HALF_LENGTH,0.08,0),0.9,0.08,material(GOLD,2))
- aim_marker.visible=false
- pass_arrow=MeshInstance3D.new()
- var arrow_mesh:=ImmediateMesh.new()
- var arrow_material:=material(CYAN,0.3)
- arrow_material.shading_mode=BaseMaterial3D.SHADING_MODE_UNSHADED
- arrow_material.cull_mode=BaseMaterial3D.CULL_DISABLED
- arrow_mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES,arrow_material)
- for vertex in [Vector3(0.65,0,0.10),Vector3(1.45,0,0.10),Vector3(0.65,0,-0.10),Vector3(0.65,0,-0.10),Vector3(1.45,0,0.10),Vector3(1.45,0,-0.10),Vector3(1.25,0,0.30),Vector3(1.95,0,0),Vector3(1.25,0,-0.30)]: arrow_mesh.surface_add_vertex(vertex)
- arrow_mesh.surface_end()
- pass_arrow.mesh=arrow_mesh
- pass_arrow.cast_shadow=GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
- arena.add_child(pass_arrow)
- pass_arrow.visible=false
- for i in 10:
-  trail.append(sphere(arena,Vector3.ZERO,0.14*(1-float(i)/12),material(Color("f3cd8a"),1.4)))
+func build_world()->void:
+ add_child(stadium)
+ stadium.build_world()
 
 func load_pitch() -> ShaderMaterial:
- var mat:=ShaderMaterial.new()
- mat.shader=load("res://shaders/pitch.gdshader")
- return mat
+ return stadium.load_pitch()
 
-func create_actor(index: int) -> void:
- var actor:=Node3D.new()
- arena.add_child(actor)
- actors.append(actor)
- var color:=CYAN if index<Match.TEAM_SIZE else Color("ff866c")
- if index%Team.SIZE==0: color=GOLD if index<Team.SIZE else Color("b79bff")
- var rig:=FootballActor.new()
- actor.add_child(rig)
- var profile:Dictionary=sim.players[index].body if sim!=null else Body.profile(index%Team.SIZE)
- rig.build(color,Match.JERSEY_NUMBERS[index],index%Team.SIZE==0,profile)
- rig.set_meta("player_id",sim.players[index].player_id if sim!=null else "")
- rigs.append(rig)
- var label:=Label3D.new()
- label.font=bold
- label.font_size=44
- label.pixel_size=0.012
- label.billboard=BaseMaterial3D.BILLBOARD_ENABLED
- label.no_depth_test=true
- label.position.y=profile.height+0.35
- label.modulate=color
- label.outline_size=10
- label.text=Match.JERSEY_NUMBERS[index]
- actor.add_child(label)
- selected_labels.append(label)
+func apply_environment_visual(value:Dictionary)->void:
+ stadium.apply_environment_visual(value)
+
+func create_actor(index:int)->void:
+ stadium.create_actor(index,sim.players[index],bold)
+
 func style(bg: Color, border: Color=Color.TRANSPARENT, radius: int=12) -> StyleBoxFlat:
- var s:=StyleBoxFlat.new()
- s.bg_color=bg
- s.border_color=border
- s.set_border_width_all(1)
- s.set_corner_radius_all(radius)
- s.content_margin_left=24
- s.content_margin_right=24
- return s
+ return ui_kit.style(bg,border,radius)
 
 func panel(parent: Control, rect: Rect2, bg: Color=Color(0.027,0.048,0.081,0.93), border: Color=Color(0.25,0.48,0.61,0.4),radius:int=12) -> Panel:
- var p:=Panel.new()
- p.position=rect.position
- p.size=rect.size
- p.add_theme_stylebox_override("panel",style(bg,border,radius))
- p.mouse_filter=Control.MOUSE_FILTER_IGNORE
- parent.add_child(p)
- return p
+ return ui_kit.panel(parent,rect,bg,border,radius)
 
 func text(parent: Control, value: String, pos: Vector2, size_value: int=26, color: Color=INK, heavy: bool=false, width: float=0) -> Label:
- var label:=Label.new()
- label.text=value
- label.position=pos
- label.add_theme_font_override("font",bold if heavy else font)
- label.add_theme_font_size_override("font_size",size_value)
- label.add_theme_color_override("font_color",color)
- label.mouse_filter=Control.MOUSE_FILTER_IGNORE
- if width>0:
-  label.size.x=width
-  label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
- parent.add_child(label)
- return label
+ return ui_kit.text(parent,value,pos,size_value,color,heavy,width)
 
 func binding_hint(parent:Control,action:String,caption:String,pos:Vector2)->void:
- var icon:=InputGlyph.new()
- icon.size=Vector2(42,42)
- icon.position=pos
- icon.face=font
- icon.set_meta("binding_action",action)
- parent.add_child(icon)
- binding_icons.append(icon)
- text(parent,caption,pos+Vector2(52,7),22,INK)
- refresh_binding_hints()
+ ui_kit.binding_hint(parent,action,caption,pos)
 
 func button_binding(parent:Button,action:String)->void:
- var icon:=InputGlyph.new()
- var side:float=parent.get_meta("input_icon_size",32.0)
- icon.size=Vector2(side,side)
- icon.position=Vector2(10,(parent.size.y-side)/2)
- icon.face=font
- icon.set_meta("binding_action",action)
- for state in ["normal","hover","pressed","disabled"]:
-  var box:StyleBoxFlat=parent.get_theme_stylebox(state).duplicate()
-  box.content_margin_left=side+22
-  box.content_margin_right=12
-  parent.add_theme_stylebox_override(state,box)
- parent.add_child(icon)
- binding_icons.append(icon)
- refresh_binding_hints()
+ ui_kit.button_binding(parent,action)
 
 func binding_text(parent:Control,template:String,actions:Array,pos:Vector2,size_value:int=24,color:Color=INK)->Label:
- var label:=text(parent,"",pos,size_value,color)
- label.set_meta("binding_template",template)
- label.set_meta("binding_actions",actions)
- binding_labels.append(label)
- refresh_binding_hints()
- return label
+ return ui_kit.binding_text(parent,template,actions,pos,size_value,color)
 
 func refresh_binding_hints()->void:
- if not is_instance_valid(desktop_input): return
- binding_icons=binding_icons.filter(func(icon): return is_instance_valid(icon))
- binding_labels=binding_labels.filter(func(label): return is_instance_valid(label))
- for icon in binding_icons: icon.set_symbol(desktop_input.symbol(icon.get_meta("binding_action")),desktop_input.family())
- for label in binding_labels:
-  var tokens:Array=[]
-  for action in label.get_meta("binding_actions"):
-   tokens.append(("左摇杆" if desktop_input.kind=="gamepad" else "方向键") if action=="move" else desktop_input.symbol(action))
-  label.text=label.get_meta("binding_template") % tokens
+ ui_kit.refresh_binding_hints()
 
 func cycle_input_glyphs()->void:
  var options:=["auto","xbox","playstation","nintendo","generic"]
@@ -681,45 +470,7 @@ func cycle_input_glyphs()->void:
    child.text="按键图标："+{"auto":"自动识别","xbox":"Xbox","playstation":"PlayStation","nintendo":"Nintendo","generic":"通用"}[desktop_input.glyph_override]
 
 func button(parent: Control, value: String, rect: Rect2, action: Callable, primary: bool=false) -> Button:
- var b:=Button.new()
- b.text=value
- b.position=rect.position
- b.size=rect.size
- b.focus_mode=Control.FOCUS_ALL
- b.set_meta("preferred_focus",primary)
- var outline:=style(Color(0.13,0.45,0.48,0.14),Color("b1fff0"))
- outline.set_border_width_all(4)
- outline.expand_margin_left=4
- outline.expand_margin_right=4
- outline.expand_margin_top=4
- outline.expand_margin_bottom=4
- b.add_theme_stylebox_override("focus",outline)
- b.add_theme_font_override("font",bold)
- b.add_theme_font_size_override("font_size",26)
- b.add_theme_color_override("font_color",Color("10282a") if primary else INK)
- b.add_theme_color_override("font_hover_color",Color("10282a") if primary else Color.WHITE)
- b.add_theme_color_override("font_focus_color",Color("10282a") if primary else Color.WHITE)
- b.add_theme_color_override("font_disabled_color",Color("586e80"))
- b.add_theme_stylebox_override("normal",style(CYAN if primary else Color("172a40"),CYAN if primary else Color("38546d")))
- b.add_theme_stylebox_override("hover",style(Color("a6ffef") if primary else Color("29405b"),CYAN))
- b.add_theme_stylebox_override("pressed",style(Color("52bba9") if primary else Color("101d30"),CYAN))
- b.add_theme_stylebox_override("disabled",style(Color("111d2d"),Color("233447")))
- # Reserve space on both sides: shortcut at left, focused confirm beside caption at right.
- var icon_side:=clampf(rect.size.y-22,22,32 if rect.size.x<240 else 56 if rect.size.y>=90 else 44)
- var inset:=icon_side+22
- var left_inset:=12.0 if rect.size.x<240 else inset
- b.set_meta("input_icon_size",icon_side)
- for state in ["normal","hover","pressed","disabled"]:
-  var box:StyleBoxFlat=b.get_theme_stylebox(state).duplicate()
-  box.content_margin_left=left_inset
-  box.content_margin_right=inset
-  b.add_theme_stylebox_override(state,box)
- var caption_width:=bold.get_string_size(value,HORIZONTAL_ALIGNMENT_LEFT,-1,26).x
- var fit:=mini(26,maxi(12,floori(26.0*maxf(1,rect.size.x-left_inset-inset)/maxf(1,caption_width))))
- b.add_theme_font_size_override("font_size",fit)
- b.pressed.connect(func(): beep(550,0.07); action.call())
- parent.add_child(b)
- return b
+ return ui_kit.button(parent,value,rect,action,primary)
 
 func clear_ui() -> void:
  controls.reset()
@@ -743,24 +494,8 @@ func chrome(section: String) -> void:
  sound_button.set_meta("utility_focus",true)
  button(ui,"全屏",Rect2(2397,1360,90,48),toggle_fullscreen).set_meta("utility_focus",true)
 
-func camera_hub() -> void:
- camera.environment=null
- camera.cull_mask=1
- planet.position=Vector3(28,6,-93)
- orbit.position=planet.position
- planet_material.set_shader_parameter("base_color",Color("094b8a"))
- planet_material.set_shader_parameter("secondary_color",Color("39b1a4"))
- planet_material.set_shader_parameter("kind",1)
- camera.projection=Camera3D.PROJECTION_PERSPECTIVE
- camera.fov=48
- camera.position=Vector3(69,46,85)
- camera.look_at(Vector3(-13,0,0))
- for actor in actors: actor.visible=false
- football.visible=false
- indicator.visible=false
- ball_shadow.visible=false
- aim_marker.visible=false
- for t in trail: t.visible=false
+func camera_hub()->void:
+ stadium.camera_hub()
 
 func show_menu() -> void:
  if online:
@@ -838,7 +573,7 @@ func show_assistance_settings()->void:
   button(modal,Assistance.NAMES[level]+("  ✓" if desktop_input.assistance==level else ""),Rect2(655,y,320,78),func(): set_assistance(level),desktop_input.assistance==level)
   text(modal,Assistance.DESCRIPTIONS[level],Vector2(1000,y+15),24,INK,false,875)
  button(modal,"传球方向指示："+("开" if desktop_input.pass_indicator else "关"),Rect2(655,925,1250,78),toggle_pass_indicator)
- button(modal,"分别调整辅助 / 镜头反馈 / 比赛选项",Rect2(655,1010,1250,55),func(): match_tools.advanced_settings(self))
+ button(modal,"分别调整辅助 / 镜头反馈 / 比赛选项",Rect2(655,1010,1250,55),func(): show_advanced_settings())
  button(modal,"返回",Rect2(655,1080,1250,70),close_assistance_settings)
 
 func set_assistance(level:int)->void:
@@ -1064,258 +799,37 @@ func begin_travel() -> void:
  travel_text=text(ui,"前往"+Campaign.MISSIONS[mini(campaign.stage,2)].name+"轨道球场",Vector2(827,1065),43,INK,true)
  beep(140,0.7)
 
-func start_match() -> void:
- if is_instance_valid(loader) and loader.active: return
- camera.cull_mask=1
- load_epoch+=1
- var epoch:=load_epoch
- controls.reset()
- controls.enabled=false
- loader.begin("正在进入比赛")
- screen="loading"
- await loader.present(0,"准备双方阵容")
- if epoch!=load_epoch: return
+func start_match()->void:
+ await match_loading.run(session,loader,stadium,controls,desktop_input,bold,prepare_match_session,prepare_match_view,render_match,func():match_loaded.emit())
+
+func prepare_match_session()->void:
  clear_modal()
  clear_ui()
- if online:
-  sim=network.sim
- else:
-  sim=Match.new()
-  if practice:
-   if not QuickMatch.valid_fixture(quick_fixture): quick_fixture=QuickMatch.generate()
-   sim.setup(Campaign.new(),quick_fixture.seed,quick_fixture.home,quick_fixture.away,true)
-   sim.teams[0].human=true
-   sim.teams[1].human=false
-   print("QUICK_MATCH_STARTED seed=",quick_fixture.seed," home=",quick_fixture.home," away=",quick_fixture.away)
-  else: sim.setup(campaign,731 if verify else 0,Squad.ids)
-  sim.arcade=quick_arcade if practice else arcade_rules
-  sim.ice_mode=practice and quick_ice_mode
-  if sim.ice_mode: sim.arcade=false
-  sim.tactic=tactic
-  sim.regulation=100
-  sim.Rules.restart(sim,0,"kickoff",Vector2.ZERO)
- if not online: sim.mechanics.strict_rules=bool(desktop_input.options.strict_rules)
+ session.prepare(campaign,tactic,arcade_rules,verify,bool(desktop_input.options.strict_rules))
  match_tools.reset()
  sim.teams[sim.view_team].assist=desktop_input.assistance
  pending_result=false
- for actor in actors:
-  arena.remove_child(actor)
-  actor.queue_free()
- actors.clear()
- rigs.clear()
- selected_labels.clear()
- await loader.present(10,"双方阵容已就绪 · 准备球员 0 / 12")
- if epoch!=load_epoch: return
- for i in Match.PLAYER_COUNT:
-  create_actor(i)
-  await loader.present(10+(i+1)*70.0/Team.COUNT,"球员已就绪 %d / 12" % (i+1))
-  if epoch!=load_epoch: return
+
+func prepare_match_view()->void:
  last_event=-1
  event_age=0
- trail_points.clear()
- camera.projection=Camera3D.PROJECTION_PERSPECTIVE
- camera.fov=44
- camera.position=Pitch.CAMERA
- camera.look_at(Vector3(0,0,-1))
- planet.position=Vector3(40,-18,-76)
- orbit.position=planet.position
- var stage: int=0 if online or practice else mini(campaign.stage,2)
- planet_material.set_shader_parameter("kind",[1,2,0][stage])
- planet_material.set_shader_parameter("base_color",[Color("094b8a"),Color("762e23"),Color("392466")][stage])
- planet_material.set_shader_parameter("secondary_color",[Color("39b1a4"),Color("e9863d"),Color("d7a98e")][stage])
- for actor in actors: actor.visible=true
- for wall in arena_walls: wall.visible=sim.arcade or sim.ice_mode
- football.visible=true
- indicator.visible=true
- ball_shadow.visible=true
- for t in trail: t.visible=true
+ stadium.prepare_match(sim,0 if online or practice else mini(campaign.stage,2))
  build_match_ui()
- render_match(0)
- await loader.present(92,"球员已就位 · 完成球场画面")
- if epoch!=load_epoch: return
- if online and network.active:
-  await loader.present(96,"本机已就绪 · 等待对手加载")
-  if epoch!=load_epoch: return
-  network.scene_ready()
-  while network.preparing and epoch==load_epoch:
-   await get_tree().process_frame
-  if epoch!=load_epoch or not network.active: return
- await loader.present(100,"准备开球")
- if epoch!=load_epoch: return
- loader.finish()
- desktop_input.reset_navigation()
- controls.reset();controls.enabled=true
- screen="match"
- match_loaded.emit()
 
-func build_match_ui() -> void:
- var mission: Dictionary=Campaign.MISSIONS[mini(campaign.stage,2)]
- panel(ui,Rect2(72,38,630,129))
- text(ui,"ONLINE  /  1v1  /  6v6" if online else ("QUICK MATCH  /  开发测试" if practice else mission.tag),Vector2(101,57),18,CYAN)
- text(ui,"冰球模式 · 反弹边界" if sim.ice_mode else "经典六人制 · 轨道球场" if not sim.arcade else mission.name+" / 星际规则",Vector2(99,97),29,INK,true)
- panel(ui,Rect2(790,35,980,155),Color(0.016,0.03,0.055,0.96))
- text(ui,"主队"+(" · 你" if sim.view_team==0 else ""),Vector2(833,74),31,CYAN,true)
- text(ui,("客队" if online else "AI 测试队" if practice else mission.club)+(" · 你" if sim.view_team==1 else ""),Vector2(1440,80),27,Color("ffa78c"),true)
- score_label=text(ui,"0  :  0",Vector2(1168,57),52,INK,true)
- time_label=text(ui,"00 : 00",Vector2(1192,127),22,GOLD)
- var pause_control:=button(ui,"菜单" if online else "暂停",Rect2(2255,43,233,65),pause_match)
- button_binding(pause_control,"pause")
- var help_control:=button(ui,"操作说明",Rect2(2255,121,233,56),func(): show_help("match"))
- button_binding(help_control,"help")
- rule_label=text(ui,"进攻方向  →     右侧球门",Vector2(929,215),24,MUTED)
- panel(ui,Rect2(72,1184,620,190))
- text(ui,"CONTROLLED PLAYER",Vector2(102,1203),17,GOLD)
- player_label=text(ui,"哈兰德  /  持球",Vector2(100,1237),32,INK,true)
- text(ui,"射门蓄力",Vector2(102,1307),20,MUTED)
- panel(ui,Rect2(230,1318,420,9),Color("203649"),Color.TRANSPARENT)
- charge_bar=ColorRect.new()
- charge_bar.position=Vector2(230,1318)
- charge_bar.size=Vector2(0,9)
- charge_bar.color=GOLD
- ui.add_child(charge_bar)
- panel(ui,Rect2(1880,1184,608,190))
- text(ui,"球员体力",Vector2(1910,1207),23,CYAN,true)
- energy_label=text(ui,"100%",Vector2(2360,1207),25,CYAN,true)
- panel(ui,Rect2(1910,1266,538,11),Color("203649"),Color.TRANSPARENT)
- energy_bar=ColorRect.new()
- energy_bar.position=Vector2(1910,1266)
- energy_bar.size=Vector2(538,11)
- energy_bar.color=CYAN
- ui.add_child(energy_bar)
- binding_hint(ui,"sprint","冲刺",Vector2(1910,1300))
- binding_hint(ui,"jockey","横移",Vector2(2080,1300))
- binding_hint(ui,"tackle","抢断",Vector2(2250,1300))
- panel(ui,Rect2(725,1227,1118,146))
- binding_hint(ui,"shoot","蓄力射门",Vector2(757,1242))
- binding_hint(ui,"pass","短传",Vector2(1010,1242))
- binding_hint(ui,"through","直塞",Vector2(1190,1242))
- binding_hint(ui,"switch","换人",Vector2(1370,1242))
- binding_hint(ui,"cross","挑传 / 滑铲",Vector2(1540,1242))
- binding_text(ui,"%s 移动 / 瞄准",["move"],Vector2(757,1310),22,MUTED)
- binding_text(ui,"%s + %s 弧线射门",["finesse","shoot"],Vector2(1230,1310),22,MUTED)
- event_label=text(ui,"准备开球",Vector2(740,1090),34,GOLD,true,1080)
- event_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
- network_label=text(ui,"",Vector2(78,187),20,CYAN)
- action_hint=text(ui,"",Vector2(1910,1150),20,GOLD)
- rules_view.build(self)
+func build_match_ui()->void:
+ match_hud.build(ui,ui_kit,sim,Campaign.MISSIONS[mini(campaign.stage,2)],online,practice,{"pause":pause_match,"help":func():show_help("match")})
+ rules_view.build(ui,ui_kit,desktop_input)
 
 func update_pass_arrow()->void:
- pass_arrow.visible=false
- if screen!="match" or not desktop_input.pass_indicator or sim==null or sim.finished: return
- if sim.phase in ["goal","foul"]: return
- if sim.phase=="restart" and not sim.Rules.Flow.ready(sim): return
- var view=network.input_state() if online else sim
- var index:int=view.selected
- var direction:=Vector2.ZERO
- if view.owner==index and not view.charging:
-  direction=view.pass_plan(index,controls.movement(),false,desktop_input.assistance).direction
- elif view.owner<0 and not view.ball_is_shot and view.last_touch/Team.SIZE==view.view_team and view.kick_age<0.3:
-  index=view.last_touch
-  direction=view.velocity.normalized()
- if direction.length()<0.1: return
- pass_arrow.position=actors[index].position*Vector3(1,0,1)+Vector3(0,0.14,0)
- pass_arrow.rotation.y=-atan2(direction.y,direction.x)
- pass_arrow.visible=true
+ match_renderer.update_pass_arrow(stadium,session,controls,desktop_input)
 
-func render_match(dt: float) -> void:
- var predicted:bool=online and not multiplayer.is_server() and network.prediction_ready
+func render_match(dt:float)->void:
+ match_renderer.render(stadium,session,controls,desktop_input,match_tools,dt)
  var view=network.input_state() if online else sim
- var selected:int=view.selected
- indicator.visible=sim.players[selected].active and sim.phase!="goal"
- for i in Match.PLAYER_COUNT:
-  var p: Dictionary=network.render_player(i) if predicted else sim.players[i]
-  selected_labels[i].visible=sim.phase!="goal"
-  if match_tools.showing_replay(self): continue
-  actors[i].visible=p.get("active",true)
-  if not actors[i].visible: continue
-  match_tools.rig_sync(self,i)
-  var target:Vector2=p.pos
-  var target3:=Vector3(target.x,p.get("jump_z",0),target.y)
-  var previous_position:Vector3=actors[i].position
-  var teleported:bool=previous_position.distance_to(target3)>=7
-  actors[i].position=previous_position.lerp(target3,1.0-exp(-dt*22)) if dt>0 and not teleported and not predicted else target3
-  var facing:Vector2=p.dir
-  if p.action_time>0 and p.action in Match.Motion.KICKS:
-   var weight:float=smoothstep(0,0.20,float(p.action_time)/Match.Motion.action_duration(p))
-   facing=facing.slerp(p.action_dir,weight)
-  actors[i].rotation.y=lerp_angle(actors[i].rotation.y,atan2(facing.x,facing.y),1-exp(-dt*28)) if dt>0 and not teleported else atan2(facing.x,facing.y)
-  # Follow visible ground travel, including prediction/interpolation, not stale snapshot velocity.
-  var visible_velocity:Vector3=(actors[i].position-previous_position)/dt if dt>0 and not teleported else Vector3.ZERO
-  var animation_state:Dictionary=p
-  if p.action in ["retrieve_ball","carry_ball","place_ball"]:
-   animation_state=p.duplicate()
-   var rendered_ball:Vector3=football.position.lerp(Vector3(sim.ball.x,sim.ball_height,sim.ball.y),minf(1,dt*25))
-   animation_state.hand_ball=actors[i].transform.affine_inverse()*rendered_ball
-  rigs[i].animate_player(animation_state,dt if sim.freeze<=0 else 0,sim.owner==i,actors[i].basis.inverse()*visible_velocity)
-  var next:int=sim.mechanics.candidate(sim,sim.view_team) if i/Team.SIZE==sim.view_team and sim.owner!=selected else -1
-  selected_labels[i].text=(p.name if i==selected else ("▽ " if i==next else "")+Match.JERSEY_NUMBERS[i])+(" [黄]" if p.get("yellow",0)>0 else "")
-  if i==sim.teams[sim.view_team].contain_player: selected_labels[i].text+=" 协防"
-  if i==sim.teams[sim.view_team].request_player: selected_labels[i].text+=" 跑位"
-  selected_labels[i].position.y=p.body.height+(2.4 if i==selected else 0.35)
- var bp: Vector2=sim.ball
- var ball_target:=Vector3(bp.x,sim.ball_height,bp.y)
- if predicted: ball_target=network.render_ball()
- if not match_tools.showing_replay(self):
-  # Short visual blend also softens the bounded ball-preview handover.
-  football.position=football.position.lerp(ball_target,minf(1,dt*(35 if predicted else 25))) if sim.phase!="goal" and dt>0 and football.position.distance_to(ball_target)<6 else ball_target
-  football.rotate_z(dt*(sim.velocity.length() if sim.owner<0 else 7))
- for net in goal_nets: net.show_state(sim.goal_net)
- ball_shadow.position=Vector3(football.position.x,0.09,football.position.z)
- ball_shadow.visible=sim.owner<0 and sim.ball_height>1.0 and sim.phase=="play"
- indicator.position=actors[selected].position+Vector3(0,sim.players[selected].body.height+1.15,0)
- update_pass_arrow()
- indicator.scale=Vector3.ONE*clampf(camera.global_position.distance_to(indicator.global_position)/65.0,0.8,1.25)
- aim_marker.visible=view.charging and sim.owner==selected
- if aim_marker.visible:
-  aim_marker.position.x=Pitch.HALF_LENGTH*sim.side(sim.view_team)
-  aim_marker.position.z=controls.last_aim*4.35
-  aim_marker.scale=Vector3.ONE*(0.7+view.charge*0.4)
- trail_points.push_front(football.position)
- if trail_points.size()>30: trail_points.pop_back()
- for i in trail.size():
-  trail[i].visible=sim.phase!="goal" and sim.owner<0 and trail_points.size()>i*2 and sim.velocity.length()>6
-  if trail[i].visible: trail[i].position=trail_points[i*2]
- score_label.text="%d  :  %d" % [sim.score[0],sim.score[1]]
- var remaining: int=maxi(0,int(ceil(sim.duration-sim.elapsed)))
- time_label.text=("金球 " if sim.overtime else "")+"%02d : %02d" % [remaining/60,remaining%60]
- player_label.text=sim.players[selected].name+(" / 持球" if sim.owner==selected else " / 接应" if sim.owner>=0 and sim.owner/Team.SIZE==sim.view_team else " / 回防")
- if sim.phase=="restart": player_label.text=sim.players[selected].name+(" / 主罚" if sim.Rules.Flow.ready(sim) else " / 取球") if selected==sim.restart_taker else sim.players[selected].name+" / 就位"
- energy_label.text="%d%% / 疲劳 %d%%" % [int(sim.energy),int(sim.players[selected].get("fatigue",0)*100)]
- energy_bar.size.x=538*sim.energy/100
- var pass_charge:float=clampf(0.28+float(Time.get_ticks_msec()-controls.pass_started)/800,0,1) if controls.pass_held else 0
- charge_bar.size.x=420*(pass_charge if controls.pass_held else view.charge)
- charge_bar.color=Color("ff967e") if view.charge>0.85 else GOLD
- rule_label.text="太阳风活跃 ↓" if sim.wind_active() else ("你的进攻方向  →  右侧球门" if sim.view_team==0 else "你的进攻方向  ←  左侧球门")+"  /  "+["稳固防守","均衡推进","全线压上"][sim.tactic]
- network_label.text=network.diagnostics() if online else ("测试编号 %d · 玩家 vs AI" % quick_fixture.seed if practice else "")
- var defender:Dictionary=sim.players[selected]
- action_hint.text="抢断恢复 %.1f 秒" % defender.tackle_cd if defender.tackle_cd>0 else desktop_input.symbol("tackle")+" 抢断 / "+desktop_input.symbol("cross")+" 铲球"
- if defender.action_time>0 and defender.action in Match.Motion.DEFENSIVE_ACTIONS:
-  action_hint.text={"tackle":"伸脚抢断 · 收腿后恢复移动","slide_still":"原地铲球 · 收腿起身","slide":"跑动滑铲 · 减速后起身"}[defender.action]
- if sim.owner==selected:
-  action_hint.text="蓄力 %d%% · " % int(view.charge*100)+("高射 · 注意横梁" if view.charge>0.85 else "有力射门" if view.charge>0.4 else "低平射门") if view.charging else desktop_input.symbol("jockey")+" 护球 / "+desktop_input.symbol("shoot")+" 蓄力射门"
-  if selected%Team.SIZE==0 and not view.charging:
-   action_hint.text=("手持球" if sim.players[selected].keeper_holding else "脚下控球")+" · 方向 + "+desktop_input.symbol("pass")+" 传球 / "+desktop_input.symbol("cross")+" 长传"
- elif sim.teams[sim.view_team].keeper_rush: action_hint.text="门将出击 · 松开 "+desktop_input.symbol("through")+" 回位"
- if controls.pass_held: action_hint.text="传球蓄力 %d%% · 松开出球" % int(pass_charge*100)
- if sim.teams[sim.view_team].contain_player>=0: action_hint.text="队友协防 · 松开 "+desktop_input.symbol("finesse")+" 结束"
- if not sim.mechanics.buffered[sim.view_team].is_empty(): action_hint.text="已预输入 · 等待触球"
- if sim.phase in ["foul","goal"]: action_hint.text=""
- rules_view.update(self,dt)
- rule_label.modulate=Color("ffbf8c") if sim.wind_active() else Color.WHITE
- if sim.event_serial!=last_event:
-  last_event=sim.event_serial
-  event_age=0
-  event_label.text=sim.message
-  if sim.event_kind=="goal": beep(780,0.5)
-  elif sim.event_kind=="shot": kick_sound(float(sim.players[maxi(0,sim.last_touch)].action_strength))
-  elif sim.event_kind=="save": beep(270,0.1)
-  elif sim.event_kind=="post": beep(940,0.18)
- event_age+=dt
- event_label.modulate.a=clampf(3.5-event_age,0,1)
- if sim.freeze>0:
-  event_label.modulate.a=1
-  if sim.event_serial==0: event_label.text="准备开球  /  %d" % maxi(1,int(ceil(sim.freeze)))
- if sim.phase!="play" or sim.event_kind in ["restart","foul"]: event_label.modulate.a=0
+ match_hud.update(sim,view,controls,desktop_input,network.diagnostics() if online else ("测试编号 %d · 玩家 vs AI" % quick_fixture.seed if practice else ""),dt)
+ var replaying:bool=match_tools.showing_replay(sim)
+ rules_view.update(sim,match_hud,desktop_input,replaying,screen=="match")
+ stadium.follow_ball(sim,replaying,camera_motion,dt)
 
 func verify_mechanics()->void:
  await preload("res://mechanics_verification.gd").new().run(self)
@@ -1338,7 +852,7 @@ func pause_match() -> void:
  panel(modal,Rect2(850,300,860,960 if practice else 850))
  text(modal,"比赛暂停",Vector2(915,454),51,INK,true)
  text(modal,"比分与剩余时间已冻结",Vector2(918,538),26,MUTED)
- button(modal,"替补席",Rect2(1400,535,240,58),func():match_tools.substitutions(self))
+ button(modal,"替补席",Rect2(1400,535,240,58),func():show_substitutions())
  button(modal,"继续比赛",Rect2(915,625,730,84),resume_match,true)
  button(modal,"同阵容重赛" if practice else "重新开始本场",Rect2(915,738,730,78),start_match)
  if practice: button(modal,"重新随机并开赛",Rect2(915,846,730,78),reroll_quick_match)
@@ -1410,7 +924,7 @@ func show_help(from: String) -> void:
   if i==5: binding_text(modal,"打开菜单与指南；%s 切换战术",["tactics"],Vector2(949,y),26,INK)
   else: text(modal,entries[i],Vector2(949,y),26,INK)
  binding_text(modal,"%s 挑传 / 无球铲球   ·   %s + %s 吊射   ·   %s + %s 挑直塞\n%s + %s 弧线射门   ·   蓄力中按 %s 假射   ·   高空球按射门键头球 / 凌空\n持球 %s 护球   ·   %s + %s 二过一   ·   防守时按住 %s 门将出击\n铲球：低速原地伸腿；跑得越快滑得越远，起身后恢复移动。\n满蓄力可能打飞；脚踢边线球，定位球限时开出，禁区犯规判点球。",["cross","chip","shoot","chip","through","finesse","shoot","pass","jockey","chip","pass","through"],Vector2(543,954),23,MUTED)
- button(modal,"进阶操作",Rect2(543,1150,400,78),func():match_tools.extra_help(self))
+ button(modal,"进阶操作",Rect2(543,1150,400,78),func():show_extra_help())
  button(modal,"明白了  /  继续",Rect2(970,1150,1047,78),close_help,true)
 
 func close_help() -> void:
@@ -1431,44 +945,23 @@ func toggle_fullscreen() -> void:
 
 func toggle_sound() -> void:
  sounds=not sounds
- if not sounds: sound_left=0
+ if is_instance_valid(audio): audio.enabled=sounds
  if is_instance_valid(sound_button): sound_button.text="音效 开" if sounds else "音效 关"
 
 func setup_audio() -> void:
- sound_player=AudioStreamPlayer.new()
- var generator:=AudioStreamGenerator.new()
- generator.mix_rate=22050
- generator.buffer_length=0.15
- sound_player.stream=generator
- sound_player.volume_db=-16
- add_child(sound_player)
- sound_player.play()
- sound_playback=sound_player.get_stream_playback()
+ audio=preload("res://game_audio.gd").new()
+ audio.enabled=sounds
+ add_child(audio)
+ audio.start()
 
-func beep(frequency: float, duration: float) -> void:
- if sounds:
-  sound_impact=false
-  sound_freq=frequency
-  sound_left=duration
+func beep(frequency:float,duration:float)->void:
+ if is_instance_valid(audio): audio.beep(frequency,duration)
 
 func kick_sound(power:float)->void:
- if not sounds: return
- sound_impact=true;sound_age=0;sound_phase=0;sound_power=clampf(power,0,1);sound_left=0.12
+ if is_instance_valid(audio): audio.kick_sound(power)
 
-func update_audio() -> void:
- if sound_playback==null: return
- var count:=mini(sound_playback.get_frames_available(),3300)
- for i in count:
-  var value:=0.0
-  if sound_left>0:
-   if sound_impact:
-    value=(sin(sound_phase)*exp(-sound_age*30)*0.60+sin(sound_phase*13.7)*exp(-sound_age*100)*0.14)*(0.55+sound_power*0.45)
-    sound_phase+=TAU*(55+75*exp(-sound_age*45))/22050.0;sound_age+=1.0/22050.0
-   else:
-    value=sin(sound_phase)*minf(1,sound_left*15)*0.35
-    sound_phase+=TAU*sound_freq/22050.0
-   sound_left-=1.0/22050.0
-  sound_playback.push_frame(Vector2(value,value))
+func update_audio()->void:
+ if is_instance_valid(audio): audio.fill_buffer()
 
 func sync_control_context()->void:
  if sim==null: return
@@ -1490,29 +983,31 @@ func _physics_process(dt:float)->void:
    var command:Dictionary
    if bot_mode or graphical_test or server_only: command=bot_command()
    else:
-    controls.enabled=screen=="match"
+    controls.enabled=session.accepts_match_input()
     sync_control_context()
     command=controls.command()
    network.submit_local(command,dt)
   network.advance(dt)
- elif screen=="match" and sim!=null:
+ elif session.runs_local_simulation():
   controls.enabled=true
   sync_control_context()
   var command:Dictionary=controls.command()
-  sim.apply_command(0,command)
+  session.submit(command,dt)
   sim.step(dt)
   if sim.finished: show_result()
 
 func _process(dt:float)->void:
  if booting or (is_instance_valid(loader) and loader.active): return
  if is_instance_valid(pass_arrow) and screen!="match": pass_arrow.visible=false
- if screen not in ["match","online_menu","help","assist_settings","rules_verification"]: rules_view.hide()
+ if not session.shows_rules(): rules_view.hide()
  if server_only or bot_mode:
   if network_test and Time.get_ticks_msec()-network.start_time>55000:
    push_error("NETWORK_TEST_TIMEOUT")
    get_tree().quit(2)
   return
  time+=dt
+ if is_instance_valid(environment_visual) and session.animates_environment():
+  environment_visual.update(dt)
  desktop_input.step(dt)
  ui_age+=dt
  screen_ticks+=1
@@ -1541,14 +1036,14 @@ func _process(dt:float)->void:
    get_tree().quit()
  planet.rotate_y(dt*0.018)
  if is_instance_valid(toast_label) and ui_age>4: toast_label.modulate.a=maxf(0,5-ui_age)
- if screen=="match" or screen=="online_menu" or (screen in ["assist_settings","substitutions"] and online) or (screen=="help" and previous_screen=="match" and online): render_match(dt)
+ if session.renders_match(previous_screen): render_match(dt)
  elif screen=="travel":
   travel_left-=dt
   camera.position=camera.position.lerp(Pitch.CAMERA,dt*1.4)
   camera.look_at(Vector3(0,0,-1))
   if travel_left<=0: start_match()
- if sim!=null and (screen=="match" or (online and screen in ["online_menu","help","assist_settings","substitutions"])): match_tools.update(self,dt)
- impact_feedback.update(self,dt)
+ if session.updates_replay(): update_match_tools(dt)
+ update_impact_feedback(dt)
  update_audio()
  if verify: verification_tick()
  if graphical_test and screen=="match" and sim.elapsed>1.0 and not network_capture_done:
@@ -1574,8 +1069,8 @@ func _input(event:InputEvent)->void:
  if screen!="match": return
  if not match_tools.replay.is_empty() and ((event is InputEventKey and event.pressed and event.physical_keycode in [KEY_S,KEY_D,KEY_A,KEY_W]) or (event is InputEventJoypadButton and event.pressed and event.button_index in [JOY_BUTTON_A,JOY_BUTTON_B,JOY_BUTTON_X,JOY_BUTTON_Y])):
   match_tools.skip_replay();get_viewport().set_input_as_handled();return
- if pressed_key and event.physical_keycode==KEY_F2: match_tools.save_scenario(self);return
- if pressed_key and event.physical_keycode==KEY_F3: match_tools.retry_scenario(self);return
+ if pressed_key and event.physical_keycode==KEY_F2: save_scenario();return
+ if pressed_key and event.physical_keycode==KEY_F3: retry_scenario();return
  if (pressed_key and event.physical_keycode==KEY_F1) or (event is InputEventJoypadButton and event.pressed and event.button_index==JOY_BUTTON_BACK):
   show_help("match")
   get_viewport().set_input_as_handled()
@@ -1590,7 +1085,7 @@ func navigate_back()->void:
  elif screen=="online_menu": clear_modal();screen="match";controls.enabled=true
  elif screen=="help": close_help()
  elif screen=="assist_settings": close_assistance_settings()
- elif screen=="substitutions": match_tools.close(self)
+ elif screen=="substitutions": close_match_tools()
  elif screen=="briefing": show_hub()
  elif screen=="menu": clear_modal()
  elif screen=="library":
@@ -1618,106 +1113,8 @@ func _notification(what:int)->void:
  if what==NOTIFICATION_WM_WINDOW_FOCUS_OUT and screen=="match" and not verify and not quick_verify and not bot_mode and not graphical_test:
   if online: show_online_menu()
   else: pause_match()
-func verification_tick() -> void:
- verify_ticks+=1
- if capture_busy: return
- if verify_step==0 and screen_ticks>45:
-  capture_busy=true
-  await capture("title")
-  campaign=Campaign.new()
-  campaign.save_path="user://verification-campaign.json"
-  has_save=true
-  show_hub()
-  verify_step=1
-  capture_busy=false
- elif verify_step==1 and screen_ticks>30:
-  capture_busy=true
-  await capture("bridge")
-  assert(campaign.train(0))
-  assert(campaign.credits==180)
-  persist()
-  var reloaded=Campaign.new()
-  reloaded.save_path=campaign.save_path
-  assert(reloaded.load_game() and reloaded.training[0]==1)
-  show_briefing()
-  verify_step=2
-  capture_busy=false
- elif verify_step==2 and screen_ticks>25:
-  capture_busy=true
-  await capture("briefing")
-  begin_travel()
-  verify_step=3
-  capture_busy=false
- elif verify_step==3 and screen=="match" and sim.elapsed>3.0:
-  capture_busy=true
-  assert(actors.size()==Team.COUNT and sim.players.size()==Team.COUNT)
-  assert(selected_labels[4].text=="04" or selected_labels[4].text=="范戴克")
-  await capture("match")
-  var before: float=sim.elapsed
-  pause_match()
-  assert(screen=="pause")
-  assert(sim.elapsed==before)
-  resume_match()
-  sim.freeze=0
-  sim.owner=sim.selected
-  var key:=InputEventKey.new()
-  key.physical_keycode=KEY_D
-  key.pressed=true
-  get_viewport().push_input(key)
-  sim.apply_command(0,controls.command())
-  assert(sim.charging)
-  sim.charge=1
-  key.pressed=false
-  get_viewport().push_input(key)
-  sim.apply_command(0,controls.command())
-  assert(sim.owner==-1 and sim.shots[0]>0)
-  var original_selection: int=sim.selected
-  key.physical_keycode=KEY_Q
-  key.pressed=true
-  get_viewport().push_input(key)
-  sim.apply_command(0,controls.command())
-  assert(sim.selected!=original_selection)
-  key.pressed=false
-  get_viewport().push_input(key)
-  # Check scoring through the live simulation, then finish every fixture.
-  sim.ball=Vector2(31.9,3)
-  sim.velocity=Vector2(30,0)
-  sim.tick(0.05,Vector2.ZERO)
-  assert(sim.score[0]==1)
-  assert(sim.phase=="goal")
-  sim.step(3.1)
-  assert(sim.phase=="restart" and sim.restart_team==1)
-  sim.freeze=0;sim.view_team=1;sim.pass_ball();sim.view_team=0
-  sim.freeze=0
-  sim.elapsed=sim.duration
-  sim.tick(0.02,Vector2.ZERO)
-  assert(sim.finished)
-  show_result()
-  assert(campaign.stage==1)
-  verify_step=4
-  capture_busy=false
- elif verify_step==4 and screen_ticks>30:
-  capture_busy=true
-  await capture("result")
-  for stage in [1,2]:
-   await start_match()
-   sim.score=[2,1]
-   sim.freeze=0
-   sim.pass_ball()
-   sim.elapsed=sim.duration
-   sim.tick(0.02,Vector2.ZERO)
-   assert(sim.finished)
-   show_result()
-  assert(campaign.stage==3 and campaign.wins==3)
-  assert(campaign.recruit())
-  persist()
-  verify_step=5
-  capture_busy=false
- elif verify_step==5 and screen_ticks>30:
-  capture_busy=true
-  await capture("champion")
-  print("STARBORNE_VERIFY_PASS: native-window captures / input / goal / pause / training / save / three-stage campaign / keeper recruitment")
-  get_tree().quit()
+func verification_tick()->void:
+ verification_driver.verification_tick(self)
 
 func capture(name: String) -> void:
  await RenderingServer.frame_post_draw
@@ -1729,9 +1126,6 @@ func capture(name: String) -> void:
  var err:=img.save_png("res://artifacts/"+name+".png")
  assert(err==OK)
 
-
-
-
 func argument(prefix:String,fallback:String)->String:
  for value in OS.get_cmdline_user_args():
   if value.begins_with(prefix): return value.trim_prefix(prefix)
@@ -1741,32 +1135,25 @@ func show_quick_options(randomize_teams:bool=true)->void:
  if randomize_teams or not QuickMatch.valid_fixture(quick_fixture): new_quick_fixture()
  clear_modal()
  dim_modal()
- panel(modal,Rect2(390,190,1780,1080))
- text(modal,"冰球模式" if quick_ice_mode else "快速比赛",Vector2(450,235),50,INK,true)
- text(modal,"开发测试 · 玩家 vs AI · 双方随机阵容",Vector2(453,320),25,MUTED)
- text(modal,"测试编号  %d" % quick_fixture.seed,Vector2(1580,269),23,CYAN)
- for side_index in 2:
-  var x:=460+side_index*840
-  panel(modal,Rect2(x,395,780,450),Color("102131"))
-  text(modal,"你的球队" if side_index==0 else "AI 测试队",Vector2(x+24,412),30,CYAN if side_index==0 else Color("ffa78c"),true)
-  var ids:Array=quick_fixture.home if side_index==0 else quick_fixture.away
-  for slot in Team.SIZE:
-   var record:=PlayerLibrary.find(ids[slot])
-   var y:=482+slot*55
-   text(modal,QuickMatch.LABELS[slot]+" · "+record.role,Vector2(x+26,y),23,MUTED)
-   var label:=text(modal,record.name,Vector2(x+235,y-2),28,INK,true,360)
-   label.max_lines_visible=1
-   label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
-   text(modal,str(int(record.overall)),Vector2(x+677,y-2),28,GOLD,true)
- button(modal,"规则："+("冰球反弹" if quick_ice_mode else "经典六人制"),Rect2(460,880,780,70),func(): quick_ice_mode=not quick_ice_mode;quick_arcade=false; show_quick_options(false))
- button(modal,"镜头："+("跟随足球" if camera_motion else "固定"),Rect2(1300,880,780,70),func(): camera_motion=not camera_motion; show_quick_options(false))
- button(modal,"开始比赛",Rect2(460,1020,880,92),begin_quick_match,true)
- button(modal,"重新随机",Rect2(1370,1020,340,92),show_quick_options)
- button(modal,"返回",Rect2(1740,1020,340,92),clear_modal)
- text(modal,"1 门将 + 5 名场上球员 · 不修改球队与星际杯存档",Vector2(464,1162),23,MUTED)
+ preload("res://quick_match_screen.gd").build(modal,ui_kit,quick_fixture,quick_environment,quick_ice_mode,camera_motion,{
+  "rules":func():quick_ice_mode=not quick_ice_mode;quick_arcade=false;show_quick_options(false),
+  "camera":func():camera_motion=not camera_motion;show_quick_options(false),
+  "stadium":func():cycle_environment("stadium"),
+  "weather":func():cycle_environment("weather"),
+  "gravity":func():cycle_environment("gravity"),
+  "start":begin_quick_match,"reroll":show_quick_options,"back":clear_modal})
+
+func cycle_environment(key:String,_legacy_count:int=0)->void:
+ quick_environment[key]=Conditions.next_option(key,int(quick_environment[key]))
+ show_quick_options(false)
+ # Keep keyboard/controller focus on the option being cycled.
+ var prefix:String={"stadium":"球场：","weather":"天气：","gravity":"重力"}.get(key,"")
+ for child in modal.get_children():
+  if child is Button and ((key=="gravity" and "重力" in child.text) or (key!="gravity" and child.text.begins_with(prefix))):
+   child.grab_focus();break
 
 func new_quick_fixture()->void:
- var previous:=quick_fixture.duplicate(true)
+ var previous:Dictionary=quick_fixture.duplicate(true)
  quick_fixture=QuickMatch.generate()
  while not previous.is_empty() and (quick_fixture.seed==previous.seed or (quick_fixture.home==previous.home and quick_fixture.away==previous.away)):
   quick_fixture=QuickMatch.generate()
@@ -1906,7 +1293,7 @@ func show_online_menu()->void:
  text(modal,"在线对局不会暂停；返回后可继续操作。",Vector2(841,609),27,MUTED)
  button(modal,"继续比赛",Rect2(840,737,440,89),func(): clear_modal(); screen="match"; controls.enabled=true,true)
  button(modal,"退出对局",Rect2(1305,737,414,89),show_menu)
- button(modal,"替补席",Rect2(1450,575,270,65),func():match_tools.substitutions(self))
+ button(modal,"替补席",Rect2(1450,575,270,65),func():show_substitutions())
  button(modal,"操作辅助与传球指示",Rect2(840,865,879,78),show_assistance_settings)
 
 func show_online_result()->void:
@@ -1973,7 +1360,43 @@ func bot_command()->Dictionary:
 func verify_pitch_modes()->void:
  await preload("res://pitch_modes_verification.gd").new().run(self)
 
+func show_advanced_settings()->void:
+ clear_modal()
+ dim_modal()
+ tools_screen.advanced_settings(modal,ui_kit,desktop_input,show_advanced_settings,show_assistance_settings)
 
+func show_substitutions()->void:
+ controls.reset()
+ screen="substitutions"
+ clear_modal()
+ dim_modal()
+ tools_screen.substitutions(modal,ui_kit,sim,session.submit_action,show_substitutions,close_match_tools)
 
+func close_match_tools()->void:
+ clear_modal()
+ screen="match"
+ controls.reset()
 
+func show_extra_help()->void:
+ clear_modal()
+ dim_modal()
+ tools_screen.extra_help(modal,ui_kit,desktop_input,func():show_help(previous_screen))
 
+func save_scenario()->void:
+ match_tools.save_scenario(session,toast)
+
+func retry_scenario()->void:
+ match_tools.retry_scenario(session,controls,toast)
+
+func update_match_tools(dt:float)->void:
+ match_tools.update(sim,stadium,controls,desktop_input,match_hud,dt)
+
+func update_impact_feedback(dt:float)->void:
+ impact_feedback.update(camera,sim,screen=="match",int(desktop_input.options.get("camera_impact",1)),dt)
+
+func begin_library_page(page_name:String,title:String)->void:
+ clear_modal()
+ clear_ui()
+ camera_hub()
+ screen=page_name
+ chrome(title)

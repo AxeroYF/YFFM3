@@ -5,9 +5,14 @@ const Physics=preload("res://ball_physics.gd")
 static func empty()->Dictionary:
  return {"point":Vector3.ZERO,"normal":Vector3.ZERO,"strength":0.0,"age":10.0,"serial":0}
 
-static func advance(pos:Vector2,velocity:Vector2,height:float,vertical:float,spin:float,team:int,dt:float)->Dictionary:
+static func advance(pos:Vector2,velocity:Vector2,height:float,vertical:float,spin:float,team:int,dt:float,gravity_scale:float=1.0,wet:bool=false)->Dictionary:
+ var settings:=Physics.Conditions.physics({"weather":2 if wet else 0})
+ settings.gravity_scale=gravity_scale
+ return advance_with_conditions(pos,velocity,height,vertical,spin,team,dt,settings)
+
+static func advance_with_conditions(pos:Vector2,velocity:Vector2,height:float,vertical:float,spin:float,team:int,dt:float,settings:Physics.Flight)->Dictionary:
  var side:=1.0 if team==0 else -1.0
- var result:=Physics.advance(pos,velocity,height,vertical,spin,true,dt)
+ var result:=Physics.step(pos,velocity,height,vertical,spin,true,dt,settings)
  var point:=Vector3(result.pos.x,result.height,result.pos.y)
  var speed:=Vector3(result.velocity.x,result.vertical,result.velocity.y)
  var contact:=Vector3.ZERO;var normal:=Vector3.ZERO;var force:=0.0
@@ -39,7 +44,7 @@ static func tick(s,dt:float)->void:
  var left:=minf(dt,6.0)
  while left>0.00001:
   var step:=minf(left,1.0/120);left-=step;s.goal_net.age+=step
-  var f:=advance(s.ball,s.velocity,s.ball_height,s.vertical_speed,s.ball_spin,s.goal_team,step)
+  var f:=advance_with_conditions(s.ball,s.velocity,s.ball_height,s.vertical_speed,s.ball_spin,s.goal_team,step,s.flight_conditions(0.0,false))
   s.ball=f.pos;s.velocity=f.velocity;s.ball_height=f.height;s.vertical_speed=f.vertical;s.ball_spin=f.spin
   if f.force>1.0:
    s.goal_net={"point":f.contact,"normal":f.normal,"strength":clampf(f.force/32.0,0.06,1.0),"age":0.0,"serial":int(s.goal_net.serial)+1}

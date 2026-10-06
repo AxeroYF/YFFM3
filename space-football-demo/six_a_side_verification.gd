@@ -21,7 +21,7 @@ func run(game)->void:
  check(game.actors.size()==12 and game.rigs.size()==12,"twelve rendered actors and rigs")
  s.freeze=0;game.render_match(0.016)
  await capture(game,"six-match")
- game.match_tools.substitutions(game);await capture(game,"six-substitutions")
+ game.show_substitutions();await capture(game,"six-substitutions")
  game.clear_modal();game.screen="match"
  s.players[1].pos=Vector2(19,2);s.ball=Vector2(20,2)
  s.Rules.restart(s,0,"free_kick",s.ball)
@@ -37,22 +37,22 @@ func run(game)->void:
  game.camera.h_offset=0;game.camera.v_offset=0
  var before:Vector2=game.camera.unproject_position(point)
  game.desktop_input.options.camera_impact=1
- game.impact_feedback.update(game,0)
+ game.update_impact_feedback(0)
  var displacement:float=before.distance_to(game.camera.unproject_position(point))
  var expected:float=11*s.impact_strength*game.get_viewport().get_visible_rect().size.y/1440.0
  check(displacement>3 and absf(displacement-expected)<0.4,"camera contact impulse reaches calibrated screen pixels")
  await capture(game,"six-shot-contact")
  var state:PackedByteArray=var_to_bytes(s.snapshot())
- game.impact_feedback.update(game,0)
+ game.update_impact_feedback(0)
  check(absf(displacement-before.distance_to(game.camera.unproject_position(point)))<0.01,"same snapshot does not retrigger impulse")
- for tick in 30: game.impact_feedback.update(game,1.0/60)
+ for tick in 30: game.update_impact_feedback(1.0/60)
  check(game.camera.h_offset==0 and game.camera.v_offset==0 and state==var_to_bytes(s.snapshot()),"shake settles with no simulation changes")
  s.frame+=30;s.impact(4,1,Vector2.RIGHT);s.frame+=20
- game.impact_feedback.update(game,0.016)
+ game.update_impact_feedback(0.016)
  check(game.camera.h_offset==0 and game.camera.v_offset==0,"stale snapshot impact is not displayed")
- s.impact(4,1,Vector2.RIGHT);game.screen="pause";game.impact_feedback.update(game,0.016)
+ s.impact(4,1,Vector2.RIGHT);game.screen="pause";game.update_impact_feedback(0.016)
  check(game.camera.h_offset==0 and game.camera.v_offset==0,"menus suppress contact feedback")
- game.screen="match";game.desktop_input.options.camera_impact=0;s.impact(4,1,Vector2.RIGHT);game.impact_feedback.update(game,0.016)
+ game.screen="match";game.desktop_input.options.camera_impact=0;s.impact(4,1,Vector2.RIGHT);game.update_impact_feedback(0.016)
  check(game.camera.h_offset==0 and game.camera.v_offset==0,"off setting suppresses all recoil")
  var report:={"checks":checks,"passed":failures==0,"contact_pixels":displacement,"expected_pixels":expected,"resolution":str(game.get_viewport().get_visible_rect().size)}
  var file:=FileAccess.open("res://artifacts/six-visual.json",FileAccess.WRITE);file.store_string(JSON.stringify(report,"  "))

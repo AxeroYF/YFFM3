@@ -3,7 +3,7 @@ extends RefCounted
 const WIDTH:=20
 const REDUNDANCY:=6
 const FLAGS:=["sprint","jockey","assist_active","keeper_rush","finesse","chip","skip_restart","driven","contain","skill_sprint"]
-const Match=preload("res://match_sim.gd")
+const Actions=preload("res://match_actions.gd")
 
 static func bind(s,team:int,command:Dictionary,seq:int,action_id:int)->Dictionary:
  s.Library.load_catalog()
@@ -26,7 +26,7 @@ static func decode(data:PackedFloat32Array)->Dictionary:
   if not is_finite(value): return {}
  for i in [0,1,2,3,4,5,12,13,14,15,16,17,18,19]:
   if data[i]!=floorf(data[i]): return {}
- if data[0]<1 or data[0]>1000000 or data[1]<0 or data[1]>1000000 or data[2]<0 or data[2]>=12 or data[3]<0 or data[3]>10000 or data[4]<0 or data[4]>=386 or data[5]<0 or data[5]>Match.Mechanics.MAX_ACTION or data[12]<0 or data[12]>=1024: return {}
+ if data[0]<1 or data[0]>1000000 or data[1]<0 or data[1]>1000000 or data[2]<0 or data[2]>=12 or data[3]<0 or data[3]>10000 or data[4]<0 or data[4]>=386 or data[5]<0 or data[5]>Actions.MAX_ACTION or data[12]<0 or data[12]>=1024: return {}
  var c:={"seq":int(data[0]),"action_id":int(data[1]),"player":int(data[2]),"revision":int(data[3]),"catalog":int(data[4]),"action":int(data[5]),"move":Vector2(data[6],data[7]).limit_length(),"aim":clampf(data[8],-1,1),"power":clampf(data[9],0,1),"direction":Vector2(data[10],data[11]).limit_length(),"tactic":clampi(int(data[13]),0,2),"assist":clampi(int(data[14]),0,2),"receive_assist":clampi(int(data[15]),-1,2),"shot_assist":clampi(int(data[16]),-1,2),"auto_switch":clampi(int(data[17]),0,2),"reserve":clampi(int(data[18]),0,3),"out":clampi(int(data[19]),0,5)}
  if (c.action==0)!=(c.action_id==0): return {}
  for i in FLAGS.size(): c[FLAGS[i]]=(int(data[12])&(1<<i))!=0

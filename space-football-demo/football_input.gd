@@ -33,7 +33,7 @@ var shot_started:=0
 var release_finesse:=false
 var release_chip:=false
 var key_bindings:={"switch_up":KEY_KP_8,"switch_down":KEY_KP_2,"switch_left":KEY_KP_4,"switch_right":KEY_KP_6}
-const Extra=preload("res://match_mechanics.gd")
+const Extra=preload("res://match_actions.gd")
 const Provider=preload("res://input_provider.gd")
 var external_provider:Provider
 

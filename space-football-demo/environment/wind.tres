@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://environment/weather_profile.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "大风"
+wind_mean = 3.4
+wind_gust = 1.2
+visual_wind = 1.0

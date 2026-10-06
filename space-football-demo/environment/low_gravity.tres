@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://environment/gravity_profile.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "低重力 · 55%"
+multiplier = 0.55

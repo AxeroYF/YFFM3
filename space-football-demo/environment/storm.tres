@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://environment/weather_profile.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "风暴"
+rain = true
+wind_mean = 3.4
+wind_gust = 1.2
+surface_grip = 0.8
+rolling_drag = 1.3
+ball_restitution = 0.23
+wetness = 1.0
+visual_wind = 1.0
+lightning = true

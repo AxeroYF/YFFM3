@@ -140,7 +140,7 @@ func check_keeper()->void:
   test.check(not decoded.players[index].keeper_holding,"keeper foot mode replaces previous hand mode in compact snapshot")
   net.prediction_index=index;net.prediction_pos=s.players[index].pos;net.prediction_vel=s.players[index].vel;net.prediction_dir=s.players[index].dir
   var command:={"move":Vector2.DOWN,"sprint":false,"jockey":false,"assist_active":false}
-  net._predict(command,1.0/60)
+  preload("res://movement_test_probe.gd").advance(net,command,1.0/60)
   s.move_player(index,1.0/60,Vector2.DOWN,false,false)
   test.check(net.prediction_pos.is_equal_approx(s.players[index].pos) and net.prediction_dir.is_equal_approx(s.players[index].dir),"goalkeeper foot movement prediction matches authority")
   net.free()

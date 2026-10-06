@@ -366,7 +366,7 @@ func check_rosters_and_ratings()->void:
  net.prediction_index=1;net.prediction_pos=a.players[1].pos;net.prediction_vel=Vector2.ZERO
  a.owner=-1
  var move:={"move":Vector2.RIGHT,"sprint":false,"jockey":false}
- net._predict(move,1.0/60)
+ preload("res://movement_test_probe.gd").advance(net,move,1.0/60)
  a.move_player(1,1.0/60,Vector2.RIGHT,false,false)
  check(net.prediction_pos.is_equal_approx(a.players[1].pos),"client and server use identical acceleration curves")
  net.free()

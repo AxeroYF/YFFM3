@@ -3,7 +3,20 @@ extends Node
 signal changed
 signal active_pad_lost
 const Glyph=preload("res://input_glyph.gd")
-var game:Node
+signal back_requested
+signal cancel_requested
+var controls
+var ui_kit
+var page_root:Control
+var modal_root:Control
+var screen_provider:Callable
+
+func configure(input_controls,kit,page:Control,modal:Control,current_screen:Callable)->void:
+ controls=input_controls
+ ui_kit=kit
+ page_root=page
+ modal_root=modal
+ screen_provider=current_screen
 var kind:="keyboard"
 var active_pad:=-1
 var devices:Dictionary={}
@@ -51,18 +64,18 @@ func _ready()->void:
  overlay.mouse_filter=Control.MOUSE_FILTER_IGNORE
  layer.add_child(overlay)
  status_icon=make_glyph(overlay,Vector2(1760,36),"PAD")
- status=game.text(overlay,"",Vector2(1814,40),20,game.CYAN,false,650)
+ status=ui_kit.text(overlay,"",Vector2(1814,40),20,ui_kit.CYAN,false,650)
  status.max_lines_visible=1
  status.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
  legend=Control.new()
  legend.position=Vector2(680,1352)
  legend.mouse_filter=Control.MOUSE_FILTER_IGNORE
  overlay.add_child(legend)
- legend_label=game.text(legend,"",Vector2(0,8),21,game.MUTED)
+ legend_label=ui_kit.text(legend,"",Vector2(0,8),21,ui_kit.MUTED)
  confirm_icon=make_glyph(legend,Vector2(670,0),"A")
- game.text(legend,"确认",Vector2(722,8),21,game.INK)
+ ui_kit.text(legend,"确认",Vector2(722,8),21,ui_kit.INK)
  back_icon=make_glyph(legend,Vector2(810,0),"B")
- game.text(legend,"返回",Vector2(862,8),21,game.INK)
+ ui_kit.text(legend,"返回",Vector2(862,8),21,ui_kit.INK)
  focus_badge=make_glyph(overlay,Vector2.ZERO,"A")
  update_prompts()
 
@@ -70,7 +83,7 @@ func make_glyph(parent:Node,where:Vector2,symbol:String)->Control:
  var icon:=Glyph.new()
  icon.position=where
  icon.size=Vector2(42,42)
- icon.face=game.font
+ icon.face=ui_kit.font
  icon.token=symbol
  parent.add_child(icon)
  return icon
@@ -113,7 +126,7 @@ func connection_changed(id:int,connected:bool)->void:
    kind="gamepad" if was_using and active_pad>=0 else "keyboard"
    stick=Vector2.ZERO;dpad=Vector2.ZERO
    if was_using:
-    game.controls.reset()
+    controls.reset()
     active_pad_lost.emit()
  update_prompts()
 
@@ -135,16 +148,16 @@ func observe(event:InputEvent)->void:
   kind="keyboard"
  if before!=str([kind,active_pad]):
   if kind=="keyboard": stick=Vector2.ZERO;dpad=Vector2.ZERO
-  game.cancel_charge_input()
+  cancel_requested.emit()
   update_prompts()
 
 func update_prompts()->void:
- game.controls.assistance=assistance
- game.controls.receive_assist=options.receive_assist
- game.controls.shot_assist=options.shot_assist
- game.controls.auto_switch=options.auto_switch
- game.controls.key_bindings={"switch_up":KEY_I,"switch_down":KEY_K,"switch_left":KEY_J,"switch_right":KEY_L} if options.alternate_directions else {"switch_up":KEY_KP_8,"switch_down":KEY_KP_2,"switch_left":KEY_KP_4,"switch_right":KEY_KP_6}
- game.controls.gamepad=active_pad if kind=="gamepad" else -1
+ controls.assistance=assistance
+ controls.receive_assist=options.receive_assist
+ controls.shot_assist=options.shot_assist
+ controls.auto_switch=options.auto_switch
+ controls.key_bindings={"switch_up":KEY_I,"switch_down":KEY_K,"switch_left":KEY_J,"switch_right":KEY_L} if options.alternate_directions else {"switch_up":KEY_KP_8,"switch_down":KEY_KP_2,"switch_left":KEY_KP_4,"switch_right":KEY_KP_6}
+ controls.gamepad=active_pad if kind=="gamepad" else -1
  if not is_instance_valid(status): return
  var connected_name:=str(devices.get(active_pad,""))
  status.text=(connected_name+" · "+("使用中" if kind=="gamepad" else "已连接 / 键鼠操作")) if not connected_name.is_empty() else "键盘 / 鼠标"
@@ -174,8 +187,8 @@ func collect(root:Node)->Array[Control]:
  return result
 
 func sync_scope()->void:
- var next:Control=game.modal if game.modal.get_child_count()>0 else (null if game.screen=="match" or game.screen=="travel" else game.ui)
- var key:String=game.screen+("/modal" if next==game.modal else "/page")
+ var next:Control=modal_root if modal_root.get_child_count()>0 else (null if str(screen_provider.call())=="match" or str(screen_provider.call())=="travel" else page_root)
+ var key:String=str(screen_provider.call())+("/modal" if next==modal_root else "/page")
  if scope!=next or scope_key!=key:
   var old_focus:=get_viewport().gui_get_focus_owner()
   if is_instance_valid(old_focus) and is_instance_valid(scope) and scope.is_ancestor_of(old_focus): focus_memory[scope_key]=weakref(old_focus)
@@ -202,7 +215,7 @@ func step(dt:float)->void:
  if not window_active: return
  sync_scope()
  if not is_instance_valid(status): return
- status.position=Vector2(1814,225 if game.screen=="match" else 40)
+ status.position=Vector2(1814,225 if str(screen_provider.call())=="match" else 40)
  status_icon.position=Vector2(1760,status.position.y-4)
  legend.visible=scope!=null
  var focus:=get_viewport().gui_get_focus_owner()
@@ -282,12 +295,12 @@ func route(event:InputEvent)->bool:
    return true
   if event.pressed:
    if event.button_index==JOY_BUTTON_A: activate(focus)
-   elif event.button_index in [JOY_BUTTON_B,JOY_BUTTON_START]: game.navigate_back()
+   elif event.button_index in [JOY_BUTTON_B,JOY_BUTTON_START]: back_requested.emit()
   return true
  if event is InputEventKey:
   var code:int=event.physical_keycode if event.physical_keycode!=0 else event.keycode
   if code==KEY_ESCAPE:
-   if event.pressed and not event.echo: game.navigate_back()
+   if event.pressed and not event.echo: back_requested.emit()
    return true
   if code==KEY_TAB:
    if event.pressed: navigate(Vector2.LEFT if event.shift_pressed else Vector2.RIGHT,true)
@@ -315,7 +328,7 @@ func activate(focus:Control)->void:
 func suspend()->void:
  window_active=false
  reset_navigation()
- game.controls.reset()
+ controls.reset()
 
 func reset_navigation()->void:
  stick=Vector2.ZERO;dpad=Vector2.ZERO;held_direction=Vector2.ZERO

@@ -9,26 +9,26 @@ var progress:ProgressBar
 var history:Array[float]=[]
 var presented_frames:=0
 
-func build(game)->void:
+func build(kit)->void:
  layer=30
  root=Control.new()
  root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
  add_child(root)
- game.panel(root,Rect2(0,0,2560,1440),Color("07111f"),Color.TRANSPARENT,0)
- game.text(root,"YFFM 3  /  STARBORNE",Vector2(208,176),28,game.CYAN,true)
- game.text(root,"群星绿茵",Vector2(203,486),88,game.INK,true)
- title=game.text(root,"正在启动",Vector2(208,654),38,game.INK,true)
- stage=game.text(root,"准备资源",Vector2(209,816),26,game.MUTED)
- percent=game.text(root,"0%",Vector2(2220,804),36,game.CYAN,true,130)
+ kit.panel(root,Rect2(0,0,2560,1440),Color("07111f"),Color.TRANSPARENT,0)
+ kit.text(root,"YFFM 3  /  STARBORNE",Vector2(208,176),28,kit.CYAN,true)
+ kit.text(root,"群星绿茵",Vector2(203,486),88,kit.INK,true)
+ title=kit.text(root,"正在启动",Vector2(208,654),38,kit.INK,true)
+ stage=kit.text(root,"准备资源",Vector2(209,816),26,kit.MUTED)
+ percent=kit.text(root,"0%",Vector2(2220,804),36,kit.CYAN,true,130)
  percent.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT
  progress=ProgressBar.new()
  progress.step=0.0 # Twelve player builds produce fractional completion percentages.
  progress.position=Vector2(210,889);progress.size=Vector2(2140,16)
  progress.show_percentage=false
- progress.add_theme_stylebox_override("background",game.style(Color("203449"),Color.TRANSPARENT,8))
- progress.add_theme_stylebox_override("fill",game.style(game.CYAN,Color.TRANSPARENT,8))
+ progress.add_theme_stylebox_override("background",kit.style(Color("203449"),Color.TRANSPARENT,8))
+ progress.add_theme_stylebox_override("fill",kit.style(kit.CYAN,Color.TRANSPARENT,8))
  root.add_child(progress)
- game.text(root,"正在准备你的球场",Vector2(210,1192),23,game.MUTED)
+ kit.text(root,"正在准备你的球场",Vector2(210,1192),23,kit.MUTED)
  root.mouse_filter=Control.MOUSE_FILTER_STOP
  hide()
 

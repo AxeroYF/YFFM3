@@ -9,7 +9,8 @@ signal session_lost(value:String)
 const Match=preload("res://match_sim.gd")
 const Campaign=preload("res://campaign.gd")
 const Squad=preload("res://squad.gd")
-const PROTOCOL:=5 # Actor-bound input timeline and scheduled action prediction.
+const Codec=preload("res://snapshot_codec.gd")
+const PROTOCOL:=Codec.VERSION # A snapshot is independent of the receiver state.
 const Command=preload("res://network_command.gd")
 const Timeline=preload("res://network_timeline.gd")
 const Prediction=preload("res://network_prediction.gd")
@@ -441,7 +442,7 @@ func state_fragment(bytes:PackedByteArray,frame:int,index:int,count:int,ack:int,
  var complete:PackedByteArray=fragments.accept(frame,index,count,bytes,Time.get_ticks_msec())
  if complete.is_empty(): return
  var state:=unpack_state({"compressed":complete})
- if int(state.frame)<=last_snapshot: return
+ if state.is_empty() or int(state.frame)<=last_snapshot: return
  if rtts.size()==2:
   peer_rtt=[int(rtts[0]),int(rtts[1])];ping_ms=peer_rtt[maxi(0,local_team)]
  _receive_snapshot(state,ack,ack_action)
@@ -499,47 +500,6 @@ func print_metrics()->void:
   result["tick_peak_ms"]=snappedf(tick_peak_us/1000.0,0.01)
  if multiplayer.is_server(): result["rejected_actions"]=[timelines[0].rejected,timelines[1].rejected]
  print("NETWORK_METRICS ",JSON.stringify(result))
-func _predict(command:Dictionary,dt:float)->void:
- # Retained movement probe for existing locomotion tests; runtime uses Prediction.
- if sim.phase!="play": return
- if prediction_index<0: return
- var p:Dictionary=sim.players[prediction_index]
- var speed:float=p.speed*(1-float(p.get("fatigue",0))*0.14)
- if not p.get("active",true): return
- if p.get("jump_z",0)>0: speed*=0.7
- if p.get("landing",0)>0 or p.get("balance",0)>0: speed*=0.65
- if p.get("release_wait",0)>0: speed*=0.55
- if p.action in sim.Motion.DEFENSIVE_ACTIONS and p.action_time>0:
-  prediction_vel=prediction_vel.move_toward(sim.Motion.defensive_velocity(p.action,p.action_time,prediction_dir,speed,p.get("slide_speed",0)),dt*32)
-  prediction_pos=(prediction_pos+prediction_vel*dt).clamp(-sim.player_limit(prediction_index),sim.player_limit(prediction_index))
-  return
- if command.sprint and p.stamina>2: speed*=1.42
- if command.jockey: speed*=0.58
- if sim.owner==prediction_index: speed*=p.ratings.dribble_speed
- if p.action_time>0 and p.action=="tackle": speed*=0.32
- if p.action_time>0 and p.action=="receive": speed*=0.7
- if p.action in sim.Motion.DIVES and p.action_time>0: speed*=1.25 if p.action_time>0.28 else 0.25
- var move:Vector2=command.move
- var receiving_assist:int=int(command.get("receive_assist",sim.teams[prediction_index/Team.SIZE].receive_assist))
- if receiving_assist<0: receiving_assist=int(command.get("assist",sim.teams[prediction_index/Team.SIZE].assist))
- if p.action_time>0 and p.action=="slide":
-  move=p.dir if p.action_time>0.3 else Vector2.ZERO
-  speed=p.speed*1.15
- if bool(command.get("assist_active",true)):
-  move=sim.assisted_movement(prediction_index,move,prediction_pos,receiving_assist,prediction_vel,int(command.sprint))
- if (prediction_index%Team.SIZE!=0 or sim.owner==prediction_index) and not command.jockey and p.action!="slide":
-  speed*=sim.Motion.turn_scale(prediction_dir,move,p.ratings)
- prediction_vel=sim.Movement.velocity(prediction_vel,move,speed,p.ratings,sim.owner==prediction_index,dt)
- prediction_pos=(prediction_pos+prediction_vel*dt).clamp(-sim.player_limit(prediction_index),sim.player_limit(prediction_index))
- var facing:Vector2=(sim.ball-prediction_pos).normalized() if (command.jockey or prediction_index%Team.SIZE==0) and sim.owner!=prediction_index else move.normalized()
- if bool(command.get("assist_active",true)):
-  var reception:Vector2=sim.receiving_facing(prediction_index,command.move,prediction_pos,receiving_assist)
-  if reception.length()>0.1: facing=reception
- if command.jockey and sim.owner==prediction_index and move.length()<0.15: facing=sim.shield_facing(prediction_index,prediction_pos)
- if p.action in sim.Motion.DIVES and p.action_time>0: facing=prediction_dir
- if facing.length()>0.1:
-  var turn:float=sim.Movement.turn_rate(p.ratings,prediction_vel,command.jockey or prediction_index%Team.SIZE==0)
-  prediction_dir=prediction_dir.rotated(clampf(prediction_dir.angle_to(facing),-dt*turn,dt*turn)).normalized()
 
 @rpc("authority","call_remote","reliable",0)
 func final_state(state:Dictionary,game_id:int)->void:
@@ -561,70 +521,11 @@ func remote_abandon()->void:
 
 
 
-const META_FIELDS=["ice_mode","arcade","elapsed","duration","regulation","freeze","owner","height","vertical","finished","overtime","event","frame","pass_receiver","last_touch","kick_age","ball_is_shot","spin","impact_id","impact_frame","impact_kind","impact_strength","impact_x","impact_y"]
-const TEAM_FIELDS=["selected","tactic","charge","charging","dash","dash_cd","sprint","jockey","human","assist","assist_active","receive_cancelled","keeper_rush","run_player","run_time"]
-const ACTIONS=["idle","shoot","pass","tackle","save","receive","block","dive","catch","throw","slide","cross","chip","header","volley","feint","fall","appeal","wall","set_piece","set_kick","celebrate","disappointed","windup","power_shot","finesse","dive_low","dive_high","scoop","foot_save","parry","tip","catch_high","shield","smother","rush","jump","land","stumble","slide_still","retrieve_ball","carry_ball","place_ball","driven_pass","block_chest","block_head"]
-const EVENTS=["kickoff","pass","shot","tackle","goal","overtime","end","save","block","restart","foul","post"]
-const RESTARTS=["kickoff","kick_in","corner","goal_kick","free_kick","indirect","penalty","accumulated"]
-
 func pack_state(state:Dictionary)->Dictionary:
- var data:=PackedFloat32Array()
- for key in META_FIELDS: data.append(float(state[key]))
- for key in ["ball","velocity","pass_destination"]: data.append(state[key].x); data.append(state[key].y)
- for key in ["score","shots","passes","tackles","saves","possession"]:
-  data.append(float(state[key][0])); data.append(float(state[key][1]))
- data.append(EVENTS.find(state.kind))
- data.append(RESTARTS.find(state.restart))
- for team in state.teams:
-  for key in TEAM_FIELDS: data.append(float(team[key]))
-  data.append(team.move.x); data.append(team.move.y)
- for p in state.players:
-  for key in ["pos","vel","dir","action_dir"]: data.append(p[key].x); data.append(p[key].y)
-  for key in ["cooldown","stamina","action_time","tackle_cd","touch","action_strength","contact_height"]: data.append(float(p[key]))
-  if p.slot==0:
-   for key in ["keeper_cd","keeper_side","keeper_height","keeper_holding"]: data.append(float(p[key]))
-  data.append(ACTIONS.find(p.action))
- var payload:Dictionary={"values":data,"message":state.message,"rules":sim.Rules.pack(state.rules),"extra":sim.mechanics.wire(sim),"net":sim.GoalNet.pack(state.goal_net)}
- return {"compressed":var_to_bytes(payload).compress(FileAccess.COMPRESSION_DEFLATE)}
+ return Codec.encode(state)
 
 func unpack_state(wire:Dictionary)->Dictionary:
- if wire.has("compressed"): wire=bytes_to_var(wire.compressed.decompress_dynamic(65536,FileAccess.COMPRESSION_DEFLATE))
- var state:Dictionary=sim.snapshot()
- var data:PackedFloat32Array=wire.values
- var cursor:=0
- for key in META_FIELDS:
-  state[key]=data[cursor]
-  cursor+=1
- for key in ["owner","frame","event","pass_receiver","last_touch","impact_id","impact_frame","impact_kind"]: state[key]=int(state[key])
- for key in ["finished","overtime","ball_is_shot"]: state[key]=bool(state[key])
- for key in ["ball","velocity","pass_destination"]:
-  state[key]=Vector2(data[cursor],data[cursor+1]); cursor+=2
- for key in ["score","shots","passes","tackles","saves","possession"]:
-  state[key]=[data[cursor],data[cursor+1]] if key=="possession" else [int(data[cursor]),int(data[cursor+1])]
-  cursor+=2
- state.kind=EVENTS[int(data[cursor])]; cursor+=1
- state.restart=RESTARTS[int(data[cursor])]; cursor+=1
- for team in state.teams:
-  for key in TEAM_FIELDS:
-   team[key]=data[cursor]; cursor+=1
-  for key in ["selected","tactic","assist","run_player"]: team[key]=int(team[key])
-  for key in ["charging","sprint","jockey","human","assist_active","receive_cancelled","keeper_rush"]: team[key]=bool(team[key])
-  team.move=Vector2(data[cursor],data[cursor+1]); cursor+=2
- for p in state.players:
-  for key in ["pos","vel","dir","action_dir"]:
-   p[key]=Vector2(data[cursor],data[cursor+1]); cursor+=2
-  for key in ["cooldown","stamina","action_time","tackle_cd","touch","action_strength","contact_height"]:
-   p[key]=data[cursor]; cursor+=1
-  if p.slot==0:
-   for key in ["keeper_cd","keeper_side","keeper_height","keeper_holding"]: p[key]=data[cursor];cursor+=1
-   p.keeper_holding=bool(p.keeper_holding)
-  p.action=ACTIONS[int(data[cursor])]; cursor+=1
- state.message=wire.message
- state.goal_net=sim.GoalNet.unpack(wire.get("net",PackedFloat32Array()))
- state.rules=sim.Rules.unpack(wire.rules)
- if wire.has("extra"): sim.mechanics.read_wire(sim,wire.extra,state)
- return state
-
+ return Codec.decode(wire)
 
 func extra_command(c:Dictionary)->Dictionary:
  var direction:Vector2=c.get("direction",Vector2.ZERO)

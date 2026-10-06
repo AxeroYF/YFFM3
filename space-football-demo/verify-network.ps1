@@ -35,7 +35,7 @@ try {
   $log = Get-Content (Join-Path $gameRoot ('artifacts/network-'+$role+'.log')) -Raw -Encoding UTF8
   $scenario = if($LatencyActions){'latency-actions'}elseif($Mechanics){'mechanics'}elseif($Rules){'rules'}elseif($Graphical){'graphical'}else{'latency'}
   $topologyTag = if($PlayerHost){'host'}else{'dedicated'}
-  Copy-Item -LiteralPath (Join-Path $gameRoot ('artifacts/network-'+$role+'.log')) -Destination (Join-Path $gameRoot ('artifacts/v5-'+$scenario+'-'+$topologyTag+'-'+$role+'.log')) -Force
+  Copy-Item -LiteralPath (Join-Path $gameRoot ('artifacts/network-'+$role+'.log')) -Destination (Join-Path $gameRoot ('artifacts/v7-'+$scenario+'-'+$topologyTag+'-'+$role+'.log')) -Force
   $checkedLog = $log
   if($AllowSystemCertificateWarning) {
    # Only the known Windows sandbox CA-store diagnostic is allowed, never script errors.

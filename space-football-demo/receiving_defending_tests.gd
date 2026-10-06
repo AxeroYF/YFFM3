@@ -67,7 +67,7 @@ func _initialize()->void:
   net.sim=s;net.prediction_index=1;net.prediction_pos=s.players[1].pos;net.prediction_dir=s.players[1].dir;net.prediction_vel=Vector2.ZERO
   var movement:Vector2=s.assisted_movement(1,Vector2.RIGHT,s.players[1].pos)
   s.move_player(1,1.0/60,movement,false,false)
-  net._predict({"move":Vector2.RIGHT,"sprint":false,"jockey":false,"assist":2-level,"receive_assist":level},1.0/60)
+  preload("res://movement_test_probe.gd").advance(net,{"move":Vector2.RIGHT,"sprint":false,"jockey":false,"assist":2-level,"receive_assist":level},1.0/60)
   check(s.players[1].pos.distance_to(net.prediction_pos)<0.0001 and s.players[1].dir.distance_to(net.prediction_dir)<0.0001,"client uses independent receiving level and shared facing: "+str(level))
  net.free()
  var bounded:=true;var slowed:=true
@@ -110,7 +110,7 @@ func _initialize()->void:
   for frame in ceili(duration*60):
    s.players[1].action_time=maxf(0.00001,s.players[1].action_time-1.0/60)
    s.move_player(1,1.0/60,Vector2.LEFT,true,false)
-   net._predict({"move":Vector2.LEFT,"sprint":true,"jockey":false,"assist_active":false},1.0/60)
+   preload("res://movement_test_probe.gd").advance(net,{"move":Vector2.LEFT,"sprint":true,"jockey":false,"assist_active":false},1.0/60)
   distances.append(s.players[1].pos.x)
   check(s.players[1].pos.distance_to(net.prediction_pos)<0.0001,"client predicts speed-dependent slide distance "+str(entry))
   var decoded:Dictionary=net.unpack_state(net.pack_state(s.snapshot()))

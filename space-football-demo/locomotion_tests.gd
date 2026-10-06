@@ -18,7 +18,7 @@ func run(test)->void:
  network.prediction_pos=p.pos;network.prediction_vel=p.vel;network.prediction_dir=p.dir
  for i in 60:
   sim.move_player(1,1.0/60,Vector2.RIGHT,true,false)
-  network._predict({"move":Vector2.RIGHT,"sprint":true,"jockey":false,"assist_active":false},1.0/60)
+  preload("res://movement_test_probe.gd").advance(network,{"move":Vector2.RIGHT,"sprint":true,"jockey":false,"assist_active":false},1.0/60)
  test.check(p.pos.distance_to(network.prediction_pos)<0.001,"client prediction matches authority at reduced pace")
  network.free()
  var rig:=Rig.new()

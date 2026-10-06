@@ -44,28 +44,28 @@ func run(game)->void:
  s.ball=s.players[1].pos+Vector2.RIGHT;s.ball_height=s.BallPhysics.FLOOR;s.charge=0.5
  game.football.visible=true;game.match_tools.reset();game.desktop_input.options.replay=1
  game.camera.size=11;game.camera.position=Vector3(game.Pitch.HALF_LENGTH-11,9,17);game.camera.look_at(Vector3(game.Pitch.HALF_LENGTH,1,0))
- for frame in 30: game.render_match(1.0/60);game.match_tools.update(game,1.0/60)
+ for frame in 30: game.render_match(1.0/60);game.update_match_tools(1.0/60)
  s.shoot(0.3)
  var got_goal:=false
  for frame in 90:
-  s.step(1.0/120);game.render_match(1.0/120);game.match_tools.update(game,1.0/120)
+  s.step(1.0/120);game.render_match(1.0/120);game.update_match_tools(1.0/120)
   if s.phase=="goal": got_goal=true;break
  check(got_goal,"real charged shot reaches goal")
  var last_age:=0.0
  for age in [0.04,0.15,0.40]:
   for frame in ceili((age-last_age)*120):
-   s.step(1.0/120);game.render_match(1.0/120);game.match_tools.update(game,1.0/120)
+   s.step(1.0/120);game.render_match(1.0/120);game.update_match_tools(1.0/120)
   last_age=age
   await game.capture("goal-net-"+str(int(age*100)))
  check(s.goal_net.serial>0,"rendered live goal reaches net")
  game.camera.projection=Camera3D.PROJECTION_PERSPECTIVE
  for frame in 110:
-  s.step(1.0/120);game.render_match(1.0/120);game.match_tools.update(game,1.0/120)
- check(game.match_tools.showing_replay(game),"replay follows visible net entry")
+  s.step(1.0/120);game.render_match(1.0/120);game.update_match_tools(1.0/120)
+ check(game.match_tools.showing_replay(game.sim),"replay follows visible net entry")
  check(game.match_tools.replay.any(func(f):return f.net.serial>0),"replay records actual net contact")
  var frame_count:int=game.match_tools.replay.size();var authoritative:Vector2=s.ball
  s.phase_time=s.Rules.GOAL_DURATION-s.Rules.GOAL_INTRO-s.Rules.REPLAY_DURATION*0.96
- game.render_match(0);game.match_tools.update(game,0)
+ game.render_match(0);game.update_match_tools(0)
  check(s.ball==authoritative and game.match_tools.replay.size()==frame_count,"replay is presentation-only with frozen frame buffer")
  await game.capture("goal-net-replay")
  print("ACTION_NET_VISUAL_","PASS" if failures==0 else "FAILED"," checks=",checks," failures=",failures)

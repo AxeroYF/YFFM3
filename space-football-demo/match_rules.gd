@@ -157,7 +157,7 @@ static func update(s,dt:float)->void:
   p.action_time=maxf(0,p.action_time-dt)
   if p.action_time<=0: p.action="idle"
   if p.jump_z>0 or p.jump_v>0:
-   p.jump_v-=13*dt;p.jump_z=maxf(0,p.jump_z+p.jump_v*dt)
+   p.jump_v-=13*s.gravity_scale()*dt;p.jump_z=maxf(0,p.jump_z+p.jump_v*dt)
    if p.jump_z<=0: p.jump_v=0
  if s.phase in ["goal","foul"]:
   if s.phase=="goal": s.GoalNet.tick(s,minf(dt,s.phase_time))

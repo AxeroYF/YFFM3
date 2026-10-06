@@ -105,7 +105,7 @@ static func tick(s,dt:float)->void:
   s.players[i].action="wall" if i in f.wall and s.players[i].pos.distance_to(f.targets[i])<0.25 else "idle"
   s.players[i].action_time=0.3 if s.players[i].action=="wall" else 0.0
  if f.stage=="fetch":
-  var flight:Dictionary=s.BallPhysics.advance(s.ball,s.velocity,s.ball_height,s.vertical_speed,0,false,dt)
+  var flight:Dictionary=s.BallPhysics.step(s.ball,s.velocity,s.ball_height,s.vertical_speed,0,false,dt,s.flight_conditions(0.0,false))
   set_ball(s,Vector3(flight.pos.x,flight.height,flight.pos.y))
   s.velocity=flight.velocity*exp(-dt*8);s.vertical_speed=flight.vertical
   var target:Vector2=s.ball-p.dir*0.55

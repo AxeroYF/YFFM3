@@ -57,7 +57,7 @@ static func target(s,index:int)->Vector2:
  var max_speed:float=p.speed*(1-p.fatigue*0.14)
  for step in range(1,33):
   var t:float=step*0.05
-  var flight:=Physics.advance(pos,velocity,height,vertical,spin,s.ball_is_shot,0.05,3.7 if s.wind_active() else 0.0)
+  var flight:Dictionary=s.advance_ball(pos,velocity,height,vertical,spin,s.ball_is_shot,0.05,t-0.05)
   pos=flight.pos;velocity=flight.velocity;height=flight.height;vertical=flight.vertical;spin=flight.spin
   if pos.x*q< -Pitch.HALF_LENGTH: break
   if not in_area(pos,q) or height>maximum_height: continue
@@ -69,6 +69,7 @@ static func target(s,index:int)->Vector2:
   var initial:float=clampf(p.vel.dot((pos-p.pos).normalized()),-max_speed,max_speed)
   var accelerating:float=minf(t,(max_speed-initial)/p.ratings.acceleration)
   var travel:float=maxf(0,initial*accelerating+0.5*p.ratings.acceleration*accelerating*accelerating+max_speed*(t-accelerating))
+  if s.surface_grip()<1.0: travel=s.Movement.reachable_distance(initial,max_speed,p.ratings,t,s.surface_grip())
   var dive_reach:float=p.body.height*0.24 if hands and dangerous else 0
   if distance>travel+reach+dive_reach: continue
   # Loose-ball sweeping is deliberate: stay home if an opponent clearly wins.
