@@ -1,6 +1,6 @@
 # YFFM3 对话交接
 
-更新日期：**2026-10-04**。本目录描述当前开发版本。六人制、传奇模型、体型手感与协议 5 已整理纳入 Git；版本管理检查与提交信息见 CURRENT_STATE 和 VERIFICATION。Git 版本不等于公网版本，当前仍未部署服务。
+更新日期：**2026-10-06**。本目录描述当前开发版本。球场天气、低重力、两轮架构重构与协议 7 已纳入 `20b1921` 并推送；版本管理检查与提交信息见 CURRENT_STATE 和 VERIFICATION。Git 版本不等于公网版本，当前仍未部署服务。
 
 ## 项目速览
 
@@ -12,9 +12,9 @@
 | 可玩内容 | 本地快速比赛、冰球反弹模式、三站战役、基础联机 |
 | 球员 | 386 名带卡画球员，完整 26 项能力；67 名传奇已有逐人外观配置 |
 | 输入 | 键盘、Xbox 风格手柄；安卓仅预留接口 |
-| 网络 | 协议 5，权威服务器 60 Hz，默认 30 Hz 快照；本地预测与远端插值 |
+| 网络 | 协议 7，权威服务器 60 Hz，默认 30 Hz 快照；本地预测与远端插值 |
 | 发布 | 开发阶段，未部署公网；暂不打包 Windows / Android |
-| 仓库 | 独立私有仓库 `AxeroYF/YFFM3`，分支 `codex/yffm3` |
+| 仓库 | 独立公开仓库 `AxeroYF/YFFM3`，分支 `codex/yffm3` |
 | 本地目录 | `D:\Project\game_test\.worktrees\YFFM3`；主游戏在 `space-football-demo/` |
 
 ## 阅读顺序
@@ -30,17 +30,21 @@
 
 ## 专项资料
 
+最新高 / 中高优先级重构见 [ARCHITECTURE_REFACTOR.md](ARCHITECTURE_REFACTOR.md)：模块职责、协议 7、统一验证入口与本轮验证范围。
+
+最新新增 [MATCH_ENVIRONMENT.md](MATCH_ENVIRONMENT.md)：快速比赛球场、天气、间歇闪电与低重力，以及协议 6 的本轮验证。这部分及后续两轮重构已在 `20b1921` 提交并推送；当前协议为 7。
+
 | 文档 | 用途 |
 | --- | --- |
 | [SIX_A_SIDE_AND_ROADMAP.md](SIX_A_SIDE_AND_ROADMAP.md) | 六人制升级、小场规则来源及当轮机制评估 |
 | [LEGEND_MODELS.md](LEGEND_MODELS.md) | 67 名传奇外观、素材来源、展厅和模型验证 |
 | [PHYSIQUE_GAMEPLAY.md](PHYSIQUE_GAMEPLAY.md) | 体型对启动、惯性、转向和对抗的有界影响 |
-| [NETWORK_GRAY_TEST.md](NETWORK_GRAY_TEST.md) | 当前协议 5、弱网模型、历史验证证据及灰度边界 |
+| [NETWORK_GRAY_TEST.md](NETWORK_GRAY_TEST.md) | 协议 5 历史记录、弱网模型、历史验证证据及灰度边界 |
 | [部署说明](../deploy/README.md) | 与 Rougelite 同机部署的目录、端口、服务模板及观测步骤 |
 
 ## 资料时效
 
 - 本轮综合文档以当前源码为依据；具体数值以后续代码为准。专项文档中的“本轮”指各自开发阶段。
-- 历史协议 3 / 4、五人制及旧 Git 基线结果不能替代当前协议 5 / 六人制验证。
+- 历史协议 3 / 4、五人制及旧 Git 基线结果不能替代当前协议 6 / 六人制验证。
 - 日志、截图、引擎和用户存档通常不在 Git 中。代码存在、测试通过、人工体验满意、已上线，是四种不同状态。
 - 整理前的三份入口文档已存入 [历史入口存档说明](archive/README.md)，仅供追溯，不作为当前开发指令。

@@ -11,7 +11,9 @@
 | [CONTROLS.md](CONTROLS.md) | 键盘 / Xbox 操作、辅助与设备行为 |
 | [PLAYER_DATA.md](PLAYER_DATA.md) | 386 人、26 项能力、67 名传奇及体型机制 |
 | [PROJECT_INFO.md](PROJECT_INFO.md) | 项目、启动、存档、架构、联机和部署 |
-| [VERIFICATION.md](VERIFICATION.md) / [NETWORK_GRAY_TEST.md](NETWORK_GRAY_TEST.md) | 历史验证与当前协议 5 证据 |
+| [VERIFICATION.md](VERIFICATION.md) / [NETWORK_GRAY_TEST.md](NETWORK_GRAY_TEST.md) | 历史验证与协议 5 证据 |
+| [ARCHITECTURE_REFACTOR.md](ARCHITECTURE_REFACTOR.md) | 高 / 中高优先级重构、协议 7、模块归属和统一验证入口 |
+| [MATCH_ENVIRONMENT.md](MATCH_ENVIRONMENT.md) | 球场、天气、间歇闪电、低重力与协议 6 验证 |
 | [NEW_CHAT_PROMPT.md](NEW_CHAT_PROMPT.md) | 可复制的新对话接续信息 |
 | [archive/README.md](archive/README.md) | 综合整理前入口的历史存档说明 |
 
@@ -36,13 +38,26 @@
 | 主游戏内文件 | 职责 |
 | --- | --- |
 | `project.godot` / `main.tscn` | 项目配置、2K 画布、入口场景 |
-| `main.gd` | 画面、主菜单、比赛场景、相机、音效及验证入口 |
-| `match_sim.gd` | 权威模拟、球员状态、传射、碰撞、边界及快照 |
+| `main.gd` | 应用组装、菜单 / 战役导航、网络事件接线及兼容转发接口 |
+| `match_session.gd` / `match_loading.gd` | 比赛会话、命令提交、运行条件、可取消加载和网络就绪等待 |
+| `stadium_view.gd` / `match_renderer.gd` | 球场与演员节点所有权、相机 / 环境准备、比赛画面更新 |
+| `match_hud.gd` / `quick_match_screen.gd` / `match_tools_screen.gd` | 比赛 HUD、快速比赛设置、替补 / 高级设置 / 帮助界面 |
+| `ui_kit.gd` / `ui_palette.gd` | 控件构建、字体 / 按键提示和共享颜色 |
+| `match_sim.gd` | 权威模拟、球员状态、传射、碰撞与边界；调用独立状态模块生成 / 恢复快照 |
+| `match_state.gd` / `match_player_state.gd` | 完整本地快照字段与恢复、共用球员工厂 |
+| `match_actions.gd` | 输入、模拟和预测共用的动作位定义 |
 | `team_config.gd` | 六人队伍、十二人总数、中场槽位和最低参赛人数 |
 | `match_mechanics.gd` | 操作意图、出脚队列、预输入、跳跃、对抗、纪律及换人 |
 | `match_rules.gd` / `restart_flow.gd` | 规则、犯规、死球准备/跳过、进球与重新开球 |
 | `team_ai.gd` / `goalkeeper_ai.gd` | 外场协作、接应/防守/追球及门将决策 |
 | `ball_physics.gd` | 球的三维飞行、阻力、摩擦和反弹预测 |
+| `match_environment.gd` / `environment/` | 稳定选项 ID 注册表；球场、天气、重力的 Resource 类型及 8 个配置资源 |
+| `ball_flight_conditions.gd` | 每步独立的重力、摩擦、弹性与风力参数，普通球路 / 球网 / 定位球共用 |
+| `environment_visual.gd` | 根据环境资源生成银河、流星、雨、风、闪电表现 |
+| `game_audio.gd` | 音效播放与合成采样状态；主入口只接线和调度 |
+| `rules_presentation.gd` / `hold_skip_prompt.gd` | 规则提示与长按跳过提示，只读模拟 / HUD / 输入，不持有主入口 |
+| `loading_screen.gd` / `library_screen.gd` | 显式 UI 依赖；球员库导航通过信号交由应用处理 |
+| `environment_tests.gd` / `environment_verification.gd` | 环境物理、16 种组合、网络预测与 2K 画面检查 |
 | `player_collision.gd` / `goal_frame.gd` | 身体扫掠、门柱和横梁碰撞 |
 | `pitch_geometry.gd` | 球场尺度、球门尺寸、阵型与运动限制 |
 | `impact_feedback.gd` | 屏幕像素标定、真实触球帧号、相机反馈去重与时效 |
@@ -58,7 +73,7 @@
 | `player_physique.gd` / `player_movement.gd` | 有界身体比例修正；服务器和客户端共用的加减速、惯性、转向与拦截距离计算 |
 | `physique_tests.gd` / `physique_verification.gd` | 全库体型机制、同能力对照与预测一致性检查；2K 资料页及身体倾斜检查 |
 | `play_assistance.gd` | 传接球与操作辅助 |
-| `match_tools.gd` | 本地回放、训练场景、换人界面、震动反馈 |
+| `match_tools.gd` | 本地回放、训练场景和震动反馈；显式接收会话 / 画面 / 输入依赖 |
 | `rules_presentation.gd` / `hold_skip_prompt.gd` / `impact_feedback.gd` | 死球/进球显示、长按圆环和镜头冲击 |
 
 ## 输入、界面与网络
@@ -72,15 +87,19 @@
 | `quick_match.gd` | 随机且位置合理的阵容与模式配置 |
 | `campaign.gd` / `squad.gd` | 航线、队伍、训练及本地持久化 |
 | `player_library.gd` / `library_screen.gd` | 球员目录加载、筛选及详情 |
-| `match_network.gd` | ENet 房间、权威输入/动作校验、压缩快照、预测与重赛 |
+| `match_network.gd` | ENet 房间、权威输入 / 动作校验、快照传输、预测协调与重赛 |
+| `snapshot_codec.gd` | 协议 7 独立快照编解码与字段校验，不读取实时模拟或客户端旧状态 |
 | `network_command.gd` / `network_timeline.gd` | 数字输入编解码、球员身份绑定、动作去重与蓄力时间线 |
 | `network_prediction.gd` / `network_snapshots.gd` | 私有本地动作预览、快照重放与远端插值 |
 | `network_link.gd` / `network_fragments.gd` | 双向应用消息弱网注入、受限快照片段重组 |
 | `network_latency_tests.gd` / `network_latency_verification.gd` | 网络边界断言及真实 ENet 下射门恰好一次验证 |
 | 根目录 `deploy/` | 与 Rougelite 共存的 Linux 灰度说明和 systemd 服务模板；未部署 |
 | `verify-network.ps1` | 启动真实服务器与客户端进程，检测错误和终场一致性 |
+| `verify-project.ps1` / `verification-suites.json` | Fast / Full / Visual 统一验证入口与套件清单 |
+| `refactor_tests.gd` / `verification_driver.gd` | 快照隔离 / 恢复 / 状态条件回归、从主入口迁出的旧图形验证流程 |
+| `movement_test_probe.gd` | 旧移动比较测试夹具，运行时预测不加载它 |
 
-联机修改注意：新增动作名需要进入 `match_network.gd` 的 `ACTIONS`；新增权威字段需要同时覆盖本地快照、恢复、压缩打包与解包。客户端呈现与回放不应反向修改权威球路。
+联机修改注意：新增命令位在 `match_actions.gd` 登记；新增序列化动作名在 `snapshot_codec.gd` 的 `ACTIONS` 登记。新增模拟顶层状态在 `match_state.gd` 声明捕获 / 恢复映射；子系统状态由其自身负责，网络紧凑字段和扩展字典边界见 [ARCHITECTURE_REFACTOR.md](ARCHITECTURE_REFACTOR.md)。客户端呈现与回放不应反向修改权威球路。
 
 ## 数据、美术与历史原型
 

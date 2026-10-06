@@ -5,6 +5,7 @@
 ## 当前内容
 
 - 经典六人制与冰球反弹模式，快速比赛自动生成位置合理的双方阵容。
+- 快速比赛可自由设置蓝色星球 / 银河流星雨背景、晴朗 / 大风 / 暴雨 / 风暴和低重力；雨天有间歇闪电，风、湿地和重力实际影响比赛。见 [环境机制](handoff/MATCH_ENVIRONMENT.md)。
 - 386 名带卡画的球员，保留原始 26 项能力值，并映射到操作手感、跑位、接球和防守。
 - 67 名传奇已有差异化模型；身体比例适度影响启动、刹车、变向、伸脚和护球，原始能力和最高跑速保留。详见 [体型手感机制](handoff/PHYSIQUE_GAMEPLAY.md)。
 - 传球、直塞、传中、蓄力射门、搓射、挑射、头球、凌空、普通抢断、滑铲及门将动作。
@@ -35,7 +36,7 @@
 
 ## 开发环境与启动
 
-联机已升级为协议 5，加入本地动作预览、快照插值、双向弱网测试和诊断。服务器可独立运行，与已有 Rougelite 共置，操作入口见 [香港灰度部署](deploy/README.md)，实现与验证见 [联机交接](handoff/NETWORK_GRAY_TEST.md)。当前没有部署到公网。
+联机当前为协议 7，环境参数随快照与预测传递；保留本地动作预览、快照插值、双向弱网测试和诊断。服务器可独立运行，与已有 Rougelite 共置，操作入口见 [香港灰度部署](deploy/README.md)，实现与验证见 [联机交接](handoff/NETWORK_GRAY_TEST.md)。当前没有部署到公网。
 
 当前已验证版本为 **Godot 4.7.2 stable，Windows x86_64 标准版 / GDScript**。游戏本身不需要 .NET 或 Node.js；资源处理脚本使用 Node.js。
 
@@ -78,7 +79,7 @@ powershell -NoProfile -File space-football-demo/verify-network.ps1 -Rules -Ice -
 powershell -NoProfile -File space-football-demo/verify-network.ps1 -LatencyActions -Rounds 2 -Port 28836 -BurstEvery 37 -AlternateRoster -LoadDelay 500 -AllowSystemCertificateWarning
 ```
 
-历次执行记录见 [验证交接](handoff/VERIFICATION.md)，当前协议 5 的范围和证据见 [联机交接](handoff/NETWORK_GRAY_TEST.md)。规则固定帧回归使用零故障注入，弱网动作另用专项场景；证书开关仅容许已有 Windows CA 库诊断，不忽略其他错误。控制器自动验证使用合成输入，真实手柄的震动和操作手感需要实机体验。动画目前为程序骨骼动画。
+历次执行记录见 [验证交接](handoff/VERIFICATION.md)，历史协议 5 的范围和证据见 [联机交接](handoff/NETWORK_GRAY_TEST.md)。规则固定帧回归使用零故障注入，弱网动作另用专项场景；证书开关仅容许已有 Windows CA 库诊断，不忽略其他错误。控制器自动验证使用合成输入，真实手柄的震动和操作手感需要实机体验。动画目前为程序骨骼动画。
 
 ## 版本管理
 
@@ -88,4 +89,16 @@ powershell -NoProfile -File space-football-demo/verify-network.ps1 -LatencyActio
 
 ## 资源来源
 
-保留各素材目录已有的许可与来源说明。人体素材的 CC0 许可见 `space-football-demo/assets/humanoid/LICENSE.CC0.txt`；球员卡画沿用前作导入资料与清单。本仓库为私有开发仓库，未对整个项目新增开源许可证。
+保留各素材目录已有的许可与来源说明。人体素材的 CC0 许可见 `space-football-demo/assets/humanoid/LICENSE.CC0.txt`；球员卡画沿用前作导入资料与清单。仓库现为公开开发仓库，未对整个项目新增开源许可证；公开可见不改变各素材原有许可。
+
+## 架构与统一验证
+
+高 / 中高优先级重构的模块归属与协议变更见 [架构说明](handoff/ARCHITECTURE_REFACTOR.md)。在仓库根目录运行：
+
+~~~powershell
+.\space-football-demo\verify-project.ps1 -Suite Fast -AllowSystemCertificateWarning
+.\space-football-demo\verify-project.ps1 -Suite Full -AllowSystemCertificateWarning
+.\space-football-demo\verify-project.ps1 -Suite Visual -AllowSystemCertificateWarning
+~~~
+
+仅本机出现已知 Windows 根证书库诊断时使用该允许参数；其他脚本或引擎错误仍会失败。

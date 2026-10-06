@@ -1,6 +1,8 @@
 # 项目信息与开发接续
 
-核对日期：2026-10-04。主目录 `D:\Project\game_test\.worktrees\YFFM3`。游戏机制见 [GAMEPLAY_REFERENCE.md](GAMEPLAY_REFERENCE.md)，当前限制见 [CURRENT_STATE.md](CURRENT_STATE.md)。
+核对日期：2026-10-06。主目录 `D:\Project\game_test\.worktrees\YFFM3`。游戏机制见 [GAMEPLAY_REFERENCE.md](GAMEPLAY_REFERENCE.md)，当前限制见 [CURRENT_STATE.md](CURRENT_STATE.md)。
+
+最新模块分工、快照边界和统一验证入口见 [架构重构](ARCHITECTURE_REFACTOR.md)。
 
 ## 1. 技术与仓库
 
@@ -13,9 +15,9 @@
 | 渲染 | Forward Plus，3D MSAA 配置值 2 |
 | 画布 | 2560×1440；默认窗口 1920×1080；`canvas_items`、保持宽高比 |
 | 模拟 | 固定物理频率 60 Hz |
-| 仓库 | 独立私有仓库 [AxeroYF/YFFM3](https://github.com/AxeroYF/YFFM3) |
+| 仓库 | 独立公开仓库 [AxeroYF/YFFM3](https://github.com/AxeroYF/YFFM3) |
 | 分支 | `codex/yffm3` |
-| 当前功能基线 | `6f6c19e feat: add six-a-side gameplay, legend physiques and protocol v5`；交接文档另行提交 |
+| 当前功能基线 | `20b1921 feat: add match environments and modularize game architecture`，已推送；当前协议 7，交接文档另行提交 |
 | 更早基线 | `884c4e6 feat: establish YFFM3 Godot football baseline` |
 
 虽然目录在 `.worktrees` 下，YFFM3 自身已经是独立 Git 仓库，不能把它当作前作仓库中的普通子目录。六人制、传奇模型、身体机制和协议 5 已在 `6f6c19e` 纳入版本管理；旧提交 `78d8e94` 不包含这些进度。Git 归档前已 fetch 并确认没有远端分叉；最新文档提交与远端同步状态请用 Git 查询。
@@ -84,7 +86,9 @@
 
 ## 5. 联机架构与延迟处理
 
-当前协议 **5**，支持独立服务器加两客户端，也保留玩家房主加一客户端拓扑。部署优先独立服务，一场比赛一个进程。阵容 / 准备完成屏障后开始比赛，终场核对权威结果。
+球场、天气与重力参数已加入本地和压缩快照，环境开发时协议由 5 升为 6，后续重构已升为 7。快照恢复和私有预测复用同一环境；联机大厅暂未提供环境选择，默认仍为标准环境。最新实现与验证见 [MATCH_ENVIRONMENT.md](MATCH_ENVIRONMENT.md)，下文保留既有联机架构。
+
+当前协议 **7**，支持独立服务器加两客户端，也保留玩家房主加一客户端拓扑。部署优先独立服务，一场比赛一个进程。阵容 / 准备完成屏障后开始比赛，终场核对权威结果。
 
 | 层次 | 实现和边界 |
 | --- | --- |
@@ -145,7 +149,7 @@ YFFM3 可以独立进程运行，能开多少场取决于共享主机的实际�
 | 死球 / 冲击 / 六人规则 | `restart_impact_tests.gd`、`six_a_side_tests.gd`、`--verify-six` |
 | 传奇 / 体型 / 步态 | `legend_models_tests.gd`、`physique_tests.gd`、`--verify-legends`、`--verify-physique`、`--verify-locomotion` |
 | 输入 / 加载 | `--verify-input`、`--verify-loading` |
-| 协议 5 | `network_latency_tests.gd`、`verify-network.ps1` |
+| 协议 7 | `network_latency_tests.gd`、`verify-network.ps1` |
 
 网络常用复现（在仓库根目录，依次执行，不要占用相同端口并行运行）：
 
