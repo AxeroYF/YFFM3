@@ -38,8 +38,6 @@ func render(stadium,session,controls,router,replay,dt:float)->void:
   stadium.rigs[i].animate_player(animation_state,dt if sim.freeze<=0 else 0,sim.owner==i,stadium.actors[i].basis.inverse()*visible_velocity)
   var next:int=sim.mechanics.candidate(sim,sim.view_team) if i/Team.SIZE==sim.view_team and sim.owner!=selected else -1
   stadium.selected_labels[i].text=(p.name if i==selected else ("▽ " if i==next else "")+Match.JERSEY_NUMBERS[i])+(" [黄]" if p.get("yellow",0)>0 else "")
-  if i==sim.teams[sim.view_team].contain_player: stadium.selected_labels[i].text+=" 协防"
-  if i==sim.teams[sim.view_team].request_player: stadium.selected_labels[i].text+=" 跑位"
   stadium.selected_labels[i].position.y=p.body.height+(2.4 if i==selected else 0.35)
  var bp: Vector2=sim.ball
  var ball_target:=Vector3(bp.x,sim.ball_height,bp.y)

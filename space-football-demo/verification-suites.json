@@ -1,11 +1,13 @@
 {
   "Fast": [
+    {"name":"network-lifecycle", "script":"network_lifecycle_tests.gd", "pass":"NETWORK_LIFECYCLE_PASS"},
     {"name":"state", "script":"refactor_tests.gd", "pass":"REFACTOR_TESTS_PASS"},
     {"name":"environment", "script":"environment_tests.gd", "pass":"ENVIRONMENT_TESTS_PASS"},
     {"name":"network-unit", "script":"network_latency_tests.gd", "pass":"NETWORK_LATENCY_PASS"},
     {"name":"six", "script":"six_a_side_tests.gd", "pass":"SIX_A_SIDE_TESTS_PASS"}
   ],
   "Full": [
+    {"name":"network-lifecycle", "script":"network_lifecycle_tests.gd", "pass":"NETWORK_LIFECYCLE_PASS"},
     {"name":"state", "script":"refactor_tests.gd", "pass":"REFACTOR_TESTS_PASS"},
     {"name":"environment", "script":"environment_tests.gd", "pass":"ENVIRONMENT_TESTS_PASS"},
     {"name":"core", "script":"tests.gd", "pass":"MODEL_TESTS_PASS"},

@@ -48,6 +48,22 @@ func run(target:Node)->void:
  await settle()
  check(game.screen=="match" and game.practice and not game.online,"start opens offline developer match")
  check(game.sim.teams[0].human and not game.sim.teams[1].human,"opponent is AI")
+ check(game.sim.duration==300 and game.sim.regulation==300 and game.time_label.text=="05 : 00","quick match opens with five-minute clock")
+ var saved_hud_state:Dictionary=game.sim.snapshot()
+ game.sim.phase="play";game.sim.freeze=0
+ for kind in ["pass","shot","tackle","save","block"]:
+  game.sim.notify(kind,"测试球员动作描述")
+  game.render_match(0)
+  check(game.event_label.text.is_empty() and game.player_label.text==game.sim.players[game.sim.selected].name,"action narration is hidden: "+kind)
+ game.sim.players[game.sim.selected].action="slide"
+ game.sim.players[game.sim.selected].action_time=0.3
+ game.sim.players[game.sim.selected].tackle_cd=1.0
+ game.sim.owner=-1;game.render_match(0)
+ check(not game.action_hint.text.contains("恢复") and not game.action_hint.text.contains("起身"),"defensive recovery debug text is hidden")
+ game.sim.notify("overtime","金球加时 · 下一粒进球决定胜负")
+ game.render_match(0)
+ check(game.event_label.text.contains("金球加时"),"important match event remains visible")
+ game.sim.restore(saved_hud_state);game.render_match(0)
  var correct:=true
  for i in Team.COUNT:
   var ids:Array=chosen.home if i<Team.SIZE else chosen.away

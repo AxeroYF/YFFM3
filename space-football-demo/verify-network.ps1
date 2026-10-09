@@ -1,6 +1,8 @@
 param([int]$Port = 28769, [int]$Delay = 100, [int]$LossEvery = 7, [int]$Jitter = 25, [int]$ReorderEvery = 11, [int]$BurstEvery = 0, [switch]$Graphical, [switch]$LatencyActions, [int]$Rounds = 2, [switch]$PlayerHost, [string]$Executable = "", [switch]$AlternateRoster, [switch]$Rules, [int]$LoadDelay = 0, [switch]$Mechanics, [switch]$Ice, [switch]$AllowSystemCertificateWarning)
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path $PSScriptRoot -Parent
+& node (Join-Path $projectRoot 'tools/network-build.mjs') --check
+if($LASTEXITCODE -ne 0){throw 'Network build manifest is stale.'}
 $gameRoot = $PSScriptRoot
 $engine = Join-Path $projectRoot 'tools/godot/Godot_v4.7.2-stable_win64_console.exe'
 if($Executable){ $engine = (Resolve-Path -LiteralPath $Executable).Path }
@@ -35,7 +37,7 @@ try {
   $log = Get-Content (Join-Path $gameRoot ('artifacts/network-'+$role+'.log')) -Raw -Encoding UTF8
   $scenario = if($LatencyActions){'latency-actions'}elseif($Mechanics){'mechanics'}elseif($Rules){'rules'}elseif($Graphical){'graphical'}else{'latency'}
   $topologyTag = if($PlayerHost){'host'}else{'dedicated'}
-  Copy-Item -LiteralPath (Join-Path $gameRoot ('artifacts/network-'+$role+'.log')) -Destination (Join-Path $gameRoot ('artifacts/v7-'+$scenario+'-'+$topologyTag+'-'+$role+'.log')) -Force
+  Copy-Item -LiteralPath (Join-Path $gameRoot ('artifacts/network-'+$role+'.log')) -Destination (Join-Path $gameRoot ('artifacts/v8-'+$scenario+'-'+$topologyTag+'-'+$role+'.log')) -Force
   $checkedLog = $log
   if($AllowSystemCertificateWarning) {
    # Only the known Windows sandbox CA-store diagnostic is allowed, never script errors.

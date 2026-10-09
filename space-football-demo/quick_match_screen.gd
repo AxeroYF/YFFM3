@@ -2,6 +2,7 @@ extends RefCounted
 const Palette=preload("res://ui_palette.gd")
 ## Pure screen construction; choices are submitted as explicit actions.
 const Team=preload("res://team_config.gd")
+const Match=preload("res://match_sim.gd")
 const Conditions=preload("res://match_environment.gd")
 const INK=Palette.INK
 const MUTED=Palette.MUTED
@@ -36,4 +37,4 @@ static func build(modal:Control,kit,fixture:Dictionary,environment:Dictionary,ic
  kit.button(modal,"开始比赛",Rect2(460,1120,880,82),actions.start,true)
  kit.button(modal,"重新随机",Rect2(1370,1120,340,82),actions.reroll)
  kit.button(modal,"返回",Rect2(1740,1120,340,82),actions.back)
- kit.text(modal,"1 门将 + 5 名场上球员 · 重赛保留环境设置 · 不修改球队与星际杯存档",Vector2(464,1220),21,MUTED)
+ kit.text(modal,"%d 分钟比赛 · 1 门将 + 5 名场上球员 · 重赛保留环境 · 不修改存档" % int(Match.DEFAULT_DURATION/60),Vector2(464,1220),21,MUTED)

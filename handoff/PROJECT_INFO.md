@@ -17,7 +17,7 @@
 | 模拟 | 固定物理频率 60 Hz |
 | 仓库 | 独立公开仓库 [AxeroYF/YFFM3](https://github.com/AxeroYF/YFFM3) |
 | 分支 | `codex/yffm3` |
-| 当前功能基线 | `20b1921 feat: add match environments and modularize game architecture`，已推送；当前协议 7，交接文档另行提交 |
+| 当前功能基线 | 历史基线 `20b1921` / `c0a085f`；本次归档新增五分钟比赛、HUD 清理与协议 8 联机修复，最新提交及同步状态以 Git 为准 |
 | 更早基线 | `884c4e6 feat: establish YFFM3 Godot football baseline` |
 
 虽然目录在 `.worktrees` 下，YFFM3 自身已经是独立 Git 仓库，不能把它当作前作仓库中的普通子目录。六人制、传奇模型、身体机制和协议 5 已在 `6f6c19e` 纳入版本管理；旧提交 `78d8e94` 不包含这些进度。Git 归档前已 fetch 并确认没有远端分叉；最新文档提交与远端同步状态请用 Git 查询。
@@ -47,7 +47,7 @@
 .\godot.cmd --headless --path space-football-demo -- --server --port=28765
 ```
 
-最后一条会启动长期运行的本地比赛服务，按需使用并在测试结束关闭。正常客户端可在联机界面创建 / 加入会话；该服务端启动参数不是网站 HTTP 入口。
+最后一条会启动长期运行的本地比赛服务，运行前须通过环境变量 `YFFM3_ROOM_CODE` 配置邀请码；仅受信任的本地测试可加 `--allow-open-room`。源码变更后先执行 `node tools/network-build.mjs` 生成清单，验证 / 导出前执行 `node tools/network-build.mjs --check`。Node.js 是此构建步骤的依赖。正常客户端可在联机界面创建 / 加入会话；该服务端启动参数不是网站 HTTP 入口。
 
 ## 3. 目录与职责
 
@@ -88,7 +88,7 @@
 
 球场、天气与重力参数已加入本地和压缩快照，环境开发时协议由 5 升为 6，后续重构已升为 7。快照恢复和私有预测复用同一环境；联机大厅暂未提供环境选择，默认仍为标准环境。最新实现与验证见 [MATCH_ENVIRONMENT.md](MATCH_ENVIRONMENT.md)，下文保留既有联机架构。
 
-当前协议 **7**，支持独立服务器加两客户端，也保留玩家房主加一客户端拓扑。部署优先独立服务，一场比赛一个进程。阵容 / 准备完成屏障后开始比赛，终场核对权威结果。
+当前协议 **8**，支持独立服务器加两客户端，也保留玩家房主加一客户端拓扑。部署优先独立服务，一场比赛一个进程。入场先验证邀请码及版本清单，阵容 / 场景就绪屏障后开始比赛，终场核对权威结果。加载超时和掉线会清理本场并释放房间；详情见 [ONLINE_READINESS.md](ONLINE_READINESS.md)。
 
 | 层次 | 实现和边界 |
 | --- | --- |
@@ -149,7 +149,7 @@ YFFM3 可以独立进程运行，能开多少场取决于共享主机的实际�
 | 死球 / 冲击 / 六人规则 | `restart_impact_tests.gd`、`six_a_side_tests.gd`、`--verify-six` |
 | 传奇 / 体型 / 步态 | `legend_models_tests.gd`、`physique_tests.gd`、`--verify-legends`、`--verify-physique`、`--verify-locomotion` |
 | 输入 / 加载 | `--verify-input`、`--verify-loading` |
-| 协议 7 | `network_latency_tests.gd`、`verify-network.ps1` |
+| 协议 8 | `network_lifecycle_tests.gd`、`network_latency_tests.gd`、`verify-network.ps1` |
 
 网络常用复现（在仓库根目录，依次执行，不要占用相同端口并行运行）：
 

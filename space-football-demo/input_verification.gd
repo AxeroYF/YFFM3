@@ -339,5 +339,22 @@ func run(target:Node)->void:
  router.save_preferences()
  game.show_menu()
  await settle()
+ game.show_lobby()
+ await settle()
+ var invite:LineEdit
+ for item in game.ui.get_children():
+  if item is LineEdit and item.secret: invite=item
+ check(invite!=null,"lobby has masked invitation input")
+ if invite!=null:
+  var previous_code:String=game.network.room_code
+  check(invite.max_length==128 and invite.get_global_rect().end.y<game.lobby_status.position.y,"invitation fits above status without overlap")
+  invite.grab_focus()
+  check(focused()==invite,"invitation field accepts keyboard focus")
+  invite.text="ui-test-invite";invite.text_changed.emit(invite.text)
+  check(game.network.room_code==invite.text,"invitation is passed to network admission")
+  game.network.room_code=previous_code;invite.text=previous_code
+ await game.capture("online-invitation-lobby")
+ game.show_menu()
+ await settle()
  print("DESKTOP_INPUT_VERIFY_", "PASS" if failures==0 else "FAILED", " checks=",checks," failures=",failures)
  game.get_tree().quit(0 if failures==0 else 2)

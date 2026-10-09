@@ -223,6 +223,13 @@ var load_epoch:
 signal match_loaded
 
 func _ready() -> void:
+ # Own the unbuilt stadium even on server and preflight paths that exit early.
+ add_child(stadium)
+ if "--verify-network-build" in OS.get_cmdline_user_args():
+  var identity:=MatchNetwork.Build.fingerprint()
+  print("NETWORK_BUILD_", "PASS" if not identity.is_empty() else "FAILED", " protocol=",MatchNetwork.PROTOCOL," fingerprint=",identity)
+  get_tree().quit(0 if not identity.is_empty() else 2)
+  return
  if "--audit-library" in OS.get_cmdline_user_args():
   set_process(false)
   set_physics_process(false)
@@ -261,6 +268,7 @@ func _ready() -> void:
  session.network=network
  network.local_roster=Squad.ids.duplicate()
  if "--test-alternate-roster" in OS.get_cmdline_user_args(): network.local_roster[1]="legend-mbappe"
+ network.require_invite=server_only and not network_test and "--allow-open-room" not in OS.get_cmdline_user_args()
  network.name="Network"
  add_child(network)
  network.status_changed.connect(on_network_status)
@@ -427,7 +435,6 @@ func ring(parent: Node3D, pos: Vector3, radius: float, width: float, mat: Materi
  return stadium.ring(parent,pos,radius,width,mat)
 
 func build_world()->void:
- add_child(stadium)
  stadium.build_world()
 
 func load_pitch() -> ShaderMaterial:
@@ -779,7 +786,7 @@ func show_briefing() -> void:
  text(ui,m.info,Vector2(115,465),28,MUTED,false,1000)
  text(ui,"本场环境",Vector2(115,606),24,INK,true)
  text(ui,m.rule if arcade_rules else "出界重开 · 角球 / 界外球 / 球门球 · 无越位",Vector2(115,655),25,CYAN,false,1000)
- text(ui,"6 人制 · 每队 1 门将 + 5 场上球员\n100 秒比赛  /  同分进入 30 秒金球加时",Vector2(115,737),25,MUTED)
+ text(ui,"6 人制 · 每队 1 门将 + 5 场上球员\n%d 分钟比赛  /  同分进入 30 秒金球加时" % int(Match.DEFAULT_DURATION/60),Vector2(115,737),25,MUTED)
  text(ui,"选择出场战术",Vector2(115,853),28,INK,true)
  for i in 3:
   button(ui,["稳固防守","均衡推进","全线压上"][i]+("  ✓" if tactic==i else ""),Rect2(115+i*335,914,313,76),func(): tactic=i; show_briefing(),tactic==i)
@@ -1197,12 +1204,17 @@ func show_lobby()->void:
  var mode_button:=button(ui,"房间模式："+("冰球反弹" if network.ice_mode else "经典六人制"),Rect2(125,370,1025,50),func():
   if not network.active: network.ice_mode=not network.ice_mode;show_lobby())
  mode_button.disabled=network.active
+ var invite:=LineEdit.new()
+ invite.secret=true;invite.max_length=128;invite.placeholder_text="邀请码（房主设置；公开房间留空）"
+ invite.text=network.room_code;invite.position=Vector2(125,696);invite.size=Vector2(1025,60)
+ invite.add_theme_font_size_override("font_size",24);ui.add_child(invite)
+ invite.text_changed.connect(func(value):network.room_code=value)
  button(ui,"创建房间",Rect2(125,595,495,83),func(): network.strict_rules=bool(desktop_input.options.strict_rules);network.host(clampi(int(port_field.text),1024,65535)))
  button(ui,"加入房间",Rect2(650,595,500,83),func(): network.join(address_field.text.strip_edges(),clampi(int(port_field.text),1024,65535)))
- lobby_status=text(ui,"创建房间，或输入对方 / 专用服务器地址后加入。",Vector2(127,744),26,GOLD,false,1010)
+ lobby_status=text(ui,"创建房间，或输入对方 / 专用服务器地址后加入。",Vector2(127,785),26,GOLD,false,1010)
  button(ui,"准备开球",Rect2(125,879,1025,94),func(): network.set_ready(),true)
  button(ui,"返回主菜单",Rect2(125,1045,1025,76),show_menu)
- text(ui,"使用我的球队 · 不含星际杯训练加成\n3 分钟比赛 · 平局金球加时",Vector2(125,1160),23,MUTED)
+ text(ui,"使用我的球队 · 不含星际杯训练加成\n%d 分钟比赛 · 平局金球加时" % int(Match.DEFAULT_DURATION/60),Vector2(125,1160),23,MUTED)
  panel(ui,Rect2(1450,825,940,400))
  text(ui,"连接方式",Vector2(1500,864),31,CYAN,true)
  text(ui,"同一台电脑：地址使用 127.0.0.1。\n局域网：填写房主电脑的局域网 IP。\n互联网：使用可访问的专用服务器地址。\n自建房间需要网络允许对应 UDP 端口。",Vector2(1500,930),26,INK)

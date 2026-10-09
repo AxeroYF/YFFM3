@@ -10,6 +10,8 @@ const Match=preload("res://match_sim.gd")
 const Campaign=preload("res://campaign.gd")
 const Squad=preload("res://squad.gd")
 const Codec=preload("res://snapshot_codec.gd")
+const Build=preload("res://network_build.gd")
+const Admission=preload("res://network_admission.gd")
 const PROTOCOL:=Codec.VERSION # A snapshot is independent of the receiver state.
 const Command=preload("res://network_command.gd")
 const Timeline=preload("res://network_timeline.gd")
@@ -17,6 +19,13 @@ const Prediction=preload("res://network_prediction.gd")
 const Snapshots=preload("res://network_snapshots.gd")
 const Link=preload("res://network_link.gd")
 const Fragments=preload("res://network_fragments.gd")
+const LOBBY_TIMEOUT_MS:=120000
+const LOADING_TIMEOUT_MS:=45000
+var admission=Admission.new()
+var room_code:=OS.get_environment("YFFM3_ROOM_CODE")
+var require_invite:=false
+var lobby_since:Dictionary={}
+var closing:Dictionary={}
 var fragments=Fragments.new()
 var timelines:Array=[Timeline.new(),Timeline.new()]
 var preview=Prediction.new()
@@ -64,7 +73,7 @@ var last_receive:=0
 var start_time:=0
 var received_count:=0
 var test_duration:=0.0
-var online_duration:=180.0
+var online_duration:=Match.DEFAULT_DURATION
 var strict_rules:=false
 var ice_mode:=false
 var port:=28765
@@ -78,6 +87,8 @@ var mechanics_test=preload("res://network_mechanics_verification.gd").new()
 var latency_test=preload("res://network_latency_verification.gd").new()
 
 func _ready()->void:
+ admission.configure(multiplayer,PROTOCOL)
+ admission.failed.connect(fail)
  snapshot_every=3 if "--snapshots=20" in OS.get_cmdline_user_args() else 2
  snapshots.period=snapshot_every
  multiplayer.peer_connected.connect(_peer_connected)
@@ -90,10 +101,17 @@ func host(listen_port:int=28765,server_only:bool=false)->Error:
  close()
  if listen_port<1024 or listen_port>65535:
   status_changed.emit("比赛端口须为 1024–65535");return ERR_INVALID_PARAMETER
+ if (require_invite and room_code.length()<8) or room_code.length()>128 or (not room_code.is_empty() and room_code.length()<8):
+  status_changed.emit("邀请码需为 8–128 个字符；专用服务器请配置 YFFM3_ROOM_CODE");return ERR_INVALID_PARAMETER
+ admission.build=Build.fingerprint()
+ if admission.build.is_empty():
+  status_changed.emit("版本清单缺失或过期，请重新生成测试包");return ERR_INVALID_DATA
+ admission.code=room_code
+ admission.capacity=2 if server_only else 1
  port=listen_port
  dedicated=server_only
  var peer:=ENetMultiplayerPeer.new()
- var err:=peer.create_server(port,2 if dedicated else 1,4)
+ var err:=peer.create_server(port,8 if dedicated else 4,4)
  if err!=OK: status_changed.emit("创建房间失败："+error_string(err)); return err
  multiplayer.multiplayer_peer=peer
  active=true
@@ -106,6 +124,12 @@ func host(listen_port:int=28765,server_only:bool=false)->Error:
 
 func join(address:String,server_port:int=28765)->Error:
  close()
+ if address.strip_edges().is_empty() or server_port<1024 or server_port>65535 or room_code.length()>128:
+  status_changed.emit("请检查服务器地址、端口与邀请码");return ERR_INVALID_PARAMETER
+ admission.build=Build.fingerprint()
+ if admission.build.is_empty():
+  status_changed.emit("版本清单缺失或过期，请重新生成测试包");return ERR_INVALID_DATA
+ admission.code=room_code
  var peer:=ENetMultiplayerPeer.new()
  var err:=peer.create_client(address,server_port,4)
  if err!=OK: status_changed.emit("连接失败："+error_string(err)); return err
@@ -125,6 +149,8 @@ func close()->void:
  preparing=false
  sim=null
  peers.clear()
+ lobby_since.clear();closing.clear();admission.reset()
+ ready_flags=[false,false];scene_flags=[false,false]
  pending_inputs.clear()
  prediction_ready=false
  disconnect_handled=false
@@ -135,36 +161,75 @@ func close()->void:
 
 func fail(reason:String)->void:
  if not active or disconnect_handled: return
- if sim!=null and sim.finished:
-  active=false
-  status_changed.emit("服务器已关闭，可重新创建或加入房间")
-  return
  disconnect_handled=true
- active=false
- running=false
- preparing=false
- session_lost.emit(reason)
+ active=false;running=false;preparing=false
+ # Authentication/RPC callbacks can run inside ENet polling. Close on the next
+ # idle turn so we never replace MultiplayerPeer while Godot is traversing it.
+ _finish_failure.call_deferred(reason)
+
+func _finish_failure(reason:String)->void:
+ if not disconnect_handled: return
+ var finished:bool=sim!=null and sim.finished
+ close()
+ disconnect_handled=true
+ if finished:
+  status_changed.emit("服务器已关闭，可重新创建或加入房间")
+ else: session_lost.emit(reason)
+
+@rpc("authority","call_remote","reliable",0)
+func room_closed(reason:String)->void:
+ fail(reason)
+
+func dismiss_peer(id:int,reason:String)->void:
+ if closing.has(id): return
+ if peers.has(id):
+  var team:int=peers[id]
+  ready_flags[team]=false
+  rosters[team]=Squad.DEFAULT.duplicate()
+  peers.erase(id)
+ lobby_since.erase(id)
+ closing[id]=Time.get_ticks_msec()+300
+ room_closed.rpc_id(id,reason)
+
+func reset_room(reason:String)->void:
+ running=false;preparing=false
+ ready_flags=[false,false];scene_flags=[false,false]
+ rosters=[Squad.DEFAULT.duplicate(),Squad.DEFAULT.duplicate()]
+ for id in peers.keys():
+  if id!=1: dismiss_peer(id,reason)
+ sim=null;pending_inputs.clear();prediction_ready=false
+ reset_transport()
+ status_changed.emit("服务器在线 · 房间已重置，等待玩家重新加入")
+ if not dedicated: session_lost.emit(reason)
+
+func service_connections()->void:
+ admission.tick()
+ var now:=Time.get_ticks_msec()
+ for id in closing.keys():
+  if now>=int(closing[id]):
+   closing.erase(id)
+   if id in multiplayer.get_peers(): multiplayer.disconnect_peer(id)
+ if not running and not preparing:
+  for id in lobby_since.keys():
+   if peers.has(id) and not ready_flags[int(peers[id])] and now-int(lobby_since[id])>=LOBBY_TIMEOUT_MS:
+    dismiss_peer(id,"准备等待超时，请重新加入房间")
 
 func _peer_connected(id:int)->void:
  if not active or not multiplayer.is_server(): return
  var team:=0 if dedicated and 0 not in peers.values() else 1
- if team in peers.values(): multiplayer.multiplayer_peer.disconnect_peer(id); return
+ if running or preparing or team in peers.values(): dismiss_peer(id,"房间已满或比赛进行中，请稍后重试");return
  peers[id]=team
+ lobby_since[id]=Time.get_ticks_msec()
  assign_side.rpc_id(id,team,ice_mode or "--ice-mode" in OS.get_cmdline_user_args(),PROTOCOL)
  status_changed.emit("对手已连接 · 双方准备后开球")
 
 func _peer_disconnected(id:int)->void:
+ lobby_since.erase(id);closing.erase(id)
  if not active or not multiplayer.is_server() or not peers.has(id): return
  var team:int=peers[id]
- peers.erase(id)
- ready_flags[team]=false
+ peers.erase(id);ready_flags[team]=false;rosters[team]=Squad.DEFAULT.duplicate()
  if running or preparing:
-  running=false
-  preparing=false
-  for peer_id in peers:
-   if peer_id!=1: remote_abandon.rpc_id(peer_id)
-  if not dedicated: session_lost.emit("对手已离开，本场结束；战役进度不受影响")
-  else: status_changed.emit("比赛结束：玩家离开，等待新玩家")
+  reset_room("对手已离开，本场结束；请重新加入房间")
  else: status_changed.emit("对手离开房间")
 
 func _connected()->void:
@@ -195,7 +260,7 @@ func ready_request(roster:Array,protocol:int=0)->void:
  var sender:=multiplayer.get_remote_sender_id()
  if not peers.has(sender): return
  if protocol!=PROTOCOL or not Squad.valid(roster):
-  incompatible.rpc_id(sender);return
+  dismiss_peer(sender,"比赛版本或阵容不一致，需要六人制完整阵容");return
  rosters[int(peers[sender])]=roster.duplicate()
  ready_flags[int(peers[sender])]=true
  _try_start()
@@ -375,15 +440,17 @@ func probe_echo(game_id:int,nonce:int)->void:
 
 func advance(dt:float)->void:
  if not active: return
+ if multiplayer.multiplayer_peer.get_connection_status()==MultiplayerPeer.CONNECTION_DISCONNECTED:
+  fail("连接已断开，请重新加入房间");return
+ if multiplayer.is_server(): service_connections()
  pump_link()
  if running and Time.get_ticks_msec()>=metrics_at:
   print_metrics();metrics_at=Time.get_ticks_msec()+10000
  if preparing:
-  if Time.get_ticks_msec()-prepare_started>45000:
+  if Time.get_ticks_msec()-prepare_started>LOADING_TIMEOUT_MS:
    if multiplayer.is_server():
-    for id in peers:
-     if id!=1: loading_timeout.rpc_id(id,round_id)
-   fail("对局加载超时，请返回主菜单重新连接")
+    reset_room("对局加载超时，请重新加入房间")
+   else: fail("对局加载超时，请返回主菜单重新连接")
   return
  if not multiplayer.is_server():
   if not running and not waiting_connection: return
@@ -432,6 +499,8 @@ func advance(dt:float)->void:
   for id in peers:
    if id!=1: final_state.rpc_id(id,sim.snapshot(),round_id)
   print_metrics()
+  for id in peers:
+   if id!=1: lobby_since[id]=Time.get_ticks_msec()
   match_ended.emit()
   print("NETWORK_FINAL score=",sim.score," frame=",sim.frame)
 

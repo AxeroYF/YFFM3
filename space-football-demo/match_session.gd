@@ -32,7 +32,7 @@ func prepare(campaign,tactic:int,arcade_rules:bool,verify:bool,strict_rules:bool
   sim.environment=Conditions.normalize(quick_environment if practice else {})
   if sim.ice_mode: sim.arcade=false
   sim.tactic=tactic
-  sim.regulation=100
+  sim.regulation=sim.duration
   sim.Rules.restart(sim,0,"kickoff",Vector2.ZERO)
  if not online: sim.mechanics.strict_rules=strict_rules
 func submit(command:Dictionary,dt:float=1.0/60)->void:

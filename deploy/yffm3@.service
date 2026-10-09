@@ -10,6 +10,8 @@ Type=simple
 User=yffm3
 Group=yffm3
 WorkingDirectory=/opt/yffm3/app/space-football-demo
+EnvironmentFile=/etc/yffm3/%i.env
+ExecStartPre=/opt/yffm3/bin/godot --headless --path /opt/yffm3/app/space-football-demo -- --verify-network-build
 ExecStart=/opt/yffm3/bin/godot --headless --path /opt/yffm3/app/space-football-demo -- --server --port=%i
 Environment=XDG_DATA_HOME=/var/lib/yffm3/%i
 Environment=XDG_CACHE_HOME=/var/cache/yffm3/%i

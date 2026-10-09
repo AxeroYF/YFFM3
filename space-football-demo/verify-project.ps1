@@ -6,6 +6,8 @@ param(
 )
 $ErrorActionPreference='Stop'
 $projectRoot=Split-Path $PSScriptRoot -Parent
+& node (Join-Path $projectRoot 'tools/network-build.mjs') --check
+if($LASTEXITCODE -ne 0){throw 'Network build manifest is stale.'}
 if(-not $Executable){$Executable=Join-Path $projectRoot 'tools/godot/Godot_v4.7.2-stable_win64_console.exe'}
 $engine=(Resolve-Path -LiteralPath $Executable).Path
 $manifest=Get-Content -LiteralPath (Join-Path $PSScriptRoot 'verification-suites.json') -Raw | ConvertFrom-Json

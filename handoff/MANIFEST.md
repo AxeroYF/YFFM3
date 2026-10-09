@@ -1,6 +1,6 @@
 # 文件与系统入口
 
-更新：2026-10-04。路径相对仓库根目录。主游戏在 `space-football-demo/`。
+更新：2026-10-09。路径相对仓库根目录。主游戏在 `space-football-demo/`。
 
 ## 交接文档入口
 
@@ -15,6 +15,7 @@
 | [ARCHITECTURE_REFACTOR.md](ARCHITECTURE_REFACTOR.md) | 高 / 中高优先级重构、协议 7、模块归属和统一验证入口 |
 | [MATCH_ENVIRONMENT.md](MATCH_ENVIRONMENT.md) | 球场、天气、间歇闪电、低重力与协议 6 验证 |
 | [NEW_CHAT_PROMPT.md](NEW_CHAT_PROMPT.md) | 可复制的新对话接续信息 |
+| [ONLINE_READINESS.md](ONLINE_READINESS.md) | 协议 8 邀请码、版本清单、房间恢复与部署准备 |
 | [archive/README.md](archive/README.md) | 综合整理前入口的历史存档说明 |
 
 ## 启动与环境
@@ -29,6 +30,10 @@
 | `Edit-Space-Football.cmd` | Godot 编辑器打开主游戏 |
 | `Start-Space-Football-Server.cmd` | ENet 独立服务器，默认 UDP 28765 |
 | `tools/godot-installation.json` | 已安装 Godot 4.7.2 的版本、来源与校验记录 |
+| `tools/network-build.mjs` | 生成 / 检查网络版本清单；源码变更后、导出前使用 |
+| `space-football-demo/network_build.gd` / `network-build.json` | 源码与导出共用的网络版本指纹 |
+| `space-football-demo/network_admission.gd` | 游戏 RPC 前的邀请码 / 协议 / 版本认证 |
+| `space-football-demo/network_lifecycle_tests.gd` | 真实 ENet 生命周期回归，包括错误认证、加载超时及断线恢复 |
 | `.gitignore` / `.gitattributes` | 忽略本地产物，统一源码与 Windows 脚本行尾 |
 
 当前机器：`D:\Project\game_test\.worktrees\YFFM3`。本地编辑器位于 `tools/godot/`，不在 Git 中。

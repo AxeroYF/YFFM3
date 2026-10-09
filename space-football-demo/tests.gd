@@ -512,7 +512,7 @@ func _initialize() -> void:
  s.tick(0.05,Vector2.ZERO)
  check(s.score==[0,0] and s.restart_kind=="goal_kick" and s.restart_taker==6 and s.owner==-1,"wide shot awards opponent goal kick")
  s=fixture()
- s.elapsed=100
+ s.elapsed=s.duration
  s.tick(0.02,Vector2.ZERO)
  check(s.overtime and not s.finished,"tie enters golden goal")
  s.owner=-1
@@ -523,9 +523,9 @@ func _initialize() -> void:
  s.step(s.Rules.GOAL_DURATION+0.1)
  check(s.finished,"overtime goal ends match after celebration")
  s=fixture()
- s.elapsed=100
+ s.elapsed=s.duration
  s.tick(0.02,Vector2.ZERO)
- s.elapsed=130
+ s.elapsed=s.duration
  s.tick(0.02,Vector2.ZERO)
  check(s.finished and s.score==[0,0],"scoreless overtime ends in retry draw")
  s=fixture(1)
@@ -545,6 +545,8 @@ func _initialize() -> void:
    cc.stage=stage
    s=Match.new()
    s.setup(cc,seed_value)
+   # Fixed-length balance fixtures keep historical scoring comparisons reproducible.
+   s.duration=100;s.regulation=100
    s.human=false
    for tick in 15000:
     s.tick(1.0/60,Vector2.ZERO)
@@ -558,6 +560,7 @@ func _initialize() -> void:
  var pilot_goals:=0
  for stage in 3:
   s=fixture(stage)
+  s.duration=100;s.regulation=100
   # Difficulty no longer changes hidden run speed; exercise distinct shot seeds.
   s.rng.seed=451+stage*137
   # Stop-clock play can include ten goals and complete retrieval/restart scenes.

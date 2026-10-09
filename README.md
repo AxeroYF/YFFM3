@@ -36,7 +36,7 @@
 
 ## 开发环境与启动
 
-联机当前为协议 7，环境参数随快照与预测传递；保留本地动作预览、快照插值、双向弱网测试和诊断。服务器可独立运行，与已有 Rougelite 共置，操作入口见 [香港灰度部署](deploy/README.md)，实现与验证见 [联机交接](handoff/NETWORK_GRAY_TEST.md)。当前没有部署到公网。
+联机当前为协议 8，常规比赛 5 分钟；支持邀请码入场、源码与规则数据版本校验，以及加载超时 / 掉线后的房间清理。环境参数随快照与预测传递；保留本地动作预览、快照插值、双向弱网测试和诊断。服务器可独立运行，与已有 Rougelite 共置，操作入口见 [香港灰度部署](deploy/README.md)，最新修复见 [联机准备状态](handoff/ONLINE_READINESS.md)。当前没有部署到公网。
 
 当前已验证版本为 **Godot 4.7.2 stable，Windows x86_64 标准版 / GDScript**。游戏本身不需要 .NET 或 Node.js；资源处理脚本使用 Node.js。
 
@@ -96,9 +96,12 @@ powershell -NoProfile -File space-football-demo/verify-network.ps1 -LatencyActio
 高 / 中高优先级重构的模块归属与协议变更见 [架构说明](handoff/ARCHITECTURE_REFACTOR.md)。在仓库根目录运行：
 
 ~~~powershell
+node tools/network-build.mjs
 .\space-football-demo\verify-project.ps1 -Suite Fast -AllowSystemCertificateWarning
 .\space-football-demo\verify-project.ps1 -Suite Full -AllowSystemCertificateWarning
 .\space-football-demo\verify-project.ps1 -Suite Visual -AllowSystemCertificateWarning
 ~~~
 
 仅本机出现已知 Windows 根证书库诊断时使用该允许参数；其他脚本或引擎错误仍会失败。
+
+源码、规则资源或球员 JSON 数据改变后，先重新生成并提交 `network-build.json`。验证脚本会拒绝过期清单；导出前运行 `node tools/network-build.mjs --check`，客户端与服务器使用同一清单。专用服务器须通过环境变量 `YFFM3_ROOM_CODE` 配置邀请码；本地开放测试才使用 `--allow-open-room`。

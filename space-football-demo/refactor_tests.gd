@@ -21,6 +21,25 @@ func envelope(payload:Dictionary)->Dictionary:
  return {"compressed":var_to_bytes(payload).compress(FileAccess.COMPRESSION_DEFLATE)}
 
 func _initialize()->void:
+ # Product duration is shared across local modes and the dedicated server.
+ var local=Session.new()
+ for mode in ["campaign","quick","ice"]:
+  local.practice=mode!="campaign";local.quick_ice_mode=mode=="ice"
+  local.prepare(preload("res://campaign.gd").new(),1,false,true,false)
+  check(local.sim.duration==300 and local.sim.regulation==300,mode+" starts with five effective minutes")
+ var clock=local.sim
+ clock.elapsed=299.9;clock.freeze=0;clock.phase="restart"
+ clock.step(1.0/60)
+ check(clock.elapsed==299.9 and not clock.finished,"restart preparation does not spend regulation time")
+ clock.phase="play";clock.freeze=0;clock.score=[1,0]
+ clock.step(1.0/60)
+ check(not clock.finished,"match remains open before five minutes")
+ clock.elapsed=300;clock.phase="play";clock.freeze=0
+ clock.step(1.0/60)
+ check(clock.finished,"non-tied match finishes at five minutes")
+ var server=Network.new()
+ check(server.online_duration==300,"online default matches local five-minute duration")
+ server.free()
  var original=fixture()
  original.environment={"stadium":1,"weather":3,"gravity":1}
  original.pickup_lock=0.7
@@ -78,7 +97,7 @@ func _initialize()->void:
  check(extended.players[1].effect_timer==1.75 and extended.teams[0].special_charge==0.6 and extended.special_mode.remaining==3.0,"additional state fields survive codec without parallel field lists")
  var payload:Dictionary=bytes_to_var(encoded.compressed.decompress_dynamic(Codec.MAX_BYTES,FileAccess.COMPRESSION_DEFLATE))
  var bad:Dictionary=payload.duplicate(true)
- bad.version=6
+ bad.version=Codec.VERSION-1
  check(Codec.decode(envelope(bad)).is_empty(),"old protocol rejected")
  bad=payload.duplicate(true);bad.values=bad.values.slice(0,3)
  check(Codec.decode(envelope(bad)).is_empty(),"truncated numeric payload rejected")
